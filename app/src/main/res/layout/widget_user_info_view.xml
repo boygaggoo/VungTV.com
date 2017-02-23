@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/userpage_ll_info"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_centerHorizontal="true"
+    android:paddingTop="@dimen/margin"
+    android:paddingBottom="@dimen/margin"
+    android:gravity="center_horizontal"
+    android:background="@color/colorPrimaryDark"
+    android:orientation="vertical">
+
+    <com.vungtv.film.widget.VtvTextView
+        android:id="@+id/userpage_tv_username"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="@dimen/margin"
+        android:textSize="@dimen/font_normal"
+        android:textColor="@color/text_light_1"
+        tools:text="User name"
+        app:textStyle="bold"/>
+
+    <RelativeLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="@dimen/margin">
+
+        <com.vungtv.film.widget.VtvCircularImageView
+            android:id="@+id/userpage_img_avatar"
+            android:layout_width="77dp"
+            android:layout_height="77dp"
+            android:src="@drawable/icon_human2"
+            app:civ_border="true"
+            app:civ_border_width="1dp"
+            app:civ_border_color="@color/colorAccent"/>
+
+        <ImageView
+            android:id="@+id/userpage_btn_change_avatar"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:layout_alignBottom="@+id/userpage_img_avatar"
+            android:layout_alignRight="@+id/userpage_img_avatar"
+            android:layout_alignEnd="@+id/userpage_img_avatar"
+            android:src="@drawable/icon_camera"
+            android:contentDescription="@string/app_name" />
+
+    </RelativeLayout>
+
+    <com.vungtv.film.widget.VtvTextView
+        android:id="@+id/userpage_tv_offline_login"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="@dimen/margin"
+        android:textSize="@dimen/font_normal"
+        android:textColor="@color/text_light_1"
+        android:text="@string/login_action_login"
+        app:textStyle="bold"/>
+
+    <com.vungtv.film.widget.VtvTextView
+        android:id="@+id/userpage_tv_vip"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="@dimen/space_4"
+        android:textSize="@dimen/font_normal"
+        android:textColor="@color/text_light_1"
+        tools:text="Thời hạn VIP : 31/12/2050" />
+
+    <com.vungtv.film.widget.VtvTextView
+        android:id="@+id/userpage_tv_vung"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="@dimen/margin"
+        android:textSize="@dimen/font_normal"
+        android:textColor="@color/text_light_1"
+        tools:text="Vừng còn : 100 vừng" />
+
+</LinearLayout>

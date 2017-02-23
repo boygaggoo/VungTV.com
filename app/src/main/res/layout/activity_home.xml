@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.vungtv.film.widget.VtvDrawerLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/home_drawer_layout"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/colorPrimary"
+    android:fitsSystemWindows="true"
+    app:lock_open="true">
+
+    <LinearLayout
+        android:id="@+id/home_content_layout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        tools:layout_marginLeft="300dp">
+
+        <com.vungtv.film.widget.VtvToolbarHome
+            android:id="@+id/home_toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
+        <FrameLayout
+            android:id="@+id/home_frameLayout"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+
+    </LinearLayout>
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/home_nav_recycler"
+        android:layout_width="@dimen/home_nav_size_w"
+        android:layout_height="match_parent"
+        android:layout_gravity="start"
+        android:fitsSystemWindows="true"
+        android:choiceMode="singleChoice"
+        android:background="@color/colorPrimaryDark"/>
+
+</com.vungtv.film.widget.VtvDrawerLayout>

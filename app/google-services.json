@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "899316289181",
+    "project_id": "vungtv-148318"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:899316289181:android:131585af142b56e9",
+        "android_client_info": {
+          "package_name": "com.vungtv.film"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "899316289181-3ch2ca1bgokck0hfala2gas8gsj2kshi.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.vungtv.film",
+            "certificate_hash": "73899425F5CDFAF0154F6687051C828276ECF348"
+          }
+        },
+        {
+          "client_id": "899316289181-3q7i8i9u4rud6fgqa6642pip0b6jcpkq.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAi3fRomKvPGd8Uy1V3RywULUfqBEIqgSQ"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 1
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

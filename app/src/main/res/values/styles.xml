@@ -1,0 +1,181 @@
+<resources>
+
+    <!-- Base application theme. -->
+    <style name="AppTheme" parent="Theme.AppCompat.Light.NoActionBar">
+        <!-- Customize your theme here. -->
+        <item name="colorPrimary">@color/colorPrimary</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+        <item name="colorAccent">@color/colorAccent</item>
+    </style>
+
+    <style name="AppTheme.Text" parent="@android:style/TextAppearance">
+        <item name="android:textSize">@dimen/font_normal</item>
+        <item name="android:textColor">@color/text_dark_1</item>
+    </style>
+
+    <style name="AppTheme.Text.Label" parent="@android:style/TextAppearance">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">14dp</item>
+        <item name="android:minWidth">14dp</item>
+        <item name="android:paddingLeft">2dp</item>
+        <item name="android:paddingRight">2dp</item>
+        <item name="android:gravity">center</item>
+        <item name="android:background">@drawable/ds_bg_text_label</item>
+        <item name="android:textColor">@color/text_light_1</item>
+        <item name="android:textSize">10sp</item>
+    </style>
+
+    <style name="AppTheme.Text.FilmTitle" parent="@style/AppTheme.Text">
+        <item name="android:layout_width">@dimen/poster_size_w</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:textSize">@dimen/font_small</item>
+        <item name="android:textColor">@color/text_dark_1</item>
+        <item name="android:ellipsize">end</item>
+        <item name="android:maxLines">2</item>
+    </style>
+
+    <style name="AppTheme.Text.HomeTitle" parent="@style/AppTheme.Text">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:paddingLeft">@dimen/space_4</item>
+        <item name="android:paddingRight">@dimen/space_4</item>
+        <item name="android:textSize">@dimen/font_lage</item>
+        <item name="android:textColor">@color/colorAccent</item>
+        <item name="android:ellipsize">end</item>
+        <item name="android:maxLines">2</item>
+    </style>
+
+    <style name="AppTheme.Text.Footer" parent="@android:style/TextAppearance">
+        <item name="android:layout_width">0dp</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_marginTop">15dp</item>
+        <item name="android:layout_marginBottom">15dp</item>
+        <item name="android:padding">5dp</item>
+        <item name="android:background">@drawable/ds_border_gray7_radius</item>
+        <item name="android:gravity">center</item>
+        <item name="android:textSize">@dimen/font_normal</item>
+        <item name="android:textColor">@color/text_dark_1</item>
+    </style>
+
+    <style name="AppTheme.Edittext.Login" parent="Base.Widget.AppCompat.EditText">
+        <item name="android:background">@drawable/ds_edittext_login</item>
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">32dp</item>
+        <item name="android:layout_marginBottom">@dimen/space_7</item>
+        <item name="android:paddingLeft">@dimen/margin</item>
+        <item name="android:paddingRight">@dimen/margin</item>
+        <item name="android:gravity">center_vertical|left</item>
+        <item name="android:textColor">@color/text_light_1</item>
+        <item name="android:textColorHint">@color/text_light_3</item>
+        <item name="android:maxLength">40</item>
+    </style>
+
+    <style name="AppTheme.Progressbar.Recent" parent="Widget.AppCompat.ProgressBar.Horizontal">
+        <item name="colorAccent">@color/colorAccent</item>
+    </style>
+
+    <style name="AppTheme.Dialog" parent="Theme.AppCompat.Light.Dialog">
+        <item name="colorAccent">@color/colorAccent</item>
+        <item name="android:textColorPrimary">@color/text_dark_1</item>
+        <item name="android:background">@color/transparent_dark</item>
+        <item name="colorControlNormal">@color/text_dark_1</item>
+        <item name="colorControlActivated">@color/colorAccent</item>
+    </style>
+
+    <style name="AppTheme.Dialog.Progress" parent="AppTheme.Dialog">
+        <item name="android:background">@color/transparent_light</item>
+        <item name="android:layout_width">36dp</item>
+        <item name="android:layout_height">36dp</item>
+    </style>
+
+    <style name="AppTheme.Dialog.Title" parent="@android:style/TextAppearance">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">48dp</item>
+        <item name="android:gravity">center</item>
+        <item name="android:textSize">@dimen/font_lage</item>
+        <item name="android:textColor">@color/colorAccent</item>
+    </style>
+
+    <style name="AppTheme.Dialog.Text" parent="@android:style/TextAppearance">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:padding">@dimen/space_16</item>
+        <item name="android:gravity">center</item>
+        <item name="android:lineSpacingMultiplier">1.3</item>
+        <item name="android:textSize">@dimen/font_normal</item>
+        <item name="android:textColor">@color/text_dark_1</item>
+    </style>
+
+    <style name="AppTheme.Dialog.Edittext" parent="@android:style/TextAppearance.Widget.EditText">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">@dimen/space_48</item>
+        <item name="android:padding">@dimen/space_8</item>
+        <item name="android:layout_margin">@dimen/space_16</item>
+        <item name="android:gravity">center</item>
+        <item name="android:maxLines">1</item>
+        <item name="android:background">@drawable/ds_edittext_border_blue</item>
+        <item name="android:textSize">@dimen/font_lage</item>
+        <item name="android:textColor">@color/text_dark_1</item>
+    </style>
+
+    <style name="AppTheme.Dialog.Button" parent="@android:style/Widget.Button">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">@dimen/space_48</item>
+        <item name="android:layout_marginBottom">@dimen/space_16</item>
+        <item name="android:gravity">center</item>
+        <item name="android:background">@drawable/ds_touchable_bg_green_radius</item>
+        <item name="android:textSize">@dimen/font_lage</item>
+        <item name="android:textColor">@color/text_light_1</item>
+    </style>
+
+    <style name="AppTheme.Edittext.NapThe" parent="Base.Widget.AppCompat.EditText">
+        <item name="android:background">@drawable/ds_edittext_gray</item>
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">36dp</item>
+        <item name="android:layout_marginBottom">@dimen/space_7</item>
+        <item name="android:layout_marginLeft">@dimen/space_24</item>
+        <item name="android:layout_marginRight">@dimen/space_24</item>
+        <item name="android:paddingLeft">@dimen/margin</item>
+        <item name="android:paddingRight">@dimen/margin</item>
+        <item name="android:gravity">center_vertical|left</item>
+        <item name="android:textColor">@color/text_dark_1</item>
+        <item name="android:textColorHint">@color/text_dark_3</item>
+        <item name="android:maxLength">40</item>
+    </style>
+
+    <style name="AppTheme.Edittext.User" parent="Base.Widget.AppCompat.EditText">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">@dimen/space_48</item>
+        <item name="android:maxLines">1</item>
+        <item name="android:gravity">center_vertical|left|start</item>
+        <item name="android:paddingLeft">@dimen/margin</item>
+        <item name="android:paddingRight">@dimen/margin</item>
+        <item name="android:drawablePadding">@dimen/margin</item>
+        <item name="android:textSize">@dimen/font_normal</item>
+    </style>
+
+    <style name="AppTheme.SearchView" parent="Widget.AppCompat.EditText">
+        <item name="android:layout_marginLeft">@dimen/margin</item>
+        <item name="android:paddingLeft">@dimen/margin</item>
+        <item name="android:paddingRight">@dimen/margin</item>
+        <item name="android:background">@drawable/ds_bg_searchview</item>
+        <item name="android:drawableLeft">@drawable/icon_search</item>
+        <item name="android:drawablePadding">@dimen/margin</item>
+        <item name="android:imeOptions">actionSearch</item>
+        <item name="android:maxLines">1</item>
+        <item name="android:textSize">@dimen/font_normal</item>
+        <item name="android:textColor">@color/text_light_1</item>
+        <item name="android:textColorHint">@color/text_light_3</item>
+    </style>
+
+    <style name="AppTheme.RatingBar.Small" parent="@android:style/Widget.RatingBar">
+        <item name="android:progressDrawable">@drawable/ds_ratingbar_bg_small</item>
+        <item name="android:minHeight">16dp</item>
+        <item name="android:maxHeight">16dp</item>
+    </style>
+
+    <style name="AppTheme.RatingBar" parent="Widget.AppCompat.RatingBar.Indicator">
+        <item name="android:progressDrawable">@drawable/ds_ratingbar_bg</item>
+    </style>
+
+</resources>

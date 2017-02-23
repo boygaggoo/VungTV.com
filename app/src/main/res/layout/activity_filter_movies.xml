@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <com.vungtv.film.widget.VtvToolbarPage
+        android:id="@+id/filter_movies_toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+    <android.support.v4.widget.SwipeRefreshLayout
+        android:id="@+id/filter_movies_refresh"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@+id/filter_movies_toolbar" >
+
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/filter_movies_recycler"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:paddingLeft="@dimen/space_7"
+            android:paddingRight="@dimen/space_7"
+            android:scrollbars="vertical"/>
+
+    </android.support.v4.widget.SwipeRefreshLayout>
+
+    <com.vungtv.film.widget.VtvErrorMsgView
+        android:id="@+id/filter_movies_errormsg"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:visibility="gone"
+        tools:text="@string/error_no_connection"/>
+
+    <ImageView
+        android:id="@+id/filter_movies_btn_sort"
+        android:layout_width="@dimen/space_36"
+        android:layout_height="@dimen/space_36"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true"
+        android:layout_marginLeft="@dimen/margin"
+        android:layout_marginRight="@dimen/margin"
+        android:layout_marginBottom="@dimen/space_24"
+        android:background="@drawable/ds_touchable_bg_green_radius"
+        android:src="@drawable/icon_sapxep"
+        android:contentDescription="@string/app_name" />
+
+</RelativeLayout>

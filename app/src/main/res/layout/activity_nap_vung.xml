@@ -1,0 +1,236 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/activity_setting"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:gravity="center_horizontal"
+    android:orientation="vertical">
+
+    <com.vungtv.film.widget.VtvToolbarSetting
+        android:id="@+id/napvung_toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:textTitle="@string/napvung_info"/>
+
+
+    <com.vungtv.film.widget.VtvTextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/margin"
+        android:padding="@dimen/margin"
+        android:gravity="center"
+        android:textColor="@color/colorAccent"
+        android:textSize="@dimen/font_normal"
+        android:text="@string/napvung_loai_the"/>
+
+    <View
+        android:layout_width="@dimen/space_128"
+        android:layout_height="1dp"
+        android:background="@color/dividers_dark" />
+
+    <RadioGroup
+        android:id="@+id/napvung_radiogroup"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="@dimen/margin"
+        android:layout_marginBottom="@dimen/margin"
+        android:orientation="horizontal"
+        android:weightSum="4">
+
+        <com.vungtv.film.widget.VtvRadioButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:textSize="@dimen/font_normal"
+            android:text="@string/napvung_mobifone"
+            android:checked="true"/>
+
+        <com.vungtv.film.widget.VtvRadioButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:textSize="@dimen/font_normal"
+            android:text="@string/napvung_vinaphone"/>
+
+        <com.vungtv.film.widget.VtvRadioButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:textSize="@dimen/font_normal"
+            android:text="@string/napvung_viettel"/>
+
+        <com.vungtv.film.widget.VtvRadioButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:textSize="@dimen/font_normal"
+            android:text="@string/napvung_fptgate"/>
+
+    </RadioGroup>
+
+    <com.vungtv.film.widget.VtvTextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/margin"
+        android:padding="@dimen/margin"
+        android:gravity="center"
+        android:textColor="@color/colorAccent"
+        android:textSize="@dimen/font_normal"
+        android:text="@string/napvung_menh_gia"/>
+
+    <View
+        android:layout_width="@dimen/space_128"
+        android:layout_height="1dp"
+        android:background="@color/dividers_dark" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_marginTop="@dimen/margin"
+        android:paddingLeft="@dimen/margin"
+        android:paddingRight="@dimen/margin"
+        android:weightSum="4">
+
+        <com.vungtv.film.widget.VtvTextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:padding="@dimen/margin"
+            android:layout_margin="@dimen/space_4"
+            android:gravity="center"
+            android:background="@drawable/ds_btn_gray2_radius"
+            android:textColor="@color/text_light_1"
+            android:textSize="@dimen/font_normal"
+            android:text="@string/napvung_menh_gia_10k"/>
+
+        <com.vungtv.film.widget.VtvTextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:padding="@dimen/margin"
+            android:layout_margin="@dimen/space_4"
+            android:gravity="center"
+            android:background="@drawable/ds_btn_gray2_radius"
+            android:textColor="@color/text_light_1"
+            android:textSize="@dimen/font_normal"
+            android:text="@string/napvung_menh_gia_20k"/>
+
+        <com.vungtv.film.widget.VtvTextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:padding="@dimen/margin"
+            android:layout_margin="@dimen/space_4"
+            android:gravity="center"
+            android:background="@drawable/ds_btn_gray2_radius"
+            android:textColor="@color/text_light_1"
+            android:textSize="@dimen/font_normal"
+            android:text="@string/napvung_menh_gia_50k"/>
+
+        <com.vungtv.film.widget.VtvTextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:padding="@dimen/margin"
+            android:layout_margin="@dimen/space_4"
+            android:gravity="center"
+            android:background="@drawable/ds_btn_gray2_radius"
+            android:textColor="@color/text_light_1"
+            android:textSize="@dimen/font_normal"
+            android:text="@string/napvung_menh_gia_100k" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:paddingLeft="@dimen/margin"
+        android:paddingRight="@dimen/margin"
+        android:weightSum="4">
+
+        <com.vungtv.film.widget.VtvTextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:padding="@dimen/margin"
+            android:layout_margin="@dimen/space_4"
+            android:gravity="center"
+            android:background="@drawable/ds_btn_gray2_radius"
+            android:textColor="@color/text_light_1"
+            android:textSize="@dimen/font_normal"
+            android:text="@string/napvung_menh_gia_200k"/>
+
+        <com.vungtv.film.widget.VtvTextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:padding="@dimen/margin"
+            android:layout_margin="@dimen/space_4"
+            android:gravity="center"
+            android:background="@drawable/ds_btn_gray2_radius"
+            android:textColor="@color/text_light_1"
+            android:textSize="@dimen/font_normal"
+            android:text="@string/napvung_menh_gia_300k"/>
+
+        <com.vungtv.film.widget.VtvTextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:padding="@dimen/margin"
+            android:layout_margin="@dimen/space_4"
+            android:gravity="center"
+            android:background="@drawable/ds_btn_gray2_radius"
+            android:textColor="@color/text_light_1"
+            android:textSize="@dimen/font_normal"
+            android:text="@string/napvung_menh_gia_500k"/>
+
+        <com.vungtv.film.widget.VtvTextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:padding="@dimen/margin"
+            android:layout_margin="@dimen/space_4"
+            android:gravity="center"
+            android:background="@drawable/ds_btn_gray2_radius"
+            android:textColor="@color/text_light_1"
+            android:textSize="@dimen/font_normal"
+            android:text="@string/napvung_menh_gia_1000k"/>
+
+    </LinearLayout>
+
+    <com.vungtv.film.widget.VtvTextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/margin"
+        android:layout_marginBottom="@dimen/margin"
+        android:padding="@dimen/margin"
+        android:gravity="center"
+        android:textColor="@color/text_dark_1"
+        android:textSize="@dimen/font_normal"
+        tools:text="Bạn nhận được: 85 vừng"/>
+
+    <com.vungtv.film.widget.VtvEditText
+        style="@style/AppTheme.Edittext.NapThe"
+        android:layout_marginTop="@dimen/space_24"
+        android:hint="@string/napvung_hint_mathecao"/>
+
+    <com.vungtv.film.widget.VtvEditText
+        style="@style/AppTheme.Edittext.NapThe"
+        android:hint="@string/napvung_hint_serial"/>
+
+    <com.vungtv.film.widget.VtvButton
+        style="@style/AppTheme.Dialog.Button"
+        android:layout_width="match_parent"
+        android:layout_height="36dp"
+        android:layout_marginTop="@dimen/space_7"
+        android:layout_marginLeft="24dp"
+        android:layout_marginRight="24dp"
+        android:textAllCaps="true"
+        android:text="@string/muavip_text_title_napvung"
+        app:textStyle="bold"/>
+
+</LinearLayout>

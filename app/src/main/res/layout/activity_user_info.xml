@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/activity_user_info"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <com.vungtv.film.widget.VtvUserInfoHeaderView
+        android:id="@+id/userinfo_header"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+    <ImageView
+        android:id="@+id/userinfo_btn_back"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:padding="@dimen/margin"
+        android:contentDescription="@string/app_name"
+        android:src="@drawable/icon_back1"/>
+
+    <com.vungtv.film.widget.VtvTextView
+        style="@style/AppTheme.Text.FilmTitle"
+        android:id="@+id/item_userpage_title"
+        android:layout_width="match_parent"
+        android:layout_height="45dp"
+        android:layout_below="@+id/userinfo_header"
+        android:paddingLeft="@dimen/margin"
+        android:paddingRight="@dimen/margin"
+        android:gravity="center_vertical"
+        android:background="@color/gray_2"
+        android:textColor="@color/colorAccent"
+        android:textSize="@dimen/font_lage"
+        android:text="@string/userinfo_text_title"
+        app:textStyle="bold"/>
+
+    <com.vungtv.film.widget.VtvTwoTextView
+        android:id="@+id/userinfo_email"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/item_userpage_title"
+        app:textLeft="@string/userinfo_text_email"
+        app:textRight="abcd@vungtv.com"
+        app:iconLeft="@drawable/icon_mail2"/>
+
+    <com.vungtv.film.widget.VtvTwoTextView
+        android:id="@+id/userinfo_displayname"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/userinfo_email"
+        app:textLeft="@string/userinfo_text_displayname"
+        app:textRight="abcd@vungtv.com"
+        app:iconLeft="@drawable/icon_user2"
+        app:iconRight="@drawable/icon_edit"/>
+
+    <com.vungtv.film.widget.VtvTwoTextView
+        android:id="@+id/userinfo_pass"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/userinfo_displayname"
+        app:textLeft="@string/userinfo_text_pass"
+        app:textRight="******"
+        app:iconLeft="@drawable/icon_lock"
+        app:iconRight="@drawable/icon_edit"/>
+
+    <com.vungtv.film.widget.VtvTwoTextView
+        android:id="@+id/userinfo_creatDate"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/userinfo_pass"
+        app:textLeft="@string/userinfo_text_createAt"
+        app:textRight="--/--/----"
+        app:iconLeft="@drawable/icon_calendar"/>
+
+</RelativeLayout>

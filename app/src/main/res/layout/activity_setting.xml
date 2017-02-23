@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/activity_setting"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <com.vungtv.film.widget.VtvToolbarSetting
+        android:id="@+id/setting_toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:textTitle="@string/setting_title"/>
+
+    <com.vungtv.film.widget.VtvTwoTextView
+        android:id="@+id/setting_version"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:textLeft="@string/setting_text_version"
+        app:textRight="1.0" />
+
+    <com.vungtv.film.widget.VtvTwoTextView
+        android:id="@+id/setting_language"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:textLeft="@string/setting_text_language"
+        app:textRight="Tiếng việt" />
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/ds_touchable_bg_gray1"
+        android:paddingLeft="@dimen/margin"
+        android:paddingRight="@dimen/margin"
+        android:orientation="vertical">
+
+        <com.vungtv.film.widget.VtvTextView
+            style="@style/AppTheme.Text.FilmTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="53dp"
+            android:layout_toLeftOf="@+id/setting_switch_download"
+            android:layout_toStartOf="@+id/setting_switch_download"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:gravity="center_vertical"
+            android:textColor="@color/text_dark_2"
+            android:textSize="@dimen/font_lage"
+            android:text="@string/setting_text_only_down_wifi"/>
+
+        <Switch
+            style="@style/AppTheme.Text.FilmTitle"
+            android:id="@+id/setting_switch_download"
+            android:layout_width="wrap_content"
+            android:layout_height="53dp"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentEnd="true"
+            android:gravity="center_vertical"
+            android:checked="true"/>
+
+    </RelativeLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1px"
+        android:background="@color/dividers_dark"/>
+
+</LinearLayout>

@@ -1,0 +1,213 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.v4.widget.NestedScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:scrollbars="vertical">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <com.vungtv.film.widget.VtvUserInfoHeaderView
+            android:id="@+id/buyvip_header"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
+        <ImageView
+            android:id="@+id/buyvip_btn_back"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:padding="@dimen/margin"
+            android:contentDescription="@string/app_name"
+            android:src="@drawable/icon_back1"/>
+
+        <com.vungtv.film.widget.VtvTextView
+            style="@style/AppTheme.Text.FilmTitle"
+            android:id="@+id/buyvip_title"
+            android:layout_width="match_parent"
+            android:layout_height="45dp"
+            android:layout_below="@+id/buyvip_header"
+            android:paddingLeft="@dimen/margin"
+            android:paddingRight="@dimen/margin"
+            android:gravity="center"
+            android:background="@color/gray_2"
+            android:textColor="@color/colorAccent"
+            android:textSize="@dimen/font_lage"
+            android:text="@string/buyvip_text_title"
+            app:textStyle="bold"/>
+
+        <com.vungtv.film.widget.VtvTextView
+            android:id="@+id/buyvip_tv_msg"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/buyvip_title"
+            android:padding="@dimen/margin"
+            android:gravity="center"
+            android:textSize="@dimen/font_normal"
+            android:textColor="@color/text_dark_1"
+            android:lineSpacingMultiplier="1.3"
+            tools:text="Tài khoản của bạn hiện có 100 vừng\nĐăng ký gói VIP để loại bỏ quảng cáo khi xem phim"/>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_below="@+id/buyvip_tv_msg"
+            android:background="@color/dividers_dark"
+            android:id="@+id/buyvip_dividers" />
+
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/buyvip_recyclerview"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/margin"
+            android:layout_marginRight="@dimen/margin"
+            android:layout_below="@+id/buyvip_dividers"
+            android:layout_centerHorizontal="true"
+            app:layout_behavior="@string/appbar_scrolling_view_behavior" />
+
+        <com.vungtv.film.widget.VtvTextView
+            style="@style/AppTheme.Text.FilmTitle"
+            android:id="@+id/buyvip_title_napvung"
+            android:layout_width="match_parent"
+            android:layout_height="45dp"
+            android:layout_below="@+id/buyvip_recyclerview"
+            android:paddingLeft="@dimen/margin"
+            android:paddingRight="@dimen/margin"
+            android:gravity="center"
+            android:background="@color/gray_2"
+            android:textColor="@color/colorAccent"
+            android:textSize="@dimen/font_lage"
+            android:text="@string/muavip_text_title_napvung"
+            app:textStyle="bold"/>
+
+        <com.vungtv.film.widget.VtvTextView
+            android:id="@+id/buyvip_tv_napvung_msg"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/buyvip_title_napvung"
+            android:padding="@dimen/margin"
+            android:gravity="center"
+            android:textSize="@dimen/font_normal"
+            android:textColor="@color/text_dark_1"
+            android:lineSpacingMultiplier="1.3"
+            android:text="@string/muavip_text_nap_vung"/>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_below="@+id/buyvip_tv_napvung_msg"
+            android:background="@color/dividers_dark" />
+
+        <RelativeLayout
+            android:id="@+id/buyvip_group_btn_nap_1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/buyvip_tv_napvung_msg"
+            android:padding="@dimen/margin"
+            android:weightSum="3">
+
+            <com.vungtv.film.widget.VtvTextView
+                style="@style/AppTheme.Text.FilmTitle"
+                android:id="@+id/buyvip_tv_msg_nap_1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_toLeftOf="@+id/buyvip_btn_nap_mobilecard"
+                android:layout_toStartOf="@+id/buyvip_btn_nap_mobilecard"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentStart="true"
+                android:textColor="@color/colorAccent"
+                android:textSize="@dimen/font_lage"
+                android:text="@string/napvung_mobilecard"
+                app:textStyle="bold"/>
+
+            <com.vungtv.film.widget.VtvTextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_toLeftOf="@+id/buyvip_btn_nap_mobilecard"
+                android:layout_toStartOf="@+id/buyvip_btn_nap_mobilecard"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentStart="true"
+                android:layout_below="@+id/buyvip_tv_msg_nap_1"
+                android:textColor="@color/text_dark_2"
+                android:textSize="@dimen/font_normal"
+                android:maxLines="2"
+                android:text="@string/napvung_mobilecard_des" />
+
+            <com.vungtv.film.widget.VtvButton
+                style="@style/AppTheme.Dialog.Button"
+                android:id="@+id/buyvip_btn_nap_mobilecard"
+                android:layout_width="wrap_content"
+                android:layout_height="36dp"
+                android:layout_alignParentRight="true"
+                android:layout_alignParentEnd="true"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="@dimen/space_24"
+                android:layout_marginStart="@dimen/space_24"
+                android:textAllCaps="true"
+                android:text="@string/muavip_action_nap"/>
+
+        </RelativeLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_below="@+id/buyvip_group_btn_nap_1"
+            android:background="@color/dividers_dark" />
+
+        <RelativeLayout
+            android:id="@+id/buyvip_group_btn_nap_2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/buyvip_group_btn_nap_1"
+            android:padding="@dimen/margin"
+            android:weightSum="3">
+
+            <com.vungtv.film.widget.VtvTextView
+                style="@style/AppTheme.Text.FilmTitle"
+                android:id="@+id/buyvip_tv_msg_nap_2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_toLeftOf="@+id/buyvip_btn_nap_bankcard"
+                android:layout_toStartOf="@+id/buyvip_btn_nap_bankcard"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentStart="true"
+                android:textColor="@color/yellow"
+                android:textSize="@dimen/font_lage"
+                android:text="@string/napvung_banking"
+                app:textStyle="bold"/>
+
+            <com.vungtv.film.widget.VtvTextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_toLeftOf="@+id/buyvip_btn_nap_bankcard"
+                android:layout_toStartOf="@+id/buyvip_btn_nap_bankcard"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentStart="true"
+                android:layout_below="@+id/buyvip_tv_msg_nap_2"
+                android:textColor="@color/text_dark_2"
+                android:textSize="@dimen/font_normal"
+                android:maxLines="2"
+                android:text="@string/napvung_banking_des" />
+
+            <com.vungtv.film.widget.VtvButton
+                style="@style/AppTheme.Dialog.Button"
+                android:id="@+id/buyvip_btn_nap_bankcard"
+                android:layout_width="wrap_content"
+                android:layout_height="36dp"
+                android:layout_alignParentRight="true"
+                android:layout_alignParentEnd="true"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="@dimen/space_24"
+                android:layout_marginStart="@dimen/space_24"
+                android:background="@drawable/ds_touchable_bg_yellow_radius"
+                android:textAllCaps="true"
+                android:text="@string/muavip_action_nap"/>
+
+        </RelativeLayout>
+
+    </RelativeLayout>
+
+</android.support.v4.widget.NestedScrollView>

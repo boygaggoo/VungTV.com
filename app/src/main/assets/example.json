@@ -1,0 +1,52 @@
+[
+  {
+    "success": false,
+    "code": -30,
+    "message": "B\u1ea1n kh\u00f4ng \u0111\u1ee7 V\u1eebng \u0111\u1ec3 mua g\u00f3i 30 ng\u00e0y.",
+    "data": {
+      "limit": 6,
+      "offset": 0
+    }
+  },
+  {
+    "success": true,
+    "code": "",
+    "message": "B\u1ea1n \u0111\u00e3 mua th\u00e0nh c\u00f4ng g\u00f3i 30 ng\u00e0y, h\u1ebft h\u1ea1n v\u00e0o 24-03-2017 01:42:09",
+    "data": {
+      "limit": 6,
+      "offset": 0,
+      "cards": [
+        {
+          "code": "VMS",
+          "label" : "Mobiphone"
+        },
+        {
+          "code": "VNP",
+          "label" : "Vinaphone"
+        },
+        {
+          "code": "VTT",
+          "label" : "Viettel"
+        },
+        {
+          "code": "FPT",
+          "label" : "FPT Gate"
+        }
+      ],
+      "values": [
+        {
+          "money" : "10.000đ",
+          "vung" : "85"
+        },
+        {
+          "money" : "20.000đ",
+          "vung" : "170"
+        },
+        {
+          "money" : "50.000đ",
+          "vung" : "450"
+        }
+      ]
+    }
+  }
+]

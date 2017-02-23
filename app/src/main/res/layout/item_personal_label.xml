@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="53dp"
+    android:background="@drawable/ds_touchable_bg_gray1" >
+
+    <com.vungtv.film.widget.VtvTextView
+        style="@style/AppTheme.Text.FilmTitle"
+        android:id="@+id/item_userpage_title"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:paddingLeft="@dimen/margin"
+        android:paddingRight="@dimen/margin"
+        android:layout_toLeftOf="@+id/item_userpage_label"
+        android:layout_toStartOf="@+id/item_userpage_label"
+        android:gravity="center_vertical"
+        android:textColor="@color/text_dark_1"
+        android:textSize="@dimen/font_lage"
+        tools:text="Phim theo dõi"/>
+
+    <com.vungtv.film.widget.VtvTextView
+        style="@style/AppTheme.Text.Label"
+        android:id="@+id/item_userpage_label"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true"
+        android:layout_centerVertical="true"
+        android:layout_marginRight="13dp"
+        android:layout_marginEnd="13dp"
+        android:text="0"
+        tools:text="99"/>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1px"
+        android:layout_below="@+id/item_userpage_title"
+        android:background="@color/dividers_dark"/>
+
+</RelativeLayout>

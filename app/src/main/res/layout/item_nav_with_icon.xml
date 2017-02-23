@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/item_nav_root"
+    android:layout_width="match_parent"
+    android:layout_height="48dp"
+    android:background="@drawable/ds_touchable_bg_gray8" >
+
+    <com.vungtv.film.widget.VtvTextView
+        style="@style/AppTheme.Text.FilmTitle"
+        android:id="@+id/item_nav_title"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginLeft="26dp"
+        android:layout_marginStart="26dp"
+        android:layout_marginRight="13dp"
+        android:layout_marginEnd="13dp"
+        android:gravity="center_vertical"
+        android:textColor="@color/text_light_1"
+        android:textSize="@dimen/font_normal"
+        android:drawablePadding="@dimen/space_4"
+        android:drawableRight="@drawable/icon_forward"
+        android:drawableEnd="@drawable/icon_forward"
+        android:drawableLeft="@drawable/icon_download1"
+        android:drawableStart="@drawable/icon_download1"
+        tools:text="Phim đã tải"/>
+
+</RelativeLayout>

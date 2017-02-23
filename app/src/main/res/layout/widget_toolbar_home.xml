@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="?attr/actionBarSize"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:background="@color/colorPrimary">
+
+    <ImageView
+        android:id="@+id/toolbar_btn_menu"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginRight="6dp"
+        android:layout_marginEnd="6dp"
+        android:layout_centerVertical="true"
+        android:padding="@dimen/margin"
+        android:src="@drawable/icon_menu"
+        android:background="@drawable/ds_touchable_bg_gray7"
+        android:contentDescription="@string/app_name" />
+
+    <ImageView
+        android:layout_width="91dp"
+        android:layout_height="26dp"
+        android:layout_centerVertical="true"
+        android:layout_toRightOf="@+id/toolbar_btn_menu"
+        android:layout_toEndOf="@+id/toolbar_btn_menu"
+        android:layout_alignBottom="@+id/toolbar_btn_menu"
+        android:layout_marginBottom="@dimen/margin"
+        android:src="@drawable/logo"
+        android:scaleType="fitStart"
+        android:contentDescription="@string/app_name" />
+
+    <ImageView
+        android:id="@+id/toolbar_btn_search"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerVertical="true"
+        android:layout_toLeftOf="@+id/toolbar_vip"
+        android:layout_toStartOf="@+id/toolbar_vip"
+        android:padding="@dimen/margin"
+        android:src="@drawable/icon_search"
+        android:background="@drawable/ds_touchable_bg_gray7"
+        android:contentDescription="@string/app_name" />
+
+    <ImageView
+        android:id="@+id/toolbar_vip"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerVertical="true"
+        android:layout_toLeftOf="@+id/toolbar_user"
+        android:layout_toStartOf="@+id/toolbar_user"
+        android:padding="@dimen/margin"
+        android:src="@drawable/icon_vip"
+        android:background="@drawable/ds_touchable_bg_gray7"
+        android:contentDescription="@string/app_name" />
+
+    <ImageView
+        android:id="@+id/toolbar_user"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerVertical="true"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true"
+        android:padding="@dimen/margin"
+        android:src="@drawable/icon_user"
+        android:background="@drawable/ds_touchable_bg_gray7"
+        android:contentDescription="@string/app_name" />
+
+    <com.vungtv.film.widget.VtvTextView
+        style="@style/AppTheme.Text.Label"
+        android:id="@+id/toolbar_user_label"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true"
+        android:layout_alignTop="@+id/toolbar_user"
+        android:layout_marginRight="5dp"
+        android:layout_marginEnd="5dp"
+        android:layout_marginTop="2dp"
+        android:visibility="gone"
+        tools:text="99"
+        tools:visibility="visible"/>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1px"
+        android:layout_alignParentBottom="true"
+        android:background="@drawable/toolbar_line_bottom" />
+
+</RelativeLayout>

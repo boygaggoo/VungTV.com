@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.vungtv.film.widget.VtvTextView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/item_recharge_tv_value"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_weight="1"
+    android:padding="@dimen/margin"
+    android:layout_margin="@dimen/space_4"
+    android:gravity="center"
+    android:background="@drawable/ds_btn_gray2_radius"
+    android:textColor="@color/text_light_1"
+    android:textSize="@dimen/font_normal"
+    tools:text="10.000đ = 85 Vừng"/>

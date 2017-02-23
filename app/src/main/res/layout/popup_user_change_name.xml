@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="vertical"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:minWidth="@dimen/popup_size_w"
+    tools:background="@drawable/ds_bg_gray1_boder_radius">
+
+    <com.vungtv.film.widget.VtvEditText
+        style="@style/AppTheme.Dialog.Edittext"
+        android:id="@+id/pop_changename_ed_name"
+        android:maxLength="30"
+        android:hint="@string/popup_text_hint_input_name" />
+
+    <com.vungtv.film.widget.VtvButton
+        style="@style/AppTheme.Dialog.Button"
+        android:id="@+id/pop_changename_ok"
+        android:layout_gravity="center_horizontal"
+        android:text="@string/popup_action_change_name" />
+
+</LinearLayout>

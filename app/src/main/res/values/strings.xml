@@ -1,0 +1,157 @@
+<resources>
+    <string name="app_name">Vung TV</string>
+    <string name="text_slogan">Kho Phim Full HD 1080P</string>
+    <string name="text_site_andress">vungtv.com</string>
+
+    <string name="facebook_app_id">329967930705976</string>
+
+    <!-- error -->
+    <string name="error_no_connection">Không thể kết nối tới máy chủ, hãy kiểm tra lại mạng của bạn! hoặc liên hệ admin.</string>
+    <string name="error_off_network">Không có kết nối mạng, hãy bật wifi hoặc dữ liệu mạng.</string>
+    <string name="error_get_data_failed">Không tải được dữ liệu, không có kết nối mạng hoặc máy chủ gặp sự cố.</string>
+    <string name="error_no_data">Không có dữ liệu !</string>
+    <string name="error_service">Lỗi dịch vụ máy chủ !</string>
+
+    <string name="comment_time_fomat">%1$s thg %2$s lúc %3$s</string>
+
+    <!-- Home activity - Navigation -->
+    <string name="home_text_home">Trang chủ</string>
+    <string name="home_text_the_loai">Thể loại</string>
+    <string name="home_text_quoc_gia">Quốc gia</string>
+    <string name="home_text_phim_le">Phim lẻ</string>
+    <string name="home_text_phim_bo">Phim bộ</string>
+    <string name="home_text_topIMDB">Top IMDB</string>
+    <string name="home_text_phim_chieu_rap">Phim chiếu rạp</string>
+    <string name="home_text_phim_sap_chieu">Phim sắp chiếu</string>
+    <string name="home_text_phim_da_tai">Phim đã tải</string>
+    <string name="home_text_phim_yeu_thich">Phim yêu thích</string>
+    <string name="home_text_phim_theo_doi">Phim theo dõi</string>
+    <string name="home_text_phim_18">Phim 18+</string>
+    <string name="home_text_tvshow">TV Shows</string>
+    <string name="home_text_hoat_hinh">Hoạt hình</string>
+    <string name="home_text_xem_gan_day">Xem gần đây</string>
+
+    <!-- widget Footer -->
+    <string name="footer_text_messenger">Messenge</string>
+    <string name="footer_text_face">Facebook</string>
+    <string name="footer_text_request">Request</string>
+    <string name="footer_text_report">Hỗ trợ và góp ý</string>
+
+    <!-- Login activity -->
+    <string name="login_action_login">Đăng nhập</string>
+    <string name="login_action_login_facebook">Đăng nhập bằng Facebook</string>
+    <string name="login_action_login_google">Đăng nhập bằng Google+</string>
+    <string name="login_action_register">Đăng ký</string>
+    <string name="login_hint_email">Email đăng nhập</string>
+    <string name="login_hint_pass">Mật khẩu</string>
+    <string name="login_hint_repass">Nhập lại mật khẩu</string>
+    <string name="login_text_forget_pass">Quên mật khẩu ?</string>
+    <string name="login_text_login_ask">Đã có tài khoản ?</string>
+    <string name="login_text_register_ask">Chưa có tài khoản ?</string>
+    <string name="login_text_login_success">Đăng nhập thành công.</string>
+    <string name="login_error_msg_login_failed">Đăng nhập thất bại!.</string>
+    <string name="login_error_msg_email">Email không hợp lệ !</string>
+    <string name="login_error_msg_pass">Chưa nhập mật khẩu !</string>
+
+    <!-- Popup memu sort movies -->
+    <string name="popup_text_sort_view">Xem nhiều nhất</string>
+    <string name="popup_text_sort_year">Năm phát hành</string>
+    <string name="popup_text_sort_imdb">Điểm IMDB</string>
+    <string name="popup_text_sort_nameza">Tên phim Z-A</string>
+    <string name="popup_text_sort_nameaz">Tên phim A-Z</string>
+
+    <string name="personal_text_system">Hệ thống</string>
+    <string name="personal_action_setting">Cài đặt</string>
+    <string name="personal_action_app_info">Giới thiệu ứng dụng</string>
+    <string name="personal_action_cantact">Liên hệ quảng cáo</string>
+    <string name="personal_action_user_info">Thông tin tài khoản</string>
+    <string name="personal_action_change_pass">Đổi mật khẩu</string>
+    <string name="personal_action_invite_friend">Mời bạn bè</string>
+    <string name="personal_text_history">Lịch sử</string>
+    <string name="personal_action_film_viewed">Phim đã xem</string>
+    <string name="personal_action_logout">Đăng xuất</string>
+    <string name="personal_action_nap_vip">Nạp VIP</string>
+    <string name="personal_action_giftcode">Gift Code</string>
+    <string name="personal_text_vip_expired">Thời hạn VIP : %s</string>
+    <string name="personal_text_vung_con">Vừng còn : &lt;font color=#4d9658&gt;%s vừng&lt;/font&gt;</string>
+    <string name="personal_text_personal">Cá nhân</string>
+
+    <string name="popup_text_loading">Đang tải&#8230;</string>
+
+    <!-- Settings Activity -->
+    <string name="setting_text_version">Phiên bản</string>
+    <string name="setting_text_language">Ngôn ngữ</string>
+    <string name="setting_text_only_down_wifi">Chỉ download trên wifi</string>
+    <string name="setting_lang_vi">Tiếng việt</string>
+    <string name="setting_lang_en">English</string>
+    <string name="setting_title">Cài đặt</string>
+
+    <!-- User Info Activity -->
+    <string name="userinfo_text_title">Thông tin tài khoản</string>
+    <string name="userinfo_text_email">Email đăng nhập</string>
+    <string name="userinfo_text_displayname">Tên hiển thị</string>
+    <string name="userinfo_text_pass">Mật khẩu</string>
+    <string name="userinfo_text_createAt">Ngày đăng ký</string>
+
+    <!-- User Info Activity -->
+    <string name="change_pass_text_title">Đổi mật khẩu</string>
+    <string name="user_change_pass_hint_password">Mật khẩu</string>
+    <string name="user_change_pass_hint_new_password">Mật khẩu mới</string>
+    <string name="user_change_pass_hint_renew_password">Nhập lại mật khẩu mới</string>
+    <string name="user_change_pass_btn_submit">Xác nhận</string>
+    <string name="user_change_pass_success">Đổi mật khẩu thành công !</string>
+    <string name="user_change_pass_error_msg_repass">Mật khẩu không khớp !</string>
+    <string name="user_change_pass_error_msg_input">Không được bỏ trống !</string>
+    <string name="user_change_pass_error_msg_pass_short">Mật khẩu ít nhất 6 ký tự !</string>
+    <string name="user_change_name_success">Đổi tên thành công !</string>
+
+    <!-- Buy VIP activity -->
+    <string name="buyvip_text_title">Mua VIP</string>
+    <string name="buyvip_package_day">Gói %s ngày</string>
+    <string name="buyvip_package_money">%s vừng</string>
+    <string name="muavip_text_title_napvung">Nạp vừng</string>
+    <string name="muavip_text_nap_vung">Dùng thẻ điện thoại hoặc thẻ ngân hàng để nạp vừng\ngiúp bạn mua các gói xem phim VIP nhanh chóng và thuận tiện.</string>
+    <string name="muavip_action_nap">Nạp</string>
+    <string name="buyvip_text_buy_vung">Tài khoản của bạn hiện có &lt;font color=#4d9658&gt;%s Vừng&lt;/font&gt;.&lt;br/&gt;Đăng ký gói VIP để loại bỏ quảng cáo khi xem phim</string>
+
+    <string name="napvung_mobilecard">Dùng thẻ điện thoại</string>
+    <string name="napvung_mobilecard_des">Thanh toán qua thẻ điện thoại như \nthẻ Viettel, Mobifone, Vinaphone,&#8230;</string>
+    <string name="napvung_banking">Dùng thẻ ngân hàng</string>
+    <string name="napvung_banking_des">Thanh toán qua thẻ ngân hàng như \nInterner Banking, Visa, MasterCard,&#8230;</string>
+    <string name="napvung_loai_the">Loại thẻ</string>
+    <string name="napvung_info">Thông tin nạp thẻ</string>
+    <string name="napvung_mobifone">Mobifone</string>
+    <string name="napvung_vinaphone">Vinaphone</string>
+    <string name="napvung_viettel">Viettel</string>
+    <string name="napvung_fptgate">FPT gate</string>
+    <string name="napvung_menh_gia">Mệnh giá thẻ</string>
+    <string name="napvung_menh_gia_10k">10.000</string>
+    <string name="napvung_menh_gia_100k">100.000</string>
+    <string name="napvung_menh_gia_50k">50.000</string>
+    <string name="napvung_menh_gia_20k">20.000</string>
+    <string name="napvung_menh_gia_200k">200.000</string>
+    <string name="napvung_menh_gia_300k">300.000</string>
+    <string name="napvung_menh_gia_500k">500.000</string>
+    <string name="napvung_menh_gia_1000k">1.000.000</string>
+    <string name="napvung_hint_mathecao">Nhập mã thẻ cào</string>
+    <string name="napvung_hint_serial">Nhập số serial</string>
+    <string name="napvung_btn_nap_vung">Nạp vừng</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="search_hint">Tìm kiếm</string>
+    <string name="search_action_exit">Thoát</string>
+    <string name="search_action_film_name">Theo tên phim</string>
+    <string name="search_action_film_actor">Theo tên diễn viên</string>
+    <string name="movie_details_des">Đại Đường Song Long, Đại Đường Song Long, Đại Đường Song Long, Đại Đường Song Long, Đại Đường Song Long, Đại Đường Song Long, Đại Đường Song Long, Đại Đường Song Long, Đại Đường Song Long, Đại Đường Song Long, Đại Đường Song Long, Đại Đường Song Long,</string>
+    <string name="movie_details_text_rating">Xếp hạng phim này</string>
+    <string name="movie_details_text_phim_lien_quan">Phim liên quan</string>
+
+    <!-- Popup change name -->
+    <string name="popup_text_hint_input_name">Nhập tên hiển thị</string>
+    <string name="popup_action_change_name">Đổi tên</string>
+    <string name="napvung_quy_doi">Quy đổi</string>
+    <string name="recharge_text_money_vung">%1$s = %2$s vừng</string>
+    <string name="rechange_error_msg_empty">Chưa nhập mã thẻ cào hoặc số serial !</string>
+    <string name="rechange_error_msg_card_type">Chưa chọn loại thẻ !</string>
+
+</resources>

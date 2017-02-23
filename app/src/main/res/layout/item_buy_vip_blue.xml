@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/muavip_btn_goi30"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_margin="@dimen/margin"
+    android:paddingTop="@dimen/space_24"
+    android:paddingBottom="@dimen/space_24"
+    android:gravity="center"
+    android:background="@drawable/ds_touchable_bg_green_muavip"
+    android:orientation="vertical">
+
+    <com.vungtv.film.widget.VtvTextView
+        android:id="@+id/item_buy_vip_tv_day"
+        style="@style/AppTheme.Text.FilmTitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:paddingLeft="@dimen/space_16"
+        android:paddingRight="@dimen/space_16"
+        android:textColor="@color/text_light_1"
+        android:textSize="@dimen/font_lage"
+        tools:text="Gói 30 ngày"
+        app:textStyle="bold"/>
+
+    <View
+        android:layout_width="@dimen/space_56"
+        android:layout_height="1dp"
+        android:layout_marginTop="@dimen/space_7"
+        android:layout_marginBottom="@dimen/margin"
+        android:layout_gravity="center_horizontal"
+        android:background="@color/gray_2" />
+
+    <com.vungtv.film.widget.VtvTextView
+        android:id="@+id/item_buy_vip_tv_money"
+        style="@style/AppTheme.Text.FilmTitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:padding="@dimen/space_7"
+        android:gravity="center"
+        android:background="@drawable/ds_bg_gray1_boder_radius"
+        android:textColor="@color/colorAccent"
+        android:textSize="@dimen/font_lage"
+        tools:text="30 vừng"
+        app:textStyle="bold"/>
+
+</LinearLayout>

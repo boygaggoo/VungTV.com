@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="colorPrimary">@color/gray_7</color>
+    <color name="colorPrimaryDark">@color/gray_8</color>
+    <color name="colorAccent">@color/green</color>
+
+    <color name="white">#ffffff</color>
+    <color name="gray_1">#f5f5f5</color>
+    <color name="gray_2">#cdcdcd</color>
+    <color name="gray_6">#888888</color>
+    <color name="gray_7">#181818</color>
+    <color name="gray_8">#101010</color>
+    <color name="gray_9">#0b0b0b</color>
+
+    <color name="text_dark_3">#61000000</color>
+    <color name="text_dark_2">#8a000000</color>
+    <color name="text_dark_1">#dd000000</color>
+    <color name="text_light_3">#7fffffff</color>
+    <color name="text_light_2">#b2ffffff</color>
+    <color name="text_light_1">#ffffff</color>
+
+    <color name="dividers_dark">#1f000000</color>
+    <color name="dividers_light">#1fffffff</color>
+
+    <color name="green_light">#77c282</color>
+    <color name="green">#4d9658</color>
+    <color name="green_dark">#317B3A</color>
+
+    <color name="transparent_dark">#00000000</color>
+    <color name="transparent_light">#00ffffff</color>
+    <color name="transparent_green">#004e9657</color>
+
+    <color name="red">#ff4545</color>
+    <color name="yellow">#cc9900</color>
+    <color name="orange">#ff7d49</color>
+    <color name="blue_gray">#659390</color>
+    <color name="orange_dark">#F05A1E</color>
+    <color name="yellow_dark">#A77D00</color>
+
+    <color name="black_80">#cc000000</color>
+</resources>

@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.vungtv.film.widget.VtvTextView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    style="@style/AppTheme.Text"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_gravity="center"
+    android:gravity="center"
+    android:padding="@dimen/margin"
+    android:textColor="@color/text_dark_2"
+    tools:text="Lỗi mạng !\nClick thử lại" />
