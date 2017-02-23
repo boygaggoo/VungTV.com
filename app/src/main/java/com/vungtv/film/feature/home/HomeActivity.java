@@ -18,6 +18,7 @@ import com.vungtv.film.data.source.remote.ApiQuery;
 import com.vungtv.film.data.source.remote.service.HomeServices;
 import com.vungtv.film.eventbus.ConfigurationChangedEvent;
 import com.vungtv.film.eventbus.AccountModifyEvent;
+import com.vungtv.film.feature.buyvip.BuyVipActivity;
 import com.vungtv.film.feature.filtermovies.FilterMoviesActivity;
 import com.vungtv.film.feature.home.HomeNavAdapter.OnNavItemSelectedListener;
 import com.vungtv.film.feature.login.LoginActivity;
@@ -189,7 +190,7 @@ public class HomeActivity extends BaseActivity implements OnNavItemSelectedListe
 
             @Override
             public void onBtnVipClick() {
-
+                startActivity(new Intent(HomeActivity.this, BuyVipActivity.class));
             }
 
             @Override

@@ -80,7 +80,7 @@
             android:background="@color/gray_2"
             android:textColor="@color/colorAccent"
             android:textSize="@dimen/font_lage"
-            android:text="@string/muavip_text_title_napvung"
+            android:text="@string/buyvip_text_title_napvung"
             app:textStyle="bold"/>
 
         <com.vungtv.film.widget.VtvTextView
@@ -93,7 +93,7 @@
             android:textSize="@dimen/font_normal"
             android:textColor="@color/text_dark_1"
             android:lineSpacingMultiplier="1.3"
-            android:text="@string/muavip_text_nap_vung"/>
+            android:text="@string/buyvip_text_nap_vung"/>
 
         <View
             android:layout_width="match_parent"
@@ -147,7 +147,7 @@
                 android:layout_marginLeft="@dimen/space_24"
                 android:layout_marginStart="@dimen/space_24"
                 android:textAllCaps="true"
-                android:text="@string/muavip_action_nap"/>
+                android:text="@string/buyvip_action_nap"/>
 
         </RelativeLayout>
 
@@ -204,7 +204,7 @@
                 android:layout_marginStart="@dimen/space_24"
                 android:background="@drawable/ds_touchable_bg_yellow_radius"
                 android:textAllCaps="true"
-                android:text="@string/muavip_action_nap"/>
+                android:text="@string/buyvip_action_nap"/>
 
         </RelativeLayout>
 

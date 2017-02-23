@@ -66,7 +66,7 @@ public class RechargeActivity extends BaseActivity implements RechargeContract.V
         radioGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(RadioGroup radioGroup, int i) {
-                LogUtils.e(TAG, "onCheckedChanged: i = " + i);
+
                 if (cardTypes.get(i) != null) {
                     cardInfo[0] = cardTypes.get(i).getCode();
                     LogUtils.e(TAG, "onCheckedChanged: cardInfo[0] = " + cardInfo[0]);
@@ -103,8 +103,9 @@ public class RechargeActivity extends BaseActivity implements RechargeContract.V
     }
 
     @Override
-    public void showMsgRechargeSuccess() {
+    public void showMsgRechargeSuccess(String msg) {
         // nap vung thanh cong
+        showToast(msg);
     }
 
     @Override

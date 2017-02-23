@@ -1,52 +1,30 @@
-[
-  {
-    "success": false,
-    "code": -30,
-    "message": "B\u1ea1n kh\u00f4ng \u0111\u1ee7 V\u1eebng \u0111\u1ec3 mua g\u00f3i 30 ng\u00e0y.",
-    "data": {
-      "limit": 6,
-      "offset": 0
-    }
-  },
-  {
-    "success": true,
-    "code": "",
-    "message": "B\u1ea1n \u0111\u00e3 mua th\u00e0nh c\u00f4ng g\u00f3i 30 ng\u00e0y, h\u1ebft h\u1ea1n v\u00e0o 24-03-2017 01:42:09",
-    "data": {
-      "limit": 6,
-      "offset": 0,
-      "cards": [
-        {
-          "code": "VMS",
-          "label" : "Mobiphone"
-        },
-        {
-          "code": "VNP",
-          "label" : "Vinaphone"
-        },
-        {
-          "code": "VTT",
-          "label" : "Viettel"
-        },
-        {
-          "code": "FPT",
-          "label" : "FPT Gate"
-        }
-      ],
-      "values": [
-        {
-          "money" : "10.000đ",
-          "vung" : "85"
-        },
-        {
-          "money" : "20.000đ",
-          "vung" : "170"
-        },
-        {
-          "money" : "50.000đ",
-          "vung" : "450"
-        }
-      ]
-    }
+{
+  "success": true,
+  "code": "",
+  "message": "B\u1ea1n \u0111\u00e3 mua th\u00e0nh c\u00f4ng g\u00f3i 30 ng\u00e0y, h\u1ebft h\u1ea1n v\u00e0o 23-07-2017 16:46:32",
+  "data": {
+    "limit": 6,
+    "offset": 0,
+    "user": {
+      "user_id": "3097",
+      "user_email": "vodanhdong3@gmail.com",
+      "user_display_name": "Mr Cuong",
+      "user_phone": null,
+      "user_personal_id": null,
+      "user_balance": "860",
+      "user_otp": null,
+      "user_created_at": "1484278277",
+      "user_lastlog_at": null,
+      "user_updated_at": "1487843853",
+      "user_is_partner": null,
+      "user_level": null,
+      "user_status": null,
+      "user_vip_date": null,
+      "user_status_message": "0",
+      "user_type": "",
+      "user_flag_pass_social": null,
+      "created_at_format": "13\/01\/2017"
+    },
+    "token": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpYXQiOjE0ODc4NDU5NDgsImp0aSI6Inl1dXF1aklZZzlwaFdRQ0JzVnNic0N6WjczRTErTitJOEpoRkk5M3YyRVU9IiwiaXNzIjoiYXBpLnZ1bmd0di5jb20iLCJuYmYiOjE0ODc4NDU5NTAsImV4cCI6MTQ5MzAyOTk1MCwiZGF0YSI6eyJ1c2VyX2lkIjoiMzA5NyIsInVzZXJfZW1haWwiOiJ2b2Rhbmhkb25nM0BnbWFpbC5jb20iLCJ1c2VyX2Rpc3BsYXlfbmFtZSI6Ik1yIEN1b25nIiwidXNlcl9waG9uZSI6bnVsbCwidXNlcl9wZXJzb25hbF9pZCI6bnVsbCwidXNlcl9iYWxhbmNlIjoiODYwIiwidXNlcl9vdHAiOm51bGwsInVzZXJfY3JlYXRlZF9hdCI6IjE0ODQyNzgyNzciLCJ1c2VyX2xhc3Rsb2dfYXQiOm51bGwsInVzZXJfdXBkYXRlZF9hdCI6IjE0ODc4NDM4NTMiLCJ1c2VyX2lzX3BhcnRuZXIiOm51bGwsInVzZXJfbGV2ZWwiOm51bGwsInVzZXJfc3RhdHVzIjpudWxsLCJ1c2VyX3ZpcF9kYXRlIjpudWxsLCJ1c2VyX3N0YXR1c19tZXNzYWdlIjoiMCIsInVzZXJfdHlwZSI6IiIsInVzZXJfZmxhZ19wYXNzX3NvY2lhbCI6bnVsbCwiY3JlYXRlZF9hdF9mb3JtYXQiOiIxM1wvMDFcLzIwMTcifX0.Is6YyFhRZj5PYpkJ-Gzs1R2sg4JgzJWqKx6MXHeKtIk"
   }
-]
+}

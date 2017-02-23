@@ -47,7 +47,7 @@ public class TimeUtils {
      * @return
      */
     public static long getCurrentTimeMillis() {
-        return Calendar.getInstance(TimeZone.getTimeZone("GMT+7:00")).getTimeInMillis();
+        return Calendar.getInstance(TimeZone.getDefault()).getTimeInMillis();
     }
 
     /**
@@ -56,7 +56,7 @@ public class TimeUtils {
      */
     public static String getCurrentDateTime() {
         return new SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.getDefault())
-                .format(Calendar.getInstance(TimeZone.getTimeZone("GMT+7:00")).getTime());
+                .format(Calendar.getInstance(TimeZone.getDefault()).getTime());
     }
 
     /**
@@ -89,18 +89,18 @@ public class TimeUtils {
         DateFormat objFormatter = new SimpleDateFormat("dd/MM/yyyy", Locale.getDefault());
 
         Calendar objCalendar =
-                Calendar.getInstance(TimeZone.getTimeZone("GMT+7:00"));
-        objCalendar.setTimeInMillis(timeStamp*1000);//edit
+                Calendar.getInstance(TimeZone.getDefault());
+        objCalendar.setTimeInMillis(timeStamp * 1000);//edit
         String result = objFormatter.format(objCalendar.getTime());
         objCalendar.clear();
         return result;
     }
 
     public static String convertTimeStampToDateTime(long timeStamp){
-        DateFormat objFormatter = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss", Locale.getDefault());
+        DateFormat objFormatter = new SimpleDateFormat("HH:mm:ss dd/MM/yyyy", Locale.getDefault());
 
         Calendar objCalendar =
-                Calendar.getInstance(TimeZone.getTimeZone("GMT+7:00"));
+                Calendar.getInstance(TimeZone.getDefault());
         objCalendar.setTimeInMillis(timeStamp * 1000);
         String result = objFormatter.format(objCalendar.getTime());
         objCalendar.clear();

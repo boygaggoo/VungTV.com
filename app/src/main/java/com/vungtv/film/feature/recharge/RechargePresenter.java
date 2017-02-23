@@ -20,6 +20,8 @@ import java.util.ArrayList;
 
 public class RechargePresenter implements RechargeContract.Presenter {
 
+    private static final String TAG = RechargePresenter.class.getSimpleName();
+
     private final Context context;
 
     private final RechargeContract.View activityView;
@@ -48,7 +50,7 @@ public class RechargePresenter implements RechargeContract.Presenter {
             activityView.showMsgError(context.getResources().getString(R.string.rechange_error_msg_card_type));
 
         } else if (StringUtils.isEmpty(cardInfo[1]) || StringUtils.isEmpty(cardInfo[2])) {
-            
+
             activityView.showMsgError(context.getResources().getString(R.string.rechange_error_msg_empty));
 
         } else {
@@ -77,7 +79,7 @@ public class RechargePresenter implements RechargeContract.Presenter {
             }
 
             @Override
-            public void onBuyVipSuccess(User user, String msg) {
+            public void onBuyVipSuccess(String msg, User user, String token) {
 
             }
 
@@ -89,8 +91,17 @@ public class RechargePresenter implements RechargeContract.Presenter {
             }
 
             @Override
-            public void onRechargeSuccess() {
+            public void onRechargeSuccess(String msg, User user, String token) {
+
                 activityView.showLoading(false);
+                activityView.showMsgRechargeSuccess(msg);
+                activityView.clearEdittexts();
+
+                // Update user info and access token
+                UserSessionManager.updateUserSession(context, user);
+                if (!StringUtils.isEmpty(token)) {
+                    UserSessionManager.setAccessToken(context, token);
+                }
             }
 
             @Override
@@ -99,7 +110,8 @@ public class RechargePresenter implements RechargeContract.Presenter {
                 activityView.showMsgError(error);
 
                 if (code == -999) {
-                    //activityView.logOutAccount();
+                    // Đăng xuất khi lỗi: tài khoản được đăng nhập ở thiết bị khác.
+                    activityView.logOutAccount();
                 }
             }
         });

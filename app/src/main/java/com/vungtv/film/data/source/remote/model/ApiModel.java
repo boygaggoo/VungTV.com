@@ -9,7 +9,7 @@ public class ApiModel {
     private Boolean success;
     @SerializedName("code")
     @Expose
-    private int code;
+    private String code;
     @SerializedName("message")
     @Expose
     private String message;
@@ -23,18 +23,11 @@ public class ApiModel {
     }
 
     public int getCode() {
-        return code;
-    }
-
-    public void setCode(int code) {
-        this.code = code;
+        if (code == null) return 0;
+        return Integer.parseInt(code);
     }
 
     public String getMessage() {
         return message;
-    }
-
-    public void setMessage(String message) {
-        this.message = message;
     }
 }

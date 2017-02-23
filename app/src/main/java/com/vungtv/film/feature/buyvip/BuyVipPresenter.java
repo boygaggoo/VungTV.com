@@ -8,6 +8,7 @@ import com.vungtv.film.model.CardType;
 import com.vungtv.film.model.CardValue;
 import com.vungtv.film.model.PackageVip;
 import com.vungtv.film.model.User;
+import com.vungtv.film.util.StringUtils;
 
 import java.util.ArrayList;
 
@@ -89,10 +90,16 @@ public class BuyVipPresenter implements BuyVipContract.Presenter {
             }
 
             @Override
-            public void onBuyVipSuccess(User user, String msg) {
+            public void onBuyVipSuccess(String msg, User user, String token) {
+
                 activityView.showLoading(false);
                 activityView.showMsgBuyVipSuccess(msg);
+
+                // Update user info and access token
                 UserSessionManager.updateUserSession(context, user);
+                if (!StringUtils.isEmpty(token)) {
+                    UserSessionManager.setAccessToken(context, token);
+                }
             }
 
             @Override
@@ -101,7 +108,7 @@ public class BuyVipPresenter implements BuyVipContract.Presenter {
             }
 
             @Override
-            public void onRechargeSuccess() {
+            public void onRechargeSuccess(String msg, User user, String token) {
 
             }
 

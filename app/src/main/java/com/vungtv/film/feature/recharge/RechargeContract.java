@@ -20,7 +20,7 @@ public interface RechargeContract {
 
         void showMsgError(String error);
 
-        void showMsgRechargeSuccess();
+        void showMsgRechargeSuccess(String msg);
 
         void addViewCardType(ArrayList<CardType> list);
 

@@ -109,9 +109,9 @@
     <string name="buyvip_text_title">Mua VIP</string>
     <string name="buyvip_package_day">Gói %s ngày</string>
     <string name="buyvip_package_money">%s vừng</string>
-    <string name="muavip_text_title_napvung">Nạp vừng</string>
-    <string name="muavip_text_nap_vung">Dùng thẻ điện thoại hoặc thẻ ngân hàng để nạp vừng\ngiúp bạn mua các gói xem phim VIP nhanh chóng và thuận tiện.</string>
-    <string name="muavip_action_nap">Nạp</string>
+    <string name="buyvip_text_title_napvung">Nạp vừng</string>
+    <string name="buyvip_text_nap_vung">Dùng thẻ điện thoại hoặc thẻ ngân hàng để nạp vừng\ngiúp bạn mua các gói xem phim VIP nhanh chóng và thuận tiện.</string>
+    <string name="buyvip_action_nap">Nạp</string>
     <string name="buyvip_text_buy_vung">Tài khoản của bạn hiện có &lt;font color=#4d9658&gt;%s Vừng&lt;/font&gt;.&lt;br/&gt;Đăng ký gói VIP để loại bỏ quảng cáo khi xem phim</string>
 
     <string name="napvung_mobilecard">Dùng thẻ điện thoại</string>
@@ -120,22 +120,14 @@
     <string name="napvung_banking_des">Thanh toán qua thẻ ngân hàng như \nInterner Banking, Visa, MasterCard,&#8230;</string>
     <string name="napvung_loai_the">Loại thẻ</string>
     <string name="napvung_info">Thông tin nạp thẻ</string>
-    <string name="napvung_mobifone">Mobifone</string>
-    <string name="napvung_vinaphone">Vinaphone</string>
-    <string name="napvung_viettel">Viettel</string>
-    <string name="napvung_fptgate">FPT gate</string>
     <string name="napvung_menh_gia">Mệnh giá thẻ</string>
-    <string name="napvung_menh_gia_10k">10.000</string>
-    <string name="napvung_menh_gia_100k">100.000</string>
-    <string name="napvung_menh_gia_50k">50.000</string>
-    <string name="napvung_menh_gia_20k">20.000</string>
-    <string name="napvung_menh_gia_200k">200.000</string>
-    <string name="napvung_menh_gia_300k">300.000</string>
-    <string name="napvung_menh_gia_500k">500.000</string>
-    <string name="napvung_menh_gia_1000k">1.000.000</string>
     <string name="napvung_hint_mathecao">Nhập mã thẻ cào</string>
     <string name="napvung_hint_serial">Nhập số serial</string>
     <string name="napvung_btn_nap_vung">Nạp vừng</string>
+    <string name="napvung_quy_doi">Quy đổi</string>
+    <string name="recharge_text_money_vung">%1$s = %2$s vừng</string>
+    <string name="rechange_error_msg_empty">Chưa nhập mã thẻ cào hoặc số serial !</string>
+    <string name="rechange_error_msg_card_type">Chưa chọn loại thẻ !</string>
 
     <!-- TODO: Remove or change this placeholder text -->
     <string name="search_hint">Tìm kiếm</string>
@@ -149,9 +141,5 @@
     <!-- Popup change name -->
     <string name="popup_text_hint_input_name">Nhập tên hiển thị</string>
     <string name="popup_action_change_name">Đổi tên</string>
-    <string name="napvung_quy_doi">Quy đổi</string>
-    <string name="recharge_text_money_vung">%1$s = %2$s vừng</string>
-    <string name="rechange_error_msg_empty">Chưa nhập mã thẻ cào hoặc số serial !</string>
-    <string name="rechange_error_msg_card_type">Chưa chọn loại thẻ !</string>
 
 </resources>

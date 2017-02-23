@@ -28,21 +28,47 @@
         <activity
             android:name=".feature.filtermovies.FilterMoviesActivity"
             android:configChanges="keyboardHidden|orientation|screenSize" />
-        <activity android:name=".feature.personal.PersonalActivity" />
-        <activity android:name=".feature.login.LoginActivity" />
+
+        <activity
+            android:configChanges="keyboardHidden|orientation|screenSize"
+            android:name=".feature.personal.PersonalActivity" />
+
+        <activity
+            android:configChanges="keyboardHidden|orientation|screenSize"
+            android:name=".feature.login.LoginActivity" />
+
         <activity android:name=".feature.moviedetails.MovieDetailsActivity" />
-        <activity android:name=".feature.setting.SettingActivity" />
-        <activity android:name=".feature.userinfo.UserInfoActivity" />
-        <activity android:name=".feature.changepass.ChangePassActivity" />
+
+        <activity
+            android:configChanges="keyboardHidden|orientation|screenSize"
+            android:name=".feature.setting.SettingActivity" />
+
+        <activity
+            android:configChanges="keyboardHidden|orientation|screenSize"
+            android:name=".feature.userinfo.UserInfoActivity" />
+
+        <activity
+            android:configChanges="keyboardHidden|orientation|screenSize"
+            android:name=".feature.changepass.ChangePassActivity" />
+
+        <activity
+            android:configChanges="keyboardHidden|orientation|screenSize"
+            android:name=".feature.buyvip.BuyVipActivity" />
+
+        <activity
+            android:configChanges="keyboardHidden|orientation|screenSize"
+            android:name=".feature.recharge.RechargeActivity" />
+
         <activity android:name=".feature.search.SearchActivity" />
-        <activity android:name=".feature.logout.LogOutActivity" />
+
+        <activity
+            android:configChanges="keyboardHidden|orientation|screenSize"
+            android:name=".feature.logout.LogOutActivity" />
 
         <meta-data
             android:name="com.facebook.sdk.ApplicationId"
             android:value="@string/facebook_app_id" />
 
-        <activity android:name=".feature.buyvip.BuyVipActivity" />
-        <activity android:name=".feature.recharge.RechargeActivity"></activity>
     </application>
 
 </manifest>

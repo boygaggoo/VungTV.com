@@ -11,6 +11,7 @@ import com.vungtv.film.util.LogUtils;
 import com.vungtv.film.util.LoginFacebookUtils;
 import com.vungtv.film.util.LoginGoogleUtils;
 import com.vungtv.film.util.StringUtils;
+import com.vungtv.film.util.TimeUtils;
 
 import org.greenrobot.eventbus.EventBus;
 
@@ -36,6 +37,23 @@ public class UserSessionManager {
         SharedPreferences preferences = context.getSharedPreferences(USER_PREFS, Context.MODE_PRIVATE);
         String provider = preferences.getString(USER_PROVIDER, null);
         return provider != null;
+    }
+
+    public static boolean isVIP(Context context) {
+        User user = getCurrentUser(context);
+
+        if (user == null) return false;
+
+        try {
+            long vipDate = Long.parseLong(user.getUserVipDate());
+            long curTime = TimeUtils.getCurrentTimeMillis();
+
+            return vipDate > curTime / 1000;
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return false;
     }
 
     /**

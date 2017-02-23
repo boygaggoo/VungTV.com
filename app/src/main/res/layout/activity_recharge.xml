@@ -1,88 +1,98 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.v4.widget.NestedScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:id="@+id/activity_setting"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:gravity="center_horizontal"
-    android:orientation="vertical">
+    android:scrollbars="vertical">
 
-    <com.vungtv.film.widget.VtvToolbarSetting
-        android:id="@+id/recharge_toolbar"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:textTitle="@string/napvung_info"/>
-
-
-    <com.vungtv.film.widget.VtvTextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/margin"
-        android:padding="@dimen/margin"
-        android:gravity="center"
-        android:textColor="@color/colorAccent"
-        android:textSize="@dimen/font_normal"
-        android:text="@string/napvung_loai_the"/>
-
-    <View
-        android:layout_width="@dimen/space_128"
-        android:layout_height="1dp"
-        android:background="@color/dividers_dark" />
-
-    <RadioGroup
-        android:id="@+id/recharge_radiogroup"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:padding="@dimen/margin"
-        android:gravity="center"
-        android:orientation="horizontal" />
-
-    <com.vungtv.film.widget.VtvEditText
-        android:id="@+id/recharge_ed_card_number"
-        style="@style/AppTheme.Edittext.NapThe"
-        android:layout_marginTop="@dimen/space_24"
-        android:inputType="text"
-        android:hint="@string/napvung_hint_mathecao"/>
-
-    <com.vungtv.film.widget.VtvEditText
-        android:id="@+id/recharge_ed_card_serial"
-        style="@style/AppTheme.Edittext.NapThe"
-        android:inputType="text"
-        android:hint="@string/napvung_hint_serial"/>
-
-    <com.vungtv.film.widget.VtvButton
-        android:id="@+id/recharge_btn_submit"
-        style="@style/AppTheme.Dialog.Button"
-        android:layout_width="match_parent"
-        android:layout_height="36dp"
-        android:layout_marginTop="@dimen/space_7"
-        android:layout_marginLeft="24dp"
-        android:layout_marginRight="24dp"
-        android:textAllCaps="true"
-        android:text="@string/muavip_text_title_napvung"
-        app:textStyle="bold"/>
-
-    <com.vungtv.film.widget.VtvTextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:padding="@dimen/margin"
-        android:gravity="center"
-        android:textColor="@color/colorAccent"
-        android:textSize="@dimen/font_normal"
-        android:text="@string/napvung_quy_doi"/>
-
-    <View
-        android:layout_width="@dimen/space_128"
-        android:layout_height="1dp"
-        android:background="@color/dividers_dark" />
-
-    <android.support.v7.widget.RecyclerView
-        android:id="@+id/recharge_recycler"
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:tools="http://schemas.android.com/tools"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_marginTop="@dimen/margin"
-        android:paddingLeft="@dimen/margin"
-        android:paddingRight="@dimen/margin"/>
+        android:gravity="center_horizontal"
+        android:orientation="vertical">
 
-</LinearLayout>
+        <com.vungtv.film.widget.VtvToolbarSetting
+            android:id="@+id/recharge_toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:textTitle="@string/napvung_info"/>
+
+
+        <com.vungtv.film.widget.VtvTextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/margin"
+            android:padding="@dimen/margin"
+            android:gravity="center"
+            android:textColor="@color/colorAccent"
+            android:textSize="@dimen/font_normal"
+            android:text="@string/napvung_loai_the"/>
+
+        <View
+            android:layout_width="@dimen/space_128"
+            android:layout_height="1dp"
+            android:background="@color/dividers_dark" />
+
+        <RadioGroup
+            android:id="@+id/recharge_radiogroup"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="@dimen/margin"
+            android:gravity="center"
+            android:orientation="horizontal" />
+
+        <com.vungtv.film.widget.VtvEditText
+            android:id="@+id/recharge_ed_card_number"
+            style="@style/AppTheme.Edittext.NapThe"
+            android:layout_marginTop="@dimen/space_24"
+            android:inputType="text"
+            android:hint="@string/napvung_hint_mathecao"/>
+
+        <com.vungtv.film.widget.VtvEditText
+            android:id="@+id/recharge_ed_card_serial"
+            style="@style/AppTheme.Edittext.NapThe"
+            android:inputType="text"
+            android:hint="@string/napvung_hint_serial"/>
+
+        <com.vungtv.film.widget.VtvButton
+            android:id="@+id/recharge_btn_submit"
+            style="@style/AppTheme.Dialog.Button"
+            android:layout_width="match_parent"
+            android:layout_height="36dp"
+            android:layout_marginTop="@dimen/space_7"
+            android:layout_marginLeft="24dp"
+            android:layout_marginRight="24dp"
+            android:textAllCaps="true"
+            android:text="@string/buyvip_text_title_napvung"
+            app:textStyle="bold"/>
+
+        <com.vungtv.film.widget.VtvTextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="@dimen/margin"
+            android:gravity="center"
+            android:textColor="@color/colorAccent"
+            android:textSize="@dimen/font_normal"
+            android:text="@string/napvung_quy_doi"/>
+
+        <View
+            android:layout_width="@dimen/space_128"
+            android:layout_height="1dp"
+            android:background="@color/dividers_dark" />
+
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/recharge_recycler"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginTop="@dimen/margin"
+            android:paddingLeft="@dimen/margin"
+            android:paddingRight="@dimen/margin"
+            app:layout_behavior="@string/appbar_scrolling_view_behavior" />
+
+    </LinearLayout>
+</android.support.v4.widget.NestedScrollView>
