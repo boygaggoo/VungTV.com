@@ -10,6 +10,7 @@
     <dimen name="margin">10dp</dimen>
 
     <dimen name="popup_size_w">300dp</dimen>
+    <dimen name="popup_menu_size_w">200dp</dimen>
 
     <dimen name="poster_size_h">153dp</dimen>
     <dimen name="poster_size_h_horizontal">93dp</dimen>
@@ -33,5 +34,7 @@
     <dimen name="font_lage">18sp</dimen>
     <dimen name="space_56">56dp</dimen>
     <dimen name="space_128">128dp</dimen>
+    <dimen name="space_72">72dp</dimen>
+    <dimen name="space_12">12dp</dimen>
 
 </resources>

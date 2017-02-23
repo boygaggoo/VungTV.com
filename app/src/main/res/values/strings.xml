@@ -141,5 +141,12 @@
     <!-- Popup change name -->
     <string name="popup_text_hint_input_name">Nhập tên hiển thị</string>
     <string name="popup_action_change_name">Đổi tên</string>
+    <string name="popup_text_filter_movies">Lọc phim</string>
+    <string name="popup_text_sort">Sắp xếp</string>
+    <string name="popup_text_danh_muc">Danh mục</string>
+    <string name="popup_text_quoc_gia">Quốc gia</string>
+    <string name="popup_text_the_loai">Thể loại</string>
+    <string name="popup_text_year">Năm</string>
+    <string name="popup_action_filter">Lọc</string>
 
 </resources>

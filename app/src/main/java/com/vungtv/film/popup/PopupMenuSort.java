@@ -67,7 +67,7 @@ public class PopupMenuSort {
         popupWindow.setBackgroundDrawable(bgPopup);
         popupWindow.setVerticalOffset(context.getResources().getDimensionPixelSize(R.dimen.space_7));
         popupWindow.setHorizontalOffset(context.getResources().getDimensionPixelSize(R.dimen.margin));
-        popupWindow.setWidth(context.getResources().getDimensionPixelSize(R.dimen.popup_size_w));
+        popupWindow.setWidth(context.getResources().getDimensionPixelSize(R.dimen.popup_menu_size_w));
         popupWindow.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {

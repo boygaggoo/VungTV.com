@@ -16,8 +16,8 @@ import com.vungtv.film.R;
 import com.vungtv.film.data.source.local.UserSessionManager;
 import com.vungtv.film.data.source.remote.ApiQuery;
 import com.vungtv.film.data.source.remote.service.HomeServices;
-import com.vungtv.film.eventbus.ConfigurationChangedEvent;
 import com.vungtv.film.eventbus.AccountModifyEvent;
+import com.vungtv.film.eventbus.ConfigurationChangedEvent;
 import com.vungtv.film.feature.buyvip.BuyVipActivity;
 import com.vungtv.film.feature.filtermovies.FilterMoviesActivity;
 import com.vungtv.film.feature.home.HomeNavAdapter.OnNavItemSelectedListener;
@@ -103,10 +103,8 @@ public class HomeActivity extends BaseActivity implements OnNavItemSelectedListe
         drawer.closeDrawer(navRecycler);
         switch (itemId) {
             case HomeNavAdapter.NAV_ITEMID.ACCOUNT:
-                Intent intent = null;
                 if (!UserSessionManager.isLogin(getApplicationContext())) {
-                    intent = new Intent(HomeActivity.this, LoginActivity.class);
-                    startActivity(intent);
+                    startActivity(new Intent(HomeActivity.this, LoginActivity.class));
                 }
                 break;
             case HomeNavAdapter.NAV_ITEMID.MOVIE:
@@ -190,7 +188,11 @@ public class HomeActivity extends BaseActivity implements OnNavItemSelectedListe
 
             @Override
             public void onBtnVipClick() {
-                startActivity(new Intent(HomeActivity.this, BuyVipActivity.class));
+                if (!UserSessionManager.isLogin(getApplicationContext())) {
+                    startActivity(new Intent(HomeActivity.this, LoginActivity.class));
+                } else {
+                    startActivity(new Intent(HomeActivity.this, BuyVipActivity.class));
+                }
             }
 
             @Override
