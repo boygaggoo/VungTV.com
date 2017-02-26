@@ -13,6 +13,7 @@ import com.vungtv.film.R;
 import com.vungtv.film.eventbus.AccountModifyEvent;
 import com.vungtv.film.feature.buyvip.BuyVipActivity;
 import com.vungtv.film.feature.changepass.ChangePassActivity;
+import com.vungtv.film.feature.favorite.FavoriteActivity;
 import com.vungtv.film.feature.login.LoginActivity;
 import com.vungtv.film.feature.logout.LogOutActivity;
 import com.vungtv.film.feature.setting.SettingActivity;
@@ -155,7 +156,7 @@ public class PersonalActivity extends BaseActivity implements PersonalContract.V
 
                         break;
                     case PersonalRecyclerAdapter.USERPAGE_ITEMID.FAVORITE:
-
+                        startActivity(new Intent(PersonalActivity.this, FavoriteActivity.class));
                         break;
                     case PersonalRecyclerAdapter.USERPAGE_ITEMID.FOLLOW:
 

@@ -12,6 +12,7 @@
         android:label="@string/app_name"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
+
         <activity
             android:name=".feature.loading.LoadingActivity"
             android:configChanges="keyboardHidden|orientation|screenSize"
@@ -22,48 +23,57 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
         <activity
             android:name=".feature.home.HomeActivity"
             android:configChanges="keyboardHidden|orientation|screenSize" />
+
         <activity
             android:name=".feature.filtermovies.FilterMoviesActivity"
             android:configChanges="keyboardHidden|orientation|screenSize" />
 
         <activity
-            android:configChanges="keyboardHidden|orientation|screenSize"
-            android:name=".feature.personal.PersonalActivity" />
+            android:name=".feature.personal.PersonalActivity"
+            android:configChanges="keyboardHidden|orientation|screenSize" />
 
         <activity
-            android:configChanges="keyboardHidden|orientation|screenSize"
-            android:name=".feature.login.LoginActivity" />
+            android:name=".feature.login.LoginActivity"
+            android:configChanges="keyboardHidden|orientation|screenSize" />
 
-        <activity android:name=".feature.moviedetails.MovieDetailsActivity" />
-
-        <activity
-            android:configChanges="keyboardHidden|orientation|screenSize"
-            android:name=".feature.setting.SettingActivity" />
+        <activity android:name=".feature.moviedetail.MovieDetailActivity" />
 
         <activity
-            android:configChanges="keyboardHidden|orientation|screenSize"
-            android:name=".feature.userinfo.UserInfoActivity" />
+            android:name=".feature.setting.SettingActivity"
+            android:configChanges="keyboardHidden|orientation|screenSize" />
 
         <activity
-            android:configChanges="keyboardHidden|orientation|screenSize"
-            android:name=".feature.changepass.ChangePassActivity" />
+            android:name=".feature.userinfo.UserInfoActivity"
+            android:configChanges="keyboardHidden|orientation|screenSize" />
 
         <activity
-            android:configChanges="keyboardHidden|orientation|screenSize"
-            android:name=".feature.buyvip.BuyVipActivity" />
+            android:name=".feature.changepass.ChangePassActivity"
+            android:configChanges="keyboardHidden|orientation|screenSize" />
 
         <activity
-            android:configChanges="keyboardHidden|orientation|screenSize"
-            android:name=".feature.recharge.RechargeActivity" />
+            android:name=".feature.buyvip.BuyVipActivity"
+            android:configChanges="keyboardHidden|orientation|screenSize" />
+
+        <activity
+            android:name=".feature.recharge.RechargeActivity"
+            android:configChanges="keyboardHidden|orientation|screenSize" />
 
         <activity android:name=".feature.search.SearchActivity" />
 
         <activity
+            android:name=".feature.logout.LogOutActivity"
+            android:configChanges="keyboardHidden|orientation|screenSize" />
+
+        <activity
+            android:name=".feature.menumovies.MenuMoviesActivity" />
+
+        <activity
             android:configChanges="keyboardHidden|orientation|screenSize"
-            android:name=".feature.logout.LogOutActivity" />
+            android:name=".feature.favorite.FavoriteActivity" />
 
         <meta-data
             android:name="com.facebook.sdk.ApplicationId"

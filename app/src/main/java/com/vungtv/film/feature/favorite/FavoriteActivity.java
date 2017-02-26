@@ -1,4 +1,4 @@
-package com.vungtv.film.feature.filtermovies;
+package com.vungtv.film.feature.favorite;
 
 import android.content.Intent;
 import android.content.res.Configuration;
@@ -11,12 +11,13 @@ import android.widget.TextView;
 
 import com.vungtv.film.BaseActivity;
 import com.vungtv.film.R;
-import com.vungtv.film.data.source.remote.service.FilterMoviesServices;
+import com.vungtv.film.feature.filtermovies.FilterMoviesActivity;
+import com.vungtv.film.feature.filtermovies.FilterMoviesAdapter;
+import com.vungtv.film.feature.logout.LogOutActivity;
 import com.vungtv.film.feature.search.SearchActivity;
 import com.vungtv.film.interfaces.OnItemClickListener;
 import com.vungtv.film.model.Movie;
-import com.vungtv.film.popup.PopupMenuSort;
-import com.vungtv.film.util.UriPaser;
+import com.vungtv.film.util.StringUtils;
 import com.vungtv.film.widget.GridSpacingItemDecoration;
 import com.vungtv.film.widget.LoadmoreScrollListener;
 import com.vungtv.film.widget.VtvToolbarPage;
@@ -24,65 +25,69 @@ import com.vungtv.film.widget.VtvToolbarPage;
 import java.util.ArrayList;
 
 import butterknife.BindView;
-import butterknife.ButterKnife;
-import butterknife.OnClick;
 
-import static com.google.gson.internal.$Gson$Preconditions.checkNotNull;
+public class FavoriteActivity extends BaseActivity implements FavoriteContract.View {
 
-public class FilterMoviesActivity extends BaseActivity implements FilterMoviesContract.View{
-    private static final String TAG = FilterMoviesActivity.class.getSimpleName();
-    public static final String INTENT_DANHMUC = "INTENT_DANHMUC";
-    public static final String INTENT_THELOAI = "INTENT_THELOAI";
-    public static final String INTENT_QUOCGIA = "INTENT_QUOCGIA";
-    public static final String INTENT_NAM = "INTENT_NAM";
-    public static final String INTENT_SAPXEP = "INTENT_SAPXEP";
-    public static final String INTENT_TOP = "INTENT_TOP";
-
-    private FilterMoviesContract.Presenter presenter;
+    private FavoriteContract.Presenter presenter;
 
     private FilterMoviesAdapter adapter;
 
     private LoadmoreScrollListener loadmoreScrollListener;
 
-    @BindView(R.id.filter_movies_toolbar)
-    VtvToolbarPage toolbarPage;
+    @BindView(R.id.favorite_toolbar)
+    VtvToolbarPage toolbar;
 
-    @BindView(R.id.filter_movies_refresh)
+    @BindView(R.id.favorite_refreshLayout)
     SwipeRefreshLayout refreshLayout;
 
-    @BindView(R.id.filter_movies_recycler)
+    @BindView(R.id.favorite_recycler)
     RecyclerView recyclerView;
 
-    @BindView(R.id.filter_movies_errormsg)
-    TextView tvErrorMsg;
-
-    private PopupMenuSort popupMenuSort;
+    @BindView(R.id.text_msg_error)
+    TextView textMsgError;
 
     private int curItemView = 0;
-
-    public static Bundle getBundleData(String uri) {
-        Bundle bundle = new Bundle();
-        bundle.putString(INTENT_DANHMUC, UriPaser.getDanhMuc(uri));
-        bundle.putString(INTENT_THELOAI, UriPaser.getTheLoai(uri));
-        bundle.putString(INTENT_QUOCGIA, UriPaser.getQuocGia(uri));
-        bundle.putString(INTENT_NAM, UriPaser.getNam(uri));
-        bundle.putString(INTENT_SAPXEP, UriPaser.getSapXep(uri));
-        bundle.putString(INTENT_TOP, UriPaser.getTop(uri));
-        return bundle;
-    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_filter_movies);
-        ButterKnife.bind(this);
-        setViewListener();
+        setContentView(R.layout.activity_favorite);
 
-        new FilterMoviesPresenter(this, this, new FilterMoviesServices(this));
+        toolbar.setOnToolbarPageListener(new VtvToolbarPage.OnToolbarPageListener() {
+            @Override
+            public void onBtnBackClick() {
+                finish();
+            }
+
+            @Override
+            public void onSearchClick() {
+                startActivity(new Intent(FavoriteActivity.this, SearchActivity.class));
+            }
+
+            @Override
+            public void onBtnFilterClick() {
+                startActivity(new Intent(FavoriteActivity.this, FilterMoviesActivity.class));
+            }
+        });
+
+        refreshLayout.setColorSchemeResources(R.color.green);
+        refreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                presenter.reloadData();
+            }
+        });
+
+        textMsgError.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                presenter.reloadData();
+            }
+        });
+
+        new FavoritePresenter(this, this);
 
         presenter.start();
-        presenter.getIntentData(getIntent());
-        presenter.loadData();
     }
 
     @Override
@@ -98,38 +103,8 @@ public class FilterMoviesActivity extends BaseActivity implements FilterMoviesCo
         presenter.configChange(isScreenLand, adapter.getList());
     }
 
-    /**
-     * Set toolbar event
-     */
-    private void setViewListener() {
-        toolbarPage.setOnToolbarPageListener(new VtvToolbarPage.OnToolbarPageListener() {
-            @Override
-            public void onBtnBackClick() {
-                finish();
-            }
-
-            @Override
-            public void onSearchClick() {
-                startActivity(new Intent(FilterMoviesActivity.this, SearchActivity.class));
-            }
-
-            @Override
-            public void onBtnFilterClick() {
-                presenter.filterMoviesClick();
-            }
-        });
-        refreshLayout.setColorSchemeResources(R.color.green);
-        refreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
-            @Override
-            public void onRefresh() {
-                presenter.reloadData();
-            }
-        });
-    }
-
     @Override
     public void showLoading(boolean show) {
-
         if (!show) {
             popupLoading.dismiss();
             refreshLayout.setRefreshing(false);
@@ -145,22 +120,18 @@ public class FilterMoviesActivity extends BaseActivity implements FilterMoviesCo
 
     @Override
     public void showMsgError(boolean show, String error) {
-        if (!show) {
-            tvErrorMsg.setVisibility(View.GONE);
+
+        if (show && !StringUtils.isEmpty(error)) {
+            textMsgError.setText(error);
+            textMsgError.setVisibility(View.VISIBLE);
             return;
         }
-        tvErrorMsg.setText(error);
-        tvErrorMsg.setVisibility(View.VISIBLE);
-    }
 
-    @Override
-    public void showToolbarTitle(String title) {
-        toolbarPage.setTitle(title);
+        textMsgError.setVisibility(View.GONE);
     }
 
     @Override
     public void showRecyclerView(final int columNumber, final int rowAdsNumber, float itemWidth, int itemSpace) {
-
         GridLayoutManager layoutManager = new GridLayoutManager(getApplicationContext(), columNumber);
         layoutManager.setSpanSizeLookup(new GridLayoutManager.SpanSizeLookup() {
             @Override
@@ -184,7 +155,6 @@ public class FilterMoviesActivity extends BaseActivity implements FilterMoviesCo
                 presenter.openMovieDetails(adapter.getItemMovieId(pos));
             }
         });
-
         if (loadmoreScrollListener != null) {
             recyclerView.removeOnScrollListener(loadmoreScrollListener);
             loadmoreScrollListener = null;
@@ -201,37 +171,20 @@ public class FilterMoviesActivity extends BaseActivity implements FilterMoviesCo
     }
 
     @Override
-    public void showPopupFilter(boolean show) {
-
-    }
-
-    @Override
-    public void showPopupSort(View view) {
-        if (popupMenuSort == null) {
-            popupMenuSort = new PopupMenuSort(this, view);
-            popupMenuSort.setOnMenuSortListener(new PopupMenuSort.OnMenuSortListener() {
-                @Override
-                public void onMenuSortItemSelected(String sapXep) {
-                    presenter.sapXepMoviesSubmit(sapXep);
-                }
-            });
-        }
-
-        if (popupMenuSort.isShowing()) {
-            popupMenuSort.dismiss();
-        }else {
-            popupMenuSort.show();
-        }
-    }
-
-    @Override
     public void showActMovieDetails(int movieId) {
 
     }
 
     @Override
     public void addItemMovie(ArrayList<Movie> movies) {
+
         adapter.addMultiItem(movies);
+
+        if (adapter.getItemCount() == 0) {
+            showMsgError(true, getString(R.string.favorite_text_msg_not_yet));
+        } else {
+            showMsgError(false, null);
+        }
     }
 
     @Override
@@ -246,11 +199,6 @@ public class FilterMoviesActivity extends BaseActivity implements FilterMoviesCo
     }
 
     @Override
-    public void addAdsNative(int pos) {
-        adapter.addItem(pos, null);
-    }
-
-    @Override
     public void clearData() {
         adapter.clear();
     }
@@ -261,12 +209,12 @@ public class FilterMoviesActivity extends BaseActivity implements FilterMoviesCo
     }
 
     @Override
-    public void setPresenter(FilterMoviesContract.Presenter mPresenter) {
-        presenter = checkNotNull(mPresenter);
+    public void logOutAccount() {
+        startActivity(new Intent(this, LogOutActivity.class));
     }
 
-    @OnClick(R.id.filter_movies_btn_sort)
-    public void btnSortClicked(View view) {
-        presenter.sapXepMoviesClick(view);
+    @Override
+    public void setPresenter(FavoriteContract.Presenter Presenter) {
+        presenter = Presenter;
     }
 }

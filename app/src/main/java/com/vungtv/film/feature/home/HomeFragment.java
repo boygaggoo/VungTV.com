@@ -12,7 +12,7 @@ import android.widget.LinearLayout;
 import com.vungtv.film.R;
 import com.vungtv.film.eventbus.ConfigurationChangedEvent;
 import com.vungtv.film.feature.filtermovies.FilterMoviesActivity;
-import com.vungtv.film.feature.moviedetails.MovieDetailsActivity;
+import com.vungtv.film.feature.moviedetail.MovieDetailActivity;
 import com.vungtv.film.model.Slider;
 import com.vungtv.film.popup.PopupLoading;
 import com.vungtv.film.widget.VtvErrorMsgView;
@@ -96,8 +96,8 @@ public class HomeFragment extends Fragment implements HomeContract.View {
 
     @Override
     public void openActMovieDetails(int movieId) {
-        Intent intent = new Intent(HomeFragment.this.getActivity(), MovieDetailsActivity.class);
-        intent = MovieDetailsActivity.getIntentData(intent, movieId);
+        Intent intent = new Intent(HomeFragment.this.getActivity(), MovieDetailActivity.class);
+        intent = MovieDetailActivity.getIntentData(intent, movieId);
         getActivity().startActivity(intent);
     }
 

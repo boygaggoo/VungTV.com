@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.vungtv.film.widget.VtvTextView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/text_msg_error"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:padding="@dimen/space_24"
+    android:gravity="center"
+    android:lineSpacingMultiplier="1.3"
+    android:visibility="gone"
+    tools:visibility="visible"
+    tools:text="@string/error_get_data_failed"
+    style="@style/AppTheme.Text" />

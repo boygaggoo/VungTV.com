@@ -27,6 +27,7 @@ import static com.vungtv.film.feature.filtermovies.FilterMoviesActivity.INTENT_T
  */
 
 public class FilterMoviesPresenter implements FilterMoviesContract.Presenter {
+
     private static final String TAG = FilterMoviesPresenter.class.getSimpleName();
 
     private final Context context;

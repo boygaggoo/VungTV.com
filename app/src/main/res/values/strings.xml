@@ -148,5 +148,7 @@
     <string name="popup_text_the_loai">Thể loại</string>
     <string name="popup_text_year">Năm</string>
     <string name="popup_action_filter">Lọc</string>
+    <string name="favorite_text_title">Phim yêu thích</string>
+    <string name="favorite_text_msg_not_yet">Chưa yêu thích phim nào.</string>
 
 </resources>

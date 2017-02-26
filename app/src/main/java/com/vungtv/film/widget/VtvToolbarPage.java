@@ -2,6 +2,7 @@ package com.vungtv.film.widget;
 
 import android.annotation.TargetApi;
 import android.content.Context;
+import android.content.res.TypedArray;
 import android.os.Build;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
@@ -13,35 +14,50 @@ import com.vungtv.film.R;
 public class VtvToolbarPage extends RelativeLayout {
 
     private View btnBack, btnSearch, btnFilter;
+
     private VtvTextView textTitle;
+
+    private String title;
 
     private OnToolbarPageListener onToolbarPageListener;
 
     public VtvToolbarPage(Context context) {
         super(context);
-        init();
+        init(null);
     }
 
     public VtvToolbarPage(Context context, AttributeSet attrs) {
         super(context, attrs);
-        init();
+        init(attrs);
     }
 
     public VtvToolbarPage(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
-        init();
+        init(attrs);
     }
 
     @TargetApi(Build.VERSION_CODES.LOLLIPOP)
     public VtvToolbarPage(Context context, AttributeSet attrs, int defStyleAttr, int defStyleRes) {
         super(context, attrs, defStyleAttr, defStyleRes);
-        init();
+        init(attrs);
     }
 
-    private void init() {
+    private void init(AttributeSet attrs) {
+        if (attrs != null) {
+            TypedArray a = getContext().getTheme()
+                    .obtainStyledAttributes(attrs, R.styleable.VtvToolbar, 0, 0);
+            try {
+                title = a.getString(R.styleable.VtvToolbar_textTitle);
+            } finally {
+                a.recycle();
+            }
+        }
         LayoutInflater.from(getContext()).inflate(R.layout.widget_toolbar_page, this);
         retrieverViews();
         registerListener();
+        if (title != null) {
+            textTitle.setText(title);
+        }
     }
 
     private void retrieverViews() {
@@ -85,6 +101,7 @@ public class VtvToolbarPage extends RelativeLayout {
 
     public void setTitle(String text) {
         if (text == null) return;
+        this.title = text;
         textTitle.setText(text);
     }
 

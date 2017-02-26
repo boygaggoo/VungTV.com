@@ -29,7 +29,7 @@
         android:id="@+id/filter_movies_errormsg"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:visibility="gone"
+        android:visibility="visible"
         tools:text="@string/error_no_connection"/>
 
     <ImageView

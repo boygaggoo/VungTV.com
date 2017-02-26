@@ -19,9 +19,11 @@ import com.vungtv.film.data.source.remote.service.HomeServices;
 import com.vungtv.film.eventbus.AccountModifyEvent;
 import com.vungtv.film.eventbus.ConfigurationChangedEvent;
 import com.vungtv.film.feature.buyvip.BuyVipActivity;
+import com.vungtv.film.feature.favorite.FavoriteActivity;
 import com.vungtv.film.feature.filtermovies.FilterMoviesActivity;
 import com.vungtv.film.feature.home.HomeNavAdapter.OnNavItemSelectedListener;
 import com.vungtv.film.feature.login.LoginActivity;
+import com.vungtv.film.feature.menumovies.MenuMoviesActivity;
 import com.vungtv.film.feature.personal.PersonalActivity;
 import com.vungtv.film.feature.search.SearchActivity;
 import com.vungtv.film.util.ActivityUtils;
@@ -108,16 +110,19 @@ public class HomeActivity extends BaseActivity implements OnNavItemSelectedListe
                 }
                 break;
             case HomeNavAdapter.NAV_ITEMID.MOVIE:
-                bundle.putString(FilterMoviesActivity.INTENT_DANHMUC, ApiQuery.P_PHIM_LE);
-                openFilterMoviesActivity(bundle);
+                Intent intent = new Intent(HomeActivity.this, MenuMoviesActivity.class);
+                intent.putExtra(MenuMoviesActivity.INTENT_DANHMUC, ApiQuery.P_PHIM_LE);
+                startActivity(intent);
                 break;
             case HomeNavAdapter.NAV_ITEMID.TVSERIES:
-                bundle.putString(FilterMoviesActivity.INTENT_DANHMUC, ApiQuery.P_PHIM_BO);
-                openFilterMoviesActivity(bundle);
+                Intent intent2 = new Intent(HomeActivity.this, MenuMoviesActivity.class);
+                intent2.putExtra(MenuMoviesActivity.INTENT_DANHMUC, ApiQuery.P_PHIM_BO);
+                startActivity(intent2);
                 break;
             case HomeNavAdapter.NAV_ITEMID.ANIME:
-                bundle.putString(FilterMoviesActivity.INTENT_DANHMUC, ApiQuery.P_ANIME);
-                openFilterMoviesActivity(bundle);
+                Intent intent3 = new Intent(HomeActivity.this, MenuMoviesActivity.class);
+                intent3.putExtra(MenuMoviesActivity.INTENT_DANHMUC, ApiQuery.P_ANIME);
+                startActivity(intent3);
                 break;
             case HomeNavAdapter.NAV_ITEMID.TVSHOW:
                 bundle.putString(FilterMoviesActivity.INTENT_DANHMUC, ApiQuery.P_TV_SHOW);
@@ -140,7 +145,7 @@ public class HomeActivity extends BaseActivity implements OnNavItemSelectedListe
                 openFilterMoviesActivity(bundle);
                 break;
             case HomeNavAdapter.NAV_ITEMID.FAVORITE:
-
+                startActivity(new Intent(HomeActivity.this, FavoriteActivity.class));
                 break;
             case HomeNavAdapter.NAV_ITEMID.FOLLOW:
 
