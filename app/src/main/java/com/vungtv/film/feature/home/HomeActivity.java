@@ -13,11 +13,9 @@ import android.widget.LinearLayout;
 
 import com.vungtv.film.BaseActivity;
 import com.vungtv.film.R;
-import com.vungtv.film.data.source.local.UserSessionManager;
-import com.vungtv.film.data.source.remote.ApiQuery;
 import com.vungtv.film.data.source.remote.service.HomeServices;
-import com.vungtv.film.eventbus.ConfigurationChangedEvent;
 import com.vungtv.film.eventbus.AccountModifyEvent;
+import com.vungtv.film.eventbus.ConfigurationChangedEvent;
 import com.vungtv.film.feature.buyvip.BuyVipActivity;
 import com.vungtv.film.feature.filtermovies.FilterMoviesActivity;
 import com.vungtv.film.feature.home.HomeNavAdapter.OnNavItemSelectedListener;
@@ -26,6 +24,7 @@ import com.vungtv.film.feature.personal.PersonalActivity;
 import com.vungtv.film.feature.search.SearchActivity;
 import com.vungtv.film.util.ActivityUtils;
 import com.vungtv.film.util.LogUtils;
+import com.vungtv.film.util.UriPaser;
 import com.vungtv.film.widget.VtvDrawerLayout;
 import com.vungtv.film.widget.VtvToolbarHome;
 
@@ -98,59 +97,21 @@ public class HomeActivity extends BaseActivity implements OnNavItemSelectedListe
     }
 
     @Override
-    public void onNavigationItemSelected(View v, int itemId) {
+    public void onNavigationItemSelected(int position, String url) {
         Bundle bundle = new Bundle();
-        drawer.closeDrawer(navRecycler);
-        switch (itemId) {
-            case HomeNavAdapter.NAV_ITEMID.ACCOUNT:
-                Intent intent = null;
-                if (!UserSessionManager.isLogin(getApplicationContext())) {
-                    intent = new Intent(HomeActivity.this, LoginActivity.class);
-                    startActivity(intent);
-                }
-                break;
-            case HomeNavAdapter.NAV_ITEMID.MOVIE:
-                bundle.putString(FilterMoviesActivity.INTENT_DANHMUC, ApiQuery.P_PHIM_LE);
-                openFilterMoviesActivity(bundle);
-                break;
-            case HomeNavAdapter.NAV_ITEMID.TVSERIES:
-                bundle.putString(FilterMoviesActivity.INTENT_DANHMUC, ApiQuery.P_PHIM_BO);
-                openFilterMoviesActivity(bundle);
-                break;
-            case HomeNavAdapter.NAV_ITEMID.ANIME:
-                bundle.putString(FilterMoviesActivity.INTENT_DANHMUC, ApiQuery.P_ANIME);
-                openFilterMoviesActivity(bundle);
-                break;
-            case HomeNavAdapter.NAV_ITEMID.TVSHOW:
-                bundle.putString(FilterMoviesActivity.INTENT_DANHMUC, ApiQuery.P_TV_SHOW);
-                openFilterMoviesActivity(bundle);
-                break;
-            case HomeNavAdapter.NAV_ITEMID.FILM18:
-                bundle.putString(FilterMoviesActivity.INTENT_DANHMUC, ApiQuery.P_PHIM_18);
-                openFilterMoviesActivity(bundle);
-                break;
-            case HomeNavAdapter.NAV_ITEMID.CINEMA:
-                bundle.putString(FilterMoviesActivity.INTENT_DANHMUC, ApiQuery.P_CINEMA);
-                openFilterMoviesActivity(bundle);
-                break;
-            case HomeNavAdapter.NAV_ITEMID.COMING:
-                bundle.putString(FilterMoviesActivity.INTENT_DANHMUC, ApiQuery.P_COMMING);
-                openFilterMoviesActivity(bundle);
-                break;
-            case HomeNavAdapter.NAV_ITEMID.IMDB:
-                bundle.putString(FilterMoviesActivity.INTENT_DANHMUC, ApiQuery.P_IMDB);
-                openFilterMoviesActivity(bundle);
-                break;
-            case HomeNavAdapter.NAV_ITEMID.FAVORITE:
 
-                break;
-            case HomeNavAdapter.NAV_ITEMID.FOLLOW:
-
-                break;
-            case HomeNavAdapter.NAV_ITEMID.DOWNLOAD:
-                showToast("Comming soon...");
-                break;
+        if (position == 0) {
+            Intent intent = new Intent(HomeActivity.this, LoginActivity.class);
+            startActivity(intent);
+            return;
         }
+
+        String pathSegment = UriPaser.getNavItemPathSegment(url);
+        if (pathSegment == null) return;
+
+        drawer.closeDrawer(navRecycler);
+
+
     }
 
     @Subscribe

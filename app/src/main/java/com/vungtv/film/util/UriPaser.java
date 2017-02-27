@@ -47,4 +47,16 @@ public class UriPaser {
         Uri uri = Uri.parse(url);
         return uri.getQueryParameter(ApiQuery.Q_TOP);
     }
+
+    public static String getNavItemPathSegment(String url) {
+        if (StringUtils.isEmpty(url)) return null;
+
+        try {
+            Uri uri = Uri.parse(url);
+            return uri.getLastPathSegment();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
 }

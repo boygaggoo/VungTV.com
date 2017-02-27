@@ -1,7 +1,6 @@
 package com.vungtv.film.feature.home;
 
 import android.content.Context;
-import android.content.res.Resources;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -19,15 +18,19 @@ import java.util.ArrayList;
 
 public class HomeNavAdapter extends RecyclerView.Adapter {
     private static final String TAG = HomeNavAdapter.class.getSimpleName();
+
     private static final int COLOR_BG_NORMAL = R.drawable.ds_touchable_bg_gray8;
     private static final int COLOR_BG_ACTIVE = R.color.colorPrimary;
+
     private static final int ICON_RIGHT_NORMAL = R.drawable.icon_forward;
     private static final int ICON_RIGHT_ACTIVE = R.drawable.icon_lavung;
+
     private static final int TYPE_HEADER = 0;
     public static final int TYPE_NORMAL = 1;
     private static final int TYPE_WITH_ICON = 2;
     private static final int TYPE_WITH_ICON_LABEL = 3;
     private static final int TYPE_LINE = 4;
+
     private Context context;
     private ArrayList<NavItem> list = new ArrayList<>();
     private OnNavItemSelectedListener onNavItemSelectedListener;
@@ -35,7 +38,9 @@ public class HomeNavAdapter extends RecyclerView.Adapter {
 
     public HomeNavAdapter(Context context) {
         this.context = context;
-        addItemNav();
+
+        // Add header account;
+        list.add(0, new NavItem(TYPE_HEADER, context.getString(R.string.login_action_login), null));
     }
 
     @Override
@@ -107,43 +112,19 @@ public class HomeNavAdapter extends RecyclerView.Adapter {
         notifyItemChanged(0);
     }
 
-    /**
-     * Add item menu to nav;
-     */
-    private void addItemNav() {
-        //add header
-        addTolist(TYPE_HEADER, NAV_ITEMID.ACCOUNT, R.string.login_action_login);
-        //add item menu;
-        addTolist(NAV_ITEMID.HOME, R.string.home_text_home);
-        addTolist(NAV_ITEMID.TVSERIES, R.string.home_text_phim_bo);
-        addTolist(NAV_ITEMID.MOVIE, R.string.home_text_phim_le);
-        addTolist(NAV_ITEMID.ANIME, R.string.home_text_hoat_hinh);
-        addTolist(NAV_ITEMID.TVSHOW, R.string.home_text_tvshow);
-        addTolist(NAV_ITEMID.FILM18, R.string.home_text_phim_18);
-        addTolist(NAV_ITEMID.CINEMA, R.string.home_text_phim_chieu_rap);
-        addTolist(NAV_ITEMID.COMING, R.string.home_text_phim_sap_chieu);
-        addTolist(NAV_ITEMID.IMDB, R.string.home_text_topIMDB);
-        // add line
-        addTolist(TYPE_LINE, 999, R.string.home_text_phim_da_tai, 0);
-
-        addTolist(TYPE_WITH_ICON, NAV_ITEMID.FAVORITE, R.string.home_text_phim_yeu_thich, R.drawable.icon_heart3);
-        addTolist(TYPE_WITH_ICON_LABEL, NAV_ITEMID.FOLLOW, R.string.home_text_phim_theo_doi, R.drawable.icon_bell3);
-        addTolist(TYPE_WITH_ICON, NAV_ITEMID.DOWNLOAD, R.string.home_text_phim_da_tai, R.drawable.icon_download2);
+    public void addItem(int pos, NavItem navItem) {
+        list.add(pos, navItem);
+        notifyItemInserted(pos);
     }
 
-    private void addTolist(int itemid, int titleRes) {
-        Resources res = context.getResources();
-        list.add(new NavItem(itemid, res.getString(titleRes)));
+    public void addAllItem(ArrayList<NavItem> list) {
+        this.list.addAll(list);
+        notifyDataSetChanged();
     }
 
-    private void addTolist(int itemType, int itemid, int titleRes) {
-        Resources res = context.getResources();
-        list.add(new NavItem(itemType, itemid, res.getString(titleRes)));
-    }
-
-    private void addTolist(int itemType, int itemid, int titleRes, int iconLeftRes) {
-        Resources res = context.getResources();
-        list.add(new NavItem(itemType, itemid, res.getString(titleRes), iconLeftRes));
+    public void setListNavItem(ArrayList<NavItem> list) {
+        this.list = list;
+        notifyDataSetChanged();
     }
 
     /**
@@ -164,7 +145,7 @@ public class HomeNavAdapter extends RecyclerView.Adapter {
                 public void onClick(View view) {
                     if (onNavItemSelectedListener != null) {
                         onNavItemSelectedListener.onNavigationItemSelected(
-                                view, list.get(getLayoutPosition()).getId());
+                                getLayoutPosition(), list.get(getLayoutPosition()).getLink());
                     }
                 }
             });
@@ -222,7 +203,8 @@ public class HomeNavAdapter extends RecyclerView.Adapter {
         @Override
         public void onClick(View view) {
             if (onNavItemSelectedListener != null) {
-                onNavItemSelectedListener.onNavigationItemSelected(view, list.get(getLayoutPosition()).getId());
+                onNavItemSelectedListener.onNavigationItemSelected(
+                        getLayoutPosition(), list.get(getLayoutPosition()).getLink());
             }
         }
 
@@ -261,7 +243,8 @@ public class HomeNavAdapter extends RecyclerView.Adapter {
         @Override
         public void onClick(View view) {
             if (onNavItemSelectedListener != null) {
-                onNavItemSelectedListener.onNavigationItemSelected(view, list.get(getLayoutPosition()).getId());
+                onNavItemSelectedListener.onNavigationItemSelected(
+                        getLayoutPosition(), list.get(getLayoutPosition()).getLink());
             }
         }
 
@@ -295,7 +278,8 @@ public class HomeNavAdapter extends RecyclerView.Adapter {
         @Override
         public void onClick(View view) {
             if (onNavItemSelectedListener != null) {
-                onNavItemSelectedListener.onNavigationItemSelected(view, list.get(getLayoutPosition()).getId());
+                onNavItemSelectedListener.onNavigationItemSelected(
+                        getLayoutPosition(), list.get(getLayoutPosition()).getLink());
             }
         }
 
@@ -343,7 +327,6 @@ public class HomeNavAdapter extends RecyclerView.Adapter {
     }
 
     public interface OnNavItemSelectedListener {
-
-        void onNavigationItemSelected(View v, int itemId);
+        void onNavigationItemSelected(int position, String url);
     }
 }
