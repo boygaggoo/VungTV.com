@@ -34,18 +34,18 @@ public class LoginPresenter implements LoginContract.Presenter {
 
     private final AccountServices accountService;
 
-    private LoginContract.View loginView;
+    private LoginContract.View fragmentView;
 
     private String userProvider = null;
 
-    public LoginPresenter(Context context, LoginContract.View loginView, AccountServices accountService, LoginFacebookUtils loginFacebookUtils, LoginGoogleUtils loginGoogleUtils) {
+    public LoginPresenter(Context context, LoginContract.View fragmentView, AccountServices accountService, LoginFacebookUtils loginFacebookUtils, LoginGoogleUtils loginGoogleUtils) {
         this.context = context;
-        this.loginView = checkNotNull(loginView);
+        this.fragmentView = checkNotNull(fragmentView);
         this.accountService = checkNotNull(accountService);
         this.loginFacebookUtils = checkNotNull(loginFacebookUtils);
         this.loginGoogleUtils = checkNotNull(loginGoogleUtils);
 
-        this.loginView.setPresenter(this);
+        this.fragmentView.setPresenter(this);
 
         accountServiceResponse();
         setLoginFacebookGoogleEventcallback();
@@ -65,28 +65,28 @@ public class LoginPresenter implements LoginContract.Presenter {
     @Override
     public void loginWithEmail(String email, String pass) {
         if (email.length() < 2) {
-            loginView.showMsgError(context.getString(R.string.login_error_msg_email));
+            fragmentView.showMsgError(context.getString(R.string.login_error_msg_email));
             return;
         }
 
         if (pass.length() < 6) {
-            loginView.showMsgError(context.getString(R.string.login_error_msg_pass));
+            fragmentView.showMsgError(context.getString(R.string.login_error_msg_pass));
             return;
         }
 
-        loginView.showLoading(true);
+        fragmentView.showLoading(true);
         accountService.loginWithEmail(email, pass);
     }
 
     @Override
     public void loginWithFacebook() {
-        loginView.showLoading(true);
+        fragmentView.showLoading(true);
         loginFacebookUtils.login();
     }
 
     @Override
     public void loginWithGoogle() {
-        loginView.showLoading(true);
+        fragmentView.showLoading(true);
         loginGoogleUtils.login();
     }
 
@@ -98,32 +98,32 @@ public class LoginPresenter implements LoginContract.Presenter {
 
     @Override
     public void registerAcc(String email, String pass, String rePass) {
-        loginView.showLoading(true);
+        fragmentView.showLoading(true);
         accountService.register(email, pass, rePass);
     }
 
     @Override
     public void fogetPass() {
-        loginView.showMsgError("Quên pass");
+        fragmentView.showMsgError("Quên pass");
     }
 
     @Override
     public void openFragLogin(LoginContract.View view) {
-        this.loginView = checkNotNull(view);
-        this.loginView.setPresenter(this);
+        this.fragmentView = checkNotNull(view);
+        this.fragmentView.setPresenter(this);
     }
 
     @Override
     public void openFragRegister(LoginContract.View view) {
-        this.loginView = checkNotNull(view);
-        this.loginView.setPresenter(this);
+        this.fragmentView = checkNotNull(view);
+        this.fragmentView.setPresenter(this);
     }
 
     private void accountServiceResponse() {
         accountService.setOnLoginResulListener(new AccountServices.OnLoginResulListener() {
             @Override
             public void onSuccess(User user, String token) {
-                loginView.showLoading(false);
+                fragmentView.showLoading(false);
 
                 user.setProvider(userProvider);
                 UserSessionManager.setUserSession(context, user, token);
@@ -133,8 +133,8 @@ public class LoginPresenter implements LoginContract.Presenter {
 
             @Override
             public void onFailure(int code, String error) {
-                loginView.showLoading(false);
-                loginView.showMsgError(error);
+                fragmentView.showLoading(false);
+                fragmentView.showMsgError(error);
             }
         });
     }
@@ -150,7 +150,8 @@ public class LoginPresenter implements LoginContract.Presenter {
 
             @Override
             public void onFailure() {
-                loginView.showMsgError(context.getResources().getString(R.string.login_error_msg_login_failed));
+                fragmentView.showLoading(false);
+                fragmentView.showMsgError(context.getResources().getString(R.string.login_error_msg_login_failed));
             }
         });
 
@@ -164,7 +165,8 @@ public class LoginPresenter implements LoginContract.Presenter {
 
             @Override
             public void onFailure() {
-                loginView.showMsgError(context.getResources().getString(R.string.login_error_msg_login_failed));
+                fragmentView.showLoading(false);
+                fragmentView.showMsgError(context.getResources().getString(R.string.login_error_msg_login_failed));
             }
         });
     }

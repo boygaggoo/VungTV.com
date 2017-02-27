@@ -6,7 +6,6 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.FragmentActivity;
-import android.util.Log;
 
 import com.google.android.gms.auth.api.Auth;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
@@ -16,7 +15,6 @@ import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.common.api.ResultCallback;
 import com.google.android.gms.common.api.Status;
-import com.google.gson.Gson;
 import com.vungtv.film.R;
 import com.vungtv.film.data.source.local.UserSessionManager;
 import com.vungtv.film.interfaces.OnSocialLoginListener;
@@ -101,15 +99,17 @@ public class LoginGoogleUtils {
 
         // Result returned from launching the Intent from GoogleSignInApi.getSignInIntent(...);
         if (requestCode == RC_SIGN_IN_GG) {
+
             GoogleSignInResult result = Auth.GoogleSignInApi.getSignInResultFromIntent(data);
             LogUtils.d(TAG, "GG login sccess = " + result.isSuccess());
+            LogUtils.d(TAG, "GG login msg = " + result.getStatus().getStatusMessage());
+
             if (result.isSuccess()) {
                 // Google Sign In was successful, authenticate with Firebase
                 GoogleSignInAccount account = result.getSignInAccount();
 
                 if (account != null) {
                     onLoginListener.onSuccess(account.getIdToken());
-                    LogUtils.e(TAG, "ServerAuthCode: " + new Gson().toJson(account));
                     return;
                 }
             }
@@ -118,6 +118,9 @@ public class LoginGoogleUtils {
         }
     }
 
+    /**
+     * Disconnect gg api client;
+     */
     public void disconect() {
         if (mGoogleApiClient != null && mGoogleApiClient.isConnected()) {
             mGoogleApiClient.stopAutoManage(activity);
@@ -125,6 +128,9 @@ public class LoginGoogleUtils {
         }
     }
 
+    /**
+     * Get GoogleApiClient
+     */
     private void getGoogleLogin() {
         // Configure Google Sign In
         GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
@@ -136,6 +142,8 @@ public class LoginGoogleUtils {
                 .enableAutoManage(activity, new GoogleApiClient.OnConnectionFailedListener() {
                     @Override
                     public void onConnectionFailed(@NonNull ConnectionResult connectionResult) {
+                        LogUtils.e(TAG, "GoogleLogin onConnectionFailed: " + connectionResult.getErrorMessage());
+
                         if (onLoginListener != null)
                             onLoginListener.onFailure();
                     }

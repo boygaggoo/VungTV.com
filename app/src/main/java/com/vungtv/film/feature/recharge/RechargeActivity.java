@@ -2,8 +2,10 @@ package com.vungtv.film.feature.recharge;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v4.content.res.ResourcesCompat;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.TypedValue;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.RadioGroup;
@@ -116,12 +118,14 @@ public class RechargeActivity extends BaseActivity implements RechargeContract.V
                 ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
 
         int textSize = getResources().getDimensionPixelSize(R.dimen.font_normal);
+        int textColor = ResourcesCompat.getColor(getResources(), R.color.text_dark_1, null);
         for (int i = 0; i < cardTypes.size(); i++) {
             CardType cardType = cardTypes.get(i);
             VtvRadioButton radioButton = new VtvRadioButton(this);
             radioButton.setId(i);
-            radioButton.setTextSize(textSize);
+            radioButton.setTextSize(TypedValue.COMPLEX_UNIT_SP, 15f);
             radioButton.setText(cardType.getLabel());
+            radioButton.setTextColor(textColor);
             radioGroup.addView(radioButton, layoutParams);
         }
     }

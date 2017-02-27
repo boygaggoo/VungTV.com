@@ -228,8 +228,10 @@ public class UserSessionManager {
     }
 
     public static void logout(Context context, @NonNull LoginGoogleUtils loginGoogleUtils) {
+        String provider = UserSessionManager.getUserProvider(context.getApplicationContext());
+        if (provider == null) return;
 
-        switch (UserSessionManager.getUserProvider(context.getApplicationContext())) {
+        switch (provider) {
 
             case UserSessionManager.PROVIDER_FACE:
                 LoginFacebookUtils.logout(context);

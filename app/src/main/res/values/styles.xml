@@ -82,6 +82,12 @@
         <item name="colorControlActivated">@color/colorAccent</item>
     </style>
 
+    <style name="AppTheme.Dialog.FullWidthHeight" parent="Base.Theme.AppCompat.Dialog.Alert">
+        <item name="windowMinWidthMajor">100%</item>
+        <item name="windowMinWidthMinor">100%</item>
+        <item name="android:windowBackground">@color/black_80</item>
+    </style>
+
     <style name="AppTheme.Dialog.Progress" parent="AppTheme.Dialog">
         <item name="android:background">@color/transparent_light</item>
         <item name="android:layout_width">36dp</item>
@@ -176,6 +182,23 @@
 
     <style name="AppTheme.RatingBar" parent="Widget.AppCompat.RatingBar.Indicator">
         <item name="android:progressDrawable">@drawable/ds_ratingbar_bg</item>
+    </style>
+
+    <style name="AppTheme.Spinner.filter" parent="Widget.AppCompat.Spinner">
+        <item name="android:dropDownSelector">@android:color/transparent</item>
+        <item name="android:popupBackground">@color/black_80</item>
+        <item name="android:spinnerMode">dropdown</item>
+    </style>
+
+    <style name="AppTheme.Spinner.DropDown.filter" parent="android:style/Widget.ListView.DropDown">
+        <item name="android:divider">@color/dividers_light</item>
+        <item name="android:dividerHeight">1dp</item>
+        <item name="android:dropDownVerticalOffset">@dimen/space_36</item>
+    </style>
+
+
+    <style name="AppTheme.Spinner.DropDown.Theme" parent="AppTheme">
+        <item name="android:dropDownSpinnerStyle">@style/AppTheme.Spinner.DropDown.filter</item>
     </style>
 
 </resources>
