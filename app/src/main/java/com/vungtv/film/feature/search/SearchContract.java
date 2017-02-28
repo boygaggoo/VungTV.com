@@ -36,7 +36,7 @@ public interface SearchContract {
 
     interface Presenter extends BasePresenter {
 
-        void loadData(int searchType, String query);
+        void loadData(String query);
 
         void clearSearchView();
 

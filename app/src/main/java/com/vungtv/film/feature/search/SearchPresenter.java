@@ -3,7 +3,12 @@ package com.vungtv.film.feature.search;
 import android.content.Context;
 
 import com.vungtv.film.R;
+import com.vungtv.film.data.source.remote.model.ApiSearch;
+import com.vungtv.film.data.source.remote.service.SearchServices;
+import com.vungtv.film.model.Movie;
 import com.vungtv.film.util.DensityUtils;
+
+import java.util.ArrayList;
 
 import static com.google.gson.internal.$Gson$Preconditions.checkNotNull;
 
@@ -16,14 +21,34 @@ public class SearchPresenter implements SearchContract.Presenter {
 
     private final Context context;
 
-    private final SearchContract.View searchView;
+    private final SearchContract.View activityView;
+
+    private final SearchServices searchServices;
 
     private int columNumber = 3;
 
-    public SearchPresenter(Context context, SearchContract.View searchView) {
+    public SearchPresenter(Context context, final SearchContract.View activityView) {
         this.context = checkNotNull(context);
-        this.searchView = checkNotNull(searchView);
-        this.searchView.setPresenter(this);
+
+        this.activityView = checkNotNull(activityView);
+        this.activityView.setPresenter(this);
+
+        searchServices = new SearchServices(context);
+        searchServices.setSearchResultCallback(new SearchServices.SearchResultCallback() {
+            @Override
+            public void onSearchResultSuccess(ApiSearch.Data data) {
+                activityView.showLoadding(false);
+                activityView.showMsgError(false, null);
+                activityView.showListMovies(true, (ArrayList<Movie>) data.getMovies());
+            }
+
+            @Override
+            public void onFailure(int code, String error) {
+                activityView.showLoadding(false);
+                activityView.showMsgError(true, error);
+                activityView.showListMovies(false, null);
+            }
+        });
     }
 
     @Override
@@ -36,27 +61,45 @@ public class SearchPresenter implements SearchContract.Presenter {
 
         itemWidth = itemWidth - itemSpace*(columNumber + 1);
         itemWidth = itemWidth / columNumber;
-        searchView.setRecyclerView(columNumber, itemWidth, itemSpace);
+        activityView.setRecyclerView(columNumber, itemWidth, itemSpace);
     }
 
     @Override
     public void onDestroy() {
-
+        searchServices.cancel();
     }
 
     @Override
-    public void loadData(int searchType, String query) {
+    public void loadData(String query) {
+        if (query.length() < 3) {
+            activityView.showMsgError(true, context.getString(R.string.search_error_msg_short));
+            return;
+        }
 
+        searchServices.setQuery(query);
+        searchServices.enqueueSearch();
+        activityView.showLoadding(true);
     }
 
     @Override
     public void clearSearchView() {
-
+        activityView.clearSearchView();
+        searchServices.setOffset(0);
     }
 
     @Override
     public void changeSearchType(int searchType) {
+        if (searchType == 0) {
+            searchServices.setModeMovie();
+        } else {
+            searchServices.setModeActor();
+        }
 
+        if (searchServices.getQuery().length() > 2) {
+            clearSearchView();
+            searchServices.enqueueSearch();
+            activityView.showLoadding(true);
+        }
     }
 
     @Override

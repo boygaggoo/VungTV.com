@@ -148,5 +148,6 @@
     <string name="popup_text_the_loai">Thể loại</string>
     <string name="popup_text_year">Năm</string>
     <string name="popup_action_filter">Lọc</string>
+    <string name="search_error_msg_short">Từ khóa dài tối thiểu 3 ký tự.</string>
 
 </resources>
