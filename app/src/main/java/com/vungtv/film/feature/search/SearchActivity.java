@@ -3,7 +3,9 @@ package com.vungtv.film.feature.search;
 import android.os.Bundle;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.view.KeyEvent;
 import android.view.View;
+import android.view.inputmethod.EditorInfo;
 import android.widget.EditText;
 import android.widget.TextView;
 
@@ -48,6 +50,19 @@ public class SearchActivity extends BaseActivity implements SearchContract.View 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_search);
 
+        edSearchView.setOnEditorActionListener(new TextView.OnEditorActionListener() {
+            @Override
+            public boolean onEditorAction(TextView textView, int i, KeyEvent keyEvent) {
+
+                if (i == EditorInfo.IME_ACTION_SEARCH) {
+                    String query = edSearchView.getText().toString();
+                    presenter.loadData(query);
+                    return true;
+                }
+                return false;
+            }
+        });
+
         new SearchPresenter(this, this);
     }
 
@@ -59,8 +74,7 @@ public class SearchActivity extends BaseActivity implements SearchContract.View 
 
     @Override
     public void showLoadding(boolean show) {
-        if (show) popupLoading.dismiss();
-        else popupLoading.show();
+        popupLoading.show(show);
     }
 
     @Override

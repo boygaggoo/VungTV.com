@@ -21,6 +21,12 @@ public class ApiQuery {
     public static final String P_ANIME = "phim-hoat-hinh";
     public static final String P_DE_CU = "phim-de-cu";
 
+    public static final String PATH_PHIM_LE = "phim_le";
+    public static final String PATH_PHIM_BO = "phim_bo";
+    public static final String PATH_ANIME = "phim_hoat_hinh";
+    public static final String PATH_FAVORITE = "phim_favorite";
+    public static final String PATH_FOLLOW = "phim_follow";
+
     public static final String[] P_MOVIES_SORT = {
             "xem-nhieu",
             "ten-phim-az",
