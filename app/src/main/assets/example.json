@@ -1,59 +1,142 @@
 {
-  "success": true,
-  "code": "",
-  "message": "B\u1ea1n \u0111\u00e3 mua th\u00e0nh c\u00f4ng g\u00f3i 30 ng\u00e0y, h\u1ebft h\u1ea1n v\u00e0o 23-07-2017 16:46:32",
-  "data": {
-    "limit": 6,
-    "offset": 0,
-    "sap-xep": [
+  "player": [
+    {
+      "file": "http://v2.vod.vungtv.com/hls/b85aef1b1e33a65e90168182e2a00531.mp4/index.m3u8?st=NkCZfFRnxKBbWenPPVhpmg&e=1488265979&z=::1",
+      "label": "720",
+      "type": "application/x-mpegURL"
+    },
+    {
+      "file": "http://drive.tienrocker.com/video-api/redirector.php?link=STExV1ExM1YvTlY4VVB0UkFYbDJ0WjU2SXR6STdWZ0wrRldtZ092UzlGVVo4SVRnNHFJWFBzRkUxczQ2NmIzM1F1SVdkRXdVV05KZUR4bmRhMDM4dmxDRlBkamRwdTNwMndJcVNmSExyeGRXRFdRVkpUK3o0SFdnZ0Jnb2VtaFRPU3Z5QXFJMU0vaE5zMHVLcEdzY2t5U0JmMllNbDFoMjY2MlFFMzRZRmVnPQ==",
+      "label": 720,
+      "type": "video/mp4"
+    }
+  ],
+  "film_version": [
+    {
+      "fh_id": "76",
+      "fh_version": "Bản phụ đề Việt",
+      "eps_id": "76",
+      "active": true,
+      "fh_slug": "phu-de",
+      "link": "https://api.vungtv.com/api/v1/phim/detail/?slug=batman-v-superman-dawn-of-justice-batman-dai-chien-superman-anh-sang-cong-ly-16516&eps_hash=VFZWalJuSjBlbmhaVlhsUmRFVnZNMHRFT1hwRE5FdHFlak5xTDFWME9WUnRNbXRHU2xSNFUxRjNjejA9&src=android&limit=6&offset=0"
+    },
+    {
+      "fh_id": "200",
+      "fh_version": "Bản thuyết minh (TMTV)",
+      "eps_id": "370",
+      "fh_slug": "thuyet-minh",
+      "link": "https://api.vungtv.com/api/v1/phim/detail/?slug=batman-v-superman-dawn-of-justice-batman-dai-chien-superman-anh-sang-cong-ly-16516&eps_hash=TW5GdFFtMWFNMU5YWWxWS2VIbzRkalkzTHl0V1NFbzJjMk5VY0N0QlYyZG5UMVZVTm10TGFtNXRkejA9&src=android&limit=6&offset=0"
+    }
+  ],
+  "movie": {
+    "mov_name": "The Walking Dead: Season 7 (Xác Sống: Phần 7)",
+    "mov_id": "17251",
+    "mov_summary": "“The Walking Dead ...",
+    "mov_last_update": "1488187603",
+    "mov_name_accent": "The Walking Dead: Season 7 (Xac Song: Phan 7) ",
+    "mov_score": "8.6",
+    "mov_director": "Greg Nicotero",
+    "mov_writer": " Frank Darabont, Robert Kirkman",
+    "mov_year": "2016",
+    "mov_poster": "poster_01_srq76203.jpg",
+    "mov_frame_bg": "bg_01_jll21258.jpg",
+    "mov_number_episode": "16",
+    "mov_count_episoder": "11",
+    "mov_active": "1",
+    "mov_slug": "the-walking-dead-season-7-xac-song-phan-7",
+    "mov_series": "1",
+    "mov_duration": "",
+    "mov_released_date": "1477155600",
+    "mov_trailer": "",
+    "mov_description": "The Walking Dead Season...",
+    "mov_type_res": "HD",
+    "mov_cover": "https://img.vungtv.com/images/movies/17251/bg_01_jll21258.jpg",
+    "eps_id": "9951",
+    "eps_movies_id": "17251",
+    "eps_title": "Tập 1",
+    "eps_order": "1",
+    "type_phim": "phim_playlist",
+    "eps_hash": "VDFsNVFYaGxPRUlyWTFGMmNrZHhSbFJRTTBKR1dXWkJUMGx4Y0ZCYVltdzRZbkp1T0VKTFYxSnFVVDA9",
+    "pl_id": "30",
+    "pl_name": "New Playlist",
+    "actors": "Sarah Wayne Callies, Andrew Lincoln, Jon Bernthal",
+    "features": "Tâm lý, Kinh dị, Giật gân",
+    "countries": "Mỹ"
+  },
+  "rating": {
+    "total": 0,
+    "avg": 0
+  },
+  "episodes1": {
+    "box": [
       {
-        "value": "film_name",
-        "label" : "Ten phim az"
-      },
-      {
-        "value": "film_name",
-        "label" : "Ten phim az"
+        "mov_id": "17251",
+        "mov_name": "The Walking Dead: Season 7 (Xác Sống: Phần 7)",
+        "mov_summary": "“The Walking Dead 7” hay còn gọi &quot;Xác Sống 7&quot; kể về một nhóm người sống sót, dẫn đầu bởi nhân viên cảnh cảnh sát Rick Grimes chạy trốn khỏi sự truy lùng, săn đuổi của đội quân thây ma ăn thịt người. Dựa theo cuốn truyện tranh nổi tiếng cùng tên của nhà văn Robert Kirkman, bộ phim đặt trong bối cảnh thế giới hoàn toàn thuộc về những thây ma sau ngày tận thế.",
+        "mov_name_accent": "The Walking Dead: Season 7 (Xac Song: Phan 7) ",
+        "mov_score": "8.6",
+        "mov_director": "Greg Nicotero",
+        "mov_writer": " Frank Darabont, Robert Kirkman",
+        "mov_year": "2016",
+        "mov_poster": "https://img.vungtv.com/images/movies/17251/poster_01_srq76203.jpg",
+        "mov_number_episode": "16",
+        "mov_count_episoder": "11",
+        "mov_active": "1",
+        "mov_slug": "the-walking-dead-season-7-xac-song-phan-7",
+        "mov_series": "1",
+        "mov_duration": false,
+        "mov_released_date": "1477155600",
+        "mov_trailer": "",
+        "eps_id": "9951",
+        "eps_status": "1",
+        "eps_upload_time": "1479706639",
+        "eps_title": "1",
+        "eps_order": "1",
+        "mov_cover": "http://localhost/filmcms/public/film/assets/images/image-not.png",
+        "eps_id_hash": "T1l5QXhlOEIrY1F2ckdxRlRQM0JGWWZBT0lxcFBaYmw4YnJuOEJLV1JqUT0="
       }
     ],
-    "danh-muc": [
+    "active": "1",
+    "has_preview": false,
+    "total": "11"
+  },
+  "relate_movies": [
+    {
+      "mov_name": "The Flash: Season 3 (Tia Chớp: Phần 3)",
+      "mov_id": "17171",
+      "mov_score": "8.3",
+      "mov_poster": "https://img.vungtv.com/images/movies/17171/poster_01_qqr92020.jpg",
+      "mov_frame_bg": "bg_01_nfe52530.jpg",
+      "mov_number_episode": "23",
+      "mov_count_episoder": "13",
+      "mov_slug": "the-flash-season-3-tia-chop-phan-3",
+      "mov_series": "1",
+      "mov_cover": "https://img.vungtv.com/images/movies/17171/bg_01_nfe52530.jpg",
+      "tm": "",
+      "lt": "",
+      "res": "HD"
+    }
+  ],
+
+  "episodes" :{
+    "phu-de" : [
       {
-        "value": "film_name",
-        "label" : "Ten phim az"
-      },
-      {
-        "value": "film_name",
-        "label" : "Ten phim az"
+        "eps_id": "9951",
+        "eps_status": "1",
+        "eps_title": "1",
+        "eps_order": "1",
+        "mov_cover": "http://localhost/filmcms/public/film/assets/images/image-not.png",
+        "eps_id_hash": "T1l5QXhlOEIrY1F2ckdxRlRQM0JGWWZBT0lxcFBaYmw4YnJuOEJLV1JqUT0="
       }
     ],
-    "quoc-gia": [
+    "thuyet-minh" : [
       {
-        "value": "film_name",
-        "label" : "Ten phim az"
-      },
-      {
-        "value": "film_name",
-        "label" : "Ten phim az"
-      }
-    ],
-    "the-loai": [
-      {
-        "value": "film_name",
-        "label" : "Ten phim az"
-      },
-      {
-        "value": "film_name",
-        "label" : "Ten phim az"
-      }
-    ],
-    "nam": [
-      {
-        "value": "film_name",
-        "label" : "Ten phim az"
-      },
-      {
-        "value": "film_name",
-        "label" : "Ten phim az"
+        "eps_title": "1",
+        "eps_order": "1",
+        "eps_id_hash": "T1l5QXhlOEIrY1F2ckdxRlRQM0JGWWZBT0lxcFBaYmw4YnJuOEJLV1JqUT0="
       }
     ]
   }
+
+
 }

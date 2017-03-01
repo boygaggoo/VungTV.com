@@ -43,14 +43,19 @@ public class SearchPresenter implements SearchContract.Presenter {
             public void onSearchResultSuccess(ApiSearch.Data data) {
                 activityView.showLoadding(false);
                 activityView.showMsgError(false, null);
-                activityView.showListMovies(true, (ArrayList<Movie>) data.getMovies());
+
+                activityView.addItemMovie((ArrayList<Movie>) data.getMovies());
+
+                if (data.getMovies().size() > 0) {
+                    isLoadmore = true;
+                    searchServices.setOffset(data.getOffset() + data.getLimit());
+                }
             }
 
             @Override
             public void onFailure(int code, String error) {
                 activityView.showLoadding(false);
                 activityView.showMsgError(true, error);
-                activityView.showListMovies(false, null);
             }
         });
     }
@@ -76,15 +81,27 @@ public class SearchPresenter implements SearchContract.Presenter {
     }
 
     @Override
-    public void loadData(String query) {
+    public void startSearch(String query) {
+        activityView.clearListMovies();
+
         if (query.length() < 3) {
             activityView.showMsgError(true, context.getString(R.string.search_error_msg_short));
             return;
         }
 
         searchServices.setQuery(query);
+        searchServices.setOffset(0);
+        searchServices.cancel();
         searchServices.enqueueSearch();
         activityView.showLoadding(true);
+    }
+
+    @Override
+    public void loadMore() {
+        if (isLoadmore) {
+            isLoadmore = false;
+            searchServices.enqueueSearch();
+        }
     }
 
     @Override
@@ -95,14 +112,20 @@ public class SearchPresenter implements SearchContract.Presenter {
 
     @Override
     public void changeSearchType(int searchType) {
+
         if (searchType == 0) {
             searchServices.setModeMovie();
+            activityView.selectSearchTypeFilmName();
         } else {
             searchServices.setModeActor();
+            activityView.selectSearchTypeActorName();
         }
 
-        if (searchServices.getQuery().length() > 2) {
-            clearSearchView();
+        if (searchServices.getQuery().length() > 1) {
+            isLoadmore = false;
+            activityView.clearListMovies();
+            searchServices.cancel();
+            searchServices.setOffset(0);
             searchServices.enqueueSearch();
             activityView.showLoadding(true);
         }
@@ -110,7 +133,36 @@ public class SearchPresenter implements SearchContract.Presenter {
 
     @Override
     public void openActMovieDetail(int movieId) {
+        activityView.openActMovieDetail(movieId);
+    }
 
+    @Override
+    public void configChange(boolean isScreenLand, ArrayList<Object> list) {
+        ArrayList<Object> listCop = new ArrayList<>();
+        listCop.addAll(list);
+
+        isLoadmore = false;
+        activityView.clearListMovies();
+
+        if (isScreenLand) {
+            columNumber = 6;
+            rowAdsNumber = 4;
+        } else {
+            columNumber = 3;
+            rowAdsNumber = 8;
+        }
+
+        float itemWidth = DensityUtils.getWidthInPx(context);
+        int itemSpace = context.getResources().getDimensionPixelSize(R.dimen.space_3);
+
+        itemWidth = itemWidth - itemSpace * (columNumber + 1);
+        itemWidth = itemWidth / columNumber;
+
+        activityView.showRecyclerView(columNumber, rowAdsNumber, itemWidth, itemSpace);
+
+        activityView.setListAdapter(listCop);
+
+        isLoadmore = true;
     }
 
 

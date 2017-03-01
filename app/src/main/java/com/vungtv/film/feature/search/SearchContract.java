@@ -19,11 +19,13 @@ public interface SearchContract {
 
         void showMsgError(boolean show, String error);
 
-        void clearSearchView();
-
         void showRecyclerView(int columNumber, int rowAdsNumber, float itemWidth, int itemSpace);
 
-        void showListMovies(boolean show, ArrayList<Movie> listMovies);
+        void addItemMovie(ArrayList<Movie> movies);
+
+        void setListAdapter(ArrayList<Object> list);
+
+        void clearSearchView();
 
         void clearListMovies();
 
@@ -36,12 +38,16 @@ public interface SearchContract {
 
     interface Presenter extends BasePresenter {
 
-        void loadData(String query);
+        void startSearch(String query);
+
+        void loadMore();
 
         void clearSearchView();
 
         void changeSearchType(int searchType);
 
         void openActMovieDetail(int movieId);
+
+        void configChange(boolean isScreenLand, ArrayList<Object> list);
     }
 }

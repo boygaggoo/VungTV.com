@@ -5,6 +5,18 @@
         android:color="@color/text_dark_3" />
 
     <item
+        android:state_focused="true"
+        android:color="@color/text_dark_3" />
+
+    <item
+        android:state_selected="true"
+        android:color="@color/text_dark_3" />
+
+    <item
+        android:state_activated="true"
+        android:color="@color/text_dark_3" />
+
+    <item
         android:color="@color/green" />
 
 </selector>

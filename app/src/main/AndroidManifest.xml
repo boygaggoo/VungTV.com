@@ -62,7 +62,9 @@
             android:name=".feature.recharge.RechargeActivity"
             android:configChanges="keyboardHidden|orientation|screenSize" />
 
-        <activity android:name=".feature.search.SearchActivity" />
+        <activity
+            android:configChanges="keyboardHidden|orientation|screenSize"
+            android:name=".feature.search.SearchActivity" />
 
         <activity
             android:name=".feature.logout.LogOutActivity"

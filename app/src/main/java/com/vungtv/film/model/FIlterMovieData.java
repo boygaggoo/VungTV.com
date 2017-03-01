@@ -6,6 +6,7 @@ package com.vungtv.film.model;
  */
 
 public class FilterMovieData {
+
     private String label;
     private String value;
 

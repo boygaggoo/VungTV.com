@@ -27,9 +27,9 @@ public class HomeNavAdapter extends RecyclerView.Adapter {
 
     private static final int TYPE_HEADER = 0;
     public static final int TYPE_NORMAL = 1;
-    private static final int TYPE_WITH_ICON = 2;
-    private static final int TYPE_WITH_ICON_LABEL = 3;
-    private static final int TYPE_LINE = 4;
+    public static final int TYPE_WITH_ICON = 2;
+    public static final int TYPE_WITH_ICON_LABEL = 3;
+    public static final int TYPE_LINE = 4;
 
     private Context context;
     private ArrayList<NavItem> list = new ArrayList<>();
@@ -115,6 +115,11 @@ public class HomeNavAdapter extends RecyclerView.Adapter {
     public void addItem(int pos, NavItem navItem) {
         list.add(pos, navItem);
         notifyItemInserted(pos);
+    }
+
+    public void addItem(NavItem navItem) {
+        list.add(navItem);
+        notifyItemInserted(list.size() - 1);
     }
 
     public void addAllItem(ArrayList<NavItem> list) {

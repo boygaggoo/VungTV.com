@@ -75,7 +75,7 @@
             android:gravity="center"
             android:background="@drawable/ds_touchable_bg_gray1"
             android:text="@string/search_action_film_name"
-            android:textColor="@color/color_touchable_green_gray"
+            android:textColor="@color/green"
             app:textStyle="bold"/>
 
         <com.vungtv.film.widget.VtvTextView
@@ -85,9 +85,9 @@
             android:layout_height="@dimen/space_48"
             android:layout_weight="1"
             android:gravity="center"
-            android:background="@drawable/ds_touchable_bg_gray1"
+            android:background="@drawable/ds_touchable_bg_gray2"
             android:text="@string/search_action_film_actor"
-            android:textColor="@color/color_touchable_green_gray"
+            android:textColor="@color/text_dark_3"
             app:textStyle="bold"/>
 
     </LinearLayout>
@@ -104,6 +104,9 @@
     <android.support.v7.widget.RecyclerView
         android:id="@+id/search_recyclerview"
         android:layout_width="match_parent"
-        android:layout_height="match_parent" />
+        android:layout_height="match_parent"
+        android:paddingLeft="@dimen/space_7"
+        android:paddingRight="@dimen/space_7"
+        android:scrollbars="vertical"/>
 
 </LinearLayout>

@@ -13,6 +13,8 @@ import android.widget.LinearLayout;
 
 import com.vungtv.film.BaseActivity;
 import com.vungtv.film.R;
+import com.vungtv.film.data.source.remote.ApiQuery;
+import com.vungtv.film.data.source.remote.model.ApiHomeMenu;
 import com.vungtv.film.data.source.remote.service.HomeServices;
 import com.vungtv.film.eventbus.AccountModifyEvent;
 import com.vungtv.film.eventbus.ConfigurationChangedEvent;
@@ -22,6 +24,7 @@ import com.vungtv.film.feature.home.HomeNavAdapter.OnNavItemSelectedListener;
 import com.vungtv.film.feature.login.LoginActivity;
 import com.vungtv.film.feature.personal.PersonalActivity;
 import com.vungtv.film.feature.search.SearchActivity;
+import com.vungtv.film.model.NavItem;
 import com.vungtv.film.util.ActivityUtils;
 import com.vungtv.film.util.LogUtils;
 import com.vungtv.film.util.UriPaser;
@@ -33,10 +36,12 @@ import org.greenrobot.eventbus.Subscribe;
 
 import butterknife.BindView;
 
-public class HomeActivity extends BaseActivity implements OnNavItemSelectedListener {
+public class HomeActivity extends BaseActivity implements OnNavItemSelectedListener, com.vungtv.film.data.source.remote.service.HomeServices.HomeMenuResultCallback {
     private static final String TAG = HomeActivity.class.getSimpleName();
 
     private HomeNavAdapter navAdapter;
+
+    private HomeServices HomeServices;
 
     @BindView(R.id.home_toolbar)
     VtvToolbarHome toolbar;
@@ -66,11 +71,16 @@ public class HomeActivity extends BaseActivity implements OnNavItemSelectedListe
         ActivityUtils.addFragmentToActivity(
                 getSupportFragmentManager(), homeFragment, R.id.home_frameLayout);
 
-        new HomePresenter(this, homeFragment, new HomeServices(this));
+        HomeServices = new HomeServices(this);
+        HomeServices.setHomeMenuResultCallback(this);
+        HomeServices.loadHomeMenu();
+        new HomePresenter(this, homeFragment, HomeServices);
+
     }
 
     @Override
     protected void onDestroy() {
+        HomeServices.cancelLoadMenu();
         EventBus.getDefault().unregister(this);
         super.onDestroy();
     }
@@ -98,7 +108,6 @@ public class HomeActivity extends BaseActivity implements OnNavItemSelectedListe
 
     @Override
     public void onNavigationItemSelected(int position, String url) {
-        Bundle bundle = new Bundle();
 
         if (position == 0) {
             Intent intent = new Intent(HomeActivity.this, LoginActivity.class);
@@ -106,12 +115,27 @@ public class HomeActivity extends BaseActivity implements OnNavItemSelectedListe
             return;
         }
 
-        String pathSegment = UriPaser.getNavItemPathSegment(url);
-        if (pathSegment == null) return;
+        String p = UriPaser.getNavItemPathSegment(url);
+        if (p == null) return;
 
         drawer.closeDrawer(navRecycler);
 
+        if (p.equalsIgnoreCase(ApiQuery.PATH_FAVORITE)) {
+            // Movies favorite
 
+        } else if (p.equalsIgnoreCase(ApiQuery.PATH_FOLLOW)) {
+            // Movies follow
+
+        } else if (p.equalsIgnoreCase("v1")) {
+            // Movies Dowload
+
+        } else if (p.equalsIgnoreCase(ApiQuery.PATH_PHIM_LE) || p.equalsIgnoreCase(ApiQuery.PATH_PHIM_BO)) {
+
+        } else {
+            Intent intent = new Intent(HomeActivity.this, FilterMoviesActivity.class);
+            intent.putExtras(FilterMoviesActivity.getBundleData(url));
+            startActivity(intent);
+        }
     }
 
     @Subscribe
@@ -211,6 +235,36 @@ public class HomeActivity extends BaseActivity implements OnNavItemSelectedListe
         } else {
             drawer.disableModeLockOpen(navRecycler);
             homeContentLayout.setPadding(0, 0, 0, 0);
+        }
+    }
+
+    @Override
+    public void onHomeMenuResultSuccess(ApiHomeMenu.Data data) {
+        if (data.getMenus() == null || data.getMenus().size() == 0) {
+            return;
+        }
+
+        for (int i = 0; i < data.getMenus().size(); i++) {
+            NavItem navItem = data.getMenus().get(i);
+            String p = navItem.getUriLastPathSegment();
+
+            if (p == null) {
+            } else if (p.equalsIgnoreCase(ApiQuery.PATH_FAVORITE)) {
+                navItem.setType(HomeNavAdapter.TYPE_WITH_ICON);
+                navItem.setIconLeftRes(R.drawable.icon_heart3);
+            } else if (p.equalsIgnoreCase(ApiQuery.PATH_FOLLOW)) {
+                navItem.setType(HomeNavAdapter.TYPE_WITH_ICON_LABEL);
+                navItem.setIconLeftRes(R.drawable.icon_bell3);
+            } else if (p.equalsIgnoreCase("v1")) {
+                navItem.setType(HomeNavAdapter.TYPE_WITH_ICON);
+                navItem.setIconLeftRes(R.drawable.icon_download2);
+            }
+
+            navAdapter.addItem(navItem);
+
+            if ( i == 7 ) {
+                navAdapter.addItem(new NavItem(HomeNavAdapter.TYPE_LINE, "", ""));
+            }
         }
     }
 }

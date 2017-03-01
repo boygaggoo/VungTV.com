@@ -23,7 +23,7 @@ import retrofit2.http.Query;
 
 public class SearchServices {
     private static final String TAG = SearchServices.class.getSimpleName();
-    private static final int LIMIT = 10;
+    private static final int LIMIT = 20;
 
     private final Context context;
 
