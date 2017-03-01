@@ -23,7 +23,10 @@
             android:layout_toStartOf="@+id/search_btn_exit"
             android:layout_centerVertical="true"
             android:hint="@string/search_hint"
-            tools:text="" />
+            android:imeOptions="actionSearch"
+            android:maxLines="1"
+            android:inputType="text"
+            tools:text=""/>
 
         <com.vungtv.film.widget.VtvTextView
             style="@style/AppTheme.Text"

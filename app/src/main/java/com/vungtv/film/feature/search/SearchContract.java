@@ -21,7 +21,7 @@ public interface SearchContract {
 
         void clearSearchView();
 
-        void setRecyclerView(int columNumber, float itemWidth, int itemSpace);
+        void showRecyclerView(int columNumber, int rowAdsNumber, float itemWidth, int itemSpace);
 
         void showListMovies(boolean show, ArrayList<Movie> listMovies);
 

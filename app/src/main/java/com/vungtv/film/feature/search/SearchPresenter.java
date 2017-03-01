@@ -25,7 +25,11 @@ public class SearchPresenter implements SearchContract.Presenter {
 
     private final SearchServices searchServices;
 
+    private boolean isLoadmore = false;
+
     private int columNumber = 3;
+
+    private int rowAdsNumber = 8;
 
     public SearchPresenter(Context context, final SearchContract.View activityView) {
         this.context = checkNotNull(context);
@@ -57,11 +61,13 @@ public class SearchPresenter implements SearchContract.Presenter {
         int itemSpace = context.getResources().getDimensionPixelSize(R.dimen.space_3);
         if (context.getResources().getBoolean(R.bool.isTabletLand)) {
             columNumber = 6;
+            rowAdsNumber = 4;
         }
 
         itemWidth = itemWidth - itemSpace*(columNumber + 1);
         itemWidth = itemWidth / columNumber;
-        activityView.setRecyclerView(columNumber, itemWidth, itemSpace);
+
+        activityView.showRecyclerView(columNumber, rowAdsNumber, itemWidth, itemSpace);
     }
 
     @Override

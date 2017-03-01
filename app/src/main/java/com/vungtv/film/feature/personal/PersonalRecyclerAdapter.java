@@ -9,7 +9,7 @@ import android.view.ViewGroup;
 
 import com.vungtv.film.R;
 import com.vungtv.film.interfaces.OnItemClickListener;
-import com.vungtv.film.model.NavItem;
+import com.vungtv.film.model.MenuItem;
 import com.vungtv.film.widget.VtvTextView;
 
 import java.util.ArrayList;
@@ -20,7 +20,7 @@ public class PersonalRecyclerAdapter extends RecyclerView.Adapter {
     public static final int TYPE_NORMAL = 1;
     private static final int TYPE_WITH_LABEL = 2;
     private Context context;
-    private ArrayList<NavItem> list = new ArrayList<>();
+    private ArrayList<MenuItem> list = new ArrayList<>();
     private OnItemClickListener onItemClickListener;
     private int numLabel = 0;
 
@@ -142,17 +142,17 @@ public class PersonalRecyclerAdapter extends RecyclerView.Adapter {
 
     private void addTolist(int itemid, int titleRes) {
         Resources res = context.getResources();
-        list.add(new NavItem(itemid, res.getString(titleRes)));
+        list.add(new MenuItem(itemid, res.getString(titleRes)));
     }
 
     private void addTolist(int itemType, int itemid, int titleRes) {
         Resources res = context.getResources();
-        list.add(new NavItem(itemType, itemid, res.getString(titleRes)));
+        list.add(new MenuItem(itemType, itemid, res.getString(titleRes)));
     }
 
     private void addTolist(int itemType, int itemid, int titleRes, int iconLeftRes) {
         Resources res = context.getResources();
-        list.add(new NavItem(itemType, itemid, res.getString(titleRes), iconLeftRes));
+        list.add(new MenuItem(itemType, itemid, res.getString(titleRes), iconLeftRes));
     }
 
     /**
@@ -166,7 +166,7 @@ public class PersonalRecyclerAdapter extends RecyclerView.Adapter {
             textTitle = (VtvTextView) itemView. findViewById(R.id.item_userpage_title);
         }
 
-        void setInfo(NavItem navItem) {
+        void setInfo(MenuItem navItem) {
             if (navItem.getTitle() != null) {
                 textTitle.setText(navItem.getTitle());
             }
@@ -195,7 +195,7 @@ public class PersonalRecyclerAdapter extends RecyclerView.Adapter {
             }
         }
 
-        public void setInfo(NavItem item) {
+        public void setInfo(MenuItem item) {
 
             if (item.getTitle() != null) {
                 textTitle.setText(item.getTitle());
@@ -225,7 +225,7 @@ public class PersonalRecyclerAdapter extends RecyclerView.Adapter {
             }
         }
 
-        public void setInfo(NavItem item) {
+        public void setInfo(MenuItem item) {
 
             if (item.getTitle() != null) {
                 textTitle.setText(item.getTitle());

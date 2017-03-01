@@ -150,5 +150,6 @@
     <string name="popup_action_filter">Lọc</string>
     <string name="favorite_text_title">Phim yêu thích</string>
     <string name="favorite_text_msg_not_yet">Chưa yêu thích phim nào.</string>
+    <string name="search_error_msg_short">Từ khóa tối thiểu 3 ký tự</string>
 
 </resources>
