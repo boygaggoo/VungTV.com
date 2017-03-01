@@ -1,5 +1,6 @@
 package com.vungtv.film.feature.search;
 
+import android.content.Intent;
 import android.content.res.Configuration;
 import android.os.Bundle;
 import android.support.v4.content.res.ResourcesCompat;
@@ -14,6 +15,7 @@ import android.widget.TextView;
 import com.vungtv.film.BaseActivity;
 import com.vungtv.film.R;
 import com.vungtv.film.feature.filtermovies.FilterMoviesAdapter;
+import com.vungtv.film.feature.moviedetail.MovieDetailActivity;
 import com.vungtv.film.interfaces.OnItemClickListener;
 import com.vungtv.film.model.Movie;
 import com.vungtv.film.widget.GridSpacingItemDecoration;
@@ -181,7 +183,9 @@ public class SearchActivity extends BaseActivity implements SearchContract.View 
 
     @Override
     public void openActMovieDetail(int movieId) {
-
+        Intent intent = new Intent(this, MovieDetailActivity.class);
+        intent = MovieDetailActivity.getIntentData(intent, movieId);
+        startActivity(intent);
     }
 
     @Override

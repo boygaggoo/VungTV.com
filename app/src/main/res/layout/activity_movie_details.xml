@@ -11,13 +11,16 @@
         android:id="@+id/activity_movie_details"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@color/colorPrimary">
+        android:background="@color/colorPrimary" >
 
-        <FrameLayout
-            android:id="@+id/mdetails_frame_video"
+        <ImageView
+            android:id="@+id/mdetails_img_cover"
             android:layout_width="match_parent"
-            android:layout_height="200dp"
-            android:background="@drawable/default_poster_land"/>
+            android:layout_height="wrap_content"
+            android:adjustViewBounds="true"
+            android:scaleType="centerCrop"
+            android:contentDescription="@string/app_name"
+            tools:src="@drawable/default_poster_land"/>
 
         <!-- Toolbar -->
         <RelativeLayout
@@ -63,12 +66,13 @@
             android:id="@+id/mdetails_tv_filmname_1"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/mdetails_frame_video"
+            android:layout_below="@+id/mdetails_img_cover"
             android:layout_marginTop="@dimen/margin"
             android:layout_marginLeft="@dimen/margin"
             android:layout_marginRight="@dimen/margin"
             android:textColor="@color/text_light_1"
             android:textSize="@dimen/font_lage"
+            android:text="@string/movie_details_text_empty"
             app:textStyle="bold"
             tools:text="Đại Đường Song Long"/>
 
@@ -96,8 +100,8 @@
             android:drawableStart="@drawable/icon_hd"
             android:textColor="@color/colorAccent"
             android:textSize="@dimen/font_normal"
-            app:textStyle="bold"
-            tools:text="7.2"/>
+            android:text="@string/movie_details_text_empty"
+            app:textStyle="bold"/>
 
         <com.vungtv.film.widget.VtvTextView
             android:id="@+id/mdetails_tv_imdb_2"
@@ -109,6 +113,7 @@
             android:layout_marginTop="@dimen/margin"
             android:textColor="@color/text_light_2"
             android:textSize="@dimen/font_normal"
+            android:text="@string/movie_details_text_empty"
             tools:text="/10 (5000)"/>
 
         <LinearLayout
@@ -151,8 +156,9 @@
             android:layout_below="@+id/mdetails_tv_imdb"
             android:layout_gravity="center_horizontal"
             android:numStars="5"
-            android:stepSize="1"
-            tools:rating="3"/>
+            android:stepSize="0.1"
+            android:max="10"
+            tools:rating="3.7"/>
 
         <com.vungtv.film.widget.VtvTextView
             android:id="@+id/mdetails_tv_rating_count"
@@ -164,6 +170,7 @@
             android:layout_marginTop="@dimen/margin"
             android:textColor="@color/text_light_2"
             android:textSize="@dimen/font_normal"
+            android:text="(0)"
             tools:text="(5000)"/>
 
         <ImageView
@@ -290,7 +297,7 @@
             android:layout_below="@+id/mdetails_tv_rating"
             android:numStars="5"
             android:stepSize="1"
-            android:rating="3"/>
+            tools:rating="3"/>
 
         <View
             android:id="@+id/mdetails_line_2"
@@ -315,6 +322,7 @@
             android:orientation="vertical" />
 
         <com.vungtv.film.widget.moviesrowview.VtvMoviesRowView
+            android:id="@+id/mdetails_relate_movies"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_below="@+id/mdetails_layout_episodes"

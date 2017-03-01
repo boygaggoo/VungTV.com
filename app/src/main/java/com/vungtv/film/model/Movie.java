@@ -1,13 +1,10 @@
 package com.vungtv.film.model;
 
-import android.os.Parcel;
-import android.os.Parcelable;
-
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
 
-public class Movie implements Parcelable {
+public class Movie {
     @SerializedName("mov_id")
     @Expose
     private int movId;
@@ -35,6 +32,51 @@ public class Movie implements Parcelable {
     @SerializedName("mov_cover")
     @Expose
     private String movCover;
+    @SerializedName("mov_summary")
+    @Expose
+    private String movSummary;
+    @SerializedName("mov_last_update")
+    @Expose
+    private String movLastUpdate;
+    @SerializedName("mov_name_accent")
+    @Expose
+    private String movNameAccent;
+    @SerializedName("mov_director")
+    @Expose
+    private String movDirector;
+    @SerializedName("mov_writer")
+    @Expose
+    private String movWriter;
+    @SerializedName("mov_year")
+    @Expose
+    private String movYear;
+    @SerializedName("mov_active")
+    @Expose
+    private int movActive;
+    @SerializedName("mov_duration")
+    @Expose
+    private String movDuration;
+    @SerializedName("mov_released_date")
+    @Expose
+    private long movReleasedDate;
+    @SerializedName("mov_trailer")
+    @Expose
+    private String movTrailer;
+    @SerializedName("mov_type_res")
+    @Expose
+    private String movTypeRes;
+    @SerializedName("type_phim")
+    @Expose
+    private String typePhim;
+    @SerializedName("actors")
+    @Expose
+    private String actors;
+    @SerializedName("features")
+    @Expose
+    private String features;
+    @SerializedName("countries")
+    @Expose
+    private String countries;
     @SerializedName("tm")
     @Expose
     private String tm;
@@ -46,54 +88,6 @@ public class Movie implements Parcelable {
     private String res;
 
     public Movie() {
-    }
-
-    protected Movie(Parcel in) {
-        movName = in.readString();
-        movId = in.readInt();
-        movScore = in.readString();
-        movPoster = in.readString();
-        movFrameBg = in.readString();
-        movNumberEpisode = in.readInt();
-        movCountEpisoder = in.readInt();
-        movSeries = in.readInt();
-        movCover = in.readString();
-        tm = in.readString();
-        lt = in.readString();
-        res = in.readString();
-    }
-
-    public static final Creator<Movie> CREATOR = new Creator<Movie>() {
-        @Override
-        public Movie createFromParcel(Parcel in) {
-            return new Movie(in);
-        }
-
-        @Override
-        public Movie[] newArray(int size) {
-            return new Movie[size];
-        }
-    };
-
-    @Override
-    public int describeContents() {
-        return 0;
-    }
-
-    @Override
-    public void writeToParcel(Parcel parcel, int i) {
-        parcel.writeString(movName);
-        parcel.writeInt(movId);
-        parcel.writeString(movScore);
-        parcel.writeString(movPoster);
-        parcel.writeString(movFrameBg);
-        parcel.writeInt(movNumberEpisode);
-        parcel.writeInt(movCountEpisoder);
-        parcel.writeInt(movSeries);
-        parcel.writeString(movCover);
-        parcel.writeString(tm);
-        parcel.writeString(lt);
-        parcel.writeString(res);
     }
 
     public String getMovName() {
@@ -190,5 +184,125 @@ public class Movie implements Parcelable {
 
     public void setRes(String res) {
         this.res = res;
+    }
+
+    public String getMovSummary() {
+        return movSummary;
+    }
+
+    public void setMovSummary(String movSummary) {
+        this.movSummary = movSummary;
+    }
+
+    public String getMovLastUpdate() {
+        return movLastUpdate;
+    }
+
+    public void setMovLastUpdate(String movLastUpdate) {
+        this.movLastUpdate = movLastUpdate;
+    }
+
+    public String getMovNameAccent() {
+        return movNameAccent;
+    }
+
+    public void setMovNameAccent(String movNameAccent) {
+        this.movNameAccent = movNameAccent;
+    }
+
+    public String getMovDirector() {
+        return movDirector;
+    }
+
+    public void setMovDirector(String movDirector) {
+        this.movDirector = movDirector;
+    }
+
+    public String getMovWriter() {
+        return movWriter;
+    }
+
+    public void setMovWriter(String movWriter) {
+        this.movWriter = movWriter;
+    }
+
+    public String getMovYear() {
+        return movYear;
+    }
+
+    public void setMovYear(String movYear) {
+        this.movYear = movYear;
+    }
+
+    public int getMovActive() {
+        return movActive;
+    }
+
+    public void setMovActive(int movActive) {
+        this.movActive = movActive;
+    }
+
+    public String getMovDuration() {
+        return movDuration;
+    }
+
+    public void setMovDuration(String movDuration) {
+        this.movDuration = movDuration;
+    }
+
+    public long getMovReleasedDate() {
+        return movReleasedDate;
+    }
+
+    public void setMovReleasedDate(long movReleasedDate) {
+        this.movReleasedDate = movReleasedDate;
+    }
+
+    public String getMovTrailer() {
+        return movTrailer;
+    }
+
+    public void setMovTrailer(String movTrailer) {
+        this.movTrailer = movTrailer;
+    }
+
+    public String getMovTypeRes() {
+        return movTypeRes;
+    }
+
+    public void setMovTypeRes(String movTypeRes) {
+        this.movTypeRes = movTypeRes;
+    }
+
+    public String getTypePhim() {
+        return typePhim;
+    }
+
+    public void setTypePhim(String typePhim) {
+        this.typePhim = typePhim;
+    }
+
+    public String getActors() {
+        return actors;
+    }
+
+    public void setActors(String actors) {
+        this.actors = actors;
+    }
+
+    public String getFeatures() {
+        return features;
+    }
+
+    public void setFeatures(String features) {
+        this.features = features;
+    }
+
+    public String getCountries() {
+        return countries;
+    }
+
+    public void setCountries(String countries) {
+        this.countries = countries;
     }
 }

@@ -12,6 +12,7 @@ import android.widget.TextView;
 import com.vungtv.film.BaseActivity;
 import com.vungtv.film.R;
 import com.vungtv.film.data.source.remote.service.FilterMoviesServices;
+import com.vungtv.film.feature.moviedetail.MovieDetailActivity;
 import com.vungtv.film.feature.search.SearchActivity;
 import com.vungtv.film.interfaces.OnItemClickListener;
 import com.vungtv.film.model.Movie;
@@ -225,8 +226,10 @@ public class FilterMoviesActivity extends BaseActivity implements FilterMoviesCo
     }
 
     @Override
-    public void showActMovieDetails(int movieId) {
-
+    public void openActMovieDetails(int movieId) {
+        Intent intent = new Intent(this, MovieDetailActivity.class);
+        intent = MovieDetailActivity.getIntentData(intent, movieId);
+        startActivity(intent);
     }
 
     @Override
