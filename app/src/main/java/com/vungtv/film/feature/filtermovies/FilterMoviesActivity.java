@@ -17,6 +17,7 @@ import com.vungtv.film.feature.search.SearchActivity;
 import com.vungtv.film.interfaces.OnItemClickListener;
 import com.vungtv.film.model.Movie;
 import com.vungtv.film.popup.PopupMenuSort;
+import com.vungtv.film.util.LogUtils;
 import com.vungtv.film.util.UriPaser;
 import com.vungtv.film.widget.GridSpacingItemDecoration;
 import com.vungtv.film.widget.LoadmoreScrollListener;
@@ -183,6 +184,7 @@ public class FilterMoviesActivity extends BaseActivity implements FilterMoviesCo
             @Override
             public void onItemClick(View v, int pos) {
                 presenter.openMovieDetails(adapter.getItemMovieId(pos));
+                LogUtils.e(TAG, "openActMovieDetail movId 2 = " + adapter.getItemMovieId(pos));
             }
         });
 
@@ -226,10 +228,9 @@ public class FilterMoviesActivity extends BaseActivity implements FilterMoviesCo
     }
 
     @Override
-    public void openActMovieDetails(int movieId) {
-        Intent intent = new Intent(this, MovieDetailActivity.class);
-        intent = MovieDetailActivity.getIntentData(intent, movieId);
-        startActivity(intent);
+    public void openActMovieDetail(int movieId) {
+        LogUtils.e(TAG, "openActMovieDetail movId 4 = " + movieId);
+        startActivity(MovieDetailActivity.getIntentData(this, movieId));
     }
 
     @Override

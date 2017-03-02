@@ -32,7 +32,7 @@ public class FilterMoviesPresenter implements FilterMoviesContract.Presenter {
 
     private final Context context;
 
-    private final FilterMoviesContract.View moviesView;
+    private final FilterMoviesContract.View activityView;
 
     private final FilterMoviesServices filterMoviesServices;
 
@@ -42,12 +42,12 @@ public class FilterMoviesPresenter implements FilterMoviesContract.Presenter {
 
     private int rowAdsNumber = 8;
 
-    public FilterMoviesPresenter(Context context, FilterMoviesContract.View moviesView, FilterMoviesServices filterMoviesServices) {
+    public FilterMoviesPresenter(Context context, FilterMoviesContract.View activityView, FilterMoviesServices filterMoviesServices) {
         this.context = checkNotNull(context);
-        this.moviesView = checkNotNull(moviesView);
+        this.activityView = checkNotNull(activityView);
         this.filterMoviesServices = checkNotNull(filterMoviesServices);
 
-        moviesView.setPresenter(this);
+        activityView.setPresenter(this);
         filterMoviesServicesResponse();
     }
 
@@ -63,7 +63,7 @@ public class FilterMoviesPresenter implements FilterMoviesContract.Presenter {
         itemWidth = itemWidth - itemSpace*(columNumber + 1);
         itemWidth = itemWidth / columNumber;
 
-        moviesView.showRecyclerView(columNumber, rowAdsNumber, itemWidth, itemSpace);
+        activityView.showRecyclerView(columNumber, rowAdsNumber, itemWidth, itemSpace);
     }
 
     @Override
@@ -89,8 +89,8 @@ public class FilterMoviesPresenter implements FilterMoviesContract.Presenter {
     public void loadData() {
         filterMoviesServices.cancel();
         filterMoviesServices.loadFilterMovies();
-        moviesView.showLoading(true);
-        moviesView.showMsgError(false, null);
+        activityView.showLoading(true);
+        activityView.showMsgError(false, null);
     }
 
     @Override
@@ -105,8 +105,8 @@ public class FilterMoviesPresenter implements FilterMoviesContract.Presenter {
     @Override
     public void reloadData() {
         isLoadmore = false;
-        moviesView.clearData();
-        moviesView.disableRefresing();
+        activityView.clearData();
+        activityView.disableRefresing();
         filterMoviesServices.setOffset(0);
         loadData();
     }
@@ -117,7 +117,7 @@ public class FilterMoviesPresenter implements FilterMoviesContract.Presenter {
         listCop.addAll(list);
 
         isLoadmore = false;
-        moviesView.clearData();
+        activityView.clearData();
 
         if (isScreenLand) {
             columNumber = 6;
@@ -133,21 +133,22 @@ public class FilterMoviesPresenter implements FilterMoviesContract.Presenter {
         itemWidth = itemWidth - itemSpace * (columNumber + 1);
         itemWidth = itemWidth / columNumber;
 
-        moviesView.showRecyclerView(columNumber, rowAdsNumber, itemWidth, itemSpace);
+        activityView.showRecyclerView(columNumber, rowAdsNumber, itemWidth, itemSpace);
 
-        moviesView.setListAdapter(listCop);
+        activityView.setListAdapter(listCop);
 
         isLoadmore = true;
     }
 
     @Override
     public void openMovieDetails(int movieId) {
-
+        activityView.openActMovieDetail(movieId);
+        LogUtils.e(TAG, "openActMovieDetail movId 3 = " + movieId);
     }
 
     @Override
     public void sapXepMoviesClick(View view) {
-        moviesView.showPopupSort(view);
+        activityView.showPopupSort(view);
     }
 
     @Override
@@ -177,14 +178,14 @@ public class FilterMoviesPresenter implements FilterMoviesContract.Presenter {
             @Override
             public void onSuccess(ApiFilterMovies.DataPage dataPage) {
 
-                moviesView.showLoading(false);
-                moviesView.showToolbarTitle(dataPage.getTitle());
+                activityView.showLoading(false);
+                activityView.showToolbarTitle(dataPage.getTitle());
 
                 if (dataPage.getMovies().size() > 0) {
                     // add ads;
-                    moviesView.addAdsNative();
+                    activityView.addAdsNative();
                 }
-                moviesView.addItemMovie(dataPage.getMovies());
+                activityView.addItemMovie(dataPage.getMovies());
                 if (dataPage.getMovies().size() > 0) {
                     isLoadmore = true;
                     filterMoviesServices.setOffset(dataPage.getOffset() + filterMoviesServices.getLimit());
@@ -193,8 +194,8 @@ public class FilterMoviesPresenter implements FilterMoviesContract.Presenter {
 
             @Override
             public void onFailure(int code, String error) {
-                moviesView.showLoading(false);
-                moviesView.showMsgError(true, error);
+                activityView.showLoading(false);
+                activityView.showMsgError(true, error);
             }
         });
     }

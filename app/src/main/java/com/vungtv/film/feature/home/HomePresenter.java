@@ -75,7 +75,7 @@ public class HomePresenter implements HomeContract.Presenter {
 
     @Override
     public void openActMovieDetails(int movieId) {
-        homeView.openActMovieDetails(movieId);
+        homeView.openActMovieDetail(movieId);
     }
 
     @Override

@@ -1,5 +1,6 @@
 package com.vungtv.film.feature.moviedetail;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.widget.ImageView;
@@ -11,6 +12,7 @@ import com.vungtv.film.BaseActivity;
 import com.vungtv.film.R;
 import com.vungtv.film.model.Movie;
 import com.vungtv.film.util.StringUtils;
+import com.vungtv.film.util.TextUtils;
 import com.vungtv.film.util.TimeUtils;
 import com.vungtv.film.widget.ExpandableTextView;
 import com.vungtv.film.widget.VtvTextView;
@@ -24,9 +26,9 @@ public class MovieDetailActivity extends BaseActivity implements MovieDetailCont
 
     private static final String TAG = MovieDetailActivity.class.getSimpleName();
 
-    private static final String INTENT_MOVIE_ID = "INTENT_MOVIE_ID";
+    public static final String INTENT_MOVIE_ID = "INTENT_MOVIE_ID";
 
-    @BindView(R.id.activity_movie_details)
+    @BindView(R.id.mdetails_img_cover)
     ImageView imgCover;
 
     @BindView(R.id.mdetails_tv_filmname_1)
@@ -70,7 +72,7 @@ public class MovieDetailActivity extends BaseActivity implements MovieDetailCont
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_movie_details);
+        setContentView(R.layout.activity_movie_detail);
 
         new MovieDetailPresenter(this, this);
         presenter.startLoadDetail(getIntent().getIntExtra(INTENT_MOVIE_ID, 0));
@@ -79,11 +81,12 @@ public class MovieDetailActivity extends BaseActivity implements MovieDetailCont
     /**
      * set intent data;
      *
-     * @param intent Intent start activity;
+     * @param packageContext activity;
      * @param movieId id of movie;
      * @return Intent;
      */
-    public static Intent getIntentData(Intent intent, int movieId) {
+    public static Intent getIntentData(Context packageContext, int movieId) {
+        Intent intent = new Intent(packageContext, MovieDetailActivity.class);
         intent.putExtra(INTENT_MOVIE_ID, movieId);
         return intent;
     }
@@ -105,6 +108,7 @@ public class MovieDetailActivity extends BaseActivity implements MovieDetailCont
             Picasso.with(this)
                     .load(movie.getMovCover().replace(" ", ""))
                     .fit()
+                    .centerCrop()
                     .error(R.drawable.default_poster_land)
                     .into(imgCover);
         }
@@ -120,7 +124,7 @@ public class MovieDetailActivity extends BaseActivity implements MovieDetailCont
 
         // set IMDB
         if (StringUtils.isNotEmpty(movie.getMovScore())) {
-            tvMovName2.setText(movie.getMovScore());
+            tvIMDB.setText(movie.getMovScore());
         }
 
         // set rating point
@@ -129,7 +133,7 @@ public class MovieDetailActivity extends BaseActivity implements MovieDetailCont
         tvRatingCount.setText(rateCount);
 
         // set description;
-        expanTvDes.setText(String.format(
+        String textDes = String.format(
                 getString(R.string.movie_details_des),
                 StringUtils.isNotEmpty(movie.getMovSummary()) ? movie.getMovSummary() : "N/A",
                 movie.getMovReleasedDate() > 0 ? TimeUtils.convertTimeStampToDate(movie.getMovReleasedDate()) : "N/A",
@@ -139,8 +143,9 @@ public class MovieDetailActivity extends BaseActivity implements MovieDetailCont
                 StringUtils.isNotEmpty(movie.getActors()) ? movie.getActors() : "N/A",
                 StringUtils.isNotEmpty(movie.getFeatures()) ? movie.getFeatures() : "N/A",
                 StringUtils.isNotEmpty(movie.getCountries()) ? movie.getCountries() : "N/A"
-                )
         );
+
+        expanTvDes.setText(TextUtils.styleTextHtml(textDes));
     }
 
     @Override

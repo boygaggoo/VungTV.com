@@ -40,7 +40,10 @@
             android:name=".feature.login.LoginActivity"
             android:configChanges="keyboardHidden|orientation|screenSize" />
 
-        <activity android:name=".feature.moviedetail.MovieDetailActivity" />
+        <activity
+            android:theme="@style/AppTheme.Translucent"
+            android:configChanges="keyboardHidden|orientation|screenSize"
+            android:name=".feature.moviedetail.MovieDetailActivity" />
 
         <activity
             android:name=".feature.setting.SettingActivity"

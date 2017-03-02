@@ -12,6 +12,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 
+import com.google.gson.Gson;
 import com.squareup.picasso.Picasso;
 import com.vungtv.film.R;
 import com.vungtv.film.model.HotTopic;
@@ -19,6 +20,7 @@ import com.vungtv.film.model.Movie;
 import com.vungtv.film.model.MovieRecent;
 import com.vungtv.film.util.DrawableUtils;
 import com.vungtv.film.util.FontUtils;
+import com.vungtv.film.util.LogUtils;
 import com.vungtv.film.widget.VtvTextView;
 
 import java.util.ArrayList;
@@ -122,8 +124,11 @@ public class MoviesRowAdapter extends RecyclerView.Adapter {
     }
 
     public int getMovieId(int pos) {
-        if (pos < 0 || pos >= list.size()) return 0;
+
         Object obj = list.get(pos);
+
+        LogUtils.d(TAG, "getMovieId: " + new Gson().toJson(obj));
+
         if (obj instanceof Movie) {
             return ((Movie) obj).getMovId();
         } else if (obj instanceof MovieRecent) {
@@ -164,6 +169,7 @@ public class MoviesRowAdapter extends RecyclerView.Adapter {
             infoLayout = (LinearLayout) itemView.findViewById(R.id.item_home_row_film_layout_info);
 
             itemView.setOnClickListener(this);
+            poster.setOnClickListener(this);
         }
 
         public void setInfo(Movie movie) {
@@ -247,8 +253,10 @@ public class MoviesRowAdapter extends RecyclerView.Adapter {
 
         @Override
         public void onClick(View view) {
-            if (onItemClickListener != null)
-                onItemClickListener.onItemClick(view, getLayoutPosition());
+            if (onItemClickListener != null) {
+                Movie movie = (Movie) list.get(getLayoutPosition());
+                onItemClickListener.onItemClick(view, movie.getMovId());
+            }
         }
     }
 
@@ -273,6 +281,7 @@ public class MoviesRowAdapter extends RecyclerView.Adapter {
             progressBar = (ProgressBar) itemView.findViewById(R.id.item_home_row_film_recent_progress);
             viewGroup = (ViewGroup) rootLayout.getChildAt(0);
             itemView.setOnClickListener(this);
+            imageView.setOnClickListener(this);
             btnInfo.setOnClickListener(this);
             progressBar.setMax(100);
         }
@@ -341,6 +350,7 @@ public class MoviesRowAdapter extends RecyclerView.Adapter {
             poster = (ImageView) itemView.findViewById(R.id.item_home_row_film_img_poster);
 
             itemView.setOnClickListener(this);
+            poster.setOnClickListener(this);
         }
 
         public void setInfo(Movie movie) {
@@ -368,8 +378,10 @@ public class MoviesRowAdapter extends RecyclerView.Adapter {
 
         @Override
         public void onClick(View view) {
-            if (onItemClickListener != null)
-                onItemClickListener.onItemClick(view, getMovieId(getLayoutPosition()));
+            if (onItemClickListener != null) {
+                Movie movie = (Movie) list.get(getLayoutPosition());
+                onItemClickListener.onItemClick(view, movie.getMovId());
+            }
         }
     }
 
@@ -411,8 +423,10 @@ public class MoviesRowAdapter extends RecyclerView.Adapter {
 
         @Override
         public void onClick(View view) {
-            if (onItemClickListener != null)
-                onItemClickListener.onItemClick(view, getMovieId(getLayoutPosition()));
+            if (onItemClickListener != null) {
+                HotTopic hotTopic = (HotTopic) list.get(getLayoutPosition());
+                onItemClickListener.onItemClick(view, hotTopic.getMovId());
+            }
         }
     }
 

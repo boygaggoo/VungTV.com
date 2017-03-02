@@ -1,6 +1,5 @@
 package com.vungtv.film.feature.search;
 
-import android.content.Intent;
 import android.content.res.Configuration;
 import android.os.Bundle;
 import android.support.v4.content.res.ResourcesCompat;
@@ -183,9 +182,7 @@ public class SearchActivity extends BaseActivity implements SearchContract.View 
 
     @Override
     public void openActMovieDetail(int movieId) {
-        Intent intent = new Intent(this, MovieDetailActivity.class);
-        intent = MovieDetailActivity.getIntentData(intent, movieId);
-        startActivity(intent);
+        startActivity(MovieDetailActivity.getIntentData(this, movieId));
     }
 
     @Override

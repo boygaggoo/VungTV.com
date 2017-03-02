@@ -15,6 +15,7 @@ import com.vungtv.film.feature.filtermovies.FilterMoviesActivity;
 import com.vungtv.film.feature.moviedetail.MovieDetailActivity;
 import com.vungtv.film.model.Slider;
 import com.vungtv.film.popup.PopupLoading;
+import com.vungtv.film.util.LogUtils;
 import com.vungtv.film.widget.VtvErrorMsgView;
 import com.vungtv.film.widget.VtvFooterView;
 import com.vungtv.film.widget.moviesrowview.MoviesRowAdapter;
@@ -95,10 +96,8 @@ public class HomeFragment extends Fragment implements HomeContract.View {
     }
 
     @Override
-    public void openActMovieDetails(int movieId) {
-        Intent intent = new Intent(HomeFragment.this.getActivity(), MovieDetailActivity.class);
-        intent = MovieDetailActivity.getIntentData(intent, movieId);
-        getActivity().startActivity(intent);
+    public void openActMovieDetail(int movieId) {
+        getActivity().startActivity(MovieDetailActivity.getIntentData(this.getActivity(), movieId));
     }
 
     @Override
@@ -214,6 +213,7 @@ public class HomeFragment extends Fragment implements HomeContract.View {
                             @Override
                             public void onItemClick(View v, int movieId) {
                                 presenter.openActMovieDetails(movieId);
+                                LogUtils.d(TAG, "addMoviesView openActMovieDetails movieId = " + movieId);
                             }
                         })
                         .build();

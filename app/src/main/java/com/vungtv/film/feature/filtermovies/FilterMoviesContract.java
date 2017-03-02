@@ -26,7 +26,7 @@ public interface FilterMoviesContract {
 
         void showPopupSort(android.view.View view);
 
-        void openActMovieDetails(int movieId);
+        void openActMovieDetail(int movieId);
 
         void addItemMovie(ArrayList<Movie> movies);
 

@@ -83,7 +83,7 @@ public class MenuMoviesActivity extends BaseActivity implements MenuMoviesContra
                         .addOnItemClickListener(new MoviesRowAdapter.OnItemClickListener() {
                             @Override
                             public void onItemClick(View v, int movieId) {
-                                //presenter.openActMovieDetails(movieId);
+                                //presenter.openActMovieDetail(movieId);
                             }
                         })
                         .build();

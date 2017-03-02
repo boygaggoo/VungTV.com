@@ -9,7 +9,6 @@ import android.support.v7.app.AppCompatActivity;
 import android.util.Base64;
 
 import com.vungtv.film.R;
-import com.vungtv.film.data.source.remote.service.AccountServices;
 import com.vungtv.film.feature.home.HomeActivity;
 import com.vungtv.film.util.LogUtils;
 import com.vungtv.film.util.LoginGoogleUtils;
@@ -34,7 +33,7 @@ public class LoadingActivity extends AppCompatActivity implements LoadingContrac
         setContentView(R.layout.activity_loading);
         ButterKnife.bind(this);
 
-        new LoadingPresenter(this, this, new AccountServices(this), new LoginGoogleUtils(this));
+        new LoadingPresenter(this, this, new LoginGoogleUtils(this));
 
         getHashKeyfacebook();
     }

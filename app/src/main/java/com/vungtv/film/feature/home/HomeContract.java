@@ -29,7 +29,7 @@ public interface HomeContract {
 
         void removeAllViews();
 
-        void openActMovieDetails(int movieId);
+        void openActMovieDetail(int movieId);
 
         void openActFilterMovies(String url);
     }

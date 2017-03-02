@@ -22,11 +22,12 @@ public class LoadingPresenter implements LoadingContract.Presenter{
     private final AccountServices accountServices;
 
 
-    public LoadingPresenter(Context context, LoadingContract.View loadingView, AccountServices accountServices, LoginGoogleUtils loginGoogleUtils) {
+    public LoadingPresenter(Context context, LoadingContract.View loadingView, LoginGoogleUtils loginGoogleUtils) {
         this.context = context;
         this.activityView = checkNotNull(loadingView);
-        this.accountServices = checkNotNull(accountServices);
         this.loginGoogleUtils = loginGoogleUtils;
+
+        accountServices = new AccountServices(context.getApplicationContext());
 
         loadingView.setPresenter(this);
         accountServiceResponse();

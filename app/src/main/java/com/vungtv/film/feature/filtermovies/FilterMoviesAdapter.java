@@ -16,6 +16,7 @@ import com.vungtv.film.interfaces.OnItemClickListener;
 import com.vungtv.film.model.Movie;
 import com.vungtv.film.util.DrawableUtils;
 import com.vungtv.film.util.FontUtils;
+import com.vungtv.film.util.LogUtils;
 import com.vungtv.film.widget.VtvTextView;
 
 import java.util.ArrayList;
@@ -135,6 +136,7 @@ public class FilterMoviesAdapter extends RecyclerView.Adapter {
             infoLayout = (LinearLayout) itemView.findViewById(R.id.item_home_row_film_layout_info);
 
             itemView.setOnClickListener(this);
+            poster.setOnClickListener(this);
         }
 
         public void setInfo(Movie movie) {
@@ -212,6 +214,7 @@ public class FilterMoviesAdapter extends RecyclerView.Adapter {
 
         @Override
         public void onClick(View view) {
+            LogUtils.e(TAG, "openActMovieDetail movId 1 = " + getLayoutPosition());
             if (onItemClickListener != null)
                 onItemClickListener.onItemClick(view, getLayoutPosition());
         }
