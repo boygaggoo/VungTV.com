@@ -185,6 +185,10 @@ public class VtvMoviesRowView extends LinearLayout{
         tvTitle.setText(title);
     }
 
+    public void setBtnViewMoreVisible(boolean visible) {
+        btnViewMore.setVisibility(visible ? VISIBLE : GONE);
+    }
+
     public MoviesRowAdapter getAdapter() {
         return adapter;
     }

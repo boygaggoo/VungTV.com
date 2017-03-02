@@ -5,6 +5,7 @@ import android.content.Context;
 import com.vungtv.film.data.source.remote.ApiError;
 import com.vungtv.film.data.source.remote.RetrofitBuild;
 import com.vungtv.film.data.source.remote.interfaces.ApiResultCallback;
+import com.vungtv.film.data.source.remote.model.ApiModel;
 import com.vungtv.film.data.source.remote.model.ApiMovieDetail;
 import com.vungtv.film.util.LogUtils;
 import com.vungtv.film.util.NetworkUtils;
@@ -13,7 +14,10 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 import retrofit2.Retrofit;
+import retrofit2.http.Field;
+import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.GET;
+import retrofit2.http.POST;
 import retrofit2.http.Query;
 
 /**
@@ -26,13 +30,19 @@ import retrofit2.http.Query;
 public class MovieDetailServices {
     private static final String TAG = MovieDetailServices.class.getSimpleName();
 
+    private static final String SRC = "android";
+
     private final Context context;
 
     private final Retrofit retrofit;
 
     private Call<ApiMovieDetail> callMovie;
 
+    private Call<ApiModel> callAction;
+
     private MovieDetailResultCallback movieDetailResultCallback;
+
+    private int movId = 0;
 
 
     public MovieDetailServices(Context context) {
@@ -44,9 +54,21 @@ public class MovieDetailServices {
         this.movieDetailResultCallback = movieDetailResultCallback;
     }
 
-    public void loadInfo(int movId) {
+    public void setMovId(int movId) {
+        this.movId = movId;
+    }
+
+    public int getMovId() {
+        return movId;
+    }
+
+    /**
+     * Load movie info;
+     */
+    public void loadInfo() {
         if (!NetworkUtils.isInternetTurnOn(context)) {
-            movieDetailResultCallback.onFailure(0, ApiError.toString(context, ApiError.OFF_INTERNET));
+            if (movieDetailResultCallback != null)
+                movieDetailResultCallback.onFailure(0, ApiError.toString(context, ApiError.OFF_INTERNET));
             LogUtils.e(TAG, "loadHomeData: error: turn off internet!");
             return;
         }
@@ -56,6 +78,8 @@ public class MovieDetailServices {
         callMovie.enqueue(new Callback<ApiMovieDetail>() {
             @Override
             public void onResponse(Call<ApiMovieDetail> call, Response<ApiMovieDetail> response) {
+                if (movieDetailResultCallback == null) return;
+
                 if (!response.isSuccessful()) {
                     movieDetailResultCallback.onFailure(response.code(), ApiError.toString(context, ApiError.SERVICE_ERROR));
                     LogUtils.e(TAG, "loadHomeData: error: server down!");
@@ -74,23 +98,119 @@ public class MovieDetailServices {
 
             @Override
             public void onFailure(Call<ApiMovieDetail> call, Throwable t) {
-
+                if (movieDetailResultCallback != null) {
+                    movieDetailResultCallback.onFailure(0, ApiError.toString(context, ApiError.NO_INTERNET));
+                }
+                t.printStackTrace();
             }
         });
     }
 
+    /**
+     * Load list episode;
+     *
+     * @param movId id;
+     */
     public void loadEpisode(int movId) {
 
     }
 
-    public void cancel() {
+    public void likeMovie(String action, String token) {
+        if (!NetworkUtils.isInternetTurnOn(context)) {
+            if (movieDetailResultCallback != null)
+                movieDetailResultCallback.onActionChangeFailed(ApiError.toString(context, ApiError.OFF_INTERNET));
+            LogUtils.e(TAG, "loadHomeData: error: turn off internet!");
+            return;
+        }
 
+        MovieDetailInterface service = retrofit.create(MovieDetailInterface.class);
+        callAction = null;
+        callAction = service.likeMovie(action, movId, token, SRC);
+        callAction.enqueue(new Callback<ApiModel>() {
+            @Override
+            public void onResponse(Call<ApiModel> call, Response<ApiModel> response) {
+
+                if (!response.isSuccessful()) {
+                    movieDetailResultCallback.onActionChangeFailed(ApiError.toString(context, ApiError.SERVICE_ERROR));
+                    return;
+                }
+
+                movieDetailResultCallback.onLikeMovieSuccess(response.body().getSuccess(), response.body().getMessage());
+            }
+
+            @Override
+            public void onFailure(Call<ApiModel> call, Throwable t) {
+                if (movieDetailResultCallback != null) {
+                    movieDetailResultCallback.onActionChangeFailed(ApiError.toString(context, ApiError.NO_INTERNET));
+                }
+                t.printStackTrace();
+            }
+        });
+    }
+
+    public void followMovie(String action, String token) {
+        if (!NetworkUtils.isInternetTurnOn(context)) {
+            if (movieDetailResultCallback != null)
+                movieDetailResultCallback.onActionChangeFailed(ApiError.toString(context, ApiError.OFF_INTERNET));
+            LogUtils.e(TAG, "loadHomeData: error: turn off internet!");
+            return;
+        }
+
+        MovieDetailInterface service = retrofit.create(MovieDetailInterface.class);
+        callAction = null;
+        callAction = service.followMovie(action, movId, token, SRC);
+        callAction.enqueue(new Callback<ApiModel>() {
+            @Override
+            public void onResponse(Call<ApiModel> call, Response<ApiModel> response) {
+
+                if (!response.isSuccessful()) {
+                    movieDetailResultCallback.onActionChangeFailed(ApiError.toString(context, ApiError.SERVICE_ERROR));
+                    return;
+                }
+
+                movieDetailResultCallback.onFollowMovieSuccess(response.body().getSuccess(), response.body().getMessage());
+            }
+
+            @Override
+            public void onFailure(Call<ApiModel> call, Throwable t) {
+                if (movieDetailResultCallback != null) {
+                    movieDetailResultCallback.onActionChangeFailed(ApiError.toString(context, ApiError.NO_INTERNET));
+                }
+                t.printStackTrace();
+            }
+        });
+    }
+
+    public void cancel() {
+        if (callMovie != null && callMovie.isExecuted()) {
+            callMovie.cancel();
+        }
+
+        if (callAction != null && callAction.isExecuted()) {
+            callAction.cancel();
+        }
     }
 
     private interface MovieDetailInterface {
 
         @GET("phim/detail?src=android")
         Call<ApiMovieDetail> loadInfo(@Query("mov_id") int movId);
+
+        @FormUrlEncoded
+        @POST("phim/like_phim")
+        Call<ApiModel> likeMovie(
+                @Field("action") String action,
+                @Field("mov_id") int movId,
+                @Field("token") String token,
+                @Field("src") String src);
+
+        @FormUrlEncoded
+        @POST("phim/follow_film")
+        Call<ApiModel> followMovie(
+                @Field("action") String action,
+                @Field("mov_id") int movId,
+                @Field("token") String token,
+                @Field("src") String src);
     }
 
     public interface MovieDetailResultCallback extends ApiResultCallback {
@@ -98,6 +218,12 @@ public class MovieDetailServices {
         void onMovieInfoResultSuccess(ApiMovieDetail.Data data);
 
         void onEpisodeResultSuccess();
+
+        void onLikeMovieSuccess(boolean sucess, String mes);
+
+        void onFollowMovieSuccess(boolean sucess, String mes);
+
+        void onActionChangeFailed(String mes);
     }
 
 }

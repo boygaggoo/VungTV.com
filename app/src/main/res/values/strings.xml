@@ -153,5 +153,8 @@
     <string name="search_error_msg_short">Từ khóa tối thiểu 3 ký tự</string>
     <string name="search_error_msg_no_movie">Không tìm được phim nào.</string>
     <string name="movie_details_text_empty">N/A</string>
+    <string name="movie_details_error_like">Cần đăng nhập tài khoản để thích phim.</string>
+    <string name="movie_details_error_follow">Cần đăng nhập tài khoản để theo dõi phim.</string>
+    <string name="movie_details_error_download">Tính năng này chưa cập nhật.</string>
 
 </resources>

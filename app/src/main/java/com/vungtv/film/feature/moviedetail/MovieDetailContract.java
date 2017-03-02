@@ -21,9 +21,15 @@ public interface MovieDetailContract {
 
         void showMsgError(boolean show, String error);
 
+        void showMsgToast(String msg);
+
         void setMovieInfo(Movie movie, int totalRating, double avgRating);
 
         void setRelateMovies(ArrayList<Movie> movies);
+
+        void changeStatusLike(boolean isLiked);
+
+        void changeStatusFollow(boolean isFollow);
 
         void addAdsBanner();
 
@@ -42,20 +48,20 @@ public interface MovieDetailContract {
 
         void watchMovie();
 
+        void resumeWatchMovie();
+
         void playTrailer();
 
         void ratingMovie(int point);
 
         void likeMovie();
 
-        void unLikeMovie();
-
         void followMovie();
 
-        void unFollowMovie();
+        void downloadMovie();
 
         void shareMovie();
 
-        void closeAds();
+        void clearAds();
     }
 }

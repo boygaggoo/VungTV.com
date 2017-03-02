@@ -10,7 +10,9 @@ import android.widget.RatingBar;
 import com.squareup.picasso.Picasso;
 import com.vungtv.film.BaseActivity;
 import com.vungtv.film.R;
+import com.vungtv.film.feature.search.SearchActivity;
 import com.vungtv.film.model.Movie;
+import com.vungtv.film.util.LogUtils;
 import com.vungtv.film.util.StringUtils;
 import com.vungtv.film.util.TextUtils;
 import com.vungtv.film.util.TimeUtils;
@@ -21,6 +23,7 @@ import com.vungtv.film.widget.moviesrowview.VtvMoviesRowView;
 import java.util.ArrayList;
 
 import butterknife.BindView;
+import butterknife.OnClick;
 
 public class MovieDetailActivity extends BaseActivity implements MovieDetailContract.View {
 
@@ -91,6 +94,51 @@ public class MovieDetailActivity extends BaseActivity implements MovieDetailCont
         return intent;
     }
 
+    @OnClick(R.id.mdetails_btn_back)
+    public void onBtnBackClick() {
+        finish();
+    }
+
+    @OnClick(R.id.mdetails_btn_search)
+    public void onBtnSearchClick() {
+        openActSearch();
+    }
+
+    @OnClick(R.id.mdetails_btn_share)
+    public void onBtnSharekClick() {
+        presenter.shareMovie();
+    }
+
+    @OnClick(R.id.mdetails_img_cover)
+    public void onImgCoverClick() {
+        presenter.resumeWatchMovie();
+    }
+
+    @OnClick(R.id.mdetails_btn_like)
+    public void onBtnLikeClick() {
+        presenter.likeMovie();
+    }
+
+    @OnClick(R.id.mdetails_btn_notify)
+    public void onBtnFollowClick() {
+        presenter.followMovie();
+    }
+
+    @OnClick(R.id.mdetails_btn_download)
+    public void onBtnDownloadClick() {
+        presenter.downloadMovie();
+    }
+
+    @OnClick(R.id.mdetails_btn_trailer)
+    public void onBtnPlayTrailerClick() {
+        presenter.playTrailer();
+    }
+
+    @OnClick(R.id.mdetails_btn_clear_ads)
+    public void onBtnClearAdsClick() {
+        presenter.clearAds();
+    }
+
     @Override
     public void showLoadding(boolean show) {
         popupLoading.show(show);
@@ -99,6 +147,11 @@ public class MovieDetailActivity extends BaseActivity implements MovieDetailCont
     @Override
     public void showMsgError(boolean show, String error) {
 
+    }
+
+    @Override
+    public void showMsgToast(String msg) {
+        showToast(msg);
     }
 
     @Override
@@ -150,7 +203,27 @@ public class MovieDetailActivity extends BaseActivity implements MovieDetailCont
 
     @Override
     public void setRelateMovies(ArrayList<Movie> movies) {
+        LogUtils.d(TAG, "setRelateMovies: " + movies.size());
         relateMovies.setDataListView(new ArrayList<Object>(movies));
+        relateMovies.setBtnViewMoreVisible(false);
+    }
+
+    @Override
+    public void changeStatusLike(boolean isLiked) {
+        if (isLiked) {
+            btnLike.setImageResource(R.drawable.icon_heart2);
+        } else {
+            btnLike.setImageResource(R.drawable.icon_heart1);
+        }
+    }
+
+    @Override
+    public void changeStatusFollow(boolean isFollow) {
+        if (isFollow) {
+            btnLike.setImageResource(R.drawable.icon_bell2);
+        } else {
+            btnLike.setImageResource(R.drawable.icon_bell1);
+        }
     }
 
     @Override
@@ -170,7 +243,7 @@ public class MovieDetailActivity extends BaseActivity implements MovieDetailCont
 
     @Override
     public void openActSearch() {
-
+        startActivity(new Intent(this, SearchActivity.class));
     }
 
     @Override

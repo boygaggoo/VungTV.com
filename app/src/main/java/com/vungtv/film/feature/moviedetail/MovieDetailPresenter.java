@@ -2,8 +2,11 @@ package com.vungtv.film.feature.moviedetail;
 
 import android.content.Context;
 
+import com.vungtv.film.R;
+import com.vungtv.film.data.source.local.UserSessionManager;
 import com.vungtv.film.data.source.remote.model.ApiMovieDetail;
 import com.vungtv.film.data.source.remote.service.MovieDetailServices;
+import com.vungtv.film.util.StringUtils;
 
 /**
  * Content class.
@@ -21,6 +24,10 @@ public class MovieDetailPresenter implements MovieDetailContract.Presenter, Movi
 
     private final MovieDetailServices movieDetailServices;
 
+    private boolean isLiked = false;
+
+    private boolean isFollow = false;
+
 
     public MovieDetailPresenter(Context context, MovieDetailContract.View activityView) {
         this.context = context;
@@ -35,7 +42,8 @@ public class MovieDetailPresenter implements MovieDetailContract.Presenter, Movi
     @Override
     public void startLoadDetail(int movId) {
         activityView.showLoadding(true);
-        movieDetailServices.loadInfo(movId);
+        movieDetailServices.setMovId(movId);
+        movieDetailServices.loadInfo();
     }
 
     @Override
@@ -45,6 +53,11 @@ public class MovieDetailPresenter implements MovieDetailContract.Presenter, Movi
 
     @Override
     public void watchMovie() {
+
+    }
+
+    @Override
+    public void resumeWatchMovie() {
 
     }
 
@@ -60,22 +73,39 @@ public class MovieDetailPresenter implements MovieDetailContract.Presenter, Movi
 
     @Override
     public void likeMovie() {
+        String token = UserSessionManager.getAccessToken(context.getApplicationContext());
+        if (StringUtils.isEmpty(token)) {
+            activityView.showMsgToast(context.getResources().getString(R.string.movie_details_error_like));
+            return;
+        }
 
-    }
-
-    @Override
-    public void unLikeMovie() {
-
+        activityView.showLoadding(true);
+        if (isLiked) {
+            movieDetailServices.likeMovie("unlike", token);
+        } else {
+            movieDetailServices.likeMovie("like", token);
+        }
     }
 
     @Override
     public void followMovie() {
+        String token = UserSessionManager.getAccessToken(context.getApplicationContext());
+        if (StringUtils.isEmpty(token)) {
+            activityView.showMsgToast(context.getResources().getString(R.string.movie_details_error_follow));
+            return;
+        }
 
+        activityView.showLoadding(true);
+        if (isFollow) {
+            movieDetailServices.followMovie("unfollow", token);
+        } else {
+            movieDetailServices.followMovie("follow", token);
+        }
     }
 
     @Override
-    public void unFollowMovie() {
-
+    public void downloadMovie() {
+        activityView.showMsgToast(context.getResources().getString(R.string.movie_details_error_download));
     }
 
     @Override
@@ -84,7 +114,7 @@ public class MovieDetailPresenter implements MovieDetailContract.Presenter, Movi
     }
 
     @Override
-    public void closeAds() {
+    public void clearAds() {
 
     }
 
@@ -102,11 +132,40 @@ public class MovieDetailPresenter implements MovieDetailContract.Presenter, Movi
     public void onMovieInfoResultSuccess(ApiMovieDetail.Data data) {
         activityView.showLoadding(false);
         activityView.setMovieInfo(data.movie, data.rating.total, data.rating.avg);
+        activityView.setRelateMovies(data.relateMovies);
     }
 
     @Override
     public void onEpisodeResultSuccess() {
 
+    }
+
+    @Override
+    public void onLikeMovieSuccess(boolean sucess, String mes) {
+        activityView.showLoadding(false);
+        activityView.showMsgToast(mes);
+
+        if (sucess) {
+            isLiked = !isLiked;
+            activityView.changeStatusLike(isLiked);
+        }
+    }
+
+    @Override
+    public void onFollowMovieSuccess(boolean sucess, String mes) {
+        activityView.showLoadding(false);
+        activityView.showMsgToast(mes);
+
+        if (sucess) {
+            isFollow = !isFollow;
+            activityView.changeStatusFollow(isFollow);
+        }
+    }
+
+    @Override
+    public void onActionChangeFailed(String mes) {
+        activityView.showLoadding(false);
+        activityView.showMsgToast(mes);
     }
 
     @Override

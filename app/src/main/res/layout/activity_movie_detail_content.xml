@@ -123,39 +123,36 @@
         android:id="@+id/mdetails_btn_download"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/margin"
-        android:layout_marginLeft="@dimen/margin"
-        android:layout_marginRight="@dimen/margin"
         android:layout_alignParentRight="true"
         android:layout_alignParentEnd="true"
         android:layout_below="@+id/mdetails_tv_imdb"
+        android:padding="@dimen/margin"
         android:src="@drawable/icon_download1"
+        android:background="?attr/selectableItemBackgroundBorderless"
         android:contentDescription="@string/app_name" />
 
     <ImageView
         android:id="@+id/mdetails_btn_notify"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/margin"
-        android:layout_marginLeft="@dimen/margin"
-        android:layout_marginRight="@dimen/margin"
         android:layout_toLeftOf="@+id/mdetails_btn_download"
         android:layout_toStartOf="@+id/mdetails_btn_download"
         android:layout_below="@+id/mdetails_tv_imdb"
+        android:padding="@dimen/margin"
         android:src="@drawable/icon_bell2"
+        android:background="?attr/selectableItemBackgroundBorderless"
         android:contentDescription="@string/app_name" />
 
     <ImageView
         android:id="@+id/mdetails_btn_like"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/margin"
-        android:layout_marginLeft="@dimen/margin"
-        android:layout_marginRight="@dimen/margin"
         android:layout_toLeftOf="@+id/mdetails_btn_notify"
         android:layout_toStartOf="@+id/mdetails_btn_notify"
         android:layout_below="@+id/mdetails_tv_imdb"
+        android:padding="@dimen/margin"
         android:src="@drawable/icon_heart1"
+        android:background="?attr/selectableItemBackgroundBorderless"
         android:contentDescription="@string/app_name" />
 
     <ImageView
@@ -174,15 +171,15 @@
     <ImageView
         style="@style/AppTheme.Text.HomeTitle"
         android:id="@+id/mdetails_btn_clear_ads"
-        android:layout_width="110dp"
+        android:layout_width="wrap_content"
         android:layout_height="24dp"
+        android:layout_below="@+id/mdetails_rating_1"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true"
         android:layout_marginTop="@dimen/margin"
         android:layout_marginLeft="@dimen/margin"
         android:layout_marginRight="@dimen/margin"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentEnd="true"
-        android:layout_below="@+id/mdetails_rating_1"
-        android:scaleType="fitStart"
+        android:scaleType="fitXY"
         android:src="@drawable/icon_disable_ads"
         android:contentDescription="@string/app_name" />
 
@@ -228,6 +225,7 @@
         android:layout_height="wrap_content"
         android:layout_below="@+id/mdetails_line_1"
         android:layout_marginTop="@dimen/margin"
+        android:layout_marginBottom="@dimen/space_7"
         android:layout_centerHorizontal="true"
         android:textColor="@color/text_light_2"
         android:textSize="@dimen/font_lage"
