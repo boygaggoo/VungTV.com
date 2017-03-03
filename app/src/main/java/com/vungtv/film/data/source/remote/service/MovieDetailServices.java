@@ -5,8 +5,10 @@ import android.content.Context;
 import com.vungtv.film.data.source.remote.ApiError;
 import com.vungtv.film.data.source.remote.RetrofitBuild;
 import com.vungtv.film.data.source.remote.interfaces.ApiResultCallback;
+import com.vungtv.film.data.source.remote.model.ApiEpisodes;
 import com.vungtv.film.data.source.remote.model.ApiModel;
 import com.vungtv.film.data.source.remote.model.ApiMovieDetail;
+import com.vungtv.film.data.source.remote.model.ApiRating;
 import com.vungtv.film.util.LogUtils;
 import com.vungtv.film.util.NetworkUtils;
 
@@ -38,7 +40,11 @@ public class MovieDetailServices {
 
     private Call<ApiMovieDetail> callMovie;
 
+    private Call<ApiEpisodes> callEps;
+
     private Call<ApiModel> callAction;
+
+    private Call<ApiRating> callRating;
 
     private MovieDetailResultCallback movieDetailResultCallback;
 
@@ -63,12 +69,13 @@ public class MovieDetailServices {
     }
 
     /**
-     * Load movie info;
+     * Get thông tin phim
      */
     public void loadInfo() {
         if (!NetworkUtils.isInternetTurnOn(context)) {
             if (movieDetailResultCallback != null)
-                movieDetailResultCallback.onFailure(0, ApiError.toString(context, ApiError.OFF_INTERNET));
+                movieDetailResultCallback.onFailure(0,
+                        ApiError.toString(context, ApiError.OFF_INTERNET));
             LogUtils.e(TAG, "loadHomeData: error: turn off internet!");
             return;
         }
@@ -81,14 +88,16 @@ public class MovieDetailServices {
                 if (movieDetailResultCallback == null) return;
 
                 if (!response.isSuccessful()) {
-                    movieDetailResultCallback.onFailure(response.code(), ApiError.toString(context, ApiError.SERVICE_ERROR));
+                    movieDetailResultCallback.onFailure(response.code(),
+                            ApiError.toString(context, ApiError.SERVICE_ERROR));
                     LogUtils.e(TAG, "loadHomeData: error: server down!");
                     return;
                 }
 
                 ApiMovieDetail apiMovieDetail = response.body();
                 if (!apiMovieDetail.getSuccess()) {
-                    movieDetailResultCallback.onFailure(apiMovieDetail.getCode(), apiMovieDetail.getMessage());
+                    movieDetailResultCallback.onFailure(
+                            apiMovieDetail.getCode(), apiMovieDetail.getMessage());
                     LogUtils.e(TAG, "loadHomeData: error: No data!");
                     return;
                 }
@@ -99,7 +108,8 @@ public class MovieDetailServices {
             @Override
             public void onFailure(Call<ApiMovieDetail> call, Throwable t) {
                 if (movieDetailResultCallback != null) {
-                    movieDetailResultCallback.onFailure(0, ApiError.toString(context, ApiError.NO_INTERNET));
+                    movieDetailResultCallback.onFailure(0,
+                            ApiError.toString(context, ApiError.NO_INTERNET));
                 }
                 t.printStackTrace();
             }
@@ -107,18 +117,60 @@ public class MovieDetailServices {
     }
 
     /**
-     * Load list episode;
-     *
-     * @param movId id;
+     * Get ds tap
      */
-    public void loadEpisode(int movId) {
+    public void loadListEpisodes() {
+        if (!NetworkUtils.isInternetTurnOn(context)) {
+            if (movieDetailResultCallback != null)
+                movieDetailResultCallback.onActionChangeFailed(
+                        ApiError.toString(context, ApiError.OFF_INTERNET));
+            return;
+        }
 
+        MovieDetailInterface service = retrofit.create(MovieDetailInterface.class);
+        callEps = service.loadEpisodes(movId);
+        callEps.enqueue(new Callback<ApiEpisodes>() {
+            @Override
+            public void onResponse(Call<ApiEpisodes> call, Response<ApiEpisodes> response) {
+                if (movieDetailResultCallback == null) return;
+
+                if (!response.isSuccessful()) {
+                    movieDetailResultCallback.onActionChangeFailed(
+                            ApiError.toString(context, ApiError.SERVICE_ERROR));
+                    return;
+                }
+
+                ApiEpisodes apiEpisodes = response.body();
+                if (!apiEpisodes.getSuccess()) {
+                    movieDetailResultCallback.onActionChangeFailed(apiEpisodes.getMessage());
+                    return;
+                }
+
+                movieDetailResultCallback.onEpisodeResultSuccess(apiEpisodes.getData());
+            }
+
+            @Override
+            public void onFailure(Call<ApiEpisodes> call, Throwable t) {
+                if (movieDetailResultCallback != null) {
+                    movieDetailResultCallback.onFailure(0,
+                            ApiError.toString(context, ApiError.NO_INTERNET));
+                }
+                t.printStackTrace();
+            }
+        });
     }
 
+    /**
+     * Thich / bỏ thích phim
+     *
+     * @param action like / unlike
+     * @param token token đang nhap
+     */
     public void likeMovie(String action, String token) {
         if (!NetworkUtils.isInternetTurnOn(context)) {
             if (movieDetailResultCallback != null)
-                movieDetailResultCallback.onActionChangeFailed(ApiError.toString(context, ApiError.OFF_INTERNET));
+                movieDetailResultCallback.onActionChangeFailed(
+                        ApiError.toString(context, ApiError.OFF_INTERNET));
             LogUtils.e(TAG, "loadHomeData: error: turn off internet!");
             return;
         }
@@ -131,27 +183,43 @@ public class MovieDetailServices {
             public void onResponse(Call<ApiModel> call, Response<ApiModel> response) {
 
                 if (!response.isSuccessful()) {
-                    movieDetailResultCallback.onActionChangeFailed(ApiError.toString(context, ApiError.SERVICE_ERROR));
+                    movieDetailResultCallback.onActionChangeFailed(
+                            ApiError.toString(context, ApiError.SERVICE_ERROR));
                     return;
                 }
 
-                movieDetailResultCallback.onLikeMovieSuccess(response.body().getSuccess(), response.body().getMessage());
+                if (!response.body().getSuccess()) {
+                    movieDetailResultCallback.onActionChangeFailed(
+                            response.body().getMessage()
+                    );
+                    return;
+                }
+
+                movieDetailResultCallback.onLikeMovieSuccess(response.body().getMessage());
             }
 
             @Override
             public void onFailure(Call<ApiModel> call, Throwable t) {
                 if (movieDetailResultCallback != null) {
-                    movieDetailResultCallback.onActionChangeFailed(ApiError.toString(context, ApiError.NO_INTERNET));
+                    movieDetailResultCallback.onActionChangeFailed(
+                            ApiError.toString(context, ApiError.NO_INTERNET));
                 }
                 t.printStackTrace();
             }
         });
     }
 
+    /**
+     * Theo dõi phim
+     *
+     * @param action follow / unfollow
+     * @param token token đang nhap
+     */
     public void followMovie(String action, String token) {
         if (!NetworkUtils.isInternetTurnOn(context)) {
             if (movieDetailResultCallback != null)
-                movieDetailResultCallback.onActionChangeFailed(ApiError.toString(context, ApiError.OFF_INTERNET));
+                movieDetailResultCallback.onActionChangeFailed(
+                        ApiError.toString(context, ApiError.OFF_INTERNET));
             LogUtils.e(TAG, "loadHomeData: error: turn off internet!");
             return;
         }
@@ -164,15 +232,75 @@ public class MovieDetailServices {
             public void onResponse(Call<ApiModel> call, Response<ApiModel> response) {
 
                 if (!response.isSuccessful()) {
-                    movieDetailResultCallback.onActionChangeFailed(ApiError.toString(context, ApiError.SERVICE_ERROR));
+                    movieDetailResultCallback.onActionChangeFailed(
+                            ApiError.toString(context, ApiError.SERVICE_ERROR));
                     return;
                 }
 
-                movieDetailResultCallback.onFollowMovieSuccess(response.body().getSuccess(), response.body().getMessage());
+                if (!response.body().getSuccess()) {
+                    movieDetailResultCallback.onActionChangeFailed(
+                            response.body().getMessage()
+                    );
+                    return;
+                }
+
+                movieDetailResultCallback.onFollowMovieSuccess(response.body().getMessage());
             }
 
             @Override
             public void onFailure(Call<ApiModel> call, Throwable t) {
+                if (movieDetailResultCallback != null) {
+                    movieDetailResultCallback.onActionChangeFailed(
+                            ApiError.toString(context, ApiError.NO_INTERNET));
+                }
+                t.printStackTrace();
+            }
+        });
+    }
+
+    /**
+     * Đánh giá phim;
+     *
+     * @param star sao
+     */
+    public void ratingMovie(int star) {
+        if (!NetworkUtils.isInternetTurnOn(context)) {
+            if (movieDetailResultCallback != null)
+                movieDetailResultCallback.onActionChangeFailed(
+                        ApiError.toString(context, ApiError.OFF_INTERNET));
+            LogUtils.e(TAG, "loadHomeData: error: turn off internet!");
+            return;
+        }
+
+        MovieDetailInterface service = retrofit.create(MovieDetailInterface.class);
+
+        callRating = service.rating(star, movId, SRC);
+        callRating.enqueue(new Callback<ApiRating>() {
+            @Override
+            public void onResponse(Call<ApiRating> call, Response<ApiRating> response) {
+
+                if (!response.isSuccessful()) {
+                    movieDetailResultCallback.onActionChangeFailed(
+                            ApiError.toString(context, ApiError.SERVICE_ERROR));
+                    return;
+                }
+
+                if (!response.body().getSuccess()) {
+                    movieDetailResultCallback.onActionChangeFailed(
+                            response.body().getMessage()
+                    );
+                    return;
+                }
+
+                movieDetailResultCallback.onRatingMovieSuccess(
+                        response.body().getMessage(),
+                        response.body().getData().getRating().total,
+                        response.body().getData().getRating().avg
+                );
+            }
+
+            @Override
+            public void onFailure(Call<ApiRating> call, Throwable t) {
                 if (movieDetailResultCallback != null) {
                     movieDetailResultCallback.onActionChangeFailed(ApiError.toString(context, ApiError.NO_INTERNET));
                 }
@@ -186,6 +314,10 @@ public class MovieDetailServices {
             callMovie.cancel();
         }
 
+        if (callEps != null && callEps.isExecuted()) {
+            callEps.cancel();
+        }
+
         if (callAction != null && callAction.isExecuted()) {
             callAction.cancel();
         }
@@ -195,6 +327,9 @@ public class MovieDetailServices {
 
         @GET("phim/detail?src=android")
         Call<ApiMovieDetail> loadInfo(@Query("mov_id") int movId);
+
+        @GET("phim/episodes?src=android")
+        Call<ApiEpisodes> loadEpisodes(@Query("mov_id") int movId);
 
         @FormUrlEncoded
         @POST("phim/like_phim")
@@ -211,17 +346,26 @@ public class MovieDetailServices {
                 @Field("mov_id") int movId,
                 @Field("token") String token,
                 @Field("src") String src);
+
+        @FormUrlEncoded
+        @POST("phim/rating_movie")
+        Call<ApiRating> rating(
+                @Field("star") int star,
+                @Field("mov_id") int movId,
+                @Field("src") String src);
     }
 
     public interface MovieDetailResultCallback extends ApiResultCallback {
 
         void onMovieInfoResultSuccess(ApiMovieDetail.Data data);
 
-        void onEpisodeResultSuccess();
+        void onEpisodeResultSuccess(ApiEpisodes.Data data);
 
-        void onLikeMovieSuccess(boolean sucess, String mes);
+        void onLikeMovieSuccess(String mes);
 
-        void onFollowMovieSuccess(boolean sucess, String mes);
+        void onFollowMovieSuccess(String mes);
+
+        void onRatingMovieSuccess(String msg, int total, float avg);
 
         void onActionChangeFailed(String mes);
     }

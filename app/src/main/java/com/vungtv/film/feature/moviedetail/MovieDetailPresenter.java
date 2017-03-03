@@ -4,6 +4,7 @@ import android.content.Context;
 
 import com.vungtv.film.R;
 import com.vungtv.film.data.source.local.UserSessionManager;
+import com.vungtv.film.data.source.remote.model.ApiEpisodes;
 import com.vungtv.film.data.source.remote.model.ApiMovieDetail;
 import com.vungtv.film.data.source.remote.service.MovieDetailServices;
 import com.vungtv.film.util.StringUtils;
@@ -44,6 +45,7 @@ public class MovieDetailPresenter implements MovieDetailContract.Presenter, Movi
         activityView.showLoadding(true);
         movieDetailServices.setMovId(movId);
         movieDetailServices.loadInfo();
+        movieDetailServices.loadListEpisodes();
     }
 
     @Override
@@ -68,7 +70,8 @@ public class MovieDetailPresenter implements MovieDetailContract.Presenter, Movi
 
     @Override
     public void ratingMovie(int point) {
-
+        activityView.showLoadding(true);
+        movieDetailServices.ratingMovie(point);
     }
 
     @Override
@@ -136,30 +139,37 @@ public class MovieDetailPresenter implements MovieDetailContract.Presenter, Movi
     }
 
     @Override
-    public void onEpisodeResultSuccess() {
-
-    }
-
-    @Override
-    public void onLikeMovieSuccess(boolean sucess, String mes) {
+    public void onEpisodeResultSuccess(ApiEpisodes.Data data) {
         activityView.showLoadding(false);
-        activityView.showMsgToast(mes);
 
-        if (sucess) {
-            isLiked = !isLiked;
-            activityView.changeStatusLike(isLiked);
+        if (data.getEpisodes() != null && data.getEpisodes().size() > 0) {
+            activityView.setListEpisodes(data.getEpisodes());
         }
     }
 
     @Override
-    public void onFollowMovieSuccess(boolean sucess, String mes) {
+    public void onLikeMovieSuccess(String mes) {
         activityView.showLoadding(false);
         activityView.showMsgToast(mes);
 
-        if (sucess) {
-            isFollow = !isFollow;
-            activityView.changeStatusFollow(isFollow);
-        }
+        isLiked = !isLiked;
+        activityView.changeStatusLike(isLiked);
+    }
+
+    @Override
+    public void onFollowMovieSuccess(String mes) {
+        activityView.showLoadding(false);
+        activityView.showMsgToast(mes);
+
+        isFollow = !isFollow;
+        activityView.changeStatusFollow(isFollow);
+    }
+
+    @Override
+    public void onRatingMovieSuccess(String msg, int total, float avg) {
+        activityView.showLoadding(false);
+        activityView.showMsgToast(msg);
+        activityView.changeRatingInfo(total, avg);
     }
 
     @Override

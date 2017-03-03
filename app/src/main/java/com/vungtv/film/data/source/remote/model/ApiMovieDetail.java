@@ -3,6 +3,7 @@ package com.vungtv.film.data.source.remote.model;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 import com.vungtv.film.model.Movie;
+import com.vungtv.film.model.RatingMovie;
 
 import java.util.ArrayList;
 
@@ -24,12 +25,6 @@ public class ApiMovieDetail extends ApiModel{
 
     public class Data {
 
-        @SerializedName("limit")
-        @Expose
-        public int limit;
-        @SerializedName("offset")
-        @Expose
-        public int offset;
         @SerializedName("movie")
         @Expose
         public Movie movie;
@@ -38,18 +33,7 @@ public class ApiMovieDetail extends ApiModel{
         public ArrayList<Movie> relateMovies = null;
         @SerializedName("rating")
         @Expose
-        public Rating rating;
-
-    }
-
-    public class Rating {
-
-        @SerializedName("total")
-        @Expose
-        public int total;
-        @SerializedName("avg")
-        @Expose
-        public Double avg;
+        public RatingMovie rating;
 
     }
 }

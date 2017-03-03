@@ -63,6 +63,7 @@
         android:visibility="gone"/>
 
     <LinearLayout
+        android:id="@+id/mdetails_layout_type_res"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/margin"
@@ -72,22 +73,6 @@
         android:layout_alignParentRight="true"
         android:layout_alignParentEnd="true"
         android:orientation="horizontal">
-
-        <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="@dimen/space_7"
-            android:layout_marginStart="@dimen/space_7"
-            android:src="@drawable/icon_hd"
-            android:contentDescription="@string/app_name" />
-
-        <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="@dimen/space_7"
-            android:layout_marginStart="@dimen/space_7"
-            android:src="@drawable/icon_lt"
-            android:contentDescription="@string/app_name" />
 
     </LinearLayout>
 
@@ -139,7 +124,7 @@
         android:layout_toStartOf="@+id/mdetails_btn_download"
         android:layout_below="@+id/mdetails_tv_imdb"
         android:padding="@dimen/margin"
-        android:src="@drawable/icon_bell2"
+        android:src="@drawable/icon_bell1"
         android:background="?attr/selectableItemBackgroundBorderless"
         android:contentDescription="@string/app_name" />
 
@@ -241,7 +226,7 @@
         android:numStars="5"
         android:stepSize="1"
         android:max="5"
-        tools:rating="3"/>
+        android:rating="1"/>
 
     <View
         android:id="@+id/mdetails_line_2"
@@ -258,18 +243,20 @@
         android:layout_below="@+id/mdetails_line_2"
         android:orientation="vertical" />
 
-    <LinearLayout
-        android:id="@+id/mdetails_layout_episodes"
+    <com.vungtv.film.widget.VtvAutoFitRecyclerView
+        android:id="@+id/mdetails_recycler_eps"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@+id/mdetails_ads_layout"
-        android:orientation="vertical" />
+        android:padding="@dimen/margin"
+        android:columnWidth="@dimen/space_56"
+        android:clipToPadding="false"/>
 
     <com.vungtv.film.widget.moviesrowview.VtvMoviesRowView
         android:id="@+id/mdetails_relate_movies"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/mdetails_layout_episodes"
+        android:layout_below="@+id/mdetails_recycler_eps"
         app:style="black"
         app:iconTitle="@drawable/icon_filmroll2"
         app:title="@string/movie_details_text_phim_lien_quan"

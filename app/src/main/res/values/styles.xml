@@ -6,6 +6,19 @@
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
+        <item name="android:ratingBarStyle">@style/AppTheme.RatingBar.Dark</item>
+    </style>
+
+    <!-- Base application theme. -->
+    <style name="AppTheme.Dark" parent="Theme.AppCompat.NoActionBar">
+        <!-- Customize your theme here. -->
+        <item name="colorPrimary">@color/colorPrimary</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+        <item name="colorAccent">@color/colorAccent</item>
+        <item name="android:background">@color/transparent_dark</item>
+        <item name="android:windowBackground">@color/transparent_dark</item>
+        <item name="android:ratingBarStyle">@style/AppTheme.RatingBar.Dark</item>
+        <item name="android:alertDialogStyle">@style/AppTheme.Dialog.Dark</item>
     </style>
 
     <style name="AppTheme.Translucent" parent="AppTheme" />
@@ -84,6 +97,15 @@
         <item name="colorControlActivated">@color/colorAccent</item>
     </style>
 
+    <style name="AppTheme.Dialog.Dark" parent="Base.Theme.AppCompat.Dialog.Alert">
+        <item name="colorAccent">@color/colorAccent</item>
+        <item name="android:textColorPrimary">@color/text_dark_1</item>
+        <item name="android:background">@color/transparent_dark</item>
+        <item name="android:windowBackground">@color/transparent_dark</item>
+        <item name="colorControlNormal">@color/text_dark_1</item>
+        <item name="colorControlActivated">@color/colorAccent</item>
+    </style>
+
     <style name="AppTheme.Dialog.FullWidthHeight" parent="Base.Theme.AppCompat.Dialog.Alert">
         <item name="windowMinWidthMajor">100%</item>
         <item name="windowMinWidthMinor">100%</item>
@@ -122,6 +144,17 @@
         <item name="android:gravity">center</item>
         <item name="android:maxLines">1</item>
         <item name="android:background">@drawable/ds_edittext_border_blue</item>
+        <item name="android:textSize">@dimen/font_lage</item>
+        <item name="android:textColor">@color/text_dark_1</item>
+    </style>
+
+    <style name="AppTheme.Dialog.Material.Edittext" parent="@android:style/TextAppearance.Widget.EditText">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">@dimen/space_48</item>
+        <item name="android:padding">@dimen/space_8</item>
+        <item name="android:layout_margin">@dimen/space_16</item>
+        <item name="android:gravity">center</item>
+        <item name="android:maxLines">1</item>
         <item name="android:textSize">@dimen/font_lage</item>
         <item name="android:textColor">@color/text_dark_1</item>
     </style>
@@ -184,6 +217,11 @@
 
     <style name="AppTheme.RatingBar" parent="Widget.AppCompat.RatingBar">
         <item name="android:progressDrawable">@drawable/ds_ratingbar_bg</item>
+    </style>
+
+    <style name="AppTheme.RatingBar.Dark" parent="Widget.AppCompat.RatingBar">
+        <item name="colorControlNormal">@color/gray_2</item>
+        <item name="colorControlActivated">@color/colorAccent</item>
     </style>
 
     <style name="AppTheme.Spinner.filter" parent="Widget.AppCompat.Spinner">

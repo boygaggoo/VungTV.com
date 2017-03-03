@@ -156,5 +156,14 @@
     <string name="movie_details_error_like">Cần đăng nhập tài khoản để thích phim.</string>
     <string name="movie_details_error_follow">Cần đăng nhập tài khoản để theo dõi phim.</string>
     <string name="movie_details_error_download">Tính năng này chưa cập nhật.</string>
+    <string name="popup_action_rating">Đánh giá</string>
+    <string name="popup_text_title_rating">Đánh giá phim</string>
+    <string name="popup_action_cancel">Hủy</string>
+    <string name="popup_rating_text_1">Phim không hay</string>
+    <string name="popup_rating_text_2">Phim bình thường</string>
+    <string name="popup_rating_text_3">Phim tạm được</string>
+    <string name="popup_rating_text_4">Phim hay</string>
+    <string name="popup_rating_text_5">Phim rất hay</string>
+    <string name="popup_rating_text_0">Phim quá tệ</string>
 
 </resources>

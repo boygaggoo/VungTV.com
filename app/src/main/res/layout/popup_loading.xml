@@ -7,8 +7,7 @@
     android:layout_height="wrap_content"
     android:layout_gravity="center"
     android:gravity="center"
-    android:padding="@dimen/margin"
-    android:background="@drawable/ds_bg_gray1_boder_radius">
+    android:padding="@dimen/margin">
 
     <ProgressBar
         style="@style/AppTheme.Dialog.Progress" />

@@ -2,6 +2,7 @@ package com.vungtv.film.feature.moviedetail;
 
 import com.vungtv.film.BasePresenter;
 import com.vungtv.film.BaseView;
+import com.vungtv.film.model.Episode;
 import com.vungtv.film.model.Movie;
 
 import java.util.ArrayList;
@@ -23,13 +24,19 @@ public interface MovieDetailContract {
 
         void showMsgToast(String msg);
 
-        void setMovieInfo(Movie movie, int totalRating, double avgRating);
+        void showPopupRating(float star);
+
+        void setMovieInfo(Movie movie, int totalRating, float avgRating);
+
+        void setListEpisodes(ArrayList<Episode> listEpisodes);
 
         void setRelateMovies(ArrayList<Movie> movies);
 
         void changeStatusLike(boolean isLiked);
 
         void changeStatusFollow(boolean isFollow);
+
+        void changeRatingInfo(int total, float avg);
 
         void addAdsBanner();
 

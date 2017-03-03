@@ -51,10 +51,10 @@ public class MoviesRowAdapter extends RecyclerView.Adapter {
         COLOR_YELLOW = getColor(R.color.yellow);
         COLOR_ORANGE = getColor(R.color.orange);
         COLOR_BLUEGRAY = getColor(R.color.green_dark);
-        PADDING = context.getResources().getDimensionPixelSize(R.dimen.space_4);
+        PADDING = context.getResources().getDimensionPixelSize(R.dimen.space_2);
         MARGIN = context.getResources().getDimensionPixelSize(R.dimen.margin);
         MARGIN_BETWEEN_ITEM = context.getResources().getDimensionPixelSize(R.dimen.space_7);
-        TEXTSIZE_INFO = context.getResources().getDimensionPixelSize(R.dimen.font_tiny);
+        TEXTSIZE_INFO = context.getResources().getDimensionPixelSize(R.dimen.font_tiny)*2/3;
     }
 
     @Override
@@ -240,7 +240,7 @@ public class MoviesRowAdapter extends RecyclerView.Adapter {
             LinearLayout.LayoutParams layoutParams =
                     new LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
             layoutParams.setMargins(0, 0, 0, PADDING);
-            textView.setPadding(PADDING, PADDING, PADDING, PADDING);
+            textView.setPadding(PADDING * 2, PADDING, PADDING * 2, PADDING);
             textView.setTextColor(Color.WHITE);
             textView.setTextStyle(FontUtils.BOLD);
             textView.setTextSize(TEXTSIZE_INFO /2);
@@ -354,7 +354,6 @@ public class MoviesRowAdapter extends RecyclerView.Adapter {
         }
 
         public void setInfo(Movie movie) {
-            //LogUtils.d(TAG, new Gson().toJson(movie));
 
             RecyclerView.LayoutParams layoutParams =
                     (RecyclerView.LayoutParams) poster.getLayoutParams();
@@ -365,7 +364,9 @@ public class MoviesRowAdapter extends RecyclerView.Adapter {
             } else {
                 layoutParams.setMargins(0, 0, MARGIN_BETWEEN_ITEM, 0);
             }
+
             poster.setLayoutParams(layoutParams);
+
             String urlPoster = movie.getMovPoster();
             if (urlPoster != null && urlPoster.length() > 5) {
                 Picasso.with(context)

@@ -3,6 +3,9 @@ package com.vungtv.film.feature.moviedetail;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v7.widget.RecyclerView;
+import android.view.View;
+import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RatingBar;
@@ -11,12 +14,16 @@ import com.squareup.picasso.Picasso;
 import com.vungtv.film.BaseActivity;
 import com.vungtv.film.R;
 import com.vungtv.film.feature.search.SearchActivity;
+import com.vungtv.film.interfaces.OnItemClickListener;
+import com.vungtv.film.model.Episode;
 import com.vungtv.film.model.Movie;
+import com.vungtv.film.popup.PopupRating;
 import com.vungtv.film.util.LogUtils;
 import com.vungtv.film.util.StringUtils;
 import com.vungtv.film.util.TextUtils;
 import com.vungtv.film.util.TimeUtils;
 import com.vungtv.film.widget.ExpandableTextView;
+import com.vungtv.film.widget.MarginDecoration;
 import com.vungtv.film.widget.VtvTextView;
 import com.vungtv.film.widget.moviesrowview.VtvMoviesRowView;
 
@@ -25,11 +32,15 @@ import java.util.ArrayList;
 import butterknife.BindView;
 import butterknife.OnClick;
 
-public class MovieDetailActivity extends BaseActivity implements MovieDetailContract.View {
+public class MovieDetailActivity extends BaseActivity implements MovieDetailContract.View, RatingBar.OnRatingBarChangeListener {
 
     private static final String TAG = MovieDetailActivity.class.getSimpleName();
 
     public static final String INTENT_MOVIE_ID = "INTENT_MOVIE_ID";
+
+    private MovieDetailContract.Presenter presenter;
+
+    private EpisodesRecycerAdapter adapter;
 
     @BindView(R.id.mdetails_img_cover)
     ImageView imgCover;
@@ -45,6 +56,9 @@ public class MovieDetailActivity extends BaseActivity implements MovieDetailCont
 
     @BindView(R.id.mdetails_tv_imdb_2)
     VtvTextView tvIMDB2;
+
+    @BindView(R.id.mdetails_layout_type_res)
+    LinearLayout layoutTypeRes;
 
     @BindView(R.id.mdetails_rating_1)
     RatingBar ratingBar1;
@@ -64,18 +78,35 @@ public class MovieDetailActivity extends BaseActivity implements MovieDetailCont
     @BindView(R.id.mdetails_rating_btn)
     RatingBar ratingBar2;
 
-    @BindView(R.id.mdetails_layout_episodes)
-    LinearLayout layoutEpisodes;
+    @BindView(R.id.mdetails_recycler_eps)
+    RecyclerView epsRecyclerView;
 
     @BindView(R.id.mdetails_relate_movies)
     VtvMoviesRowView relateMovies;
 
-    private MovieDetailContract.Presenter presenter;
+    private PopupRating popupRating;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_movie_detail);
+
+        ratingBar2.setOnRatingBarChangeListener(this);
+
+        epsRecyclerView.addItemDecoration(new MarginDecoration(this, R.dimen.space_4));
+        epsRecyclerView.setHasFixedSize(true);
+        adapter = new EpisodesRecycerAdapter();
+        adapter.setOnItemClickListener(new OnItemClickListener() {
+            @Override
+            public void onItemClick(View v, int pos) {
+                if (adapter.getEpisode(pos).getEpsPreview()) {
+                    presenter.playTrailer();
+                } else {
+                    presenter.watchMovie();
+                }
+            }
+        });
+        epsRecyclerView.setAdapter(adapter);
 
         new MovieDetailPresenter(this, this);
         presenter.startLoadDetail(getIntent().getIntExtra(INTENT_MOVIE_ID, 0));
@@ -155,7 +186,23 @@ public class MovieDetailActivity extends BaseActivity implements MovieDetailCont
     }
 
     @Override
-    public void setMovieInfo(Movie movie, int totalRating, double avgRating) {
+    public void showPopupRating(float star) {
+        if (popupRating == null) {
+            popupRating = new PopupRating(this);
+            popupRating.setOnPopupChangeNameListener(new PopupRating.OnPopupRatingListener() {
+                @Override
+                public void onSendRating(int star) {
+                    presenter.ratingMovie(star);
+                }
+            });
+        }
+
+        popupRating.show();
+        popupRating.setRating(star);
+    }
+
+    @Override
+    public void setMovieInfo(Movie movie, int totalRating, float avgRating) {
         // set Cover img
         if (StringUtils.isNotEmpty(movie.getMovCover())) {
             Picasso.with(this)
@@ -180,9 +227,38 @@ public class MovieDetailActivity extends BaseActivity implements MovieDetailCont
             tvIMDB.setText(movie.getMovScore());
         }
 
+        // set Type res
+        if (StringUtils.isNotEmpty(movie.getMovTypeRes())) {
+            layoutTypeRes.removeAllViews();
+            String[] typeRes = movie.getMovTypeRes().split(",");
+
+            LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(
+                    ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+            layoutParams.leftMargin = getResources().getDimensionPixelSize(R.dimen.space_7);
+
+            for (String type : typeRes) {
+                int icon = 0;
+                if (type.equalsIgnoreCase("HD")) {
+                    icon = R.drawable.icon_hd;
+                } else if (type.equalsIgnoreCase("SD")) {
+                    icon = R.drawable.icon_sd;
+                } else if (type.equalsIgnoreCase("LT")) {
+                    icon = R.drawable.icon_lt;
+                } else if (type.equalsIgnoreCase("TM")) {
+                    icon = R.drawable.icon_tm;
+                }
+
+                if (icon != 0) {
+                    ImageView imageView = new ImageView(this);
+                    imageView.setImageResource(icon);
+                    layoutTypeRes.addView(imageView, layoutParams);
+                }
+            }
+        }
+
         // set rating point
-        ratingBar1.setRating((float) avgRating);
-        String rateCount = "(" + totalRating + ")";
+        ratingBar1.setRating(avgRating);
+        String rateCount = String.format("(%s)", String.valueOf(totalRating));
         tvRatingCount.setText(rateCount);
 
         // set description;
@@ -199,6 +275,11 @@ public class MovieDetailActivity extends BaseActivity implements MovieDetailCont
         );
 
         expanTvDes.setText(TextUtils.styleTextHtml(textDes));
+    }
+
+    @Override
+    public void setListEpisodes(ArrayList<Episode> listEpisodes) {
+        adapter.addAll(listEpisodes);
     }
 
     @Override
@@ -220,10 +301,18 @@ public class MovieDetailActivity extends BaseActivity implements MovieDetailCont
     @Override
     public void changeStatusFollow(boolean isFollow) {
         if (isFollow) {
-            btnLike.setImageResource(R.drawable.icon_bell2);
+            btnNotify.setImageResource(R.drawable.icon_bell2);
         } else {
-            btnLike.setImageResource(R.drawable.icon_bell1);
+            btnNotify.setImageResource(R.drawable.icon_bell1);
         }
+    }
+
+    @Override
+    public void changeRatingInfo(int total, float avg) {
+        // set rating point
+        ratingBar1.setRating(avg);
+        String rateCount = String.format("(%s)", String.valueOf(total));
+        tvRatingCount.setText(rateCount);
     }
 
     @Override
@@ -249,5 +338,10 @@ public class MovieDetailActivity extends BaseActivity implements MovieDetailCont
     @Override
     public void setPresenter(MovieDetailContract.Presenter Presenter) {
         presenter = Presenter;
+    }
+
+    @Override
+    public void onRatingChanged(RatingBar ratingBar, float v, boolean b) {
+        showPopupRating(v);
     }
 }
