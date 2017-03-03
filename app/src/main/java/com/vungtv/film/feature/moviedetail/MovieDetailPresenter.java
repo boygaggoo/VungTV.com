@@ -8,6 +8,7 @@ import com.vungtv.film.data.source.remote.model.ApiEpisodes;
 import com.vungtv.film.data.source.remote.model.ApiMovieDetail;
 import com.vungtv.film.data.source.remote.service.MovieDetailServices;
 import com.vungtv.film.util.StringUtils;
+import com.vungtv.film.util.UriPaser;
 
 /**
  * Content class.
@@ -27,7 +28,9 @@ public class MovieDetailPresenter implements MovieDetailContract.Presenter, Movi
 
     private boolean isLiked = false;
 
-    private boolean isFollow = false;
+    private boolean isFollowed = false;
+
+    private String trailerVideoId;
 
 
     public MovieDetailPresenter(Context context, MovieDetailContract.View activityView) {
@@ -42,9 +45,11 @@ public class MovieDetailPresenter implements MovieDetailContract.Presenter, Movi
 
     @Override
     public void startLoadDetail(int movId) {
+        String token = UserSessionManager.getAccessToken(context.getApplicationContext());
+        if (token == null) token = "";
         activityView.showLoadding(true);
         movieDetailServices.setMovId(movId);
-        movieDetailServices.loadInfo();
+        movieDetailServices.loadInfo(token);
         movieDetailServices.loadListEpisodes();
     }
 
@@ -59,13 +64,28 @@ public class MovieDetailPresenter implements MovieDetailContract.Presenter, Movi
     }
 
     @Override
+    public void watchPreviewEpisode(String urlVideo) {
+        String videoId = UriPaser.getYoutubeVideoId(urlVideo);
+        if (videoId == null) {
+            activityView.showMsgToast(context.getString(R.string.movie_details_error_preview));
+            return;
+        }
+        activityView.openActPlayerYoutube(videoId);
+    }
+
+    @Override
     public void resumeWatchMovie() {
 
     }
 
     @Override
     public void playTrailer() {
+        if (trailerVideoId == null) {
+            activityView.showMsgToast(context.getString(R.string.movie_details_error_trailer));
+            return;
+        }
 
+        activityView.openActPlayerYoutube(trailerVideoId);
     }
 
     @Override
@@ -78,7 +98,7 @@ public class MovieDetailPresenter implements MovieDetailContract.Presenter, Movi
     public void likeMovie() {
         String token = UserSessionManager.getAccessToken(context.getApplicationContext());
         if (StringUtils.isEmpty(token)) {
-            activityView.showMsgToast(context.getResources().getString(R.string.movie_details_error_like));
+            activityView.showPopupLogin(context.getResources().getString(R.string.movie_details_error_like));
             return;
         }
 
@@ -94,12 +114,12 @@ public class MovieDetailPresenter implements MovieDetailContract.Presenter, Movi
     public void followMovie() {
         String token = UserSessionManager.getAccessToken(context.getApplicationContext());
         if (StringUtils.isEmpty(token)) {
-            activityView.showMsgToast(context.getResources().getString(R.string.movie_details_error_follow));
+            activityView.showPopupLogin(context.getResources().getString(R.string.movie_details_error_follow));
             return;
         }
 
         activityView.showLoadding(true);
-        if (isFollow) {
+        if (isFollowed) {
             movieDetailServices.followMovie("unfollow", token);
         } else {
             movieDetailServices.followMovie("follow", token);
@@ -118,7 +138,11 @@ public class MovieDetailPresenter implements MovieDetailContract.Presenter, Movi
 
     @Override
     public void clearAds() {
-
+        if (!UserSessionManager.isLogin(context.getApplicationContext())) {
+            activityView.showPopupLogin(context.getResources().getString(R.string.movie_details_error_login));
+        } else {
+            activityView.showPopupVip(context.getResources().getString(R.string.movie_details_text_clear_ads));
+        }
     }
 
     @Override
@@ -134,8 +158,21 @@ public class MovieDetailPresenter implements MovieDetailContract.Presenter, Movi
     @Override
     public void onMovieInfoResultSuccess(ApiMovieDetail.Data data) {
         activityView.showLoadding(false);
-        activityView.setMovieInfo(data.movie, data.rating.total, data.rating.avg);
+        activityView.setMovieInfo(data.movie);
+        activityView.setRatingInfo(data.rating.total, data.rating.avg);
         activityView.setRelateMovies(data.relateMovies);
+
+        trailerVideoId = UriPaser.getYoutubeVideoId(data.movie.getMovTrailer());
+
+        if (data.movieUserStatus != null) {
+            isLiked = data.movieUserStatus.like;
+            isFollowed = data.movieUserStatus.follow;
+        }
+        activityView.changeStatusLike(isLiked);
+        activityView.changeStatusFollow(isFollowed);
+
+        activityView.changeBtnClearAdsVisible(
+                !UserSessionManager.isVIP(context.getApplicationContext()));
     }
 
     @Override
@@ -161,15 +198,15 @@ public class MovieDetailPresenter implements MovieDetailContract.Presenter, Movi
         activityView.showLoadding(false);
         activityView.showMsgToast(mes);
 
-        isFollow = !isFollow;
-        activityView.changeStatusFollow(isFollow);
+        isFollowed = !isFollowed;
+        activityView.changeStatusFollow(isFollowed);
     }
 
     @Override
     public void onRatingMovieSuccess(String msg, int total, float avg) {
         activityView.showLoadding(false);
         activityView.showMsgToast(msg);
-        activityView.changeRatingInfo(total, avg);
+        activityView.setRatingInfo(total, avg);
     }
 
     @Override

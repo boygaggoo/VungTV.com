@@ -59,4 +59,11 @@ public class UriPaser {
         }
         return null;
     }
+
+    public static String getYoutubeVideoId(String url) {
+        if (url == null || url.length() < 5) return null;
+
+        Uri uri = Uri.parse(url);
+        return uri.getQueryParameter("v");
+    }
 }

@@ -14,7 +14,7 @@
         android:layout_height="96dp"
         android:orientation="vertical"
         android:gravity="center"
-        android:layout_marginBottom="@dimen/space_16"
+        android:layout_marginBottom="@dimen/space_20"
         android:background="@color/green">
 
         <com.vungtv.film.widget.VtvCircularImageView
@@ -27,18 +27,13 @@
     <com.vungtv.film.widget.VtvEditText
         style="@style/AppTheme.Dialog.Material.Edittext"
         android:id="@+id/pop_changename_ed_name"
+        android:gravity="center"
         android:maxLength="30"
         android:hint="@string/popup_text_hint_input_name" />
 
     <com.vungtv.film.widget.VtvButton
-        style="@style/Base.Widget.AppCompat.Button.ButtonBar.AlertDialog"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/space_8"
-        android:layout_marginLeft="@dimen/space_16"
-        android:layout_marginRight="@dimen/space_16"
-        android:layout_marginBottom="@dimen/space_8"
-        android:id="@+id/pop_changename_ok"
+        android:id="@+id/pop_changename_submit"
+        style="@style/AppTheme.Dialog.Material.Button"
         android:layout_gravity="right|end"
         android:text="@string/popup_action_change_name"
         app:textStyle="bold"/>

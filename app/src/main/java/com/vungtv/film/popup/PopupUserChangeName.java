@@ -20,7 +20,7 @@ public class PopupUserChangeName {
         dialog.setContentView(R.layout.popup_user_change_name);
 
         editText = (VtvEditText) dialog.findViewById(R.id.pop_changename_ed_name);
-        View btnSubmit = dialog.findViewById(R.id.pop_changename_ok);
+        View btnSubmit = dialog.findViewById(R.id.pop_changename_submit);
         btnSubmit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

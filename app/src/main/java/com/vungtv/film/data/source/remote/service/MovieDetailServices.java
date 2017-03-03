@@ -71,17 +71,17 @@ public class MovieDetailServices {
     /**
      * Get thông tin phim
      */
-    public void loadInfo() {
+    public void loadInfo(String token) {
         if (!NetworkUtils.isInternetTurnOn(context)) {
             if (movieDetailResultCallback != null)
                 movieDetailResultCallback.onFailure(0,
                         ApiError.toString(context, ApiError.OFF_INTERNET));
-            LogUtils.e(TAG, "loadHomeData: error: turn off internet!");
+            LogUtils.e(TAG, "loadInfo: error: turn off internet!");
             return;
         }
 
         MovieDetailInterface service = retrofit.create(MovieDetailInterface.class);
-        callMovie = service.loadInfo(movId);
+        callMovie = service.loadInfo(movId, token);
         callMovie.enqueue(new Callback<ApiMovieDetail>() {
             @Override
             public void onResponse(Call<ApiMovieDetail> call, Response<ApiMovieDetail> response) {
@@ -90,7 +90,7 @@ public class MovieDetailServices {
                 if (!response.isSuccessful()) {
                     movieDetailResultCallback.onFailure(response.code(),
                             ApiError.toString(context, ApiError.SERVICE_ERROR));
-                    LogUtils.e(TAG, "loadHomeData: error: server down!");
+                    LogUtils.e(TAG, "loadInfo: error: server down!");
                     return;
                 }
 
@@ -98,7 +98,7 @@ public class MovieDetailServices {
                 if (!apiMovieDetail.getSuccess()) {
                     movieDetailResultCallback.onFailure(
                             apiMovieDetail.getCode(), apiMovieDetail.getMessage());
-                    LogUtils.e(TAG, "loadHomeData: error: No data!");
+                    LogUtils.e(TAG, "loadInfo: error: No data!");
                     return;
                 }
 
@@ -326,7 +326,7 @@ public class MovieDetailServices {
     private interface MovieDetailInterface {
 
         @GET("phim/detail?src=android")
-        Call<ApiMovieDetail> loadInfo(@Query("mov_id") int movId);
+        Call<ApiMovieDetail> loadInfo(@Query("mov_id") int movId, @Query("token") String token);
 
         @GET("phim/episodes?src=android")
         Call<ApiEpisodes> loadEpisodes(@Query("mov_id") int movId);

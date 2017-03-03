@@ -4,6 +4,7 @@
     <string name="text_site_andress">vungtv.com</string>
 
     <string name="facebook_app_id">329967930705976</string>
+    <string name="yooutube_dev_key">AIzaSyCRqUixQupNAe-uNuuuAvquiFAg7JBURs0</string>
 
     <!-- error -->
     <string name="error_no_connection">Không thể kết nối tới máy chủ, hãy kiểm tra lại mạng của bạn! hoặc liên hệ admin.</string>
@@ -153,9 +154,10 @@
     <string name="search_error_msg_short">Từ khóa tối thiểu 3 ký tự</string>
     <string name="search_error_msg_no_movie">Không tìm được phim nào.</string>
     <string name="movie_details_text_empty">N/A</string>
-    <string name="movie_details_error_like">Cần đăng nhập tài khoản để thích phim.</string>
-    <string name="movie_details_error_follow">Cần đăng nhập tài khoản để theo dõi phim.</string>
+    <string name="movie_details_error_like">Để thích phim này bạn cần đăng nhập tài khoản.</string>
+    <string name="movie_details_error_follow">Để theo dõi phim này bạn cần đăng nhập tài khoản.</string>
     <string name="movie_details_error_download">Tính năng này chưa cập nhật.</string>
+    <string name="movie_details_text_clear_ads">Đăng ký gói VIP để loại bỏ tất cả quảng cáo.</string>
     <string name="popup_action_rating">Đánh giá</string>
     <string name="popup_text_title_rating">Đánh giá phim</string>
     <string name="popup_action_cancel">Hủy</string>
@@ -165,5 +167,11 @@
     <string name="popup_rating_text_4">Phim hay</string>
     <string name="popup_rating_text_5">Phim rất hay</string>
     <string name="popup_rating_text_0">Phim quá tệ</string>
+    <string name="movie_details_error_trailer">Trailer chưa được cập nhật.</string>
+    <string name="movie_details_error_preview">Không có dữ liệu video.</string>
+    <string name="popup_action_confirm">Xác nhận</string>
+    <string name="popup_action_login">Đăng nhập</string>
+    <string name="popup_action_buy_vip">Mua vip</string>
+    <string name="movie_details_error_login">Dăng nhập tài khoản để sử dụng tính năng này.</string>
 
 </resources>

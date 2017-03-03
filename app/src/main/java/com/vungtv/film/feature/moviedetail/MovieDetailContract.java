@@ -26,25 +26,35 @@ public interface MovieDetailContract {
 
         void showPopupRating(float star);
 
-        void setMovieInfo(Movie movie, int totalRating, float avgRating);
+        void showPopupLogin(String textContent);
+
+        void showPopupVip(String textContent);
+
+        void setMovieInfo(Movie movie);
 
         void setListEpisodes(ArrayList<Episode> listEpisodes);
 
         void setRelateMovies(ArrayList<Movie> movies);
 
+        void setRatingInfo(int total, float avg);
+
         void changeStatusLike(boolean isLiked);
 
         void changeStatusFollow(boolean isFollow);
 
-        void changeRatingInfo(int total, float avg);
+        void changeBtnClearAdsVisible(boolean visible);
 
         void addAdsBanner();
 
         void openActPlayer();
 
-        void openActPlayerYoutube();
+        void openActPlayerYoutube(String videoId);
 
         void openActSearch();
+
+        void openActBuyVip();
+
+        void openActLogin();
     }
 
     interface Presenter extends BasePresenter {
@@ -54,6 +64,8 @@ public interface MovieDetailContract {
         void reLoadDeatail(int movId);
 
         void watchMovie();
+
+        void watchPreviewEpisode(String urlVideo);
 
         void resumeWatchMovie();
 

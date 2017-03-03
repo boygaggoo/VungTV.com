@@ -32,10 +32,12 @@
     <dimen name="font_small">14sp</dimen>
     <dimen name="font_tiny">12sp</dimen>
     <dimen name="font_lage">18sp</dimen>
+    <dimen name="font_lager">20sp</dimen>
     <dimen name="space_56">56dp</dimen>
     <dimen name="space_128">128dp</dimen>
     <dimen name="space_72">72dp</dimen>
     <dimen name="space_12">12dp</dimen>
     <dimen name="space_2">2dp</dimen>
+    <dimen name="space_20">20dp</dimen>
 
 </resources>

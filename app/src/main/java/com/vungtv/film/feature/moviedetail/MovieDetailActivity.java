@@ -10,13 +10,17 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RatingBar;
 
+import com.google.android.youtube.player.YouTubeStandalonePlayer;
 import com.squareup.picasso.Picasso;
 import com.vungtv.film.BaseActivity;
 import com.vungtv.film.R;
+import com.vungtv.film.feature.buyvip.BuyVipActivity;
+import com.vungtv.film.feature.login.LoginActivity;
 import com.vungtv.film.feature.search.SearchActivity;
 import com.vungtv.film.interfaces.OnItemClickListener;
 import com.vungtv.film.model.Episode;
 import com.vungtv.film.model.Movie;
+import com.vungtv.film.popup.PopupMessenger;
 import com.vungtv.film.popup.PopupRating;
 import com.vungtv.film.util.LogUtils;
 import com.vungtv.film.util.StringUtils;
@@ -72,6 +76,9 @@ public class MovieDetailActivity extends BaseActivity implements MovieDetailCont
     @BindView(R.id.mdetails_btn_like)
     ImageView btnLike;
 
+    @BindView(R.id.mdetails_btn_clear_ads)
+    ImageView btnClearAds;
+
     @BindView(R.id.mdetails_tv_des)
     ExpandableTextView expanTvDes;
 
@@ -85,6 +92,8 @@ public class MovieDetailActivity extends BaseActivity implements MovieDetailCont
     VtvMoviesRowView relateMovies;
 
     private PopupRating popupRating;
+
+    private PopupMessenger popupMessenger;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -100,7 +109,7 @@ public class MovieDetailActivity extends BaseActivity implements MovieDetailCont
             @Override
             public void onItemClick(View v, int pos) {
                 if (adapter.getEpisode(pos).getEpsPreview()) {
-                    presenter.playTrailer();
+                    presenter.watchPreviewEpisode(adapter.getEpisode(pos).getEpsHash());
                 } else {
                     presenter.watchMovie();
                 }
@@ -202,13 +211,56 @@ public class MovieDetailActivity extends BaseActivity implements MovieDetailCont
     }
 
     @Override
-    public void setMovieInfo(Movie movie, int totalRating, float avgRating) {
+    public void showPopupLogin(String textContent) {
+        if (popupMessenger == null) {
+            popupMessenger = new PopupMessenger(this);
+        }
+        popupMessenger.setOnPopupMessengerListener(new PopupMessenger.OnPopupMessengerListener() {
+            @Override
+            public void onPopupMsgBtnConfirmClick() {
+                openActLogin();
+            }
+
+            @Override
+            public void onPopupMsgBtnCancelClick() {
+
+            }
+        });
+        popupMessenger.show();
+        popupMessenger.setTextContent(textContent);
+        popupMessenger.setTextBtnConfirm(getString(R.string.popup_action_login));
+    }
+
+    @Override
+    public void showPopupVip(String textContent) {
+        if (popupMessenger == null) {
+            popupMessenger = new PopupMessenger(this);
+        }
+        popupMessenger.setOnPopupMessengerListener(new PopupMessenger.OnPopupMessengerListener() {
+            @Override
+            public void onPopupMsgBtnConfirmClick() {
+                openActBuyVip();
+            }
+
+            @Override
+            public void onPopupMsgBtnCancelClick() {
+
+            }
+        });
+        popupMessenger.show();
+        popupMessenger.setTextContent(textContent);
+        popupMessenger.setTextBtnConfirm(getString(R.string.popup_action_buy_vip));
+    }
+
+    @Override
+    public void setMovieInfo(Movie movie) {
         // set Cover img
         if (StringUtils.isNotEmpty(movie.getMovCover())) {
             Picasso.with(this)
                     .load(movie.getMovCover().replace(" ", ""))
                     .fit()
                     .centerCrop()
+                    .placeholder(R.drawable.default_poster_land)
                     .error(R.drawable.default_poster_land)
                     .into(imgCover);
         }
@@ -255,11 +307,6 @@ public class MovieDetailActivity extends BaseActivity implements MovieDetailCont
                 }
             }
         }
-
-        // set rating point
-        ratingBar1.setRating(avgRating);
-        String rateCount = String.format("(%s)", String.valueOf(totalRating));
-        tvRatingCount.setText(rateCount);
 
         // set description;
         String textDes = String.format(
@@ -308,7 +355,12 @@ public class MovieDetailActivity extends BaseActivity implements MovieDetailCont
     }
 
     @Override
-    public void changeRatingInfo(int total, float avg) {
+    public void changeBtnClearAdsVisible(boolean visible) {
+        btnClearAds.setVisibility(visible ? View.VISIBLE : View.GONE);
+    }
+
+    @Override
+    public void setRatingInfo(int total, float avg) {
         // set rating point
         ratingBar1.setRating(avg);
         String rateCount = String.format("(%s)", String.valueOf(total));
@@ -326,13 +378,25 @@ public class MovieDetailActivity extends BaseActivity implements MovieDetailCont
     }
 
     @Override
-    public void openActPlayerYoutube() {
-
+    public void openActPlayerYoutube(String videoId) {
+        String devKey = getString(R.string.yooutube_dev_key);
+        Intent intent = YouTubeStandalonePlayer.createVideoIntent(this, devKey, videoId);
+        startActivity(intent);
     }
 
     @Override
     public void openActSearch() {
         startActivity(new Intent(this, SearchActivity.class));
+    }
+
+    @Override
+    public void openActBuyVip() {
+        startActivity(new Intent(this, BuyVipActivity.class));
+    }
+
+    @Override
+    public void openActLogin() {
+        startActivity(new Intent(MovieDetailActivity.this, LoginActivity.class));
     }
 
     @Override

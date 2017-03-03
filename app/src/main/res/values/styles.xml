@@ -152,11 +152,46 @@
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">@dimen/space_48</item>
         <item name="android:padding">@dimen/space_8</item>
-        <item name="android:layout_margin">@dimen/space_16</item>
-        <item name="android:gravity">center</item>
+        <item name="android:layout_marginTop">0dp</item>
+        <item name="android:layout_marginBottom">@dimen/space_24</item>
+        <item name="android:layout_marginLeft">@dimen/space_24</item>
+        <item name="android:layout_marginRight">@dimen/space_24</item>
         <item name="android:maxLines">1</item>
         <item name="android:textSize">@dimen/font_lage</item>
         <item name="android:textColor">@color/text_dark_1</item>
+    </style>
+
+    <style name="AppTheme.Dialog.Material.Button" parent="Widget.AppCompat.Button.ButtonBar.AlertDialog">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_marginTop">@dimen/space_8</item>
+        <item name="android:layout_marginBottom">@dimen/space_8</item>
+        <item name="android:layout_marginLeft">0dp</item>
+        <item name="android:layout_marginRight">@dimen/space_8</item>
+        <item name="android:textColor">@color/green</item>
+        <item name="android:textAllCaps">true</item>
+    </style>
+
+    <style name="AppTheme.Dialog.Material.Title" parent="@android:style/TextAppearance">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_marginTop">@dimen/space_24</item>
+        <item name="android:layout_marginBottom">@dimen/space_20</item>
+        <item name="android:layout_marginLeft">@dimen/space_24</item>
+        <item name="android:layout_marginRight">@dimen/space_24</item>
+        <item name="android:textColor">@color/text_dark_1</item>
+        <item name="android:textSize">@dimen/font_lager</item>
+    </style>
+
+    <style name="AppTheme.Dialog.Material.Content.Text" parent="@android:style/TextAppearance">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_marginTop">0dp</item>
+        <item name="android:layout_marginBottom">@dimen/space_24</item>
+        <item name="android:layout_marginLeft">@dimen/space_24</item>
+        <item name="android:layout_marginRight">@dimen/space_24</item>
+        <item name="android:textColor">@color/text_dark_1</item>
+        <item name="android:textSize">@dimen/font_normal</item>
     </style>
 
     <style name="AppTheme.Dialog.Button" parent="@android:style/Widget.Button">
@@ -240,5 +275,4 @@
     <style name="AppTheme.Spinner.DropDown.Theme" parent="AppTheme">
         <item name="android:dropDownSpinnerStyle">@style/AppTheme.Spinner.DropDown.filter</item>
     </style>
-
 </resources>

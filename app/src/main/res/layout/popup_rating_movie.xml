@@ -6,50 +6,41 @@
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_gravity="center">
+    android:layout_gravity="center"
+    tools:background="@color/gray_1">
 
     <com.vungtv.film.widget.VtvTextView
-        style="@style/TextAppearance.AppCompat.Title"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_margin="@dimen/space_16"
+        style="@style/AppTheme.Dialog.Material.Title"
         android:text="@string/popup_text_title_rating"
         android:textColor="@color/text_dark_1"
         app:textStyle="bold"/>
 
     <com.vungtv.film.widget.VtvTextView
         android:id="@+id/pop_rating_text"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:paddingLeft="@dimen/space_16"
-        android:paddingRight="@dimen/space_16"
+        style="@style/AppTheme.Dialog.Material.Content.Text"
+        android:layout_marginBottom="0dp"
         android:layout_gravity="center"
-        android:textColor="@color/text_dark_2"
-        android:textSize="@dimen/font_normal"
+        android:gravity="center"
         android:text="@string/popup_rating_text_3"/>
 
     <RatingBar
         android:id="@+id/pop_rating_rating"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_margin="@dimen/space_16"
+        android:layout_marginTop="@dimen/space_8"
+        android:layout_marginLeft="@dimen/space_24"
+        android:layout_marginRight="@dimen/space_24"
+        android:layout_marginBottom="@dimen/space_24"
         android:layout_gravity="center"
         android:max="5"
         android:stepSize="1"
         android:rating="3"/>
 
     <com.vungtv.film.widget.VtvButton
-        style="@style/Base.Widget.AppCompat.Button.ButtonBar.AlertDialog"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/space_8"
-        android:layout_marginLeft="@dimen/space_16"
-        android:layout_marginRight="@dimen/space_16"
-        android:layout_marginBottom="@dimen/space_8"
         android:id="@+id/pop_rating_btn_submit"
+        style="@style/AppTheme.Dialog.Material.Button"
         android:layout_gravity="right|end"
         android:text="@string/popup_action_rating"
-        android:textAllCaps="true"
         app:textStyle="bold"/>
 
 </LinearLayout>

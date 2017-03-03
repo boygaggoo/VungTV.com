@@ -19,7 +19,7 @@ android {
     }
 
     repositories {
-        maven { url "https://dl.bintray.com/hani-momanii/maven"}
+        maven { url "https://dl.bintray.com/hani-momanii/maven" }
         mavenCentral()
     }
 }
@@ -29,12 +29,7 @@ dependencies {
     androidTestCompile('com.android.support.test.espresso:espresso-core:2.2.2', {
         exclude group: 'com.android.support', module: 'support-annotations'
     })
-    testCompile 'junit:junit:4.12'
-    testCompile "org.robolectric:robolectric:3.2.2"
-    debugCompile 'com.squareup.leakcanary:leakcanary-android:1.5'
-    testCompile 'com.squareup.leakcanary:leakcanary-android-no-op:1.5'
-    debugCompile 'com.squareup.haha:haha:2.0.3'
-
+    compile files('libs/YouTubeAndroidPlayerApi.jar')
     compile 'com.android.support:appcompat-v7:25.1.1'
     compile 'com.android.support:support-v4:25.1.1'
     compile 'com.android.support:design:25.1.1'
@@ -50,8 +45,13 @@ dependencies {
     compile 'org.greenrobot:eventbus:3.0.0'
     compile 'com.facebook.android:facebook-android-sdk:[4,5)'
     compile 'com.google.android.gms:play-services-auth:10.0.1'
-
+    compile 'com.android.support.constraint:constraint-layout:+'
+    testCompile 'junit:junit:4.12'
+    testCompile 'org.robolectric:robolectric:3.2.2'
+    testCompile 'com.squareup.leakcanary:leakcanary-android-no-op:1.5'
     annotationProcessor 'com.jakewharton:butterknife-compiler:8.4.0'
+    debugCompile 'com.squareup.leakcanary:leakcanary-android:1.5'
+    debugCompile 'com.squareup.haha:haha:2.0.3'
 }
 apply plugin: 'com.google.gms.google-services'
 apply plugin: 'realm-android'

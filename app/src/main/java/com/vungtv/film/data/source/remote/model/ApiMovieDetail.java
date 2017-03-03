@@ -24,7 +24,6 @@ public class ApiMovieDetail extends ApiModel{
     }
 
     public class Data {
-
         @SerializedName("movie")
         @Expose
         public Movie movie;
@@ -34,6 +33,18 @@ public class ApiMovieDetail extends ApiModel{
         @SerializedName("rating")
         @Expose
         public RatingMovie rating;
+        @SerializedName("movie_user_status")
+        @Expose
+        public MovieUserStatus movieUserStatus;
+    }
+
+    public class MovieUserStatus {
+        @SerializedName("follow")
+        @Expose
+        public Boolean follow;
+        @SerializedName("like")
+        @Expose
+        public Boolean like;
 
     }
 }
