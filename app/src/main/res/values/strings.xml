@@ -173,5 +173,16 @@
     <string name="popup_action_login">Đăng nhập</string>
     <string name="popup_action_buy_vip">Mua vip</string>
     <string name="movie_details_error_login">Dăng nhập tài khoản để sử dụng tính năng này.</string>
+    <string name="player_clear_ads">Tắt quảng cáo</string>
+    <string name="player_control_msg_retry">Có lỗi xảy ra\nClick để thủ lại</string>
+    <string name="vtv_playback_control_clear_ads">Ẩn quảng cáo</string>
+    <string name="player_text_subtutle">Phụ đề</string>
+    <string name="player_text_quality">Chất lượng</string>
+    <string name="player_text_quality_4k">Ultra HD (4K)</string>
+    <string name="player_text_quality_2k">1440p (2K)</string>
+    <string name="player_text_quality_fhd">1080p (FHD)</string>
+    <string name="player_text_quality_hd">720p (HD)</string>
+    <string name="player_text_quality_480p">480p</string>
+    <string name="player_text_quality_360p">360p</string>
 
 </resources>

@@ -16,6 +16,7 @@ import com.vungtv.film.BaseActivity;
 import com.vungtv.film.R;
 import com.vungtv.film.feature.buyvip.BuyVipActivity;
 import com.vungtv.film.feature.login.LoginActivity;
+import com.vungtv.film.feature.player.PlayerActivity;
 import com.vungtv.film.feature.search.SearchActivity;
 import com.vungtv.film.interfaces.OnItemClickListener;
 import com.vungtv.film.model.Episode;
@@ -111,7 +112,7 @@ public class MovieDetailActivity extends BaseActivity implements MovieDetailCont
                 if (adapter.getEpisode(pos).getEpsPreview()) {
                     presenter.watchPreviewEpisode(adapter.getEpisode(pos).getEpsHash());
                 } else {
-                    presenter.watchMovie();
+                    presenter.watchMovie(adapter.getEpisode(pos).getEpsHash());
                 }
             }
         });
@@ -373,8 +374,9 @@ public class MovieDetailActivity extends BaseActivity implements MovieDetailCont
     }
 
     @Override
-    public void openActPlayer() {
-
+    public void openActPlayer(int movId, String movName, String epsHash) {
+        Intent intent = PlayerActivity.buildIntent(this, movId, movName, epsHash);
+        startActivity(intent);
     }
 
     @Override

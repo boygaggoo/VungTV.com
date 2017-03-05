@@ -5,6 +5,7 @@ import android.content.res.Configuration;
 import android.os.Bundle;
 import android.support.annotation.LayoutRes;
 import android.support.annotation.Nullable;
+import android.support.annotation.StringRes;
 import android.support.v7.app.AppCompatActivity;
 import android.widget.Toast;
 
@@ -67,5 +68,9 @@ public class BaseActivity  extends AppCompatActivity{
 
     protected void showToast(String mes) {
         Toast.makeText(getApplicationContext(), mes + "", Toast.LENGTH_SHORT).show();
+    }
+
+    protected void showToast(@StringRes int messageId) {
+        showToast(getString(messageId));
     }
 }

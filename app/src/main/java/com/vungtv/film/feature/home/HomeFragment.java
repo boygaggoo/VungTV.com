@@ -36,6 +36,7 @@ import static com.google.gson.internal.$Gson$Preconditions.checkNotNull;
  * A simple {@link Fragment} subclass.
  */
 public class HomeFragment extends Fragment implements HomeContract.View {
+
     private static final String TAG = HomeFragment.class.getSimpleName();
 
     private HomeContract.Presenter presenter;
@@ -91,8 +92,8 @@ public class HomeFragment extends Fragment implements HomeContract.View {
     }
 
     @Override
-    public void setPresenter(HomeContract.Presenter Presenters) {
-        presenter = checkNotNull(Presenters);;
+    public void setPresenter(HomeContract.Presenter Presenter) {
+        presenter = checkNotNull(Presenter);;
     }
 
     @Override

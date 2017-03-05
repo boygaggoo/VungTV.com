@@ -68,7 +68,11 @@
             android:name="com.facebook.sdk.ApplicationId"
             android:value="@string/facebook_app_id" />
 
-        <activity android:name=".feature.youtube.YoutubePlayerActivity"></activity>
+        <activity
+            android:name=".feature.player.PlayerActivity"
+            android:configChanges="keyboard|keyboardHidden|orientation|screenSize|screenLayout|smallestScreenSize|uiMode"
+            android:launchMode="singleTop"
+            android:theme="@style/AppTheme.FullScreen"/>
     </application>
 
 </manifest>

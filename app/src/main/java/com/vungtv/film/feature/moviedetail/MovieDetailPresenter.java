@@ -30,6 +30,10 @@ public class MovieDetailPresenter implements MovieDetailContract.Presenter, Movi
 
     private boolean isFollowed = false;
 
+    private int movId;
+
+    private String movName;
+
     private String trailerVideoId;
 
 
@@ -59,8 +63,8 @@ public class MovieDetailPresenter implements MovieDetailContract.Presenter, Movi
     }
 
     @Override
-    public void watchMovie() {
-
+    public void watchMovie(String epsHash) {
+        activityView.openActPlayer(movId, movName, epsHash);
     }
 
     @Override
@@ -162,6 +166,8 @@ public class MovieDetailPresenter implements MovieDetailContract.Presenter, Movi
         activityView.setRatingInfo(data.rating.total, data.rating.avg);
         activityView.setRelateMovies(data.relateMovies);
 
+        movId = data.movie.getMovId();
+        movName = data.movie.getMovName();
         trailerVideoId = UriPaser.getYoutubeVideoId(data.movie.getMovTrailer());
 
         if (data.movieUserStatus != null) {

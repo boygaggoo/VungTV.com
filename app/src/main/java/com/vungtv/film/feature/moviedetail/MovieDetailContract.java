@@ -46,7 +46,7 @@ public interface MovieDetailContract {
 
         void addAdsBanner();
 
-        void openActPlayer();
+        void openActPlayer(int movId, String movName, String epsHash);
 
         void openActPlayerYoutube(String videoId);
 
@@ -63,7 +63,7 @@ public interface MovieDetailContract {
 
         void reLoadDeatail(int movId);
 
-        void watchMovie();
+        void watchMovie(String epsHash);
 
         void watchPreviewEpisode(String urlVideo);
 

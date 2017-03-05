@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/player_root"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/gray_7"
+    android:keepScreenOn="true">
+
+    <com.vungtv.film.widget.player.VtvPlayerView
+        android:id="@+id/player_view"
+        android:focusable="true"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/gray_7"/>
+
+    <com.vungtv.film.widget.VtvTextView
+        android:id="@+id/player_btn_retry"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:padding="@dimen/space_24"
+        android:text="@string/player_control_msg_retry"
+        android:visibility="gone"/>
+
+</FrameLayout>

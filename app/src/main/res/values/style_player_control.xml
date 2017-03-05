@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <!-- Progress Loading -->
+    <style name="Theme.Control.Progress" parent="Theme.AppCompat.Light.Dialog">
+        <!-- Used for the buttons -->
+        <item name="colorAccent">@color/colorAccent</item>
+        <!-- Used for the title and text -->
+        <item name="android:textColorPrimary">@color/colorPrimary</item>
+        <!-- Used for the background -->
+        <item name="android:background">@color/transparent_dark</item>
+    </style>
+
+    <style name="Control.Text.Title" parent="@android:style/TextAppearance">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:gravity">center_vertical</item>
+        <item name="android:textColor">@color/text_light_1</item>
+        <item name="android:textSize">18sp</item>
+        <item name="android:ellipsize">end</item>
+        <item name="android:maxLines">1</item>
+    </style>
+
+    <style name="Control.Text.Button" parent="@android:style/TextAppearance">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">@dimen/space_56</item>
+        <item name="android:padding">@dimen/space_16</item>
+        <item name="android:gravity">center_vertical</item>
+        <item name="android:textColor">@color/colorAccent</item>
+        <item name="android:textSize">18sp</item>
+    </style>
+
+    <style name="Control.Text.Time" parent="@android:style/TextAppearance">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:gravity">center_vertical</item>
+        <item name="android:textColor">@color/text_light_1</item>
+        <item name="android:padding">@dimen/space_16</item>
+        <item name="android:textSize">18sp</item>
+    </style>
+
+    <style name="Control.Text.option" parent="@android:style/TextAppearance">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_marginTop">@dimen/space_72</item>
+        <item name="android:padding">@dimen/space_16</item>
+        <item name="android:gravity">center</item>
+        <item name="android:drawablePadding">@dimen/space_8</item>
+        <item name="android:background">@drawable/ds_bg_control_option</item>
+        <item name="android:textColor">@color/text_light_1</item>
+        <item name="android:textSize">18sp</item>
+    </style>
+
+    <style name="Control.Button.Top" parent="AppTheme">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:padding">@dimen/space_16</item>
+    </style>
+
+    <style name="Control.Button.play" parent="AppTheme">
+        <item name="android:layout_width">@dimen/space_56</item>
+        <item name="android:layout_height">@dimen/space_56</item>
+        <item name="android:scaleType">center</item>
+    </style>
+
+    <style name="Control.ProgressBar" parent="Widget.AppCompat.ProgressBar">
+        <!-- Used for the buttons -->
+        <item name="colorPrimary">@color/colorAccent</item>
+        <item name="colorAccent">@color/colorAccent</item>
+        <item name="android:layout_width">@dimen/space_88</item>
+        <item name="android:layout_height">@dimen/space_88</item>
+    </style>
+</resources>

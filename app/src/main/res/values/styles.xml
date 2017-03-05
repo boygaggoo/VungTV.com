@@ -9,6 +9,11 @@
         <item name="android:ratingBarStyle">@style/AppTheme.RatingBar.Dark</item>
     </style>
 
+    <style name="AppTheme.FullScreen" parent="AppTheme">
+        <item name="android:windowFullscreen">true</item>
+        <item name="android:windowNoTitle">true</item>
+    </style>
+
     <!-- Base application theme. -->
     <style name="AppTheme.Dark" parent="Theme.AppCompat.NoActionBar">
         <!-- Customize your theme here. -->
