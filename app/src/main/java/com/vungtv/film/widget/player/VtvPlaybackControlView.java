@@ -388,12 +388,12 @@ public class VtvPlaybackControlView extends FrameLayout {
     }
 
     public void setNextButtonVisible(boolean visible) {
-        nextButton.setVisibility(visible ? VISIBLE : INVISIBLE);
+        nextButton.setAlpha(visible ? 1f : 0f);
         nextButton.setEnabled(visible);
     }
 
     public void setPreviousButtonVisible(boolean visible) {
-        previousButton.setVisibility(visible ? VISIBLE : INVISIBLE);
+        previousButton.setAlpha(visible ? 1f : 0f);
         previousButton.setEnabled(visible);
     }
 

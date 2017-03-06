@@ -89,5 +89,7 @@ public interface PlayerContract {
         void openPopupListEpisodes();
 
         void selectedVersion(int position);
+
+        void selectedItemListEps(String epsHash);
     }
 }

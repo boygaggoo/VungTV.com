@@ -13,6 +13,7 @@ import com.vungtv.film.R;
 import com.vungtv.film.feature.moviedetail.EpisodesRecycerAdapter;
 import com.vungtv.film.interfaces.OnItemClickListener;
 import com.vungtv.film.model.Episode;
+import com.vungtv.film.util.LogUtils;
 import com.vungtv.film.widget.MarginDecoration;
 
 import java.util.ArrayList;
@@ -33,6 +34,8 @@ public class PopupListEpisode implements TextWatcher {
 
     private EpisodesRecycerAdapter adapter;
 
+    private OnPopupListEpisodeListener onPopupListEpisodeListener;
+
     public PopupListEpisode(Context context) {
 
         dialog = new Dialog(context, R.style.AppTheme_Dialog);
@@ -47,7 +50,12 @@ public class PopupListEpisode implements TextWatcher {
         adapter.setOnItemClickListener(new OnItemClickListener() {
             @Override
             public void onItemClick(View v, int pos) {
-
+                dismiss();
+                if (onPopupListEpisodeListener != null) {
+                    onPopupListEpisodeListener.onItemPopupEpisodeClicked(
+                            adapter.getEpisode(pos).getEpsHash());
+                    LogUtils.d("Popup ", "onItemClick: Pos = " + pos);
+                }
             }
         });
         recyclerView.setAdapter(adapter);
@@ -63,7 +71,10 @@ public class PopupListEpisode implements TextWatcher {
 
     @Override
     public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-
+        if (adapter.getItemCount() > 1) {
+            int pos = searchPosition(charSequence.toString());
+            recyclerView.scrollToPosition(pos);
+        }
     }
 
     @Override
@@ -71,20 +82,53 @@ public class PopupListEpisode implements TextWatcher {
 
     }
 
-    public void setListEpisodes(ArrayList<Episode> list) {
-        adapter.setList(list);
+    public void setListEpisodes(ArrayList<Episode> list, String epsTitle) {
+        int pos = absoluteSearchPos(epsTitle);
+        adapter.setListAndChecked(list, pos);
+    }
+
+    public void setOnPopupListEpisodeListener(OnPopupListEpisodeListener onPopupListEpisodeListener) {
+        this.onPopupListEpisodeListener = onPopupListEpisodeListener;
+    }
+
+    public void show() {
+        if (dialog != null && !dialog.isShowing()) {
+            dialog.show();
+        }
+    }
+
+    public void dismiss() {
+        if (dialog != null && dialog.isShowing()) {
+            dialog.dismiss();
+        }
     }
 
     private int searchPosition(String query) {
         int pos = 0;
-
         final List<Episode> list = adapter.getList();
-        for (Episode model : list) {
-            final String text = model.getEpsTitle().toLowerCase();
+        for (int i = 0; i < list.size(); i++) {
+            final String text = list.get(i).getEpsTitle().toLowerCase();
             if (text.contains(query)) {
-
+                pos = i;
             }
         }
-        return 0;
+        return pos;
+    }
+
+    private int absoluteSearchPos(String text) {
+        int pos = 0;
+        final List<Episode> list = adapter.getList();
+        for (int i = 0; i < list.size(); i++) {
+            final String s = list.get(i).getEpsTitle().toLowerCase();
+            if (text.equalsIgnoreCase(s)) {
+                pos = i;
+                break;
+            }
+        }
+        return pos;
+    }
+
+    public interface OnPopupListEpisodeListener {
+        void onItemPopupEpisodeClicked(String epsHash);
     }
 }

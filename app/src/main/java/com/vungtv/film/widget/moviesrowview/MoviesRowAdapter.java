@@ -1,7 +1,6 @@
 package com.vungtv.film.widget.moviesrowview;
 
 import android.content.Context;
-import android.graphics.Color;
 import android.support.v4.content.res.ResourcesCompat;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -11,6 +10,7 @@ import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
+import android.widget.TextView;
 
 import com.google.gson.Gson;
 import com.squareup.picasso.Picasso;
@@ -19,7 +19,6 @@ import com.vungtv.film.model.HotTopic;
 import com.vungtv.film.model.Movie;
 import com.vungtv.film.model.MovieRecent;
 import com.vungtv.film.util.DrawableUtils;
-import com.vungtv.film.util.FontUtils;
 import com.vungtv.film.util.LogUtils;
 import com.vungtv.film.widget.VtvTextView;
 
@@ -40,8 +39,7 @@ public class MoviesRowAdapter extends RecyclerView.Adapter {
     private OnRecentInfoClick onRecentInfoClick;
 
     private final int COLOR_BLUE, COLOR_YELLOW, COLOR_ORANGE, COLOR_BLUEGRAY;
-    private final int PADDING, MARGIN, MARGIN_BETWEEN_ITEM;
-    private final float TEXTSIZE_INFO;
+    private final int MARGIN, MARGIN_BETWEEN_ITEM;
 
     public MoviesRowAdapter(Context context, int itemType) {
         this.context = context;
@@ -51,10 +49,8 @@ public class MoviesRowAdapter extends RecyclerView.Adapter {
         COLOR_YELLOW = getColor(R.color.yellow);
         COLOR_ORANGE = getColor(R.color.orange);
         COLOR_BLUEGRAY = getColor(R.color.green_dark);
-        PADDING = context.getResources().getDimensionPixelSize(R.dimen.space_2);
         MARGIN = context.getResources().getDimensionPixelSize(R.dimen.margin);
         MARGIN_BETWEEN_ITEM = context.getResources().getDimensionPixelSize(R.dimen.space_7);
-        TEXTSIZE_INFO = context.getResources().getDimensionPixelSize(R.dimen.font_tiny)*2/3;
     }
 
     @Override
@@ -208,25 +204,26 @@ public class MoviesRowAdapter extends RecyclerView.Adapter {
             ));
 
             infoLayout.removeAllViews();
+            LayoutInflater inflater = LayoutInflater.from(itemView.getContext());
             String res = movie.getRes();
             if (res != null && res.length() > 1) {
                 String[] quality = res.split(",");
 
                 for (String s : quality) {
                     if (s.equalsIgnoreCase("HD")) {
-                        addViewInfo(s, COLOR_BLUE);
+                        addViewInfo(inflater, s, COLOR_BLUE);
                     } else if (s.equalsIgnoreCase("SD")) {
-                        addViewInfo(s, COLOR_YELLOW);
+                        addViewInfo(inflater, s, COLOR_YELLOW);
                     }
                 }
             }
 
             if (movie.getLt() != null && movie.getLt().length() > 0) {
-                addViewInfo(movie.getLt(), COLOR_ORANGE);
+                addViewInfo(inflater, movie.getLt(), COLOR_ORANGE);
             }
 
             if (movie.getTm() != null && movie.getTm().length() > 0) {
-                addViewInfo(movie.getTm(), COLOR_BLUEGRAY);
+                addViewInfo(inflater, movie.getTm(), COLOR_BLUEGRAY);
             }
         }
 
@@ -235,17 +232,10 @@ public class MoviesRowAdapter extends RecyclerView.Adapter {
          * @param info SD, HD, LT, TM
          * @param color bg color
          */
-        private void addViewInfo(String info, int color) {
-            VtvTextView textView = new VtvTextView(itemView.getContext());
-            LinearLayout.LayoutParams layoutParams =
-                    new LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
-            layoutParams.setMargins(0, 0, 0, PADDING);
-            textView.setPadding(PADDING * 2, PADDING, PADDING * 2, PADDING);
-            textView.setTextColor(Color.WHITE);
-            textView.setTextStyle(FontUtils.BOLD);
-            textView.setTextSize(TEXTSIZE_INFO /2);
+        private void addViewInfo(LayoutInflater inflater, String info, int color) {
+            TextView textView = (TextView) inflater.inflate(
+                    R.layout.item_widget_movies_row_info, infoLayout, false);
             textView.setBackground(DrawableUtils.createBgMovieInfo(context, color));
-            textView.setLayoutParams(layoutParams);
             textView.setText(info);
 
             infoLayout.addView(textView);

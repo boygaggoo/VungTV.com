@@ -9,10 +9,10 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
-import android.widget.Toast;
 
 import com.squareup.picasso.Picasso;
 import com.vungtv.film.R;
+import com.vungtv.film.feature.moviedetail.MovieDetailActivity;
 import com.vungtv.film.model.Slider;
 
 public class SliderFragment extends Fragment implements View.OnClickListener {
@@ -63,11 +63,11 @@ public class SliderFragment extends Fragment implements View.OnClickListener {
     @Override
     public void onClick(View view) {
         if (slider.getType().equalsIgnoreCase(BANNER_MOVIE)) {
-            Toast.makeText(getActivity(),
-                    "Movie ID = " + slider.getMovId(), Toast.LENGTH_SHORT).show();
+            Intent intent = MovieDetailActivity.getIntentData(getActivity(), slider.getMovId());
+            startActivity(intent);
         } else {
-            if (slider.getLink() == null || slider.getLink().length() < 5) return;
-
+            if (slider.getLink() == null || slider.getLink().length() < 5)
+                return;
             Intent intent = new Intent(Intent.ACTION_VIEW);
             intent.setData(Uri.parse(slider.getLink()));
             startActivity(intent);

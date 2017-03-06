@@ -55,6 +55,8 @@ import com.google.android.exoplayer2.util.Util;
 import com.vungtv.film.App;
 import com.vungtv.film.R;
 import com.vungtv.film.model.DrmSession;
+import com.vungtv.film.model.Episode;
+import com.vungtv.film.popup.PopupListEpisode;
 import com.vungtv.film.util.LogUtils;
 import com.vungtv.film.widget.player.TrackSelectionHelper;
 import com.vungtv.film.widget.player.VersionSelectionHelper;
@@ -64,6 +66,7 @@ import com.vungtv.film.widget.player.VtvPlayerView;
 import java.net.CookieHandler;
 import java.net.CookieManager;
 import java.net.CookiePolicy;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
@@ -108,10 +111,11 @@ public class PlayerActivity extends AppCompatActivity implements PlayerContract.
     private SimpleExoPlayer player;
     private DefaultTrackSelector trackSelector;
     private TrackSelectionHelper trackSelectionHelper;
+    private VersionSelectionHelper versionSelectionHelper;
+
+    private PopupListEpisode popupListEpisode;
 
     private MediaSource mediaSource;
-
-    private VersionSelectionHelper versionSelectionHelper;
 
     private boolean playerNeedsSource;
     private boolean shouldAutoPlay;
@@ -269,6 +273,23 @@ public class PlayerActivity extends AppCompatActivity implements PlayerContract.
     }
 
     @Override
+    public void showPopupListEpisodes(ArrayList<Episode> list, String epsTitle) {
+        if (popupListEpisode == null) {
+            popupListEpisode = new PopupListEpisode(this);
+            popupListEpisode.setOnPopupListEpisodeListener(new PopupListEpisode.OnPopupListEpisodeListener() {
+                @Override
+                public void onItemPopupEpisodeClicked(String epsHash) {
+                    presenter.selectedItemListEps(epsHash);
+                    LogUtils.d(TAG, "showPopupListEpisodes: epsHash = " + epsHash);
+                }
+            });
+        }
+
+        popupListEpisode.setListEpisodes(list, epsTitle);
+        popupListEpisode.show();
+    }
+
+    @Override
     public void setMediaSource(Uri uri, String extension) {
         mediaSource = buildMediaSource(uri, extension);
         LogUtils.d(TAG, "setMediaSource: uri : " + uri + "\nextension : " + extension );
@@ -293,6 +314,11 @@ public class PlayerActivity extends AppCompatActivity implements PlayerContract.
     @Override
     public void setBtnVersionEnable(boolean enable) {
         vtvControlView.setBtnVersionEnabled(enable);
+    }
+
+    @Override
+    public void setBtnPlaylistEnable(boolean enable) {
+        vtvControlView.setBtnPlaylistEnabled(enable);
     }
 
     @Override
@@ -551,7 +577,7 @@ public class PlayerActivity extends AppCompatActivity implements PlayerContract.
 
     @Override
     public void onClickButtonOpenPlaylist() {
-        showMsgToast("onClickButtonOpenPlaylist");
+        presenter.openPopupListEpisodes();
     }
 
     @Override

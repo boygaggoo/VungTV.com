@@ -145,6 +145,17 @@ public class PlayerPresenter implements PlayerContract.Presenter, PlayerServices
     }
 
     @Override
+    public void selectedItemListEps(String epsHash1) {
+        LogUtils.d(TAG, "selectedItemListEps: epsHash = " + epsHash);
+        this.epsHash = epsHash1;
+
+        playerView.releasePlayer();
+        playerView.clearResumePosition();
+        playerView.showLoading(true);
+        mPlayerServices.loadEpisodeInfo(movId, epsHash);
+    }
+
+    @Override
     public void start() {
 
     }
@@ -183,16 +194,24 @@ public class PlayerPresenter implements PlayerContract.Presenter, PlayerServices
                         videoData.epsTitle,
                         movName
                 ));
-        playerView.setBtnNextPrevEnable(
-                StringUtils.isNotEmpty(videoData.next),
-                StringUtils.isNotEmpty(videoData.previous));
 
+        boolean isNext = StringUtils.isNotEmpty(videoData.next);
+        boolean isPrev = StringUtils.isNotEmpty(videoData.previous);
+
+        playerView.setBtnNextPrevEnable(isNext, isPrev);
+        playerView.setBtnPlaylistEnable(isNext || isPrev);
         playerView.setBtnVersionEnable(videoData.player.size() > 1);
     }
 
     @Override
     public void onEpisodeResultSuccess(ApiEpisodes.Data data) {
-
+        playerView.showLoading(false);
+        if (data.getEpisodes() != null && data.getEpisodes().size() > 0 && videoData != null) {
+            listEps = data.getEpisodes();
+            playerView.showPopupListEpisodes(listEps, videoData.epsTitle);
+        } else {
+            playerView.showMsgToast(context.getString(R.string.player_error_msg_no_data));
+        }
     }
 
     @Override

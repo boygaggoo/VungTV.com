@@ -24,6 +24,8 @@ public class EpisodesRecycerAdapter extends RecyclerView.Adapter {
 
     private OnItemClickListener onItemClickListener;
 
+    int posChecked = 0;
+
     public EpisodesRecycerAdapter() {
     }
 
@@ -46,6 +48,10 @@ public class EpisodesRecycerAdapter extends RecyclerView.Adapter {
         return list.size();
     }
 
+    public void setItemChecked(int pos) {
+        this.posChecked = pos;
+    }
+
     public void addItem(Episode episode) {
         list.add(episode);
         notifyItemInserted(list.size() - 1);
@@ -62,6 +68,12 @@ public class EpisodesRecycerAdapter extends RecyclerView.Adapter {
     }
 
     public void setList(ArrayList<Episode> list) {
+        this.list = list;
+        notifyDataSetChanged();
+    }
+
+    public void setListAndChecked(ArrayList<Episode> list, int posChecked) {
+        this.posChecked = posChecked;
         this.list = list;
         notifyDataSetChanged();
     }
@@ -104,6 +116,12 @@ public class EpisodesRecycerAdapter extends RecyclerView.Adapter {
 
         public void setInfo(String label) {
             if (label != null) textView.setText(label);
+
+            if (posChecked == getLayoutPosition()) {
+                textView.setBackgroundResource(R.drawable.ds_touchable_bg_green_radius);
+            } else {
+                textView.setBackgroundResource(R.drawable.ds_touchable_bg_gray6_radius);
+            }
         }
 
         @Override
