@@ -249,6 +249,20 @@
         <item name="android:textColorHint">@color/text_light_3</item>
     </style>
 
+    <style name="AppTheme.SearchView.Dark" parent="Widget.AppCompat.EditText">
+        <item name="android:layout_marginLeft">@dimen/margin</item>
+        <item name="android:paddingLeft">@dimen/margin</item>
+        <item name="android:paddingRight">@dimen/margin</item>
+        <item name="android:background">@drawable/ds_bg_searchview_dark</item>
+        <item name="android:drawableLeft">@drawable/icon_search</item>
+        <item name="android:drawablePadding">@dimen/margin</item>
+        <item name="android:imeOptions">actionSearch</item>
+        <item name="android:maxLines">1</item>
+        <item name="android:textSize">@dimen/font_normal</item>
+        <item name="android:textColor">@color/text_dark_1</item>
+        <item name="android:textColorHint">@color/text_dark_3</item>
+    </style>
+
     <style name="AppTheme.RatingBar.Small" parent="@android:style/Widget.RatingBar">
         <item name="android:progressDrawable">@drawable/ds_ratingbar_bg_small</item>
         <item name="android:minHeight">16dp</item>

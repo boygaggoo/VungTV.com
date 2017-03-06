@@ -4,7 +4,7 @@ import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 import com.vungtv.film.model.Video;
 
-import java.util.List;
+import java.util.ArrayList;
 
 /**
  * Content class.
@@ -20,10 +20,12 @@ public class ApiMoviePlayer extends ApiModel {
     public Data data;
 
     public class Data {
-
         @SerializedName("player")
         @Expose
-        public Player player;
+        public ArrayList<Player> player = null;
+        @SerializedName("eps_title")
+        @Expose
+        public String epsTitle;
         @SerializedName("next")
         @Expose
         public String next;
@@ -34,12 +36,12 @@ public class ApiMoviePlayer extends ApiModel {
     }
 
     public class Player {
-        @SerializedName("phu-de")
+        @SerializedName("label")
         @Expose
-        public List<Video> phuDe = null;
-        @SerializedName("thuyet-minh")
+        public String label;
+        @SerializedName("files")
         @Expose
-        public List<Video> thuyetMinh = null;
+        public ArrayList<Video> files = null;
 
     }
 }

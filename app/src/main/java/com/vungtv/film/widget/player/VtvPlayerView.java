@@ -86,7 +86,6 @@ public class VtvPlayerView extends FrameLayout {
     private OnScreenBrightControl onScreenBrightControl;
 
     private SimpleExoPlayer player;
-    private boolean useController;
     private boolean useArtwork;
     private Bitmap defaultArtwork;
     private int controllerShowTimeoutMs;
@@ -193,7 +192,6 @@ public class VtvPlayerView extends FrameLayout {
             controller.setVisibilityListener(componentListener);
         }
         this.controllerShowTimeoutMs = controllerShowTimeoutMs;
-        this.useController = useController;
 
         textOption = (VtvTextView) findViewById(R.id.vtv_player_tv_option);
         loadingView = (ProgressBar) findViewById(R.id.vtv_player_progressBar);
@@ -229,10 +227,11 @@ public class VtvPlayerView extends FrameLayout {
             this.player.removeListener(componentListener);
             this.player.setVideoSurface(null);
         }
+
         this.player = player;
-        if (useController) {
-            controller.setPlayer(player);
-        }
+
+        controller.setPlayer(player);
+
         if (shutterView != null) {
             shutterView.setVisibility(VISIBLE);
         }
@@ -307,34 +306,6 @@ public class VtvPlayerView extends FrameLayout {
         }
     }
 
-    /**
-     * Returns whether the playback controls are enabled.
-     */
-    public boolean getUseController() {
-        return useController;
-    }
-
-    /**
-     * Sets whether playback controls are enabled. If set to {@code false} the playback controls are
-     * never visible and are disconnected from the player.
-     *
-     * @param useController Whether playback controls should be enabled.
-     */
-    public void setUseController(boolean useController) {
-        Assertions.checkState(!useController || controller != null);
-        if (this.useController == useController) {
-            return;
-        }
-        this.useController = useController;
-        if (useController) {
-            assert controller != null;
-            controller.setPlayer(player);
-        } else if (controller != null) {
-            controller.hide();
-            controller.setPlayer(null);
-        }
-    }
-
     public VtvPlaybackControlView getController() {
         return controller;
     }
@@ -347,15 +318,32 @@ public class VtvPlayerView extends FrameLayout {
      * @return Whether the key event was handled.
      */
     public boolean dispatchMediaKeyEvent(KeyEvent event) {
-        return useController && controller.dispatchMediaKeyEvent(event);
+        return controller.dispatchMediaKeyEvent(event);
     }
 
     /**
      * Shows the playback controls. Does nothing if playback controls are disabled.
      */
     public void showController() {
-        if (useController) {
-            maybeShowController(true);
+        maybeShowController(true);
+    }
+
+    private void maybeShowController(boolean isForced) {
+        if (player == null) {
+            return;
+        }
+
+        int playbackState = player.getPlaybackState();
+        boolean showIndefinitely = playbackState == ExoPlayer.STATE_IDLE
+                || playbackState == ExoPlayer.STATE_ENDED || !player.getPlayWhenReady();
+
+        boolean wasShowingIndefinitely = controller.isVisible() && controller.getShowTimeoutMs() <= 0;
+        controller.setShowTimeoutMs(showIndefinitely ? 0 : controllerShowTimeoutMs);
+        if (isForced || showIndefinitely || wasShowingIndefinitely) {
+            LogUtils.d(TAG, "maybeShowController: 1 " + controller.isVisible());
+            controller.show();
+            showBtnLockController(true);
+            LogUtils.d(TAG, "maybeShowController: 2 " + controller.isVisible());
         }
     }
 
@@ -365,7 +353,37 @@ public class VtvPlayerView extends FrameLayout {
     public void hideController() {
         if (controller != null) {
             controller.hide();
+            showBtnLockController(false);
         }
+    }
+
+    /**
+     * Show / Hide btn lock;
+     *
+     * @param show bool
+     */
+    public void showBtnLockController(boolean show) {
+        LogUtils.d(TAG, "showBtnLockController: " + show);
+        btnLockController.setVisibility(show ? VISIBLE : GONE);
+    }
+
+    /**
+     * Show progress loading view;
+     *
+     * @param show bool
+     */
+    public void showLoading(boolean show) {
+        loadingView.setVisibility(show ? VISIBLE : GONE);
+    }
+
+    /**
+     * Show text option when touch on screen;
+     * content is text control volume, bright, rewind / forward video
+     *
+     * @param show bool
+     */
+    public void showTextOption(boolean show) {
+        textOption.setVisibility(show ? VISIBLE : GONE);
     }
 
     /**
@@ -435,34 +453,6 @@ public class VtvPlayerView extends FrameLayout {
     public void setFastForwardIncrementMs(int fastForwardMs) {
         Assertions.checkState(controller != null);
         controller.setFastForwardIncrementMs(fastForwardMs);
-    }
-
-    /**
-     * Show / Hide btn lock;
-     *
-     * @param show bool
-     */
-    public void showBtnLockController(boolean show) {
-        btnLockController.setVisibility(show ? VISIBLE : GONE);
-    }
-
-    /**
-     * Show progress loading view;
-     *
-     * @param show bool
-     */
-    public void showLoading(boolean show) {
-        loadingView.setVisibility(show ? VISIBLE : GONE);
-    }
-
-    /**
-     * Show text option when touch on screen;
-     * content is text control volume, bright, rewind / forward video
-     *
-     * @param show bool
-     */
-    public void showTextOption(boolean show) {
-        textOption.setVisibility(show ? VISIBLE : GONE);
     }
 
     public void onTouchVolumeUp(float delatY, float height) {
@@ -587,10 +577,10 @@ public class VtvPlayerView extends FrameLayout {
     private void updateLockMode() {
         isLockController = !isLockController;
         if (isLockController) {
-            controller.hide();
+            hideController();
             btnLockController.setImageResource(R.drawable.ic_control_lock);
         } else {
-            controller.show();
+            showController();
             btnLockController.setImageResource(R.drawable.ic_control_unlock);
         }
     }
@@ -628,25 +618,11 @@ public class VtvPlayerView extends FrameLayout {
 
     @Override
     public boolean onTrackballEvent(MotionEvent ev) {
-        if (!useController || player == null) {
+        if (player == null) {
             return false;
         }
         maybeShowController(true);
         return true;
-    }
-
-    private void maybeShowController(boolean isForced) {
-        if (!useController || player == null) {
-            return;
-        }
-        int playbackState = player.getPlaybackState();
-        boolean showIndefinitely = playbackState == ExoPlayer.STATE_IDLE
-                || playbackState == ExoPlayer.STATE_ENDED || !player.getPlayWhenReady();
-        boolean wasShowingIndefinitely = controller.isVisible() && controller.getShowTimeoutMs() <= 0;
-        controller.setShowTimeoutMs(showIndefinitely ? 0 : controllerShowTimeoutMs);
-        if (isForced || showIndefinitely || wasShowingIndefinitely) {
-            controller.show();
-        }
     }
 
     private void updateForCurrentTrackSelections() {
@@ -729,7 +705,7 @@ public class VtvPlayerView extends FrameLayout {
 
     @Override
     public boolean onTouchEvent(MotionEvent event) {
-        if (!useController || player == null) {
+        if (player == null) {
             return false;
         }
 
@@ -815,16 +791,18 @@ public class VtvPlayerView extends FrameLayout {
                 mLastMotionY = 0;
                 startX = 0;
                 if (isClick) {
+                    // Show / hide controller
+                    LogUtils.i(TAG, "isLockController = " + isLockController);
                     if (isLockController) {
                         if (btnLockController.getVisibility() == VISIBLE) {
                             showBtnLockController(false);
                         } else {
                             showBtnLockController(true);
                         }
-                    } else if (controller.isVisible()) {
-                        controller.hide();
+                    } else if (!controller.isVisible()) {
+                        showController();
                     } else {
-                        maybeShowController(true);
+                        hideController();
                     }
                 }
                 isClick = true;
@@ -919,7 +897,7 @@ public class VtvPlayerView extends FrameLayout {
 
         @Override
         public void onVisibilityChange(int visibility) {
-            btnLockController.setVisibility(visibility);
+
         }
     }
 }

@@ -80,6 +80,9 @@ public class EpisodesRecycerAdapter extends RecyclerView.Adapter {
         return list.get(pos);
     }
 
+    public ArrayList<Episode> getList() {
+        return list;
+    }
 
     public void setOnItemClickListener(OnItemClickListener onItemClickListener) {
         this.onItemClickListener = onItemClickListener;

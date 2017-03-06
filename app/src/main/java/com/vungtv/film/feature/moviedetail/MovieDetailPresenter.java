@@ -6,6 +6,7 @@ import com.vungtv.film.R;
 import com.vungtv.film.data.source.local.UserSessionManager;
 import com.vungtv.film.data.source.remote.model.ApiEpisodes;
 import com.vungtv.film.data.source.remote.model.ApiMovieDetail;
+import com.vungtv.film.data.source.remote.service.EpisodeServices;
 import com.vungtv.film.data.source.remote.service.MovieDetailServices;
 import com.vungtv.film.util.StringUtils;
 import com.vungtv.film.util.UriPaser;
@@ -17,7 +18,7 @@ import com.vungtv.film.util.UriPaser;
  * Email: vancuong2941989@gmail.com
  */
 
-public class MovieDetailPresenter implements MovieDetailContract.Presenter, MovieDetailServices.MovieDetailResultCallback {
+public class MovieDetailPresenter implements MovieDetailContract.Presenter, MovieDetailServices.MovieDetailResultCallback, EpisodeServices.EpisodeResultCallback {
     private static final String TAG = MovieDetailPresenter.class.getSimpleName();
 
     private final Context context;
@@ -25,6 +26,8 @@ public class MovieDetailPresenter implements MovieDetailContract.Presenter, Movi
     private final MovieDetailContract.View activityView;
 
     private final MovieDetailServices movieDetailServices;
+
+    private final EpisodeServices episodeServices;
 
     private boolean isLiked = false;
 
@@ -43,8 +46,10 @@ public class MovieDetailPresenter implements MovieDetailContract.Presenter, Movi
         this.activityView.setPresenter(this);
 
         movieDetailServices = new MovieDetailServices(context);
-
         movieDetailServices.setMovieDetailResultCallback(this);
+
+        episodeServices = new EpisodeServices(context);
+        episodeServices.setEpisodeResultCallback(this);
     }
 
     @Override
@@ -54,7 +59,7 @@ public class MovieDetailPresenter implements MovieDetailContract.Presenter, Movi
         activityView.showLoadding(true);
         movieDetailServices.setMovId(movId);
         movieDetailServices.loadInfo(token);
-        movieDetailServices.loadListEpisodes();
+        episodeServices.loadListEpisodes(movId);
     }
 
     @Override
@@ -188,6 +193,12 @@ public class MovieDetailPresenter implements MovieDetailContract.Presenter, Movi
         if (data.getEpisodes() != null && data.getEpisodes().size() > 0) {
             activityView.setListEpisodes(data.getEpisodes());
         }
+    }
+
+    @Override
+    public void onEpisodeResultFailed(String msg) {
+        activityView.showLoadding(false);
+        activityView.showMsgToast(msg);
     }
 
     @Override

@@ -6,7 +6,8 @@
     android:orientation="vertical"
     android:layout_width="300dp"
     android:layout_height="wrap_content"
-    android:layout_gravity="center" >
+    android:layout_gravity="center"
+    tools:background="@color/gray_2">
 
     <com.vungtv.film.widget.VtvTextView
         android:id="@+id/pop_msg_tv_title"
@@ -20,6 +21,7 @@
         android:id="@+id/pop_msg_tv_content"
         style="@style/AppTheme.Dialog.Material.Content.Text"
         android:layout_marginTop="@dimen/space_24"
+        android:layout_marginBottom="@dimen/space_8"
         tools:text="Ban cần đăng nhập"/>
 
     <LinearLayout

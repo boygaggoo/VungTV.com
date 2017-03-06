@@ -101,7 +101,7 @@ public class TrackSelectionHelper implements View.OnClickListener,
 
     @SuppressLint("InflateParams")
     private View buildView(Resources res, LayoutInflater inflater) {
-        View view = inflater.inflate(R.layout.track_selection_dialog, null);
+        View view = inflater.inflate(R.layout.popup_track_selection, null);
         ViewGroup root = (ViewGroup) view.findViewById(R.id.root);
 
         // View for clearing the override to allow the selector to use its default selection logic.

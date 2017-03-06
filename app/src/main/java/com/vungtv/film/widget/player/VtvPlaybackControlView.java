@@ -387,6 +387,16 @@ public class VtvPlaybackControlView extends FrameLayout {
         title.setText(text);
     }
 
+    public void setNextButtonVisible(boolean visible) {
+        nextButton.setVisibility(visible ? VISIBLE : INVISIBLE);
+        nextButton.setEnabled(visible);
+    }
+
+    public void setPreviousButtonVisible(boolean visible) {
+        previousButton.setVisibility(visible ? VISIBLE : INVISIBLE);
+        previousButton.setEnabled(visible);
+    }
+
     /**
      * Ẩn hiện nút chọn đọ phân giải;
      *
@@ -439,6 +449,10 @@ public class VtvPlaybackControlView extends FrameLayout {
      */
     public int getTagBtnSubtitle() {
         return (int) btnSubtitle.getTag();
+    }
+
+    public void setBtnVersionEnabled(boolean enabled) {
+        btnVersion.setVisibility(enabled ? VISIBLE : GONE);
     }
 
     /**
@@ -547,8 +561,12 @@ public class VtvPlaybackControlView extends FrameLayout {
             enableNext = (currentWindowIndex < currentTimeline.getWindowCount() - 1)
                     || currentWindow.isDynamic;
         }
-        setButtonEnabled(enablePrevious , previousButton);
-        setButtonEnabled(enableNext, nextButton);
+
+        if (buttonNextPrevClickListener == null) {
+            setButtonEnabled(enablePrevious , previousButton);
+            setButtonEnabled(enableNext, nextButton);
+        }
+
         if (progressBar != null) {
             progressBar.setEnabled(isSeekable);
         }

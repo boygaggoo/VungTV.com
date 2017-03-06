@@ -40,8 +40,6 @@ public class MovieDetailServices {
 
     private Call<ApiMovieDetail> callMovie;
 
-    private Call<ApiEpisodes> callEps;
-
     private Call<ApiModel> callAction;
 
     private Call<ApiRating> callRating;
@@ -107,50 +105,6 @@ public class MovieDetailServices {
 
             @Override
             public void onFailure(Call<ApiMovieDetail> call, Throwable t) {
-                if (movieDetailResultCallback != null) {
-                    movieDetailResultCallback.onFailure(0,
-                            ApiError.toString(context, ApiError.NO_INTERNET));
-                }
-                t.printStackTrace();
-            }
-        });
-    }
-
-    /**
-     * Get ds tap
-     */
-    public void loadListEpisodes() {
-        if (!NetworkUtils.isInternetTurnOn(context)) {
-            if (movieDetailResultCallback != null)
-                movieDetailResultCallback.onActionChangeFailed(
-                        ApiError.toString(context, ApiError.OFF_INTERNET));
-            return;
-        }
-
-        MovieDetailInterface service = retrofit.create(MovieDetailInterface.class);
-        callEps = service.loadEpisodes(movId);
-        callEps.enqueue(new Callback<ApiEpisodes>() {
-            @Override
-            public void onResponse(Call<ApiEpisodes> call, Response<ApiEpisodes> response) {
-                if (movieDetailResultCallback == null) return;
-
-                if (!response.isSuccessful()) {
-                    movieDetailResultCallback.onActionChangeFailed(
-                            ApiError.toString(context, ApiError.SERVICE_ERROR));
-                    return;
-                }
-
-                ApiEpisodes apiEpisodes = response.body();
-                if (!apiEpisodes.getSuccess()) {
-                    movieDetailResultCallback.onActionChangeFailed(apiEpisodes.getMessage());
-                    return;
-                }
-
-                movieDetailResultCallback.onEpisodeResultSuccess(apiEpisodes.getData());
-            }
-
-            @Override
-            public void onFailure(Call<ApiEpisodes> call, Throwable t) {
                 if (movieDetailResultCallback != null) {
                     movieDetailResultCallback.onFailure(0,
                             ApiError.toString(context, ApiError.NO_INTERNET));
@@ -314,10 +268,6 @@ public class MovieDetailServices {
             callMovie.cancel();
         }
 
-        if (callEps != null && callEps.isExecuted()) {
-            callEps.cancel();
-        }
-
         if (callAction != null && callAction.isExecuted()) {
             callAction.cancel();
         }
@@ -358,8 +308,6 @@ public class MovieDetailServices {
     public interface MovieDetailResultCallback extends ApiResultCallback {
 
         void onMovieInfoResultSuccess(ApiMovieDetail.Data data);
-
-        void onEpisodeResultSuccess(ApiEpisodes.Data data);
 
         void onLikeMovieSuccess(String mes);
 

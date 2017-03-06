@@ -57,6 +57,7 @@ import com.vungtv.film.R;
 import com.vungtv.film.model.DrmSession;
 import com.vungtv.film.util.LogUtils;
 import com.vungtv.film.widget.player.TrackSelectionHelper;
+import com.vungtv.film.widget.player.VersionSelectionHelper;
 import com.vungtv.film.widget.player.VtvPlaybackControlView;
 import com.vungtv.film.widget.player.VtvPlayerView;
 
@@ -73,7 +74,7 @@ import butterknife.OnClick;
 
 import static com.google.android.exoplayer2.util.Assertions.checkNotNull;
 
-public class PlayerActivity extends AppCompatActivity implements PlayerContract.View, ExoPlayer.EventListener, VtvPlaybackControlView.VisibilityListener, VtvPlayerView.OnScreenBrightControl, VtvPlaybackControlView.OnControlButtonClickListener {
+public class PlayerActivity extends AppCompatActivity implements PlayerContract.View, ExoPlayer.EventListener, VtvPlaybackControlView.VisibilityListener, VtvPlayerView.OnScreenBrightControl, VtvPlaybackControlView.OnControlButtonClickListener, VtvPlaybackControlView.OnControlButtonNextPrevClickListener {
 
     private static final String TAG = PlayerActivity.class.getSimpleName();
     public static final String INTENT_MOV_ID = "INTENT_MOV_ID";
@@ -109,6 +110,8 @@ public class PlayerActivity extends AppCompatActivity implements PlayerContract.
     private TrackSelectionHelper trackSelectionHelper;
 
     private MediaSource mediaSource;
+
+    private VersionSelectionHelper versionSelectionHelper;
 
     private boolean playerNeedsSource;
     private boolean shouldAutoPlay;
@@ -146,7 +149,9 @@ public class PlayerActivity extends AppCompatActivity implements PlayerContract.
         vtvPlayerView.setOnScreenBrightControl(this);
         vtvPlayerView.requestFocus();
         vtvControlView = vtvPlayerView.getController();
+        vtvControlView.setVisibilityListener(this);
         vtvControlView.setOnControlButtonClickListener(this);
+        vtvControlView.setOnControlButtonNextPrevClickListener(this);
 
         new PlayerPresenter(this, this);
     }
@@ -244,6 +249,26 @@ public class PlayerActivity extends AppCompatActivity implements PlayerContract.
     }
 
     @Override
+    public void showMsgToast(String msg) {
+        Toast.makeText(getApplicationContext(), msg + "", Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
+    public void showPopupSelectVersion(String[] labels, int curSelected) {
+        if (versionSelectionHelper == null) {
+            versionSelectionHelper = new VersionSelectionHelper(this);
+            versionSelectionHelper.setOnItemSelectedListener(new VersionSelectionHelper.OnItemSelectedListener() {
+                @Override
+                public void onItemVersionSelected(int pos) {
+                    presenter.selectedVersion(pos);
+                }
+            });
+        }
+
+        versionSelectionHelper.show(labels, curSelected);
+    }
+
+    @Override
     public void setMediaSource(Uri uri, String extension) {
         mediaSource = buildMediaSource(uri, extension);
         LogUtils.d(TAG, "setMediaSource: uri : " + uri + "\nextension : " + extension );
@@ -257,6 +282,17 @@ public class PlayerActivity extends AppCompatActivity implements PlayerContract.
     @Override
     public void setVideoName(String text) {
         vtvControlView.setTitle(text);
+    }
+
+    @Override
+    public void setBtnNextPrevEnable(boolean nextEnable, boolean prevEnable) {
+        vtvControlView.setNextButtonVisible(nextEnable);
+        vtvControlView.setPreviousButtonVisible(prevEnable);
+    }
+
+    @Override
+    public void setBtnVersionEnable(boolean enable) {
+        vtvControlView.setBtnVersionEnabled(enable);
     }
 
     @Override
@@ -471,7 +507,19 @@ public class PlayerActivity extends AppCompatActivity implements PlayerContract.
 
     @Override
     public void onVisibilityChange(int visibility) {
+        if (visibility == View.GONE) {
+            hideSystemUI();
+        }
+    }
 
+    @Override
+    public void onButtonNextClick() {
+        presenter.nextEpisode();
+    }
+
+    @Override
+    public void onButtonPrevClick() {
+        presenter.prevEpisode();
     }
 
     @Override
@@ -488,27 +536,27 @@ public class PlayerActivity extends AppCompatActivity implements PlayerContract.
 
     @Override
     public void onClickButtonVersion(View v) {
-
+        presenter.openPopupSelectVersion();
     }
 
     @Override
     public void onClickButtonComment() {
-        showToast("onClickButtonComment");
+        showMsgToast("onClickButtonComment");
     }
 
     @Override
     public void onClickButtonAdDisable() {
-        showToast("onClickButtonAdDisable");
+        showMsgToast("onClickButtonAdDisable");
     }
 
     @Override
     public void onClickButtonOpenPlaylist() {
-        showToast("onClickButtonOpenPlaylist");
+        showMsgToast("onClickButtonOpenPlaylist");
     }
 
     @Override
     public void onClickButtonShare() {
-        showToast("onClickButtonShare");
+        showMsgToast("onClickButtonShare");
     }
 
     @Override
@@ -587,7 +635,7 @@ public class PlayerActivity extends AppCompatActivity implements PlayerContract.
         }
 
         if (errorString != null) {
-            showToast(errorString);
+            showMsgToast(errorString);
         }
 
         playerNeedsSource = true;
@@ -625,12 +673,8 @@ public class PlayerActivity extends AppCompatActivity implements PlayerContract.
         return false;
     }
 
-    protected void showToast(String mes) {
-        Toast.makeText(getApplicationContext(), mes + "", Toast.LENGTH_SHORT).show();
-    }
-
     protected void showToast(@StringRes int messageId) {
-        showToast(getString(messageId));
+        showMsgToast(getString(messageId));
     }
 
     // This snippet hides the system bars.
@@ -661,7 +705,7 @@ public class PlayerActivity extends AppCompatActivity implements PlayerContract.
     }
 
     // This snippet shows the system bars. It does this by removing all the flags
-// except for the ones that make the content appear under the system bars.
+    // except for the ones that make the content appear under the system bars.
     private void showSystemUI() {
         mDecorView.setSystemUiVisibility(
                 View.SYSTEM_UI_FLAG_LAYOUT_STABLE

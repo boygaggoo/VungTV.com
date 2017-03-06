@@ -3,10 +3,16 @@ package com.vungtv.film.feature.player;
 import android.content.Context;
 import android.content.Intent;
 
+import com.vungtv.film.R;
+import com.vungtv.film.data.source.remote.model.ApiEpisodes;
 import com.vungtv.film.data.source.remote.model.ApiMoviePlayer;
+import com.vungtv.film.data.source.remote.service.EpisodeServices;
 import com.vungtv.film.data.source.remote.service.PlayerServices;
+import com.vungtv.film.model.Episode;
 import com.vungtv.film.util.LogUtils;
 import com.vungtv.film.util.StringUtils;
+
+import java.util.ArrayList;
 
 /**
  * Content class.
@@ -15,12 +21,8 @@ import com.vungtv.film.util.StringUtils;
  * Email: vancuong2941989@gmail.com
  */
 
-public class PlayerPresenter implements PlayerContract.Presenter, PlayerServices.OnPlayerServicesCallback {
+public class PlayerPresenter implements PlayerContract.Presenter, PlayerServices.OnPlayerServicesCallback, EpisodeServices.EpisodeResultCallback {
     private static final String TAG = PlayerPresenter.class.getSimpleName();
-
-    private static final int WATCH_PHUDE = 0;
-
-    private static final int WATCH_THUYETMINH = 1;
 
     private final Context context;
 
@@ -28,7 +30,11 @@ public class PlayerPresenter implements PlayerContract.Presenter, PlayerServices
 
     private final PlayerServices mPlayerServices;
 
+    private final EpisodeServices episodeServices;
+
     private ApiMoviePlayer.Data videoData;
+
+    private ArrayList<Episode> listEps;
 
     private int movId;
 
@@ -36,7 +42,7 @@ public class PlayerPresenter implements PlayerContract.Presenter, PlayerServices
 
     private String epsHash;
 
-    private int watchVideoVer = WATCH_PHUDE;
+    private int watchVideoVer = 0;
 
     public PlayerPresenter(Context context, PlayerContract.View playerView) {
         this.context = context;
@@ -45,12 +51,15 @@ public class PlayerPresenter implements PlayerContract.Presenter, PlayerServices
 
         mPlayerServices = new PlayerServices(context.getApplicationContext());
         mPlayerServices.setOnPlayerServicesCallback(this);
+
+        episodeServices = new EpisodeServices(context);
+        episodeServices.setEpisodeResultCallback(this);
     }
 
     @Override
     public void getIntent(Intent intent) {
         if (intent == null) {
-            playerView.showMsgError(true, "Ko có dữ liệu.");
+            playerView.showMsgError(true, context.getString(R.string.player_error_msg_no_data));
             return;
         }
 
@@ -62,7 +71,7 @@ public class PlayerPresenter implements PlayerContract.Presenter, PlayerServices
     @Override
     public void loadEpisodeInfo() {
         if (movId < 0 || StringUtils.isEmpty(epsHash)) {
-            playerView.showMsgError(true, "Ko có dữ liệu.");
+            playerView.showMsgError(true, context.getString(R.string.player_error_msg_no_data));
             return;
         }
 
@@ -78,6 +87,61 @@ public class PlayerPresenter implements PlayerContract.Presenter, PlayerServices
     @Override
     public void retryPlayer() {
         playerView.initPlayer();
+    }
+
+    @Override
+    public void nextEpisode() {
+        playerView.releasePlayer();
+        playerView.clearResumePosition();
+        epsHash = videoData.next;
+        playerView.showLoading(true);
+        mPlayerServices.loadEpisodeInfo(movId, epsHash);
+    }
+
+    @Override
+    public void prevEpisode() {
+        playerView.releasePlayer();
+        playerView.clearResumePosition();
+        epsHash = videoData.previous;
+        playerView.showLoading(true);
+        mPlayerServices.loadEpisodeInfo(movId, epsHash);
+    }
+
+    @Override
+    public void openPopupSelectVersion() {
+        if (videoData == null || videoData.player == null || videoData.player.size() == 0) {
+            playerView.showMsgToast(context.getString(R.string.player_error_msg_no_data));
+            return;
+        }
+
+        String[] labels = new String[videoData.player.size()];
+        for (int i = 0; i < videoData.player.size(); i++) {
+            labels[i] = videoData.player.get(i).label;
+        }
+
+        playerView.showPopupSelectVersion(labels, labels[watchVideoVer] != null ? watchVideoVer : 0);
+    }
+
+    @Override
+    public void openPopupListEpisodes() {
+        if (movId <= 0) return;
+
+        if (listEps != null) {
+            playerView.showPopupListEpisodes(listEps, videoData != null ? videoData.epsTitle : "");
+            return;
+        }
+        playerView.showLoading(true);
+        episodeServices.loadListEpisodes(movId);
+    }
+
+    @Override
+    public void selectedVersion(int position) {
+        if (position != watchVideoVer) {
+            playerView.releasePlayer();
+            watchVideoVer = position;
+            setMediaSource(watchVideoVer);
+            playerView.initPlayer();
+        }
     }
 
     @Override
@@ -102,36 +166,60 @@ public class PlayerPresenter implements PlayerContract.Presenter, PlayerServices
 
         videoData = data;
 
-        if (watchVideoVer == WATCH_THUYETMINH
-                && videoData.player.thuyetMinh != null && videoData.player.thuyetMinh.size() > 0) {
-            // Play video pthuet minh
-            if (videoData.player.thuyetMinh.size() > 1) {
-                LogUtils.d(TAG, "Play thuyet minh - MP4");
-                playerView.setMediaSource(
-                        videoData.player.thuyetMinh.get(1).getUri(),
-                        videoData.player.thuyetMinh.get(1).getExtension());
-            } else {
-                LogUtils.d(TAG, "Play thuyet minh - HLS");
-                playerView.setMediaSource(
-                        videoData.player.thuyetMinh.get(0).getUri(),
-                        videoData.player.thuyetMinh.get(0).getExtension());
-            }
+        if (videoData.player == null || videoData.player.size() == 0) {
+            playerView.showMsgError(true, context.getString(R.string.player_error_msg_no_data));
+            return;
+        }
+
+        if (videoData.player.get(watchVideoVer) != null) {
+            setMediaSource(watchVideoVer);
         } else {
-            // Play video phu de
-            if (videoData.player.phuDe.size() > 1) {
-                LogUtils.d(TAG, "Play PHU DE - MP4");
-                playerView.setMediaSource(
-                        videoData.player.phuDe.get(1).getUri(),
-                        videoData.player.phuDe.get(1).getExtension());
-            } else {
-                LogUtils.d(TAG, "Play PHU DE - HLS");
-                playerView.setMediaSource(
-                        videoData.player.phuDe.get(0).getUri(),
-                        videoData.player.phuDe.get(0).getExtension());
-            }
+            setMediaSource(0);
         }
 
         playerView.initPlayer();
-        playerView.setVideoName(movName);
+        playerView.setVideoName(
+                String.format(context.getString(R.string.player_text_video_name),
+                        videoData.epsTitle,
+                        movName
+                ));
+        playerView.setBtnNextPrevEnable(
+                StringUtils.isNotEmpty(videoData.next),
+                StringUtils.isNotEmpty(videoData.previous));
+
+        playerView.setBtnVersionEnable(videoData.player.size() > 1);
+    }
+
+    @Override
+    public void onEpisodeResultSuccess(ApiEpisodes.Data data) {
+
+    }
+
+    @Override
+    public void onEpisodeResultFailed(String msg) {
+        playerView.showLoading(false);
+        playerView.showMsgToast(msg);
+    }
+
+    /**
+     * Build the video source from data;
+     *
+     * @param pos the index of list;
+     */
+    private void setMediaSource(int pos) {
+
+        if (videoData.player.get(pos).files.size() > 1) {
+            // Play video MP4
+            LogUtils.d(TAG, videoData.player.get(pos).label + " - MP4");
+            playerView.setMediaSource(
+                    videoData.player.get(pos).files.get(1).getUri(),
+                    videoData.player.get(pos).files.get(1).getExtension());
+        } else {
+            // Play video HLS
+            LogUtils.d(TAG, videoData.player.get(pos).label + " - HLS");
+            playerView.setMediaSource(
+                    videoData.player.get(pos).files.get(0).getUri(),
+                    videoData.player.get(pos).files.get(0).getExtension());
+        }
     }
 }

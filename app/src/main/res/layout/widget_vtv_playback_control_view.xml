@@ -71,7 +71,9 @@
             style="@style/Control.Button.play"
             android:id="@+id/control_btn_prev"
             android:src="@drawable/ic_control_prev"
-            android:contentDescription="@string/app_name" />
+            android:contentDescription="@string/app_name"
+            android:alpha="0.2"
+            tools:alpha="1"/>
 
         <ImageView
             style="@style/Control.Button.play"
@@ -94,7 +96,9 @@
             style="@style/Control.Button.play"
             android:id="@+id/control_btn_next"
             android:src="@drawable/ic_control_next"
-            android:contentDescription="@string/app_name" />
+            android:contentDescription="@string/app_name"
+            android:alpha="0.2"
+            tools:alpha="1"/>
 
     </LinearLayout>
 
@@ -114,12 +118,18 @@
             android:layout_toRightOf="@+id/control_tv_time"
             android:layout_toEndOf="@+id/control_tv_time"
             android:layout_toLeftOf="@+id/control_tv_duration"
-            android:layout_toStartOf="@+id/control_tv_duration"/>
+            android:layout_toStartOf="@+id/control_tv_duration"
+            tools:max="100"
+            tools:progress="100"/>
 
         <com.vungtv.film.widget.VtvTextView
             style="@style/Control.Text.Time"
             android:id="@+id/control_tv_time"
             android:layout_centerVertical="true"
+            android:layout_marginLeft="@dimen/space_16"
+            android:layout_marginStart="@dimen/space_16"
+            android:layout_marginRight="@dimen/playback_control_time_space"
+            android:layout_marginEnd="@dimen/playback_control_time_space"
             tools:text="56:21"/>
 
         <com.vungtv.film.widget.VtvTextView
@@ -128,6 +138,10 @@
             android:layout_centerVertical="true"
             android:layout_toLeftOf="@+id/control_layout_bottom_group_btn"
             android:layout_toStartOf="@+id/control_layout_bottom_group_btn"
+            android:layout_marginLeft="@dimen/playback_control_time_space"
+            android:layout_marginStart="@dimen/playback_control_time_space"
+            android:layout_marginRight="0dp"
+            android:layout_marginEnd="0dp"
             tools:text="1:00:00"/>
 
         <LinearLayout

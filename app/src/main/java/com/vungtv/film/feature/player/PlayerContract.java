@@ -12,7 +12,9 @@ import com.google.android.exoplayer2.upstream.HttpDataSource;
 import com.vungtv.film.BasePresenter;
 import com.vungtv.film.BaseView;
 import com.vungtv.film.model.DrmSession;
+import com.vungtv.film.model.Episode;
 
+import java.util.ArrayList;
 import java.util.Map;
 import java.util.UUID;
 
@@ -30,11 +32,23 @@ public interface PlayerContract {
 
         void showMsgError(boolean show, String msg);
 
+        void showMsgToast(String msg);
+
+        void showPopupSelectVersion(String[] labels, int curSelected);
+
+        void showPopupListEpisodes(ArrayList<Episode> list, String epsTitle);
+
         void setMediaSource(Uri uri, String extension);
 
         void setDrmSession(DrmSession drmSession);
 
         void setVideoName(String text);
+
+        void setBtnNextPrevEnable(boolean nextEnable, boolean prevEnable);
+
+        void setBtnVersionEnable(boolean enable);
+
+        void setBtnPlaylistEnable(boolean enable);
 
         void initPlayer();
 
@@ -65,5 +79,15 @@ public interface PlayerContract {
         void reloadEpisodeInfo();
 
         void retryPlayer();
+
+        void nextEpisode();
+
+        void prevEpisode();
+
+        void openPopupSelectVersion();
+
+        void openPopupListEpisodes();
+
+        void selectedVersion(int position);
     }
 }
