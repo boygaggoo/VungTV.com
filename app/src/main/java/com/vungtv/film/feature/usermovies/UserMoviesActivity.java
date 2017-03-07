@@ -1,5 +1,6 @@
-package com.vungtv.film.feature.favorite;
+package com.vungtv.film.feature.usermovies;
 
+import android.content.Context;
 import android.content.Intent;
 import android.content.res.Configuration;
 import android.os.Bundle;
@@ -11,36 +12,45 @@ import android.widget.TextView;
 
 import com.vungtv.film.BaseActivity;
 import com.vungtv.film.R;
-import com.vungtv.film.feature.filtermovies.FilterMoviesActivity;
 import com.vungtv.film.feature.filtermovies.FilterMoviesAdapter;
 import com.vungtv.film.feature.logout.LogOutActivity;
-import com.vungtv.film.feature.search.SearchActivity;
+import com.vungtv.film.feature.moviedetail.MovieDetailActivity;
 import com.vungtv.film.interfaces.OnItemClickListener;
 import com.vungtv.film.model.Movie;
 import com.vungtv.film.util.StringUtils;
 import com.vungtv.film.widget.GridSpacingItemDecoration;
 import com.vungtv.film.widget.LoadmoreScrollListener;
-import com.vungtv.film.widget.VtvToolbarPage;
+import com.vungtv.film.widget.VtvToolbarSetting;
 
 import java.util.ArrayList;
 
 import butterknife.BindView;
 
-public class FavoriteActivity extends BaseActivity implements FavoriteContract.View {
+public class UserMoviesActivity extends BaseActivity implements UserMoviesContract.View, VtvToolbarSetting.OnToolbarListener {
 
-    private FavoriteContract.Presenter presenter;
+    public static final String INTENT_PAGE = "INTENT_PAGE";
+    public static final int PAGE_FAVORITE = 0;
+    public static final int PAGE_FOLLOW = 1;
+
+    public static Intent buildIntent(Context context, int pageType) {
+        Intent intent = new Intent(context, UserMoviesActivity.class);
+        intent.putExtra(INTENT_PAGE, pageType);
+        return intent;
+    }
+
+    private UserMoviesContract.Presenter presenter;
 
     private FilterMoviesAdapter adapter;
 
     private LoadmoreScrollListener loadmoreScrollListener;
 
-    @BindView(R.id.favorite_toolbar)
-    VtvToolbarPage toolbar;
+    @BindView(R.id.user_mov_toolbar)
+    VtvToolbarSetting toolbar;
 
-    @BindView(R.id.favorite_refreshLayout)
+    @BindView(R.id.user_mov_refreshLayout)
     SwipeRefreshLayout refreshLayout;
 
-    @BindView(R.id.favorite_recycler)
+    @BindView(R.id.user_mov_recycler)
     RecyclerView recyclerView;
 
     @BindView(R.id.text_msg_error)
@@ -51,24 +61,9 @@ public class FavoriteActivity extends BaseActivity implements FavoriteContract.V
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_favorite);
+        setContentView(R.layout.activity_user_movies);
 
-        toolbar.setOnToolbarPageListener(new VtvToolbarPage.OnToolbarPageListener() {
-            @Override
-            public void onBtnBackClick() {
-                finish();
-            }
-
-            @Override
-            public void onSearchClick() {
-                startActivity(new Intent(FavoriteActivity.this, SearchActivity.class));
-            }
-
-            @Override
-            public void onBtnFilterClick() {
-                startActivity(new Intent(FavoriteActivity.this, FilterMoviesActivity.class));
-            }
-        });
+        toolbar.setOnToolbarListener(this);
 
         refreshLayout.setColorSchemeResources(R.color.green);
         refreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
@@ -85,8 +80,8 @@ public class FavoriteActivity extends BaseActivity implements FavoriteContract.V
             }
         });
 
-        new FavoritePresenter(this, this);
-
+        new UserMoviesPresenter(this, this);
+        presenter.getIntent(getIntent());
         presenter.start();
     }
 
@@ -152,7 +147,7 @@ public class FavoriteActivity extends BaseActivity implements FavoriteContract.V
         adapter.setOnItemClickListener(new OnItemClickListener() {
             @Override
             public void onItemClick(View v, int pos) {
-                presenter.openMovieDetails(adapter.getItemMovieId(pos));
+                openMovieDetails(adapter.getItemMovieId(pos));
             }
         });
         if (loadmoreScrollListener != null) {
@@ -171,20 +166,8 @@ public class FavoriteActivity extends BaseActivity implements FavoriteContract.V
     }
 
     @Override
-    public void showActMovieDetails(int movieId) {
-
-    }
-
-    @Override
     public void addItemMovie(ArrayList<Movie> movies) {
-
         adapter.addMultiItem(movies);
-
-        if (adapter.getItemCount() == 0) {
-            showMsgError(true, getString(R.string.favorite_text_msg_not_yet));
-        } else {
-            showMsgError(false, null);
-        }
     }
 
     @Override
@@ -194,8 +177,18 @@ public class FavoriteActivity extends BaseActivity implements FavoriteContract.V
     }
 
     @Override
+    public void setTitlePage(String title) {
+        toolbar.setTitle(title);
+    }
+
+    @Override
     public void addAdsNative() {
         adapter.addItem(null);
+    }
+
+    @Override
+    public void openMovieDetails(int movId) {
+        startActivity(MovieDetailActivity.buildIntent(this, movId));
     }
 
     @Override
@@ -214,7 +207,12 @@ public class FavoriteActivity extends BaseActivity implements FavoriteContract.V
     }
 
     @Override
-    public void setPresenter(FavoriteContract.Presenter Presenter) {
+    public void setPresenter(UserMoviesContract.Presenter Presenter) {
         presenter = Presenter;
+    }
+
+    @Override
+    public void onBtnBackClick() {
+        finish();
     }
 }

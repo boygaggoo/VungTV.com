@@ -182,7 +182,7 @@ public class SearchActivity extends BaseActivity implements SearchContract.View 
 
     @Override
     public void openActMovieDetail(int movieId) {
-        startActivity(MovieDetailActivity.getIntentData(this, movieId));
+        startActivity(MovieDetailActivity.buildIntent(this, movieId));
     }
 
     @Override

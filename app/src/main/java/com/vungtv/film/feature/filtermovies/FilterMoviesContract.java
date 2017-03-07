@@ -4,6 +4,7 @@ import android.content.Intent;
 
 import com.vungtv.film.BasePresenter;
 import com.vungtv.film.BaseView;
+import com.vungtv.film.data.source.remote.model.ApiPopupFilterMovies;
 import com.vungtv.film.model.Movie;
 
 import java.util.ArrayList;
@@ -14,15 +15,18 @@ import java.util.ArrayList;
 public interface FilterMoviesContract {
 
     interface View extends BaseView<Presenter> {
+
         void showLoading(boolean show);
 
         void showMsgError(boolean show, String error);
+
+        void showMsgToast(String msg);
 
         void showToolbarTitle(String title);
 
         void showRecyclerView(int columNumber, int rowAdsNumber, float itemWidth, int itemSpace);
 
-        void showPopupFilter(boolean show);
+        void showPopupFilter(boolean show, ApiPopupFilterMovies.Data filterDatas);
 
         void showPopupSort(android.view.View view);
 
@@ -53,14 +57,14 @@ public interface FilterMoviesContract {
 
         void configChange(boolean isScreenLand, ArrayList<Object> list);
 
-        void openMovieDetails(int movieId);
+        void openPopupSort(android.view.View view);
 
-        void sapXepMoviesClick(android.view.View view);
+        void sortMoviesSubmit(String sapXep);
 
-        void sapXepMoviesSubmit(String sapXep);
-
-        void filterMoviesClick();
+        void openPopupFilter();
 
         void filterMoviesSubmit(String sapXep, String danhMuc, String quocGia, String theLoai, String nam);
+
+        void openMovieDetails(int movieId);
     }
 }

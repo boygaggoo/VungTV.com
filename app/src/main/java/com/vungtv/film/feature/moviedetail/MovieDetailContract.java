@@ -46,6 +46,8 @@ public interface MovieDetailContract {
 
         void addAdsBanner();
 
+        void openActMovieDetail(int movId);
+
         void openActPlayer(int movId, String movName, String epsHash);
 
         void openActPlayerYoutube(String videoId);

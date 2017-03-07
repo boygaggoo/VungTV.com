@@ -1,7 +1,6 @@
 package com.vungtv.film.feature.home;
 
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
@@ -98,7 +97,7 @@ public class HomeFragment extends Fragment implements HomeContract.View {
 
     @Override
     public void openActMovieDetail(int movieId) {
-        getActivity().startActivity(MovieDetailActivity.getIntentData(this.getActivity(), movieId));
+        getActivity().startActivity(MovieDetailActivity.buildIntent(this.getActivity(), movieId));
     }
 
     @Override
@@ -106,10 +105,8 @@ public class HomeFragment extends Fragment implements HomeContract.View {
         if (url == null || url.length() < 5) {
             return;
         }
-        Intent intent = new Intent(
-                HomeFragment.this.getActivity(), FilterMoviesActivity.class);
-        intent.putExtras(FilterMoviesActivity.getBundleData(url));
-        getActivity().startActivity(intent);
+
+        getActivity().startActivity(FilterMoviesActivity.buildIntent(getActivity(), url));
     }
 
     @Override

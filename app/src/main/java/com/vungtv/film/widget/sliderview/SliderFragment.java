@@ -63,7 +63,7 @@ public class SliderFragment extends Fragment implements View.OnClickListener {
     @Override
     public void onClick(View view) {
         if (slider.getType().equalsIgnoreCase(BANNER_MOVIE)) {
-            Intent intent = MovieDetailActivity.getIntentData(getActivity(), slider.getMovId());
+            Intent intent = MovieDetailActivity.buildIntent(getActivity(), slider.getMovId());
             startActivity(intent);
         } else {
             if (slider.getLink() == null || slider.getLink().length() < 5)

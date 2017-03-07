@@ -198,10 +198,15 @@ public class MoviesRowAdapter extends RecyclerView.Adapter {
             }
 
             // set film info episode
-            episode.setText(String.format(
-                    "%1$s/%2$s",
-                    String.valueOf(movie.getMovCountEpisoder()), String.valueOf(movie.getMovNumberEpisode())
-            ));
+            if (movie.getMovNumberEpisode() > 0) {
+                episode.setVisibility(View.VISIBLE);
+                episode.setText(String.format(
+                        "%1$s/%2$s",
+                        String.valueOf(movie.getMovCountEpisoder()), String.valueOf(movie.getMovNumberEpisode())
+                ));
+            } else {
+                episode.setVisibility(View.GONE);
+            }
 
             infoLayout.removeAllViews();
             LayoutInflater inflater = LayoutInflater.from(itemView.getContext());

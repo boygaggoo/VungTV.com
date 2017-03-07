@@ -1,6 +1,7 @@
 package com.vungtv.film.data.source.remote;
 
 /**
+ *
  * Created by Mr Cuong on 12/17/2016.
  */
 
@@ -28,7 +29,7 @@ public class ApiQuery {
     public static final String PATH_FOLLOW = "phim_follow";
 
     public static final String[] P_MOVIES_SORT = {
-            "xem-nhieu",
+            "xem-nhieu-nhat",
             "ten-phim-az",
             "ten-phim-za",
             "imdb",

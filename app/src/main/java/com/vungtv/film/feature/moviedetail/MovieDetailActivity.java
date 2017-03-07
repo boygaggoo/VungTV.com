@@ -30,6 +30,7 @@ import com.vungtv.film.util.TimeUtils;
 import com.vungtv.film.widget.ExpandableTextView;
 import com.vungtv.film.widget.MarginDecoration;
 import com.vungtv.film.widget.VtvTextView;
+import com.vungtv.film.widget.moviesrowview.MoviesRowAdapter;
 import com.vungtv.film.widget.moviesrowview.VtvMoviesRowView;
 
 import java.util.ArrayList;
@@ -129,7 +130,7 @@ public class MovieDetailActivity extends BaseActivity implements MovieDetailCont
      * @param movieId id of movie;
      * @return Intent;
      */
-    public static Intent getIntentData(Context packageContext, int movieId) {
+    public static Intent buildIntent(Context packageContext, int movieId) {
         Intent intent = new Intent(packageContext, MovieDetailActivity.class);
         intent.putExtra(INTENT_MOVIE_ID, movieId);
         return intent;
@@ -335,6 +336,12 @@ public class MovieDetailActivity extends BaseActivity implements MovieDetailCont
         LogUtils.d(TAG, "setRelateMovies: " + movies.size());
         relateMovies.setDataListView(new ArrayList<Object>(movies));
         relateMovies.setBtnViewMoreVisible(false);
+        relateMovies.setOnItemClickListener(new MoviesRowAdapter.OnItemClickListener() {
+            @Override
+            public void onItemClick(View v, int movieId) {
+                openActMovieDetail(movieId);
+            }
+        });
     }
 
     @Override
@@ -371,6 +378,14 @@ public class MovieDetailActivity extends BaseActivity implements MovieDetailCont
     @Override
     public void addAdsBanner() {
 
+    }
+
+    @Override
+    public void openActMovieDetail(int movId) {
+        Intent intent = getIntent();
+        intent.putExtra(INTENT_MOVIE_ID, movId);
+        finish();
+        startActivity(intent);
     }
 
     @Override

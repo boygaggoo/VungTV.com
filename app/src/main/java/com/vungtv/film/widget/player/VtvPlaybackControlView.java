@@ -37,7 +37,7 @@ import java.util.Locale;
 
 public class VtvPlaybackControlView extends FrameLayout {
     /**
-     * Listener to be notified about changes of the visibility of the UI control.
+     * ResultListener to be notified about changes of the visibility of the UI control.
      */
     public interface VisibilityListener {
 
@@ -67,25 +67,25 @@ public class VtvPlaybackControlView extends FrameLayout {
     }
 
     /**
-     * Listener to be notified about click the buttons;
+     * ResultListener to be notified about click the buttons;
      */
     public interface OnControlButtonClickListener {
 
-        void onClickButtonQuality(View v);
+        void onButtonQualityClick(View v);
 
-        void onClickButtonSubtitle(View v);
+        void onButtonSubtitleClick(View v);
 
-        void onClickButtonVersion(View v);
+        void onButtonVersionClick(View v);
 
-        void onClickButtonComment();
+        void onButtonCommentClick();
 
-        void onClickButtonAdDisable();
+        void onButtonClearAdsClick();
 
-        void onClickButtonOpenPlaylist();
+        void onButtonPlaylistClick();
 
-        void onClickButtonShare();
+        void onButtonShareClick();
 
-        void onClickButtonFinish();
+        void onButtonFinishClick();
     }
 
     public interface OnControlButtonNextPrevClickListener {
@@ -464,7 +464,7 @@ public class VtvPlaybackControlView extends FrameLayout {
         btnPlaylist.setVisibility(enabled ? VISIBLE : GONE);
     }
 
-    public void setBtnAdDisableEnabled(boolean enabled) {
+    public void setBtnClearAdsEnabled(boolean enabled) {
         btnClearAds.setVisibility(enabled ? VISIBLE : GONE);
     }
 
@@ -889,35 +889,35 @@ public class VtvPlaybackControlView extends FrameLayout {
                     player.setPlayWhenReady(false);
                 } else if (btnQuality == view) {
                     if (onButtonClickListener != null){
-                        onButtonClickListener.onClickButtonQuality(view);
+                        onButtonClickListener.onButtonQualityClick(view);
                     }
                 } else if (btnSubtitle == view) {
                     if (onButtonClickListener != null){
-                        onButtonClickListener.onClickButtonSubtitle(view);
+                        onButtonClickListener.onButtonSubtitleClick(view);
                     }
                 } else if (btnVersion == view) {
                     if (onButtonClickListener != null){
-                        onButtonClickListener.onClickButtonVersion(view);
+                        onButtonClickListener.onButtonVersionClick(view);
                     }
                 } else if (btnComment == view) {
                     if (onButtonClickListener != null){
-                        onButtonClickListener.onClickButtonComment();
+                        onButtonClickListener.onButtonCommentClick();
                     }
                 } else if (btnClearAds == view) {
                     if (onButtonClickListener != null){
-                        onButtonClickListener.onClickButtonAdDisable();
+                        onButtonClickListener.onButtonClearAdsClick();
                     }
                 } else if (btnPlaylist == view) {
                     if (onButtonClickListener != null){
-                        onButtonClickListener.onClickButtonOpenPlaylist();
+                        onButtonClickListener.onButtonPlaylistClick();
                     }
                 } else if (btnShare == view) {
                     if (onButtonClickListener != null){
-                        onButtonClickListener.onClickButtonShare();
+                        onButtonClickListener.onButtonShareClick();
                     }
                 } else if (btnFinish == view) {
                     if (onButtonClickListener != null){
-                        onButtonClickListener.onClickButtonFinish();
+                        onButtonClickListener.onButtonFinishClick();
                     }
                 }
             }

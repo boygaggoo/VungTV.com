@@ -132,6 +132,10 @@ public class HomeNavAdapter extends RecyclerView.Adapter {
         notifyDataSetChanged();
     }
 
+    public String getItemTitle(int pos) {
+        return list.get(pos).getTitle();
+    }
+
     /**
      * Class nav header, view user avatar and display name;
      */

@@ -19,9 +19,11 @@ import com.vungtv.film.data.source.remote.service.HomeServices;
 import com.vungtv.film.eventbus.AccountModifyEvent;
 import com.vungtv.film.eventbus.ConfigurationChangedEvent;
 import com.vungtv.film.feature.buyvip.BuyVipActivity;
+import com.vungtv.film.feature.usermovies.UserMoviesActivity;
 import com.vungtv.film.feature.filtermovies.FilterMoviesActivity;
 import com.vungtv.film.feature.home.HomeNavAdapter.OnNavItemSelectedListener;
 import com.vungtv.film.feature.login.LoginActivity;
+import com.vungtv.film.feature.menumovies.MenuMoviesActivity;
 import com.vungtv.film.feature.personal.PersonalActivity;
 import com.vungtv.film.feature.search.SearchActivity;
 import com.vungtv.film.model.NavItem;
@@ -35,6 +37,8 @@ import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 
 import butterknife.BindView;
+
+import static com.vungtv.film.data.source.remote.ApiQuery.PATH_FOLLOW;
 
 public class HomeActivity extends BaseActivity implements OnNavItemSelectedListener, com.vungtv.film.data.source.remote.service.HomeServices.HomeMenuResultCallback {
     private static final String TAG = HomeActivity.class.getSimpleName();
@@ -122,19 +126,21 @@ public class HomeActivity extends BaseActivity implements OnNavItemSelectedListe
 
         if (p.equalsIgnoreCase(ApiQuery.PATH_FAVORITE)) {
             // Movies favorite
-
-        } else if (p.equalsIgnoreCase(ApiQuery.PATH_FOLLOW)) {
+            LogUtils.d(TAG, "onNavigationItemSelected: path : PATH_FAVORITE");
+            startActivity(UserMoviesActivity.buildIntent(this, UserMoviesActivity.PAGE_FAVORITE));
+        } else if (p.equalsIgnoreCase(PATH_FOLLOW)) {
             // Movies follow
-
+            LogUtils.d(TAG, "onNavigationItemSelected: path : PATH_FOLLOW");
+            startActivity(UserMoviesActivity.buildIntent(this, UserMoviesActivity.PAGE_FOLLOW));
         } else if (p.equalsIgnoreCase("v1")) {
             // Movies Dowload
 
-        } else if (p.equalsIgnoreCase(ApiQuery.PATH_PHIM_LE) || p.equalsIgnoreCase(ApiQuery.PATH_PHIM_BO)) {
+        } else if (p.equalsIgnoreCase(ApiQuery.PATH_PHIM_LE) || p.equalsIgnoreCase(ApiQuery.PATH_PHIM_BO)
+                || p.equalsIgnoreCase(ApiQuery.PATH_ANIME)) {
 
+            startActivity(MenuMoviesActivity.buildIntent(HomeActivity.this, p, navAdapter.getItemTitle(position)));
         } else {
-            Intent intent = new Intent(HomeActivity.this, FilterMoviesActivity.class);
-            intent.putExtras(FilterMoviesActivity.getBundleData(url));
-            startActivity(intent);
+            startActivity(FilterMoviesActivity.buildIntent(this, url));
         }
     }
 
@@ -252,7 +258,7 @@ public class HomeActivity extends BaseActivity implements OnNavItemSelectedListe
             } else if (p.equalsIgnoreCase(ApiQuery.PATH_FAVORITE)) {
                 navItem.setType(HomeNavAdapter.TYPE_WITH_ICON);
                 navItem.setIconLeftRes(R.drawable.icon_heart3);
-            } else if (p.equalsIgnoreCase(ApiQuery.PATH_FOLLOW)) {
+            } else if (p.equalsIgnoreCase(PATH_FOLLOW)) {
                 navItem.setType(HomeNavAdapter.TYPE_WITH_ICON_LABEL);
                 navItem.setIconLeftRes(R.drawable.icon_bell3);
             } else if (p.equalsIgnoreCase("v1")) {

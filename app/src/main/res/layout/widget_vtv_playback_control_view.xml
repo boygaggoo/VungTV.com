@@ -37,6 +37,8 @@
             android:layout_centerVertical="true"
             android:layout_alignParentRight="true"
             android:layout_alignParentEnd="true"
+            android:layout_marginRight="@dimen/space_8"
+            android:layout_marginEnd="@dimen/space_8"
             android:orientation="horizontal">
 
             <com.vungtv.film.widget.VtvTextView
@@ -151,15 +153,17 @@
             android:layout_centerVertical="true"
             android:layout_alignParentRight="true"
             android:layout_alignParentEnd="true"
+            android:layout_marginRight="@dimen/space_8"
+            android:layout_marginLeft="@dimen/space_8"
             android:orientation="horizontal">
 
             <ImageView
-                style="@style/Control.Button.Top"
                 android:id="@+id/control_btn_subtitle"
-                android:src="@drawable/ic_control_subtitles"
+                style="@style/Control.Button.Top"
                 android:contentDescription="@string/app_name"
+                android:src="@drawable/ic_control_subtitles"
                 android:visibility="gone"
-                tools:visibility="visible"/>
+                tools:visibility="visible" />
 
             <ImageView
                 style="@style/Control.Button.Top"

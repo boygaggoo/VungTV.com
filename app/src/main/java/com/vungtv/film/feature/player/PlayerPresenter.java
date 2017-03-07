@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 
 import com.vungtv.film.R;
+import com.vungtv.film.data.source.local.UserSessionManager;
 import com.vungtv.film.data.source.remote.model.ApiEpisodes;
 import com.vungtv.film.data.source.remote.model.ApiMoviePlayer;
 import com.vungtv.film.data.source.remote.service.EpisodeServices;
@@ -22,6 +23,7 @@ import java.util.ArrayList;
  */
 
 public class PlayerPresenter implements PlayerContract.Presenter, PlayerServices.OnPlayerServicesCallback, EpisodeServices.EpisodeResultCallback {
+
     private static final String TAG = PlayerPresenter.class.getSimpleName();
 
     private final Context context;
@@ -135,6 +137,15 @@ public class PlayerPresenter implements PlayerContract.Presenter, PlayerServices
     }
 
     @Override
+    public void openPopupClearAds() {
+        if (UserSessionManager.isLogin(context.getApplicationContext())) {
+            playerView.showPopupBuyVip();
+        } else {
+            playerView.showPopupLogin();
+        }
+    }
+
+    @Override
     public void selectedVersion(int position) {
         if (position != watchVideoVer) {
             playerView.releasePlayer();
@@ -156,8 +167,21 @@ public class PlayerPresenter implements PlayerContract.Presenter, PlayerServices
     }
 
     @Override
-    public void start() {
+    public void accountModify() {
+        if (UserSessionManager.isVIP(context.getApplicationContext())) {
+            playerView.setBtnClearAdsEnable(false);
+        } else {
+            playerView.setBtnClearAdsEnable(true);
+        }
+    }
 
+    @Override
+    public void start() {
+        if (UserSessionManager.isVIP(context.getApplicationContext())) {
+            playerView.setBtnClearAdsEnable(false);
+        } else {
+            playerView.setBtnClearAdsEnable(true);
+        }
     }
 
     @Override

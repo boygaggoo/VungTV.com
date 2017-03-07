@@ -8,22 +8,24 @@
     android:orientation="vertical"
     tools:context="com.vungtv.film.feature.menumovies.MenuMoviesActivity">
 
-    <com.vungtv.film.widget.VtvToolbarPage
-        android:id="@+id/favorite_toolbar"
+    <com.vungtv.film.widget.VtvToolbarSetting
+        android:id="@+id/user_mov_toolbar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:textTitle="@string/favorite_text_title"/>
 
     <android.support.v4.widget.SwipeRefreshLayout
-        android:id="@+id/favorite_refreshLayout"
+        android:id="@+id/user_mov_refreshLayout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_below="@+id/favorite_toolbar">
+        android:layout_below="@+id/user_mov_toolbar">
 
         <android.support.v7.widget.RecyclerView
-            android:id="@+id/favorite_recycler"
+            android:id="@+id/user_mov_recycler"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:paddingLeft="@dimen/margin"
+            android:paddingRight="@dimen/margin"
             android:scrollbars="vertical" />
 
     </android.support.v4.widget.SwipeRefreshLayout>

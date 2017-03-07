@@ -68,7 +68,7 @@ public class ExpandableTextView extends LinearLayout implements View.OnClickList
 
     private boolean mAnimating;
 
-    /* Listener for callback */
+    /* ResultListener for callback */
     private OnExpandStateChangeListener mListener;
 
     /* For saving collapsed status when used in ListView */

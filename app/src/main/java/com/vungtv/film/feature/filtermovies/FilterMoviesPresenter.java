@@ -6,7 +6,9 @@ import android.os.Bundle;
 import android.view.View;
 
 import com.vungtv.film.R;
+import com.vungtv.film.data.source.remote.ApiQuery;
 import com.vungtv.film.data.source.remote.model.ApiFilterMovies;
+import com.vungtv.film.data.source.remote.model.ApiPopupFilterMovies;
 import com.vungtv.film.data.source.remote.service.FilterMoviesServices;
 import com.vungtv.film.util.DensityUtils;
 import com.vungtv.film.util.LogUtils;
@@ -42,12 +44,13 @@ public class FilterMoviesPresenter implements FilterMoviesContract.Presenter {
 
     private int rowAdsNumber = 8;
 
-    public FilterMoviesPresenter(Context context, FilterMoviesContract.View activityView, FilterMoviesServices filterMoviesServices) {
+    public FilterMoviesPresenter(Context context, FilterMoviesContract.View activityView) {
         this.context = checkNotNull(context);
         this.activityView = checkNotNull(activityView);
-        this.filterMoviesServices = checkNotNull(filterMoviesServices);
 
-        activityView.setPresenter(this);
+        this.activityView.setPresenter(this);
+
+        filterMoviesServices = new FilterMoviesServices(context);
         filterMoviesServicesResponse();
     }
 
@@ -81,7 +84,7 @@ public class FilterMoviesPresenter implements FilterMoviesContract.Presenter {
         filterMoviesServices.setTheLoai(bundle.getString(INTENT_THELOAI, ""));
         filterMoviesServices.setQuocGia(bundle.getString(INTENT_QUOCGIA, ""));
         filterMoviesServices.setNam(bundle.getString(INTENT_NAM, ""));
-        filterMoviesServices.setSapXep(bundle.getString(INTENT_SAPXEP, ""));
+        filterMoviesServices.setSapXep(bundle.getString(INTENT_SAPXEP, ApiQuery.P_MOVIES_SORT[0]));
         filterMoviesServices.setTop(bundle.getString(INTENT_TOP, ""));
     }
 
@@ -147,19 +150,20 @@ public class FilterMoviesPresenter implements FilterMoviesContract.Presenter {
     }
 
     @Override
-    public void sapXepMoviesClick(View view) {
+    public void openPopupSort(View view) {
         activityView.showPopupSort(view);
     }
 
     @Override
-    public void sapXepMoviesSubmit(String sapXep) {
+    public void sortMoviesSubmit(String sapXep) {
         filterMoviesServices.setSapXep(sapXep);
         reloadData();
     }
 
     @Override
-    public void filterMoviesClick() {
-
+    public void openPopupFilter() {
+        activityView.showLoading(true);
+        filterMoviesServices.loadFilterData();
     }
 
     @Override
@@ -174,9 +178,9 @@ public class FilterMoviesPresenter implements FilterMoviesContract.Presenter {
     }
 
     private void filterMoviesServicesResponse() {
-        filterMoviesServices.setPageResultCallback(new FilterMoviesServices.PageResultCallback() {
+        filterMoviesServices.setOnPageResultCallback(new FilterMoviesServices.OnPageResultCallback() {
             @Override
-            public void onSuccess(ApiFilterMovies.DataPage dataPage) {
+            public void onPageMoviesResultSuccess(ApiFilterMovies.DataPage dataPage) {
 
                 activityView.showLoading(false);
                 activityView.showToolbarTitle(dataPage.getTitle());
@@ -190,6 +194,18 @@ public class FilterMoviesPresenter implements FilterMoviesContract.Presenter {
                     isLoadmore = true;
                     filterMoviesServices.setOffset(dataPage.getOffset() + filterMoviesServices.getLimit());
                 }
+            }
+
+            @Override
+            public void onPageFilterResultSuccess(ApiPopupFilterMovies.Data data) {
+                activityView.showLoading(false);
+                activityView.showPopupFilter(true, data);
+            }
+
+            @Override
+            public void onPageFilterResultFailed(String msg) {
+                activityView.showLoading(false);
+                activityView.showMsgToast(msg);
             }
 
             @Override

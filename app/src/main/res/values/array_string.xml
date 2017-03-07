@@ -1,0 +1,156 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="filter_sap_xep">
+        <item>---</item>
+        <item>Mới cập nhật</item>
+        <item>Năm xuất bản</item>
+        <item>Tên phim</item>
+        <item>IMDb</item>
+    </string-array>
+
+    <string-array name="filter_sap_xep_value">
+        <item> </item>
+        <item>moi-cap-nhat</item>
+        <item>nam-xuat-ban</item>
+        <item>ten-phim</item>
+        <item>imdb</item>
+    </string-array>
+
+    <string-array name="filter_danh_muc">
+        <item>---</item>
+        <item>Phim lẻ</item>
+        <item>Phim bộ</item>
+        <item>Phim 18+</item>
+        <item>TV Show</item>
+        <item>Phim hoạt hình</item>
+        <item>Phim đề cử</item>
+    </string-array>
+
+    <string-array name="filter_danh_muc_value">
+        <item> </item>
+        <item>phim-le</item>
+        <item>phim-bo</item>
+        <item>phim-18</item>
+        <item>tv-show</item>
+        <item>phim-hoat-hinh</item>
+        <item>phim-de-cu</item>
+    </string-array>
+
+    <string-array name="filter_quoc_gia">
+        <item>---</item>
+        <item>Mỹ</item>
+        <item>Hàn Quốc</item>
+        <item>Trung Quốc</item>
+        <item>Hồng Kông</item>
+        <item>Thái Lan</item>
+        <item>Ấn Độ</item>
+        <item>Nhật Bản</item>
+        <item>Tây Ban Nha</item>
+        <item>Việt Nam</item>
+        <item>Đài Loan</item>
+        <item>Anh</item>
+        <item>Pháp</item>
+    </string-array>
+
+    <string-array name="filter_quoc_gia_value">
+        <item> </item>
+        <item>my</item>
+        <item>han-quoc</item>
+        <item>trung-quoc</item>
+        <item>hong-kong</item>
+        <item>thai-lan</item>
+        <item>an-do</item>
+        <item>nhat-ban</item>
+        <item>tay-ban-nha</item>
+        <item>viet-nam</item>
+        <item>dai-loan</item>
+        <item>anh</item>
+        <item>phap</item>
+    </string-array>
+
+    <string-array name="filter_the_loai">
+        <item>---</item>
+        <item>Thần thoại</item>
+        <item>Cổ trang</item>
+        <item>Tình cảm</item>
+        <item>Hành động</item>
+        <item>Hài</item>
+        <item>Kinh dị</item>
+        <item>Chiến tranh</item>
+        <item>Khoa học viễn tưởng</item>
+        <item>Gia đình</item>
+        <item>Phiêu lưu</item>
+        <item>Tâm lý</item>
+        <item>Âm nhạc</item>
+        <item>Bí ẩn</item>
+        <item>Lịch sử</item>
+        <item>Hình sự</item>
+        <item>Hoạt hình</item>
+        <item>Khoa học &amp; Tài liệu</item>
+        <item>Lãng mạn</item>
+        <item>Viễn tây</item>
+        <item>Nhạc kịch</item>
+        <item>Giả tưởng</item>
+        <item>Thể thao</item>
+        <item>Tiểu sử</item>
+        <item>Giật gân</item>
+        <item>Võ thuật</item>
+        <item>Thời trang</item>
+        <item>Kiếm hiệp</item>
+    </string-array>
+
+    <string-array name="filter_the_loai_value">
+        <item> </item>
+        <item>than-thoai</item>
+        <item>co-trang</item>
+        <item>tinh-cam</item>
+        <item>hanh-dong</item>
+        <item>hai</item>
+        <item>kinh-di</item>
+        <item>chien-tranh</item>
+        <item>khoa-hoc-vien-tuong</item>
+        <item>gia-dinh</item>
+        <item>phieu-luu</item>
+        <item>tam-ly</item>
+        <item>am-nhac</item>
+        <item>bi-an</item>
+        <item>lich-su</item>
+        <item>hinh-su</item>
+        <item>hoat-hinh</item>
+        <item>khoa-hoc-tai-lieu</item>
+        <item>lang-man</item>
+        <item>vien-tay</item>
+        <item>nhac-kich</item>
+        <item>gia-tuong</item>
+        <item>the-thao</item>
+        <item>tieu-su</item>
+        <item>giat-gan</item>
+        <item>vo-thuat</item>
+        <item>thoi-trang</item>
+        <item>kiem-hiep</item>
+    </string-array>
+
+    <string-array name="filter_nam">
+        <item>---</item>
+        <item>2017</item>
+        <item>2016</item>
+        <item>2015</item>
+        <item>2014</item>
+        <item>2013</item>
+        <item>2012</item>
+        <item>2011</item>
+        <item>2010</item>
+    </string-array>
+
+    <string-array name="filter_nam_value">
+        <item> </item>
+        <item>2017</item>
+        <item>2016</item>
+        <item>2015</item>
+        <item>2014</item>
+        <item>2013</item>
+        <item>2012</item>
+        <item>2011</item>
+        <item>2010</item>
+    </string-array>
+</resources>

@@ -24,7 +24,10 @@
     <style name="Control.Text.Button" parent="@android:style/TextAppearance">
         <item name="android:layout_width">wrap_content</item>
         <item name="android:layout_height">@dimen/space_56</item>
-        <item name="android:padding">@dimen/space_16</item>
+        <item name="android:paddingTop">@dimen/space_16</item>
+        <item name="android:paddingBottom">@dimen/space_16</item>
+        <item name="android:paddingLeft">@dimen/space_8</item>
+        <item name="android:paddingRight">@dimen/space_8</item>
         <item name="android:gravity">center_vertical</item>
         <item name="android:textColor">@color/colorAccent</item>
         <item name="android:textSize">18sp</item>
@@ -53,7 +56,10 @@
     <style name="Control.Button.Top" parent="AppTheme">
         <item name="android:layout_width">wrap_content</item>
         <item name="android:layout_height">wrap_content</item>
-        <item name="android:padding">@dimen/space_16</item>
+        <item name="android:paddingTop">@dimen/space_16</item>
+        <item name="android:paddingBottom">@dimen/space_16</item>
+        <item name="android:paddingLeft">@dimen/space_8</item>
+        <item name="android:paddingRight">@dimen/space_8</item>
     </style>
 
     <style name="Control.Button.play" parent="AppTheme">

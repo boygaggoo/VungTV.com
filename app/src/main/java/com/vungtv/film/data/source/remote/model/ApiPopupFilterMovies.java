@@ -20,12 +20,7 @@ public class ApiPopupFilterMovies extends ApiModel {
     }
 
     public class Data {
-        @SerializedName("limit")
-        @Expose
-        private int limit;
-        @SerializedName("offset")
-        @Expose
-        private int offset;
+
         @SerializedName("sap-xep")
         @Expose
         private List<FilterMovieData> sapXep = new ArrayList<>();

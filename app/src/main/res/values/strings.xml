@@ -187,5 +187,6 @@
     <string name="player_error_msg_no_data">Không có dữ liệu.</string>
     <string name="player_text_video_name">Tập %1$s - %2$s</string>
     <string name="popup_text_title_list_episode">Danh sách tập</string>
+    <string name="user_movies_error_no_movie">Chưa có phim nào được thêm.</string>
 
 </resources>

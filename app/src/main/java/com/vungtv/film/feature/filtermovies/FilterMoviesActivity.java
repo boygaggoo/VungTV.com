@@ -1,5 +1,6 @@
 package com.vungtv.film.feature.filtermovies;
 
+import android.content.Context;
 import android.content.Intent;
 import android.content.res.Configuration;
 import android.os.Bundle;
@@ -11,11 +12,12 @@ import android.widget.TextView;
 
 import com.vungtv.film.BaseActivity;
 import com.vungtv.film.R;
-import com.vungtv.film.data.source.remote.service.FilterMoviesServices;
+import com.vungtv.film.data.source.remote.model.ApiPopupFilterMovies;
 import com.vungtv.film.feature.moviedetail.MovieDetailActivity;
 import com.vungtv.film.feature.search.SearchActivity;
 import com.vungtv.film.interfaces.OnItemClickListener;
 import com.vungtv.film.model.Movie;
+import com.vungtv.film.popup.PopupFilterMovies;
 import com.vungtv.film.popup.PopupMenuSort;
 import com.vungtv.film.util.LogUtils;
 import com.vungtv.film.util.UriPaser;
@@ -60,9 +62,12 @@ public class FilterMoviesActivity extends BaseActivity implements FilterMoviesCo
 
     private PopupMenuSort popupMenuSort;
 
+    private PopupFilterMovies popupFilter;
+
     private int curItemView = 0;
 
-    public static Bundle getBundleData(String uri) {
+    public static Intent buildIntent(Context context, String uri) {
+        Intent intent = new Intent(context, FilterMoviesActivity.class);
         Bundle bundle = new Bundle();
         bundle.putString(INTENT_DANHMUC, UriPaser.getDanhMuc(uri));
         bundle.putString(INTENT_THELOAI, UriPaser.getTheLoai(uri));
@@ -70,7 +75,8 @@ public class FilterMoviesActivity extends BaseActivity implements FilterMoviesCo
         bundle.putString(INTENT_NAM, UriPaser.getNam(uri));
         bundle.putString(INTENT_SAPXEP, UriPaser.getSapXep(uri));
         bundle.putString(INTENT_TOP, UriPaser.getTop(uri));
-        return bundle;
+        intent.putExtras(bundle);
+        return intent;
     }
 
     @Override
@@ -80,7 +86,7 @@ public class FilterMoviesActivity extends BaseActivity implements FilterMoviesCo
         ButterKnife.bind(this);
         setViewListener();
 
-        new FilterMoviesPresenter(this, this, new FilterMoviesServices(this));
+        new FilterMoviesPresenter(this, this);
 
         presenter.start();
         presenter.getIntentData(getIntent());
@@ -117,7 +123,11 @@ public class FilterMoviesActivity extends BaseActivity implements FilterMoviesCo
 
             @Override
             public void onBtnFilterClick() {
-                presenter.filterMoviesClick();
+                if (popupFilter == null) {
+                    presenter.openPopupFilter();
+                } else {
+                    popupFilter.show();
+                }
             }
         });
         refreshLayout.setColorSchemeResources(R.color.green);
@@ -153,6 +163,11 @@ public class FilterMoviesActivity extends BaseActivity implements FilterMoviesCo
         }
         tvErrorMsg.setText(error);
         tvErrorMsg.setVisibility(View.VISIBLE);
+    }
+
+    @Override
+    public void showMsgToast(String msg) {
+        showToast(msg);
     }
 
     @Override
@@ -204,8 +219,18 @@ public class FilterMoviesActivity extends BaseActivity implements FilterMoviesCo
     }
 
     @Override
-    public void showPopupFilter(boolean show) {
+    public void showPopupFilter(boolean show, ApiPopupFilterMovies.Data filterDatas) {
+        if (popupFilter == null) {
+            popupFilter = new PopupFilterMovies(this, filterDatas);
+            popupFilter.setOnPopupMoviesFilterListener(new PopupFilterMovies.OnPopupMoviesFilterListener() {
+                @Override
+                public void onPopupMoviesFilterSubmit(String sapXep, String danhMuc, String quocGia, String theLoai, String nam) {
+                    presenter.filterMoviesSubmit(sapXep, danhMuc, quocGia, theLoai, nam);
+                }
+            });
+        }
 
+        popupFilter.show();
     }
 
     @Override
@@ -215,7 +240,7 @@ public class FilterMoviesActivity extends BaseActivity implements FilterMoviesCo
             popupMenuSort.setOnMenuSortListener(new PopupMenuSort.OnMenuSortListener() {
                 @Override
                 public void onMenuSortItemSelected(String sapXep) {
-                    presenter.sapXepMoviesSubmit(sapXep);
+                    presenter.sortMoviesSubmit(sapXep);
                 }
             });
         }
@@ -230,7 +255,7 @@ public class FilterMoviesActivity extends BaseActivity implements FilterMoviesCo
     @Override
     public void openActMovieDetail(int movieId) {
         LogUtils.e(TAG, "openActMovieDetail movId 4 = " + movieId);
-        startActivity(MovieDetailActivity.getIntentData(this, movieId));
+        startActivity(MovieDetailActivity.buildIntent(this, movieId));
     }
 
     @Override
@@ -271,6 +296,6 @@ public class FilterMoviesActivity extends BaseActivity implements FilterMoviesCo
 
     @OnClick(R.id.filter_movies_btn_sort)
     public void btnSortClicked(View view) {
-        presenter.sapXepMoviesClick(view);
+        presenter.openPopupSort(view);
     }
 }

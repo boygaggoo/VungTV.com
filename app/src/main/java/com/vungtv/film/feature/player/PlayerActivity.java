@@ -54,14 +54,21 @@ import com.google.android.exoplayer2.upstream.HttpDataSource;
 import com.google.android.exoplayer2.util.Util;
 import com.vungtv.film.App;
 import com.vungtv.film.R;
+import com.vungtv.film.eventbus.AccountModifyEvent;
+import com.vungtv.film.feature.buyvip.BuyVipActivity;
+import com.vungtv.film.feature.login.LoginActivity;
 import com.vungtv.film.model.DrmSession;
 import com.vungtv.film.model.Episode;
 import com.vungtv.film.popup.PopupListEpisode;
+import com.vungtv.film.popup.PopupMessenger;
 import com.vungtv.film.util.LogUtils;
 import com.vungtv.film.widget.player.TrackSelectionHelper;
 import com.vungtv.film.widget.player.VersionSelectionHelper;
 import com.vungtv.film.widget.player.VtvPlaybackControlView;
 import com.vungtv.film.widget.player.VtvPlayerView;
+
+import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
 
 import java.net.CookieHandler;
 import java.net.CookieManager;
@@ -147,7 +154,7 @@ public class PlayerActivity extends AppCompatActivity implements PlayerContract.
         }
         setContentView(R.layout.activity_player);
         ButterKnife.bind(this);
-
+        EventBus.getDefault().register(this);
         vtvPlayerView.setAudioManager((AudioManager) getSystemService(Context.AUDIO_SERVICE));
         vtvPlayerView.setControllerVisibilityListener(this);
         vtvPlayerView.setOnScreenBrightControl(this);
@@ -207,6 +214,7 @@ public class PlayerActivity extends AppCompatActivity implements PlayerContract.
     @Override
     protected void onDestroy() {
         presenter.onDestroy();
+        EventBus.getDefault().unregister(this);
         super.onDestroy();
     }
 
@@ -222,6 +230,13 @@ public class PlayerActivity extends AppCompatActivity implements PlayerContract.
         } else {
             presenter.reloadEpisodeInfo();
         }
+    }
+
+    @Subscribe
+    public void accountModifyEvent(AccountModifyEvent event) {
+        // User update info
+        // If user buy vip success => hide button clear vip and remove all ads;
+        presenter.accountModify();
     }
 
     @Override
@@ -290,6 +305,44 @@ public class PlayerActivity extends AppCompatActivity implements PlayerContract.
     }
 
     @Override
+    public void showPopupLogin() {
+        PopupMessenger popupMessenger = new PopupMessenger(this);
+        popupMessenger.setOnPopupMessengerListener(new PopupMessenger.OnPopupMessengerListener() {
+            @Override
+            public void onPopupMsgBtnConfirmClick() {
+                openActLogin();
+            }
+
+            @Override
+            public void onPopupMsgBtnCancelClick() {
+
+            }
+        });
+        popupMessenger.show();
+        popupMessenger.setTextContent(getString(R.string.movie_details_error_login));
+        popupMessenger.setTextBtnConfirm(getString(R.string.popup_action_login));
+    }
+
+    @Override
+    public void showPopupBuyVip() {
+        PopupMessenger popupMessenger = new PopupMessenger(this);
+        popupMessenger.setOnPopupMessengerListener(new PopupMessenger.OnPopupMessengerListener() {
+            @Override
+            public void onPopupMsgBtnConfirmClick() {
+                openActBuyVip();
+            }
+
+            @Override
+            public void onPopupMsgBtnCancelClick() {
+
+            }
+        });
+        popupMessenger.show();
+        popupMessenger.setTextContent(getString(R.string.movie_details_text_clear_ads));
+        popupMessenger.setTextBtnConfirm(getString(R.string.popup_action_buy_vip));
+    }
+
+    @Override
     public void setMediaSource(Uri uri, String extension) {
         mediaSource = buildMediaSource(uri, extension);
         LogUtils.d(TAG, "setMediaSource: uri : " + uri + "\nextension : " + extension );
@@ -319,6 +372,11 @@ public class PlayerActivity extends AppCompatActivity implements PlayerContract.
     @Override
     public void setBtnPlaylistEnable(boolean enable) {
         vtvControlView.setBtnPlaylistEnabled(enable);
+    }
+
+    @Override
+    public void setBtnClearAdsEnable(boolean enable) {
+        vtvControlView.setBtnClearAdsEnabled(enable);
     }
 
     @Override
@@ -521,6 +579,16 @@ public class PlayerActivity extends AppCompatActivity implements PlayerContract.
                 .buildHttpDataSourceFactory(useBandwidthMeter ? BANDWIDTH_METER : null);
     }
 
+    @Override
+    public void openActLogin() {
+        startActivity(new Intent(this, LoginActivity.class));
+    }
+
+    @Override
+    public void openActBuyVip() {
+        startActivity(new Intent(this, BuyVipActivity.class));
+    }
+
     // Activity input
 
     @Override
@@ -549,44 +617,44 @@ public class PlayerActivity extends AppCompatActivity implements PlayerContract.
     }
 
     @Override
-    public void onClickButtonQuality(View v) {
+    public void onButtonQualityClick(View v) {
         trackSelectionHelper.showSelectionDialog(PlayerActivity.this, getString(R.string.player_text_quality),
                 trackSelector.getCurrentMappedTrackInfo(), vtvControlView.getTagBtnQuality());
     }
 
     @Override
-    public void onClickButtonSubtitle(View v) {
+    public void onButtonSubtitleClick(View v) {
         trackSelectionHelper.showSelectionDialog(PlayerActivity.this, getString(R.string.player_text_subtutle),
                 trackSelector.getCurrentMappedTrackInfo(), vtvControlView.getTagBtnSubtitle());
     }
 
     @Override
-    public void onClickButtonVersion(View v) {
+    public void onButtonVersionClick(View v) {
         presenter.openPopupSelectVersion();
     }
 
     @Override
-    public void onClickButtonComment() {
-        showMsgToast("onClickButtonComment");
+    public void onButtonCommentClick() {
+        showMsgToast("onButtonCommentClick");
     }
 
     @Override
-    public void onClickButtonAdDisable() {
-        showMsgToast("onClickButtonAdDisable");
+    public void onButtonClearAdsClick() {
+        presenter.openPopupClearAds();
     }
 
     @Override
-    public void onClickButtonOpenPlaylist() {
+    public void onButtonPlaylistClick() {
         presenter.openPopupListEpisodes();
     }
 
     @Override
-    public void onClickButtonShare() {
-        showMsgToast("onClickButtonShare");
+    public void onButtonShareClick() {
+        showMsgToast("onButtonShareClick");
     }
 
     @Override
-    public void onClickButtonFinish() {
+    public void onButtonFinishClick() {
         finish();
     }
 

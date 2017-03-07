@@ -2,69 +2,40 @@
   "success": true,
   "code": 0,
   "message": "",
-  "data": {
-    "limit": 6,
-    "offset": 6,
-    "player": [
+  "data" : {
+    "sap-xep" : [
       {
-        "label" : "Phụ đề",
-        "files" : [
-          {
-            "file": "http://v2.vod.vungtv.com/hls/6f6d5492f6963f0e9449d5cd7955f83e.mp4/index.m3u8?st=n8Kk61lF9LKwqSYmd4Lzgg&e=1488630762&z=::1&token=",
-            "label": "720",
-            "type": "application/x-mpegURL"
-          },
-          {
-            "file": "http://drive.tienrocker.com/video-api/redirector.php?link=STE...",
-            "label": 720,
-            "type": "video/mp4"
-          }
-        ]
+        "label" : "tên phim",
+        "value" : "ten-phim"
       },
       {
-        "label" : "Thuyết minh",
-        "files" : [
-          {
-            "file": "http://v2.vod.vungtv.com/hls/6f6d5492f6963f0e9449d5cd7955f83e.mp4/index.m3u8?st=n8Kk61lF9LKwqSYmd4Lzgg&e=1488630762&z=::1&token=",
-            "label": "720",
-            "type": "application/x-mpegURL"
-          },
-          {
-            "file": "http://drive.tienrocker.com/video-api/redirector.php?link=STE...",
-            "label": 720,
-            "type": "video/mp4"
-          }
-        ]
+        "label" : "Điểm IMDB",
+        "value" : "imdb"
       }
     ],
-    "eps_title": "1",
-    "next": "YWlMQmZjb1dqM0dUL2NnU2t2c2JISVFINzJENE9wWHh3UWIwOHo4aU9pUT0%3D",
-    "previous": "YytodFZvSlVXQUk0QnM4clpZN3VTNGZBT0lxcFBaYmw4YnJuOEJLV1JqUT0%3D"
-  },
-  "xxx" : {
-    "success": true,
-    "code": 0,
-    "message": "",
-    "data": {
-      "limit": 6,
-      "offset": 0,
-      "episodes": [
-        {
-          "eps_order": "1",
-          "eps_title": "1",
-          "eps_hash": "YWxydFBEMXlWYlJRelZmdFBPTTlab1FINzJENE9wWHh3UWIwOHo4aU9pUT0%3D"
-        },
-        {
-          "eps_order": "2",
-          "eps_title": "2",
-          "eps_hash": "dFRhaGtWdGZ6Z0dDUVpMbVNKUG9OWVFINzJENE9wWHh3UWIwOHo4aU9pUT0%3D"
-        },
-        {
-          "eps_order": "54",
-          "eps_title": "54",
-          "eps_hash": "QzFVU1pqZFFOOVhrTm5XQ1VFNDdFb1FINzJENE9wWHh3UWIwOHo4aU9pUT0%3D"
-        }
-      ]
-    }
+    "danh-muc" : [
+      {
+        "label" : "Phim le",
+        "value" : "phim-le"
+      }
+    ],
+    "quoc-gia" : [
+      {
+        "label" : "Mỹ",
+        "value" : "my"
+      }
+    ],
+    "the-loai" : [
+      {
+        "label" : "Khoa học",
+        "value" : "khoa-hoc"
+      }
+    ],
+    "nam" : [
+      {
+        "label" : "2016",
+        "value" : "2016"
+      }
+    ]
   }
 }

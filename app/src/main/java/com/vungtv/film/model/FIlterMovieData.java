@@ -6,9 +6,8 @@ package com.vungtv.film.model;
  */
 
 public class FilterMovieData {
-
     private String label;
-    private String value;
+    private String slug;
 
     public String getLabel() {
         return label;
@@ -18,11 +17,11 @@ public class FilterMovieData {
         this.label = label;
     }
 
-    public String getValue() {
-        return value;
+    public void setSlug(String slug) {
+        this.slug = slug;
     }
 
-    public void setValue(String value) {
-        this.value = value;
+    public String getSlug() {
+        return slug;
     }
 }

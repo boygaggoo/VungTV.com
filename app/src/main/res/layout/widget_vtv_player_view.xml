@@ -60,6 +60,8 @@
     <ImageView
         style="@style/Control.Button.play"
         android:id="@+id/vtv_player_btn_lock"
+        android:layout_width="@dimen/space_36"
+        android:layout_height="@dimen/space_36"
         android:layout_marginTop="@dimen/space_56"
         android:src="@drawable/ic_control_unlock"
         android:visibility="visible"

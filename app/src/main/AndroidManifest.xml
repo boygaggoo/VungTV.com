@@ -61,7 +61,7 @@
             android:configChanges="keyboardHidden|orientation|screenSize" />
         <activity android:name=".feature.menumovies.MenuMoviesActivity" />
         <activity
-            android:name=".feature.favorite.FavoriteActivity"
+            android:name=".feature.usermovies.UserMoviesActivity"
             android:configChanges="keyboardHidden|orientation|screenSize" />
 
         <meta-data

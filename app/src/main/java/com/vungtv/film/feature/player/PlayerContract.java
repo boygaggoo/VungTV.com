@@ -38,6 +38,10 @@ public interface PlayerContract {
 
         void showPopupListEpisodes(ArrayList<Episode> list, String epsTitle);
 
+        void showPopupLogin();
+
+        void showPopupBuyVip();
+
         void setMediaSource(Uri uri, String extension);
 
         void setDrmSession(DrmSession drmSession);
@@ -49,6 +53,8 @@ public interface PlayerContract {
         void setBtnVersionEnable(boolean enable);
 
         void setBtnPlaylistEnable(boolean enable);
+
+        void setBtnClearAdsEnable(boolean enable);
 
         void initPlayer();
 
@@ -68,6 +74,10 @@ public interface PlayerContract {
         DataSource.Factory buildDataSourceFactory(boolean useBandwidthMeter);
 
         HttpDataSource.Factory buildHttpDataSourceFactory(boolean useBandwidthMeter);
+
+        void openActLogin();
+
+        void openActBuyVip();
     }
 
     interface Presenter extends BasePresenter {
@@ -88,8 +98,12 @@ public interface PlayerContract {
 
         void openPopupListEpisodes();
 
+        void openPopupClearAds();
+
         void selectedVersion(int position);
 
         void selectedItemListEps(String epsHash);
+
+        void accountModify();
     }
 }

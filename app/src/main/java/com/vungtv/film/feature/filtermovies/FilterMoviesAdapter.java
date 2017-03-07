@@ -15,7 +15,6 @@ import com.vungtv.film.R;
 import com.vungtv.film.interfaces.OnItemClickListener;
 import com.vungtv.film.model.Movie;
 import com.vungtv.film.util.DrawableUtils;
-import com.vungtv.film.util.LogUtils;
 import com.vungtv.film.widget.VtvTextView;
 
 import java.util.ArrayList;
@@ -155,10 +154,15 @@ public class FilterMoviesAdapter extends RecyclerView.Adapter {
             }
 
             // set film info episode
-            episode.setText(String.format(
-                    "%1$s/%2$s",
-                    String.valueOf(movie.getMovCountEpisoder()), String.valueOf(movie.getMovNumberEpisode())
-            ));
+            if (movie.getMovNumberEpisode() > 0) {
+                episode.setVisibility(View.VISIBLE);
+                episode.setText(String.format(
+                        "%1$s/%2$s",
+                        String.valueOf(movie.getMovCountEpisoder()), String.valueOf(movie.getMovNumberEpisode())
+                ));
+            } else {
+                episode.setVisibility(View.GONE);
+            }
 
             infoLayout.removeAllViews();
             LayoutInflater inflater = LayoutInflater.from(itemView.getContext());
@@ -174,11 +178,9 @@ public class FilterMoviesAdapter extends RecyclerView.Adapter {
                     }
                 }
             }
-
             if (movie.getLt() != null && movie.getLt().length() > 0) {
                 addViewInfo(inflater, movie.getLt(), orange);
             }
-
             if (movie.getTm() != null && movie.getTm().length() > 0) {
                 addViewInfo(inflater, movie.getTm(), blueGray);
             }
@@ -200,7 +202,6 @@ public class FilterMoviesAdapter extends RecyclerView.Adapter {
 
         @Override
         public void onClick(View view) {
-            LogUtils.e(TAG, "openActMovieDetail movId 1 = " + getLayoutPosition());
             if (onItemClickListener != null)
                 onItemClickListener.onItemClick(view, getLayoutPosition());
         }

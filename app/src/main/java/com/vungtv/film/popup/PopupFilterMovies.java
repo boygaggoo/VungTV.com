@@ -26,6 +26,7 @@ public class PopupFilterMovies implements View.OnClickListener {
     private final String[] sapXepStr, danhMucStr, quocGiaStr, theLoaiStr, namStr;
     private final String[] sapXepValue, danhMucValue, quocGiaValue, theLoaiValue, namValue;
 
+    /* Contructor */
     public PopupFilterMovies(Context context, ApiPopupFilterMovies.Data filterDatas) {
         this.context = context;
 
@@ -35,43 +36,43 @@ public class PopupFilterMovies implements View.OnClickListener {
         sapXepValue[0] = "";
         for (int i = 0; i < filterDatas.getSapXep().size(); i++) {
             sapXepStr[i+1] = filterDatas.getSapXep().get(i).getLabel();
-            sapXepValue[i+1] = filterDatas.getSapXep().get(i).getValue();
+            sapXepValue[i+1] = filterDatas.getSapXep().get(i).getSlug();
         }
 
-        danhMucStr = new String[filterDatas.getSapXep().size() + 1];
+        danhMucStr = new String[filterDatas.getDanhMuc().size() + 1];
         danhMucStr[0] = "---";
-        danhMucValue = new String[filterDatas.getSapXep().size() + 1];
+        danhMucValue = new String[filterDatas.getDanhMuc().size() + 1];
         danhMucValue[0] = "";
-        for (int i = 0; i < filterDatas.getSapXep().size(); i++) {
-            danhMucStr[i+1] = filterDatas.getSapXep().get(i).getLabel();
-            danhMucValue[i+1] = filterDatas.getSapXep().get(i).getValue();
+        for (int i = 0; i < filterDatas.getDanhMuc().size(); i++) {
+            danhMucStr[i+1] = filterDatas.getDanhMuc().get(i).getLabel();
+            danhMucValue[i+1] = filterDatas.getDanhMuc().get(i).getSlug();
         }
 
-        quocGiaStr = new String[filterDatas.getSapXep().size() + 1];
+        quocGiaStr = new String[filterDatas.getQuocGia().size() + 1];
         quocGiaStr[0] = "---";
-        quocGiaValue = new String[filterDatas.getSapXep().size() + 1];
+        quocGiaValue = new String[filterDatas.getQuocGia().size() + 1];
         quocGiaValue[0] = "";
-        for (int i = 0; i < filterDatas.getSapXep().size(); i++) {
-            quocGiaStr[i+1] = filterDatas.getSapXep().get(i).getLabel();
-            quocGiaValue[i+1] = filterDatas.getSapXep().get(i).getValue();
+        for (int i = 0; i < filterDatas.getQuocGia().size(); i++) {
+            quocGiaStr[i+1] = filterDatas.getQuocGia().get(i).getLabel();
+            quocGiaValue[i+1] = filterDatas.getQuocGia().get(i).getSlug();
         }
 
-        theLoaiStr = new String[filterDatas.getSapXep().size() + 1];
+        theLoaiStr = new String[filterDatas.getTheLoai().size() + 1];
         theLoaiStr[0] = "---";
-        theLoaiValue = new String[filterDatas.getSapXep().size() + 1];
+        theLoaiValue = new String[filterDatas.getTheLoai().size() + 1];
         theLoaiValue[0] = "";
-        for (int i = 0; i < filterDatas.getSapXep().size(); i++) {
-            theLoaiStr[i+1] = filterDatas.getSapXep().get(i).getLabel();
-            theLoaiValue[i+1] = filterDatas.getSapXep().get(i).getValue();
+        for (int i = 0; i < filterDatas.getTheLoai().size(); i++) {
+            theLoaiStr[i+1] = filterDatas.getTheLoai().get(i).getLabel();
+            theLoaiValue[i+1] = filterDatas.getTheLoai().get(i).getSlug();
         }
 
-        namStr = new String[filterDatas.getSapXep().size() + 1];
+        namStr = new String[filterDatas.getNam().size() + 1];
         namStr[0] = "---";
-        namValue = new String[filterDatas.getSapXep().size() + 1];
+        namValue = new String[filterDatas.getNam().size() + 1];
         namValue[0] = "";
-        for (int i = 0; i < filterDatas.getSapXep().size(); i++) {
-            namStr[i+1] = filterDatas.getSapXep().get(i).getLabel();
-            namValue[i+1] = filterDatas.getSapXep().get(i).getValue();
+        for (int i = 0; i < filterDatas.getNam().size(); i++) {
+            namStr[i+1] = filterDatas.getNam().get(i).getLabel();
+            namValue[i+1] = filterDatas.getNam().get(i).getSlug();
         }
 
         init();

@@ -1,15 +1,20 @@
-package com.vungtv.film.feature.favorite;
+package com.vungtv.film.feature.usermovies;
 
 import android.content.Context;
+import android.content.Intent;
 
 import com.vungtv.film.R;
 import com.vungtv.film.data.source.local.UserSessionManager;
-import com.vungtv.film.data.source.remote.model.ApiFilterMovies;
-import com.vungtv.film.data.source.remote.service.FavoriteServices;
+import com.vungtv.film.data.source.remote.model.ApiUserMovies;
+import com.vungtv.film.data.source.remote.service.UserMoviesServices;
 import com.vungtv.film.feature.filtermovies.FilterMoviesPresenter;
 import com.vungtv.film.util.DensityUtils;
 
 import java.util.ArrayList;
+
+import static com.vungtv.film.feature.usermovies.UserMoviesActivity.INTENT_PAGE;
+import static com.vungtv.film.feature.usermovies.UserMoviesActivity.PAGE_FAVORITE;
+import static com.vungtv.film.feature.usermovies.UserMoviesActivity.PAGE_FOLLOW;
 
 /**
  * Content class.
@@ -18,14 +23,16 @@ import java.util.ArrayList;
  * Email: vancuong2941989@gmail.com
  */
 
-public class FavoritePresenter implements FavoriteContract.Presenter, FavoriteServices.OnFavoriteServicesListener {
+public class UserMoviesPresenter implements UserMoviesContract.Presenter, UserMoviesServices.ResultListener {
     private static final String TAG = FilterMoviesPresenter.class.getSimpleName();
 
     private final Context context;
 
-    private final FavoriteContract.View activityView;
+    private final UserMoviesContract.View activityView;
 
-    private final FavoriteServices favoriteServices;
+    private final UserMoviesServices userMoviesServices;
+
+    private int pageType = PAGE_FAVORITE;
 
     private int columNumber = 3;
 
@@ -34,23 +41,37 @@ public class FavoritePresenter implements FavoriteContract.Presenter, FavoriteSe
     private boolean isLoadmore = false;
 
     /* Contructor */
-    public FavoritePresenter(Context context, FavoriteContract.View activityView) {
+    public UserMoviesPresenter(Context context, UserMoviesContract.View activityView) {
         this.context = context;
         this.activityView = activityView;
 
         this.activityView.setPresenter(this);
 
-        favoriteServices = new FavoriteServices(context);
-        favoriteServices.setAccessToken(UserSessionManager.getAccessToken(context));
-        favoriteServices.setOnFavoriteServicesListener(this);
+        userMoviesServices = new UserMoviesServices(context);
+        userMoviesServices.setAccessToken(UserSessionManager.getAccessToken(context));
+        userMoviesServices.setResultListener(this);
+    }
+
+    @Override
+    public void getIntent(Intent intent) {
+        if (intent != null) {
+            pageType = intent.getIntExtra(INTENT_PAGE, PAGE_FAVORITE);
+
+            if (pageType == PAGE_FAVORITE) {
+                activityView.setTitlePage(context.getResources().getString(R.string.home_text_phim_yeu_thich));
+            } else if (pageType == PAGE_FOLLOW){
+                activityView.setTitlePage(context.getResources().getString(R.string.home_text_phim_theo_doi));
+            }
+        }
     }
 
     @Override
     public void loadData() {
-        favoriteServices.cancel();
-        favoriteServices.loadFavorite();
         activityView.showLoading(true);
         activityView.showMsgError(false, null);
+
+        userMoviesServices.cancel();
+        userMoviesServices.loadMovies(pageType);
     }
 
     @Override
@@ -66,7 +87,7 @@ public class FavoritePresenter implements FavoriteContract.Presenter, FavoriteSe
         isLoadmore = false;
         activityView.clearData();
         activityView.disableRefresing();
-        favoriteServices.setOffset(0);
+        userMoviesServices.setOffset(0);
         loadData();
     }
 
@@ -100,11 +121,6 @@ public class FavoritePresenter implements FavoriteContract.Presenter, FavoriteSe
     }
 
     @Override
-    public void openMovieDetails(int movieId) {
-        activityView.showActMovieDetails(movieId);
-    }
-
-    @Override
     public void start() {
         float itemWidth = DensityUtils.getWidthInPx(context);
         int itemSpace = context.getResources().getDimensionPixelSize(R.dimen.space_3);
@@ -123,24 +139,25 @@ public class FavoritePresenter implements FavoriteContract.Presenter, FavoriteSe
 
     @Override
     public void onDestroy() {
-        favoriteServices.cancel();
+        userMoviesServices.cancel();
     }
 
     @Override
-    public void onFavoriteLoadSuccess(ApiFilterMovies.DataPage dataPage) {
+    public void onUserMoviesResultSuccess(ApiUserMovies.Data data) {
         activityView.showLoading(false);
 
-        if (dataPage.getMovies().size() > 0) {
-            // add ads;
-            activityView.addAdsNative();
+        if (data.getMovies().size() == 0) {
+            if (data.getOffset() == 0) {
+                activityView.showMsgError(true, context.getString(R.string.user_movies_error_no_movie));
+            }
+            return;
         }
 
-        activityView.addItemMovie(dataPage.getMovies());
+        activityView.addAdsNative();
+        activityView.addItemMovie(data.getMovies());
 
-        if (dataPage.getMovies().size() > 0) {
-            isLoadmore = true;
-            favoriteServices.setOffset(dataPage.getOffset() + favoriteServices.getLimit());
-        }
+        isLoadmore = true;
+        userMoviesServices.setOffset(data.getOffset() + userMoviesServices.getLimit());
     }
 
     @Override

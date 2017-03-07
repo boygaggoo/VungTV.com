@@ -15,4 +15,12 @@ public class ApiModelData {
     @SerializedName("offset")
     @Expose
     public int offset;
+
+    public int getLimit() {
+        return limit;
+    }
+
+    public int getOffset() {
+        return offset;
+    }
 }
