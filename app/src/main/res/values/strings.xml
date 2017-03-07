@@ -188,5 +188,8 @@
     <string name="player_text_video_name">Tập %1$s - %2$s</string>
     <string name="popup_text_title_list_episode">Danh sách tập</string>
     <string name="user_movies_error_no_movie">Chưa có phim nào được thêm.</string>
+    <string name="popup_text_resume_last_point">Tiếp tục xem từ vị trí lần trước ?</string>
+    <string name="popup_action_resume">Xem tiếp</string>
+    <string name="popup_action_begin">Xem từ đầu</string>
 
 </resources>

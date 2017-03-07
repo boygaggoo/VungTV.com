@@ -11,6 +11,8 @@
 
     <dimen name="popup_size_w">300dp</dimen>
     <dimen name="popup_menu_size_w">200dp</dimen>
+    <dimen name="popup_episode_item_size_w">56dp</dimen>
+    <dimen name="popup_episode_size_w">420dp</dimen>
 
     <dimen name="poster_size_h">153dp</dimen>
     <dimen name="poster_size_h_horizontal">93dp</dimen>
@@ -26,13 +28,6 @@
     <dimen name="space_7">7dp</dimen>
     <dimen name="space_4">4dp</dimen>
     <dimen name="space_3">3dp</dimen>
-
-
-    <dimen name="font_normal">15sp</dimen>
-    <dimen name="font_small">14sp</dimen>
-    <dimen name="font_tiny">12sp</dimen>
-    <dimen name="font_lage">18sp</dimen>
-    <dimen name="font_lager">20sp</dimen>
     <dimen name="space_56">56dp</dimen>
     <dimen name="space_128">128dp</dimen>
     <dimen name="space_72">72dp</dimen>
@@ -40,6 +35,12 @@
     <dimen name="space_2">2dp</dimen>
     <dimen name="space_20">20dp</dimen>
     <dimen name="space_88">88dp</dimen>
+
+    <dimen name="font_normal">15sp</dimen>
+    <dimen name="font_small">14sp</dimen>
+    <dimen name="font_tiny">12sp</dimen>
+    <dimen name="font_lage">18sp</dimen>
+    <dimen name="font_lager">20sp</dimen>
     <dimen name="playback_control_time_space">0dp</dimen>
 
 </resources>

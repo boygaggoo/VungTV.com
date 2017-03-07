@@ -30,7 +30,7 @@
         android:layout_height="wrap_content"
         android:scrollbars="vertical"
         android:padding="@dimen/margin"
-        android:columnWidth="@dimen/space_56"
+        android:columnWidth="@dimen/popup_episode_item_size_w"
         android:clipToPadding="false"/>
 
 </LinearLayout>

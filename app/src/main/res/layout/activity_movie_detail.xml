@@ -37,8 +37,9 @@
                 tools:src="@drawable/default_poster_land"/>
 
             <ImageView
-                android:layout_width="@dimen/space_48"
-                android:layout_height="@dimen/space_48"
+                android:id="@+id/mdetails_img_cover_play"
+                android:layout_width="@dimen/space_56"
+                android:layout_height="@dimen/space_56"
                 android:src="@drawable/icon_play"
                 android:layout_gravity="center"
                 android:contentDescription="@string/app_name"

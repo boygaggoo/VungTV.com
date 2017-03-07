@@ -39,6 +39,8 @@ public class MovieDetailPresenter implements MovieDetailContract.Presenter, Movi
 
     private String trailerVideoId;
 
+    private String epsHash;
+
 
     public MovieDetailPresenter(Context context, MovieDetailContract.View activityView) {
         this.context = context;
@@ -84,7 +86,11 @@ public class MovieDetailPresenter implements MovieDetailContract.Presenter, Movi
 
     @Override
     public void resumeWatchMovie() {
-
+        if (movId > 0 && StringUtils.isNotEmpty(epsHash)) {
+            activityView.openActPlayerRecent(movId, movName, epsHash);
+        } else {
+            activityView.showMsgToast(context.getString(R.string.movie_details_error_preview));
+        }
     }
 
     @Override
@@ -173,6 +179,7 @@ public class MovieDetailPresenter implements MovieDetailContract.Presenter, Movi
 
         movId = data.movie.getMovId();
         movName = data.movie.getMovName();
+        epsHash = data.movie.getEpsHash();
         trailerVideoId = UriPaser.getYoutubeVideoId(data.movie.getMovTrailer());
 
         if (data.movieUserStatus != null) {

@@ -4,14 +4,17 @@ import android.content.Context;
 import android.content.Intent;
 
 import com.vungtv.film.R;
+import com.vungtv.film.data.source.local.MovieRecentManager;
 import com.vungtv.film.data.source.local.UserSessionManager;
 import com.vungtv.film.data.source.remote.model.ApiEpisodes;
 import com.vungtv.film.data.source.remote.model.ApiMoviePlayer;
 import com.vungtv.film.data.source.remote.service.EpisodeServices;
 import com.vungtv.film.data.source.remote.service.PlayerServices;
 import com.vungtv.film.model.Episode;
+import com.vungtv.film.model.MovieRecent;
 import com.vungtv.film.util.LogUtils;
 import com.vungtv.film.util.StringUtils;
+import com.vungtv.film.util.TimeUtils;
 
 import java.util.ArrayList;
 
@@ -34,6 +37,8 @@ public class PlayerPresenter implements PlayerContract.Presenter, PlayerServices
 
     private final EpisodeServices episodeServices;
 
+    private final MovieRecentManager movieRecentManager;
+
     private ApiMoviePlayer.Data videoData;
 
     private ArrayList<Episode> listEps;
@@ -43,6 +48,8 @@ public class PlayerPresenter implements PlayerContract.Presenter, PlayerServices
     private String movName;
 
     private String epsHash;
+
+    private boolean isRecent = false;
 
     private int watchVideoVer = 0;
 
@@ -56,6 +63,8 @@ public class PlayerPresenter implements PlayerContract.Presenter, PlayerServices
 
         episodeServices = new EpisodeServices(context);
         episodeServices.setEpisodeResultCallback(this);
+
+        movieRecentManager = new MovieRecentManager();
     }
 
     @Override
@@ -68,6 +77,7 @@ public class PlayerPresenter implements PlayerContract.Presenter, PlayerServices
         movId = intent.getIntExtra(PlayerActivity.INTENT_MOV_ID, -1);
         movName = intent.getStringExtra(PlayerActivity.INTENT_MOV_NAME);
         epsHash = intent.getStringExtra(PlayerActivity.INTENT_EPS_HASH);
+        isRecent = intent.getBooleanExtra(PlayerActivity.INTENT_RECENT, false);
     }
 
     @Override
@@ -146,6 +156,21 @@ public class PlayerPresenter implements PlayerContract.Presenter, PlayerServices
     }
 
     @Override
+    public void playFromTheLast() {
+        MovieRecent movieRecent = movieRecentManager.get(movId);
+        if (movieRecent != null && StringUtils.isNotEmpty(movieRecent.getMovEpsHash())) {
+            epsHash = movieRecent.getMovEpsHash();
+            playerView.setResumePosition(movieRecent.getMovLastPlay());
+        }
+        loadEpisodeInfo();
+    }
+
+    @Override
+    public void playFromTheBeginning() {
+        loadEpisodeInfo();
+    }
+
+    @Override
     public void selectedVersion(int position) {
         if (position != watchVideoVer) {
             playerView.releasePlayer();
@@ -176,17 +201,32 @@ public class PlayerPresenter implements PlayerContract.Presenter, PlayerServices
     }
 
     @Override
+    public void saveMovieRecent(long position, long duration) {
+        MovieRecent movieRecent = new MovieRecent(
+                movId, movName, null, epsHash, duration, position, TimeUtils.getCurrentTimeMillis()
+        );
+        movieRecentManager.addOrUpdate(movieRecent);
+    }
+
+    @Override
     public void start() {
         if (UserSessionManager.isVIP(context.getApplicationContext())) {
             playerView.setBtnClearAdsEnable(false);
         } else {
             playerView.setBtnClearAdsEnable(true);
         }
+
+        if (isRecent) {
+            playerView.showPopupRecent();
+        } else {
+            loadEpisodeInfo();
+        }
     }
 
     @Override
     public void onDestroy() {
         mPlayerServices.cancel();
+        movieRecentManager.close();
     }
 
     @Override

@@ -18,9 +18,9 @@ public class MovieRecent extends RealmObject {
     @SerializedName("mov_frame_bg")
     @Expose
     private String movFrameBg;
-    @SerializedName("mov_episode_id")
+    @SerializedName("mov_eps_hash")
     @Expose
-    private int movEpisodeId;
+    private String movEpsHash;
     @SerializedName("mov_duration")
     @Expose
     private long movDuration;
@@ -32,6 +32,16 @@ public class MovieRecent extends RealmObject {
     private long movCreateAt;
 
     public MovieRecent() {
+    }
+
+    public MovieRecent(int movId, String movName, String movFrameBg, String movEpsHash, long movDuration, long movLastPlay, long movCreateAt) {
+        this.movId = movId;
+        this.movName = movName;
+        this.movFrameBg = movFrameBg;
+        this.movEpsHash = movEpsHash;
+        this.movDuration = movDuration;
+        this.movLastPlay = movLastPlay;
+        this.movCreateAt = movCreateAt;
     }
 
     public int getMovId() {
@@ -58,12 +68,12 @@ public class MovieRecent extends RealmObject {
         this.movFrameBg = movFrameBg;
     }
 
-    public int getMovEpisodeId() {
-        return movEpisodeId;
+    public String getMovEpsHash() {
+        return movEpsHash;
     }
 
-    public void setMovEpisodeId(int movEpisodeId) {
-        this.movEpisodeId = movEpisodeId;
+    public void setMovEpsHash(String movEpsHash) {
+        this.movEpsHash = movEpsHash;
     }
 
     public long getMovDuration() {

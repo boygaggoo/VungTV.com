@@ -34,6 +34,8 @@ public interface PlayerContract {
 
         void showMsgToast(String msg);
 
+        void showPopupRecent();
+
         void showPopupSelectVersion(String[] labels, int curSelected);
 
         void showPopupListEpisodes(ArrayList<Episode> list, String epsTitle);
@@ -45,6 +47,8 @@ public interface PlayerContract {
         void setMediaSource(Uri uri, String extension);
 
         void setDrmSession(DrmSession drmSession);
+
+        void setResumePosition(long resumePosition);
 
         void setVideoName(String text);
 
@@ -100,10 +104,16 @@ public interface PlayerContract {
 
         void openPopupClearAds();
 
+        void playFromTheLast();
+
+        void playFromTheBeginning();
+
         void selectedVersion(int position);
 
         void selectedItemListEps(String epsHash);
 
         void accountModify();
+
+        void saveMovieRecent(long position, long duration);
     }
 }

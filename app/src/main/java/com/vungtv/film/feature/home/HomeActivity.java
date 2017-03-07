@@ -2,13 +2,11 @@ package com.vungtv.film.feature.home;
 
 import android.content.Intent;
 import android.content.res.Configuration;
-import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
-import android.view.animation.TranslateAnimation;
 import android.widget.LinearLayout;
 
 import com.vungtv.film.BaseActivity;
@@ -19,13 +17,13 @@ import com.vungtv.film.data.source.remote.service.HomeServices;
 import com.vungtv.film.eventbus.AccountModifyEvent;
 import com.vungtv.film.eventbus.ConfigurationChangedEvent;
 import com.vungtv.film.feature.buyvip.BuyVipActivity;
-import com.vungtv.film.feature.usermovies.UserMoviesActivity;
 import com.vungtv.film.feature.filtermovies.FilterMoviesActivity;
 import com.vungtv.film.feature.home.HomeNavAdapter.OnNavItemSelectedListener;
 import com.vungtv.film.feature.login.LoginActivity;
 import com.vungtv.film.feature.menumovies.MenuMoviesActivity;
 import com.vungtv.film.feature.personal.PersonalActivity;
 import com.vungtv.film.feature.search.SearchActivity;
+import com.vungtv.film.feature.usermovies.UserMoviesActivity;
 import com.vungtv.film.model.NavItem;
 import com.vungtv.film.util.ActivityUtils;
 import com.vungtv.film.util.LogUtils;
@@ -121,8 +119,7 @@ public class HomeActivity extends BaseActivity implements OnNavItemSelectedListe
 
         String p = UriPaser.getNavItemPathSegment(url);
         if (p == null) return;
-
-        drawer.closeDrawer(navRecycler);
+        if (!isScreenLand) drawer.closeDrawer(navRecycler);
 
         if (p.equalsIgnoreCase(ApiQuery.PATH_FAVORITE)) {
             // Movies favorite
@@ -168,7 +165,7 @@ public class HomeActivity extends BaseActivity implements OnNavItemSelectedListe
             @Override
             public void onBtnNavClick() {
                 if (drawer.isDrawerOpen(navRecycler)) {
-                    drawer.closeDrawer(navRecycler);
+                    if (!isScreenLand) drawer.closeDrawer(navRecycler);
                 } else {
                     drawer.openDrawer(navRecycler);
                 }
@@ -209,17 +206,7 @@ public class HomeActivity extends BaseActivity implements OnNavItemSelectedListe
                 if (isScreenLand) return;
 
                 float moveFactor = (navRecycler.getWidth() * slideOffset);
-                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB) {
-                    homeContentLayout.setTranslationX(moveFactor);
-                } else {
-                    TranslateAnimation anim = new TranslateAnimation(lastTranslate, moveFactor, 0.0f, 0.0f);
-
-                    anim.setDuration(0);
-                    anim.setFillAfter(true);
-                    homeContentLayout.startAnimation(anim);
-
-                    lastTranslate = moveFactor;
-                }
+                homeContentLayout.setTranslationX(moveFactor);
             }
         });
 

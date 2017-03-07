@@ -90,6 +90,7 @@ public class PlayerActivity extends AppCompatActivity implements PlayerContract.
     public static final String INTENT_MOV_ID = "INTENT_MOV_ID";
     public static final String INTENT_MOV_NAME = "INTENT_MOV_NAME";
     public static final String INTENT_EPS_HASH = "INTENT_EPS_HASH";
+    public static final String INTENT_RECENT = "INTENT_RECENT";
 
     private static final DefaultBandwidthMeter BANDWIDTH_METER = new DefaultBandwidthMeter();
 
@@ -139,6 +140,12 @@ public class PlayerActivity extends AppCompatActivity implements PlayerContract.
         return intent;
     }
 
+    public static Intent buildIntentRecent(Context context, int movId, String movName, String epsHash) {
+        Intent intent = buildIntent(context, movId, movName, epsHash);
+        intent.putExtra(INTENT_RECENT, true);
+        return intent;
+    }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -180,7 +187,7 @@ public class PlayerActivity extends AppCompatActivity implements PlayerContract.
         super.onStart();
         if (mediaSource == null) {
             presenter.getIntent(getIntent());
-            presenter.loadEpisodeInfo();
+            presenter.start();
         }else if (Util.SDK_INT > 23) {
             initPlayer();
         }
@@ -273,6 +280,26 @@ public class PlayerActivity extends AppCompatActivity implements PlayerContract.
     }
 
     @Override
+    public void showPopupRecent() {
+        PopupMessenger popupMessenger = new PopupMessenger(this);
+        popupMessenger.setOnPopupMessengerListener(new PopupMessenger.OnPopupMessengerListener() {
+            @Override
+            public void onPopupMsgBtnConfirmClick() {
+                presenter.playFromTheLast();
+            }
+
+            @Override
+            public void onPopupMsgBtnCancelClick() {
+                presenter.playFromTheBeginning();
+            }
+        });
+        popupMessenger.show();
+        popupMessenger.setTextContent(getString(R.string.popup_text_resume_last_point));
+        popupMessenger.setTextBtnConfirm(getString(R.string.popup_action_resume));
+        popupMessenger.setTextBtnCancel(getString(R.string.popup_action_begin));
+    }
+
+    @Override
     public void showPopupSelectVersion(String[] labels, int curSelected) {
         if (versionSelectionHelper == null) {
             versionSelectionHelper = new VersionSelectionHelper(this);
@@ -351,6 +378,12 @@ public class PlayerActivity extends AppCompatActivity implements PlayerContract.
     @Override
     public void setDrmSession(DrmSession drmSession) {
         this.drmSession = drmSession;
+    }
+
+    @Override
+    public void setResumePosition(long position) {
+        resumeWindow = 0;
+        resumePosition = position;
     }
 
     @Override
@@ -478,6 +511,13 @@ public class PlayerActivity extends AppCompatActivity implements PlayerContract.
         resumeWindow = player.getCurrentWindowIndex();
         resumePosition = player.isCurrentWindowSeekable() ? Math.max(0, player.getCurrentPosition())
                 : C.TIME_UNSET;
+
+        presenter.saveMovieRecent(resumePosition, player.getDuration());
+
+        LogUtils.d(TAG, "updateResumePosition: " +
+                "resumeWindow = " + resumeWindow +
+                "\nresumePosition = " + resumePosition +
+                "\nDuration = " + player.getDuration());
     }
 
     @Override

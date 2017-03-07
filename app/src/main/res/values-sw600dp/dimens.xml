@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="poster_size_h">230dp</dimen>
+    <dimen name="poster_size_h_horizontal">140dp</dimen>
+    <dimen name="poster_size_w">162dp</dimen>
+    <dimen name="poster_size_w_horizontal">249dp</dimen>
+    <dimen name="margin">15dp</dimen>
+    <dimen name="popup_episode_item_size_w">72dp</dimen>
+    <dimen name="popup_episode_size_w">600dp</dimen>
+</resources>

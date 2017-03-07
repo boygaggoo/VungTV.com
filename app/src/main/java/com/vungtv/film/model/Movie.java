@@ -86,6 +86,9 @@ public class Movie {
     @SerializedName("res")
     @Expose
     private String res;
+    @SerializedName("eps_hash")
+    @Expose
+    private String epsHash;
 
     public Movie() {
     }
@@ -304,5 +307,9 @@ public class Movie {
 
     public void setCountries(String countries) {
         this.countries = countries;
+    }
+
+    public String getEpsHash() {
+        return epsHash;
     }
 }

@@ -156,6 +156,11 @@ public class MovieDetailActivity extends BaseActivity implements MovieDetailCont
         presenter.resumeWatchMovie();
     }
 
+    @OnClick(R.id.mdetails_img_cover_play)
+    public void onImgCoverPlayClick() {
+        presenter.resumeWatchMovie();
+    }
+
     @OnClick(R.id.mdetails_btn_like)
     public void onBtnLikeClick() {
         presenter.likeMovie();
@@ -391,6 +396,12 @@ public class MovieDetailActivity extends BaseActivity implements MovieDetailCont
     @Override
     public void openActPlayer(int movId, String movName, String epsHash) {
         Intent intent = PlayerActivity.buildIntent(this, movId, movName, epsHash);
+        startActivity(intent);
+    }
+
+    @Override
+    public void openActPlayerRecent(int movId, String movName, String epsHash) {
+        Intent intent = PlayerActivity.buildIntentRecent(this, movId, movName, epsHash);
         startActivity(intent);
     }
 

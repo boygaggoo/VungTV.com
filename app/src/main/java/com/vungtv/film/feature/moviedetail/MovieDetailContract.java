@@ -50,6 +50,8 @@ public interface MovieDetailContract {
 
         void openActPlayer(int movId, String movName, String epsHash);
 
+        void openActPlayerRecent(int movId, String movName, String epsHash);
+
         void openActPlayerYoutube(String videoId);
 
         void openActSearch();

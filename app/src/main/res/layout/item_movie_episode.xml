@@ -5,7 +5,7 @@
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:padding="@dimen/margin"
+    android:minHeight="@dimen/space_36"
     android:gravity="center"
     android:background="@drawable/ds_touchable_bg_gray6_radius"
     android:textSize="@dimen/font_normal"

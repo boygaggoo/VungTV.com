@@ -57,11 +57,11 @@ public class VtvDrawerLayout extends DrawerLayout {
 
     public void setModeLockOpen(View draw) {
         isLockOpen = true;
-        setDrawerLockMode(LOCK_MODE_LOCKED_OPEN);
-        setScrimColor(Color.TRANSPARENT);
         if (draw != null) {
             openDrawer(draw, false);
         }
+        setDrawerLockMode(LOCK_MODE_LOCKED_OPEN);
+        setScrimColor(Color.TRANSPARENT);
     }
 
     public void disableModeLockOpen(View draw) {
