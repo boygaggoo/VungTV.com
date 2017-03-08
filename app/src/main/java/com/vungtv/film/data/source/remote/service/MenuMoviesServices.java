@@ -79,7 +79,7 @@ public class MenuMoviesServices extends BaseApiServices {
 
     private interface InterfaceServices {
 
-        @GET("page/{path}/?src=android&limit=10&offset=0")
+        @GET("page/{path}/?src=android&limit=20&offset=0")
         Call<ApiMenuMovies> listMovies(@Path("path") String path);
 
     }

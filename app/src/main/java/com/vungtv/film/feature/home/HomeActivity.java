@@ -11,6 +11,7 @@ import android.widget.LinearLayout;
 
 import com.vungtv.film.BaseActivity;
 import com.vungtv.film.R;
+import com.vungtv.film.data.source.local.UserSessionManager;
 import com.vungtv.film.data.source.remote.ApiQuery;
 import com.vungtv.film.data.source.remote.model.ApiHomeMenu;
 import com.vungtv.film.data.source.remote.service.HomeServices;
@@ -38,7 +39,7 @@ import butterknife.BindView;
 
 import static com.vungtv.film.data.source.remote.ApiQuery.PATH_FOLLOW;
 
-public class HomeActivity extends BaseActivity implements OnNavItemSelectedListener, com.vungtv.film.data.source.remote.service.HomeServices.HomeMenuResultCallback {
+public class HomeActivity extends BaseActivity implements OnNavItemSelectedListener, com.vungtv.film.data.source.remote.service.HomeServices.HomeMenuResultCallback, VtvToolbarHome.OnBtnClickListener {
     private static final String TAG = HomeActivity.class.getSimpleName();
 
     private HomeNavAdapter navAdapter;
@@ -64,9 +65,9 @@ public class HomeActivity extends BaseActivity implements OnNavItemSelectedListe
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
         isLoadingBackPressExit = false;
-
         EventBus.getDefault().register(this);
-        setToolbar();
+
+        toolbar.setOnBtnClickListener(this);
         setupNavigation();
 
         HomeFragment homeFragment = new HomeFragment();
@@ -100,6 +101,39 @@ public class HomeActivity extends BaseActivity implements OnNavItemSelectedListe
         super.onBackPressed();
     }
 
+    @Subscribe
+    public void onEventLoginSuccess(AccountModifyEvent eventBus) {
+        navAdapter.notifyAccountChange();
+    }
+
+    @Override
+    public void onBtnNavClick() {
+        if (drawer.isDrawerOpen(navRecycler)) {
+            if (!isScreenLand) drawer.closeDrawer(navRecycler);
+        } else {
+            drawer.openDrawer(navRecycler);
+        }
+    }
+
+    @Override
+    public void onBtnSearchClick() {
+        startActivity(new Intent(HomeActivity.this, SearchActivity.class));
+    }
+
+    @Override
+    public void onBtnVipClick() {
+        if (UserSessionManager.isLogin(getApplicationContext())) {
+            startActivity(new Intent(HomeActivity.this, BuyVipActivity.class));
+        } else {
+            startActivity(new Intent(HomeActivity.this, LoginActivity.class));
+        }
+    }
+
+    @Override
+    public void onBtnUserClick() {
+        startActivity(new Intent(HomeActivity.this, PersonalActivity.class));
+    }
+
     @Override
     public void onConfigurationChanged(Configuration newConfig) {
         super.onConfigurationChanged(newConfig);
@@ -112,8 +146,10 @@ public class HomeActivity extends BaseActivity implements OnNavItemSelectedListe
     public void onNavigationItemSelected(int position, String url) {
 
         if (position == 0) {
-            Intent intent = new Intent(HomeActivity.this, LoginActivity.class);
-            startActivity(intent);
+            if (!UserSessionManager.isLogin(getApplicationContext())) {
+                Intent intent = new Intent(HomeActivity.this, LoginActivity.class);
+                startActivity(intent);
+            }
             return;
         }
 
@@ -141,11 +177,6 @@ public class HomeActivity extends BaseActivity implements OnNavItemSelectedListe
         }
     }
 
-    @Subscribe
-    public void onEventLoginSuccess(AccountModifyEvent eventBus) {
-        navAdapter.notifyAccountChange();
-    }
-
     /**
      * Open activity
      *
@@ -155,37 +186,6 @@ public class HomeActivity extends BaseActivity implements OnNavItemSelectedListe
         Intent intent = new Intent(HomeActivity.this, FilterMoviesActivity.class);
         intent.putExtras(bundle);
         startActivity(intent);
-    }
-
-    /**
-     * set event home toolbar
-     */
-    private void setToolbar() {
-        toolbar.setOnBtnClickListener(new VtvToolbarHome.OnBtnClickListener() {
-            @Override
-            public void onBtnNavClick() {
-                if (drawer.isDrawerOpen(navRecycler)) {
-                    if (!isScreenLand) drawer.closeDrawer(navRecycler);
-                } else {
-                    drawer.openDrawer(navRecycler);
-                }
-            }
-
-            @Override
-            public void onBtnSearchClick() {
-                startActivity(new Intent(HomeActivity.this, SearchActivity.class));
-            }
-
-            @Override
-            public void onBtnVipClick() {
-                startActivity(new Intent(HomeActivity.this, BuyVipActivity.class));
-            }
-
-            @Override
-            public void onBtnUserClick() {
-                startActivity(new Intent(HomeActivity.this, PersonalActivity.class));
-            }
-        });
     }
 
     /**

@@ -10,8 +10,6 @@ import com.vungtv.film.data.source.remote.service.UserMoviesServices;
 import com.vungtv.film.feature.filtermovies.FilterMoviesPresenter;
 import com.vungtv.film.util.DensityUtils;
 
-import java.util.ArrayList;
-
 import static com.vungtv.film.feature.usermovies.UserMoviesActivity.INTENT_PAGE;
 import static com.vungtv.film.feature.usermovies.UserMoviesActivity.PAGE_FAVORITE;
 import static com.vungtv.film.feature.usermovies.UserMoviesActivity.PAGE_FOLLOW;
@@ -92,12 +90,8 @@ public class UserMoviesPresenter implements UserMoviesContract.Presenter, UserMo
     }
 
     @Override
-    public void configChange(boolean isScreenLand, ArrayList<Object> list) {
-        ArrayList<Object> listCop = new ArrayList<>();
-        listCop.addAll(list);
-
+    public void configChange(boolean isScreenLand) {
         isLoadmore = false;
-        activityView.clearData();
 
         if (isScreenLand) {
             columNumber = 6;
@@ -106,16 +100,11 @@ public class UserMoviesPresenter implements UserMoviesContract.Presenter, UserMo
             columNumber = 3;
             rowAdsNumber = 8;
         }
-
         float itemWidth = DensityUtils.getWidthInPx(context);
         int itemSpace = context.getResources().getDimensionPixelSize(R.dimen.space_3);
-
         itemWidth = itemWidth - itemSpace * (columNumber + 1);
         itemWidth = itemWidth / columNumber;
-
-        activityView.showRecyclerView(columNumber, rowAdsNumber, itemWidth, itemSpace);
-
-        activityView.setListAdapter(listCop);
+        activityView.updateRecyclerView(columNumber, rowAdsNumber, itemWidth);
 
         isLoadmore = true;
     }
@@ -153,7 +142,6 @@ public class UserMoviesPresenter implements UserMoviesContract.Presenter, UserMo
             return;
         }
 
-        activityView.addAdsNative();
         activityView.addItemMovie(data.getMovies());
 
         isLoadmore = true;

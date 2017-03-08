@@ -8,12 +8,12 @@ import com.google.android.exoplayer2.upstream.DefaultDataSourceFactory;
 import com.google.android.exoplayer2.upstream.DefaultHttpDataSourceFactory;
 import com.google.android.exoplayer2.upstream.HttpDataSource;
 import com.google.android.exoplayer2.util.Util;
-import com.squareup.leakcanary.LeakCanary;
 
 import io.realm.Realm;
 import io.realm.RealmConfiguration;
 
 /**
+ *
  * Created by pc on 2/17/2017.
  */
 
@@ -25,7 +25,7 @@ public class App extends Application {
     public void onCreate() {
         super.onCreate();
 
-        LeakCanary.install(this);
+        //LeakCanary.install(this);
 
         Realm.init(this);
         RealmConfiguration configuration = new RealmConfiguration.Builder()

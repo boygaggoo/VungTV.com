@@ -172,6 +172,7 @@ public class PlayerActivity extends AppCompatActivity implements PlayerContract.
         vtvControlView.setOnControlButtonNextPrevClickListener(this);
 
         new PlayerPresenter(this, this);
+        presenter.countPlayed();
     }
 
     @Override
@@ -281,7 +282,7 @@ public class PlayerActivity extends AppCompatActivity implements PlayerContract.
 
     @Override
     public void showPopupRecent() {
-        PopupMessenger popupMessenger = new PopupMessenger(this);
+        PopupMessenger popupMessenger = new PopupMessenger(this, true);
         popupMessenger.setOnPopupMessengerListener(new PopupMessenger.OnPopupMessengerListener() {
             @Override
             public void onPopupMsgBtnConfirmClick() {

@@ -21,9 +21,9 @@ public interface SearchContract {
 
         void showRecyclerView(int columNumber, int rowAdsNumber, float itemWidth, int itemSpace);
 
-        void addItemMovie(ArrayList<Movie> movies);
+        void updateRecyclerView(int columNumber, int rowAdsNumber,float itemWidth);
 
-        void setListAdapter(ArrayList<Object> list);
+        void addItemMovie(ArrayList<Movie> movies);
 
         void clearSearchView();
 
@@ -48,6 +48,6 @@ public interface SearchContract {
 
         void openActMovieDetail(int movieId);
 
-        void configChange(boolean isScreenLand, ArrayList<Object> list);
+        void configChange(boolean isScreenLand);
     }
 }

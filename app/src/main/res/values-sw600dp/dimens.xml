@@ -8,4 +8,6 @@
     <dimen name="popup_episode_item_size_w">72dp</dimen>
     <dimen name="popup_episode_size_w">600dp</dimen>
     <dimen name="recent_item_info_size">40dp</dimen>
+    <dimen name="mov_detail_cover_h">400dp</dimen>
+    <dimen name="recent_item_size_w">300dp</dimen>
 </resources>

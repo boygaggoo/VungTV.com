@@ -95,7 +95,7 @@ public class UserMoviesActivity extends BaseActivity implements UserMoviesContra
     public void onConfigurationChanged(Configuration newConfig) {
         super.onConfigurationChanged(newConfig);
         curItemView = ((GridLayoutManager)recyclerView.getLayoutManager()).findFirstVisibleItemPosition();
-        presenter.configChange(isScreenLand, adapter.getList());
+        presenter.configChange(isScreenLand);
     }
 
     @Override
@@ -128,17 +128,6 @@ public class UserMoviesActivity extends BaseActivity implements UserMoviesContra
     @Override
     public void showRecyclerView(final int columNumber, final int rowAdsNumber, float itemWidth, int itemSpace) {
         GridLayoutManager layoutManager = new GridLayoutManager(getApplicationContext(), columNumber);
-        layoutManager.setSpanSizeLookup(new GridLayoutManager.SpanSizeLookup() {
-            @Override
-            public int getSpanSize(int position) {
-                int x = position / (columNumber * rowAdsNumber);
-                int y = position % (columNumber * rowAdsNumber);
-                if (x == y) {
-                    return 3;
-                }
-                return 1;
-            }
-        });
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(layoutManager);
         recyclerView.addItemDecoration(new GridSpacingItemDecoration(itemSpace));
@@ -166,24 +155,21 @@ public class UserMoviesActivity extends BaseActivity implements UserMoviesContra
     }
 
     @Override
+    public void updateRecyclerView(final int columNumber, final int rowAdsNumber, float itemWidth) {
+        GridLayoutManager layoutManager = new GridLayoutManager(getApplicationContext(), columNumber);
+        recyclerView.setLayoutManager(layoutManager);
+        adapter.setItemWidth(itemWidth);
+        adapter.notifyDataSetChanged();
+    }
+
+    @Override
     public void addItemMovie(ArrayList<Movie> movies) {
         adapter.addMultiItem(movies);
     }
 
     @Override
-    public void setListAdapter(ArrayList<Object> list) {
-        adapter.setList(list);
-        recyclerView.scrollToPosition(curItemView);
-    }
-
-    @Override
     public void setTitlePage(String title) {
         toolbar.setTitle(title);
-    }
-
-    @Override
-    public void addAdsNative() {
-        adapter.addItem(null);
     }
 
     @Override

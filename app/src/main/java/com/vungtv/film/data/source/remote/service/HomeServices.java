@@ -20,7 +20,7 @@ import retrofit2.http.Query;
 public class HomeServices {
     private static final String TAG = HomeServices.class.getSimpleName();
 
-    private static final int LIMIT = 10;
+    private static final int LIMIT = 20;
 
     private final Context context;
 

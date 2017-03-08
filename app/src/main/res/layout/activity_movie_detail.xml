@@ -28,7 +28,7 @@
                 android:id="@+id/mdetails_img_cover"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:minHeight="200dp"
+                android:minHeight="@dimen/mov_detail_cover_h"
                 android:scaleType="centerCrop"
                 android:contentDescription="@string/app_name"
                 android:fitsSystemWindows="true"

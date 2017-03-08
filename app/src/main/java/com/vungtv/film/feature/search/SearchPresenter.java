@@ -137,12 +137,8 @@ public class SearchPresenter implements SearchContract.Presenter {
     }
 
     @Override
-    public void configChange(boolean isScreenLand, ArrayList<Object> list) {
-        ArrayList<Object> listCop = new ArrayList<>();
-        listCop.addAll(list);
-
+    public void configChange(boolean isScreenLand) {
         isLoadmore = false;
-        activityView.clearListMovies();
 
         if (isScreenLand) {
             columNumber = 6;
@@ -158,9 +154,7 @@ public class SearchPresenter implements SearchContract.Presenter {
         itemWidth = itemWidth - itemSpace * (columNumber + 1);
         itemWidth = itemWidth / columNumber;
 
-        activityView.showRecyclerView(columNumber, rowAdsNumber, itemWidth, itemSpace);
-
-        activityView.setListAdapter(listCop);
+        activityView.updateRecyclerView(columNumber, rowAdsNumber, itemWidth);
 
         isLoadmore = true;
     }

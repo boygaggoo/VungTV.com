@@ -115,5 +115,7 @@ public interface PlayerContract {
         void accountModify();
 
         void saveMovieRecent(long position, long duration);
+
+        void countPlayed();
     }
 }

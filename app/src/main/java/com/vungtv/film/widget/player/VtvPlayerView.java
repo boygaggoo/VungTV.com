@@ -897,7 +897,9 @@ public class VtvPlayerView extends FrameLayout {
 
         @Override
         public void onVisibilityChange(int visibility) {
-
+            if (visibility == GONE) {
+                showBtnLockController(false);
+            }
         }
     }
 }

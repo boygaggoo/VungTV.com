@@ -2,6 +2,7 @@ package com.vungtv.film.popup;
 
 import android.app.Dialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.res.Resources;
 import android.support.annotation.StringRes;
 import android.view.View;
@@ -20,7 +21,7 @@ import com.vungtv.film.widget.VtvTextView;
  * Email: vancuong2941989@gmail.com
  */
 
-public class PopupMessenger implements View.OnClickListener {
+public class PopupMessenger implements View.OnClickListener, DialogInterface.OnDismissListener, DialogInterface.OnCancelListener {
 
     private Dialog dialog;
 
@@ -36,12 +37,25 @@ public class PopupMessenger implements View.OnClickListener {
 
     private OnPopupMessengerListener onPopupMessengerListener;
 
+    private boolean isCancel = false;
+
     public PopupMessenger(Context context) {
+        init(context);
+    }
+
+    public PopupMessenger(Context context, boolean isCancel) {
+        this.isCancel = isCancel;
+        init(context);
+    }
+
+    protected void init(Context context) {
         resources = context.getApplicationContext().getResources();
 
         dialog = new Dialog(context, R.style.AppTheme_Dialog);
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
         dialog.setContentView(R.layout.popup_messenger);
+        dialog.setOnDismissListener(this);
+        dialog.setOnCancelListener(this);
 
         tvTitle = (VtvTextView) dialog.findViewById(R.id.pop_msg_tv_title);
         tvContent = (VtvTextView) dialog.findViewById(R.id.pop_msg_tv_content);
@@ -63,9 +77,6 @@ public class PopupMessenger implements View.OnClickListener {
                 break;
             case R.id.pop_msg_btn_cancel:
                 dismiss();
-                if (onPopupMessengerListener != null) {
-                    onPopupMessengerListener.onPopupMsgBtnCancelClick();
-                }
                 break;
         }
     }
@@ -128,6 +139,20 @@ public class PopupMessenger implements View.OnClickListener {
 
     public void setBtnCancelVisible(boolean visible) {
         btnCancel.setVisibility(visible ? View.VISIBLE : View.GONE);
+    }
+
+    @Override
+    public void onDismiss(DialogInterface dialogInterface) {
+        if (onPopupMessengerListener != null) {
+            onPopupMessengerListener.onPopupMsgBtnCancelClick();
+        }
+    }
+
+    @Override
+    public void onCancel(DialogInterface dialogInterface) {
+        if (isCancel && onPopupMessengerListener != null) {
+            onPopupMessengerListener.onPopupMsgBtnCancelClick();
+        }
     }
 
     public interface OnPopupMessengerListener {

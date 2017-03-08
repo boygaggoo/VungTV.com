@@ -1,9 +1,7 @@
 {
   "project_info": {
     "project_number": "899316289181",
-    "firebase_url": "https://vungtv-148318.firebaseio.com",
-    "project_id": "vungtv-148318",
-    "storage_bucket": "vungtv-148318.appspot.com"
+    "project_id": "vungtv-148318"
   },
   "client": [
     {
@@ -15,15 +13,11 @@
       },
       "oauth_client": [
         {
-          "client_id": "899316289181-tm3eqjbg4bl6vk9vb2l77m3c4vh62m9j.apps.googleusercontent.com",
-          "client_type": 3
-        },
-        {
           "client_id": "899316289181-3ch2ca1bgokck0hfala2gas8gsj2kshi.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
             "package_name": "com.vungtv.film",
-            "certificate_hash": "73899425f5cdfaf0154f6687051c828276ecf348"
+            "certificate_hash": "73899425F5CDFAF0154F6687051C828276ECF348"
           }
         },
         {
@@ -41,16 +35,11 @@
           "status": 1
         },
         "appinvite_service": {
-          "status": 2,
-          "other_platform_oauth_client": [
-            {
-              "client_id": "899316289181-tm3eqjbg4bl6vk9vb2l77m3c4vh62m9j.apps.googleusercontent.com",
-              "client_type": 3
-            }
-          ]
+          "status": 1,
+          "other_platform_oauth_client": []
         },
         "ads_service": {
-          "status": 2
+          "status": 1
         }
       }
     }

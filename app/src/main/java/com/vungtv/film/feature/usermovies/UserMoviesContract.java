@@ -21,13 +21,11 @@ public interface UserMoviesContract {
 
         void showRecyclerView(int columNumber, int rowAdsNumber, float itemWidth, int itemSpace);
 
+        void updateRecyclerView(int columNumber, int rowAdsNumber,float itemWidth);
+
         void addItemMovie(ArrayList<Movie> movies);
 
-        void setListAdapter(ArrayList<Object> list);
-
         void setTitlePage(String title);
-
-        void addAdsNative();
 
         void openMovieDetails(int movId);
 
@@ -48,6 +46,6 @@ public interface UserMoviesContract {
 
         void reloadData();
 
-        void configChange(boolean isScreenLand, ArrayList<Object> list);
+        void configChange(boolean isScreenLand);
     }
 }

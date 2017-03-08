@@ -92,7 +92,7 @@ public class SearchActivity extends BaseActivity implements SearchContract.View 
     public void onConfigurationChanged(Configuration newConfig) {
         super.onConfigurationChanged(newConfig);
         curItemView = ((GridLayoutManager)recyclerView.getLayoutManager()).findFirstVisibleItemPosition();
-        presenter.configChange(isScreenLand, adapter.getList());
+        presenter.configChange(isScreenLand);
     }
 
     @Override
@@ -139,18 +139,31 @@ public class SearchActivity extends BaseActivity implements SearchContract.View 
     }
 
     @Override
+    public void updateRecyclerView(final int columNumber, final int rowAdsNumber, float itemWidth) {
+        GridLayoutManager layoutManager = new GridLayoutManager(getApplicationContext(), columNumber);
+        layoutManager.setSpanSizeLookup(new GridLayoutManager.SpanSizeLookup() {
+            @Override
+            public int getSpanSize(int position) {
+                int x = position / (columNumber * rowAdsNumber);
+                int y = position % (columNumber * rowAdsNumber);
+                if (x == y) {
+                    return 3;
+                }
+                return 1;
+            }
+        });
+        recyclerView.setLayoutManager(layoutManager);
+        adapter.setItemWidth(itemWidth);
+        adapter.notifyDataSetChanged();
+    }
+
+    @Override
     public void addItemMovie(ArrayList<Movie> movies) {
         adapter.addMultiItem(movies);
 
         if(adapter.getItemCount() == 0) {
             showMsgError(true, getString(R.string.search_error_msg_no_movie));
         }
-    }
-
-    @Override
-    public void setListAdapter(ArrayList<Object> list) {
-        adapter.setList(list);
-        recyclerView.scrollToPosition(curItemView);
     }
 
     @Override

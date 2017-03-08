@@ -3,8 +3,9 @@ package com.vungtv.film.data.source.remote.service;
 import android.content.Context;
 
 import com.vungtv.film.data.source.remote.ApiError;
-import com.vungtv.film.data.source.remote.RetrofitBuild;
+import com.vungtv.film.data.source.remote.BaseApiServices;
 import com.vungtv.film.data.source.remote.interfaces.ApiResultCallback;
+import com.vungtv.film.data.source.remote.model.ApiModel;
 import com.vungtv.film.data.source.remote.model.ApiMoviePlayer;
 import com.vungtv.film.util.LogUtils;
 import com.vungtv.film.util.NetworkUtils;
@@ -12,9 +13,9 @@ import com.vungtv.film.util.NetworkUtils;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
-import retrofit2.Retrofit;
 import retrofit2.http.GET;
 import retrofit2.http.Path;
+import retrofit2.http.Query;
 
 /**
  * Content class.
@@ -23,21 +24,21 @@ import retrofit2.http.Path;
  * Email: vancuong2941989@gmail.com
  */
 
-public class PlayerServices {
+public class PlayerServices extends BaseApiServices{
 
     private static final String TAG = PlayerServices.class.getSimpleName();
 
-    private final Context context;
-
-    private final Retrofit retrofit;
-
     private Call<ApiMoviePlayer> call;
+
+    private Call<ApiModel> callCounter;
+
+    private PlayerInterface service;
 
     private OnPlayerServicesCallback onPlayerServicesCallback;
 
     public PlayerServices(Context context) {
-        this.context = context;
-        retrofit = RetrofitBuild.build();
+        super(context);
+        service = retrofit.create(PlayerInterface.class);
     }
 
     public void loadEpisodeInfo(int movId, String epsHash) {
@@ -48,7 +49,6 @@ public class PlayerServices {
             return;
         }
 
-        PlayerInterface service = retrofit.create(PlayerInterface.class);
         call = service.epsInfo(movId, epsHash);
         call.enqueue(new Callback<ApiMoviePlayer>() {
             @Override
@@ -81,6 +81,26 @@ public class PlayerServices {
         });
     }
 
+    public void countPlay(int movId, String token) {
+        if (isInternetTurnOff(null)) {
+            return;
+        }
+
+        callCounter = service.countView(movId, token);
+        callCounter.enqueue(new Callback<ApiModel>() {
+            @Override
+            public void onResponse(Call<ApiModel> call, Response<ApiModel> response) {
+                LogUtils.d(TAG, "counter : " + response.isSuccessful());
+            }
+
+            @Override
+            public void onFailure(Call<ApiModel> call, Throwable t) {
+                t.printStackTrace();
+            }
+        });
+
+    }
+
     public void setOnPlayerServicesCallback(OnPlayerServicesCallback onPlayerServicesCallback) {
         this.onPlayerServicesCallback = onPlayerServicesCallback;
     }
@@ -89,12 +109,19 @@ public class PlayerServices {
         if (call != null && call.isExecuted()) {
             call.cancel();
         }
+
+        if (callCounter != null && callCounter.isExecuted()) {
+            callCounter.cancel();
+        }
     }
 
     private interface PlayerInterface {
 
         @GET("phim/player/{mov_id}/{eps_hash}?src=android")
         Call<ApiMoviePlayer> epsInfo(@Path("mov_id") int movId, @Path("eps_hash") String epsHash);
+
+        @GET("phim/counter?src=android")
+        Call<ApiModel> countView(@Query("mov_id")int movId, @Query("token")String token);
     }
 
     public interface OnPlayerServicesCallback extends ApiResultCallback{

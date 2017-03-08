@@ -209,6 +209,12 @@ public class PlayerPresenter implements PlayerContract.Presenter, PlayerServices
     }
 
     @Override
+    public void countPlayed() {
+        mPlayerServices.countPlay(movId,
+                UserSessionManager.getAccessToken(context.getApplicationContext()));
+    }
+
+    @Override
     public void start() {
         if (UserSessionManager.isVIP(context.getApplicationContext())) {
             playerView.setBtnClearAdsEnable(false);
@@ -217,10 +223,13 @@ public class PlayerPresenter implements PlayerContract.Presenter, PlayerServices
         }
 
         if (isRecent) {
-            playerView.showPopupRecent();
-        } else {
-            loadEpisodeInfo();
+            MovieRecent movieRecent = movieRecentManager.get(movId);
+            if (movieRecent != null && movieRecent.getMovLastPlay() > 0) {
+                playerView.showPopupRecent();
+                return;
+            }
         }
+        loadEpisodeInfo();
     }
 
     @Override

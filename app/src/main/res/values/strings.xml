@@ -172,7 +172,7 @@
     <string name="popup_action_confirm">Xác nhận</string>
     <string name="popup_action_login">Đăng nhập</string>
     <string name="popup_action_buy_vip">Mua vip</string>
-    <string name="movie_details_error_login">Dăng nhập tài khoản để sử dụng tính năng này.</string>
+    <string name="movie_details_error_login">Đăng nhập tài khoản để sử dụng tính năng này.</string>
     <string name="player_clear_ads">Tắt quảng cáo</string>
     <string name="player_control_msg_retry">Có lỗi xảy ra\nClick để thủ lại</string>
     <string name="vtv_playback_control_clear_ads">Ẩn quảng cáo</string>
