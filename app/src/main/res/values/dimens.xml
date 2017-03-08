@@ -42,5 +42,6 @@
     <dimen name="font_lage">18sp</dimen>
     <dimen name="font_lager">20sp</dimen>
     <dimen name="playback_control_time_space">0dp</dimen>
+    <dimen name="recent_item_info_size">36dp</dimen>
 
 </resources>

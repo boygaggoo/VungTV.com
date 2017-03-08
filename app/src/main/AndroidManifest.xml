@@ -14,8 +14,7 @@
         android:theme="@style/AppTheme">
         <activity
             android:name=".feature.loading.LoadingActivity"
-            android:configChanges="keyboardHidden|orientation|screenSize"
-            android:noHistory="true">
+            android:configChanges="keyboardHidden|orientation|screenSize">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -72,7 +71,8 @@
             android:name=".feature.player.PlayerActivity"
             android:configChanges="keyboard|keyboardHidden|orientation|screenSize|screenLayout|smallestScreenSize|uiMode"
             android:launchMode="singleTop"
-            android:theme="@style/AppTheme.FullScreen"/>
+            android:theme="@style/AppTheme.FullScreen" />
+        <activity android:name=".feature.recent.RecentActivity"></activity>
     </application>
 
 </manifest>

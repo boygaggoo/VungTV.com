@@ -13,8 +13,6 @@ import com.vungtv.film.data.source.remote.service.FilterMoviesServices;
 import com.vungtv.film.util.DensityUtils;
 import com.vungtv.film.util.LogUtils;
 
-import java.util.ArrayList;
-
 import static com.google.gson.internal.$Gson$Preconditions.checkNotNull;
 import static com.vungtv.film.feature.filtermovies.FilterMoviesActivity.INTENT_DANHMUC;
 import static com.vungtv.film.feature.filtermovies.FilterMoviesActivity.INTENT_NAM;
@@ -115,12 +113,9 @@ public class FilterMoviesPresenter implements FilterMoviesContract.Presenter {
     }
 
     @Override
-    public void configChange(boolean isScreenLand, ArrayList<Object> list) {
-        ArrayList<Object> listCop = new ArrayList<>();
-        listCop.addAll(list);
+    public void configChange(boolean isScreenLand) {
 
         isLoadmore = false;
-        activityView.clearData();
 
         if (isScreenLand) {
             columNumber = 6;
@@ -136,9 +131,7 @@ public class FilterMoviesPresenter implements FilterMoviesContract.Presenter {
         itemWidth = itemWidth - itemSpace * (columNumber + 1);
         itemWidth = itemWidth / columNumber;
 
-        activityView.showRecyclerView(columNumber, rowAdsNumber, itemWidth, itemSpace);
-
-        activityView.setListAdapter(listCop);
+        activityView.updateRecyclerView(columNumber, rowAdsNumber, itemWidth);
 
         isLoadmore = true;
     }

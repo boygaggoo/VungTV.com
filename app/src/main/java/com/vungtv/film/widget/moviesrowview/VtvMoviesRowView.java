@@ -16,6 +16,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 
 import com.vungtv.film.R;
+import com.vungtv.film.interfaces.OnRecentInfoClickListener;
 import com.vungtv.film.widget.VtvTextView;
 
 import java.util.ArrayList;
@@ -202,12 +203,18 @@ public class VtvMoviesRowView extends LinearLayout{
         recyclerView.setAdapter(adapter);
     }
 
+    public void setListData(ArrayList<Object> listData) {
+        if (adapter != null) {
+            adapter.setList(listData);
+        }
+    }
+
     public void setOnItemClickListener(MoviesRowAdapter.OnItemClickListener onItemClickListener) {
         if (adapter == null) return;
         adapter.setOnItemClickListener(onItemClickListener);
     }
 
-    public void setOnRecentInfoClick(MoviesRowAdapter.OnRecentInfoClick onRecentInfoClick) {
+    public void setOnRecentInfoClick(OnRecentInfoClickListener onRecentInfoClick) {
         if (adapter == null) return;
         adapter.setOnRecentInfoClick(onRecentInfoClick);
     }

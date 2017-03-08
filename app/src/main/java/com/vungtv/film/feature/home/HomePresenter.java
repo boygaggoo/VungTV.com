@@ -4,9 +4,10 @@ package com.vungtv.film.feature.home;
 import android.content.Context;
 
 import com.vungtv.film.R;
-import com.vungtv.film.data.source.local.DbRecent;
+import com.vungtv.film.data.source.local.MovieRecentManager;
 import com.vungtv.film.data.source.remote.model.ApiHome;
 import com.vungtv.film.data.source.remote.service.HomeServices;
+import com.vungtv.film.model.MovieRecent;
 import com.vungtv.film.model.Slider;
 import com.vungtv.film.util.LogUtils;
 import com.vungtv.film.widget.moviesrowview.MoviesRowAdapter;
@@ -29,6 +30,8 @@ public class HomePresenter implements HomeContract.Presenter {
 
     private final HomeServices homeServices;
 
+    private final MovieRecentManager movieRecentManager;
+
     private ApiHome.DataHome dataHome;
 
     public HomePresenter(Context context, HomeContract.View homeView, HomeServices homeServices) {
@@ -38,6 +41,8 @@ public class HomePresenter implements HomeContract.Presenter {
 
         this.homeView.setPresenter(this);
         homeServicesResponse();
+
+        movieRecentManager = new MovieRecentManager();
     }
 
     @Override
@@ -49,6 +54,7 @@ public class HomePresenter implements HomeContract.Presenter {
     @Override
     public void onDestroy() {
         homeServices.cancel();
+        movieRecentManager.close();
     }
 
     @Override
@@ -67,20 +73,17 @@ public class HomePresenter implements HomeContract.Presenter {
     }
 
     @Override
+    public void reloadRecentMovies() {
+        // add recent movies;
+        ArrayList<MovieRecent> recents = movieRecentManager.getAll(20);
+        homeView.updateRecentView(new ArrayList<Object>(recents));
+    }
+
+    @Override
     public void configChange() {
         // Call when orientation change;
         homeView.removeAllViews();
         addViews();
-    }
-
-    @Override
-    public void openActMovieDetails(int movieId) {
-        homeView.openActMovieDetail(movieId);
-    }
-
-    @Override
-    public void openActFilterMovies(String url) {
-        homeView.openActFilterMovies(checkNotNull(url));
     }
 
     private void homeServicesResponse() {
@@ -162,13 +165,10 @@ public class HomePresenter implements HomeContract.Presenter {
             }
 
             // add recent movies;
-            homeView.addReCentView(
-                    VtvMoviesRowView.STYLE_DEFAULT,
-                    MoviesRowAdapter.ITEM_RECENT,
-                    R.drawable.icon_lavung,
-                    context.getResources().getString(R.string.home_text_xem_gan_day),
-                    new ArrayList<Object>(new DbRecent().getLisRecent())
-            );
+            ArrayList<MovieRecent> recents = movieRecentManager.getAll(20);
+            if (recents.size() > 0) {
+                homeView.addReCentView(new ArrayList<Object>(recents));
+            }
 
             // add footer view
             homeView.addFooterView();

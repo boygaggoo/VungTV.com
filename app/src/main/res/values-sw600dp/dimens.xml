@@ -7,4 +7,5 @@
     <dimen name="margin">15dp</dimen>
     <dimen name="popup_episode_item_size_w">72dp</dimen>
     <dimen name="popup_episode_size_w">600dp</dimen>
+    <dimen name="recent_item_info_size">40dp</dimen>
 </resources>

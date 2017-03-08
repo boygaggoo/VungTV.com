@@ -7,6 +7,8 @@
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
     android:minWidth="400dp"
+    android:focusable="true"
+    android:focusableInTouchMode="true"
     tools:layout_gravity="center"
     tools:background="@color/gray_1">
 
@@ -22,6 +24,7 @@
         android:imeOptions="actionSearch"
         android:maxLines="1"
         android:inputType="number"
+        android:focusable="false"
         tools:text=""/>
 
     <com.vungtv.film.widget.VtvAutoFitRecyclerView

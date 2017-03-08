@@ -131,7 +131,7 @@ public class HomeActivity extends BaseActivity implements OnNavItemSelectedListe
             startActivity(UserMoviesActivity.buildIntent(this, UserMoviesActivity.PAGE_FOLLOW));
         } else if (p.equalsIgnoreCase("v1")) {
             // Movies Dowload
-
+            showToast(R.string.error_not_been_updated);
         } else if (p.equalsIgnoreCase(ApiQuery.PATH_PHIM_LE) || p.equalsIgnoreCase(ApiQuery.PATH_PHIM_BO)
                 || p.equalsIgnoreCase(ApiQuery.PATH_ANIME)) {
 

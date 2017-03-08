@@ -60,6 +60,7 @@
         <item name="android:paddingBottom">@dimen/space_16</item>
         <item name="android:paddingLeft">@dimen/space_8</item>
         <item name="android:paddingRight">@dimen/space_8</item>
+        <item name="android:layout_centerVertical">true</item>
     </style>
 
     <style name="Control.Button.play" parent="AppTheme">

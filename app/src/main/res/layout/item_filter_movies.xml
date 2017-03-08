@@ -10,7 +10,7 @@
     <ImageView
         android:id="@+id/item_home_row_film_img_poster"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
         android:background="@color/gray_2"
         android:scaleType="fitXY"
         android:clickable="true"

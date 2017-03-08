@@ -17,6 +17,8 @@
         <ImageView
             style="@style/Control.Button.Top"
             android:id="@+id/control_btn_exit"
+            android:paddingLeft="@dimen/space_16"
+            android:paddingRight="@dimen/space_16"
             android:src="@drawable/icon_back1"
             android:contentDescription="@string/app_name" />
 

@@ -24,37 +24,45 @@
             tools:src="@drawable/default_poster_land"/>
 
         <ImageView
-            android:layout_width="@dimen/poster_size_w_horizontal"
-            android:layout_height="@dimen/poster_size_h_horizontal"
-            android:layout_alignLeft="@+id/item_home_row_film_img_poster"
-            android:layout_alignStart="@+id/item_home_row_film_img_poster"
-            android:scaleType="center"
+            android:id="@+id/item_home_row_film_icon"
+            android:layout_width="@dimen/space_36"
+            android:layout_height="@dimen/space_36"
+            android:layout_centerInParent="true"
+            android:layout_marginBottom="@dimen/recent_item_info_size"
+            android:scaleType="fitXY"
             android:src="@drawable/icon_play"
             android:contentDescription="@string/app_name" />
 
         <com.vungtv.film.widget.VtvTextView
             style="@style/AppTheme.Text.FilmTitle"
             android:id="@+id/item_home_row_film_tv_film_name"
-            android:layout_width="@dimen/poster_size_w_horizontal"
-            android:layout_height="wrap_content"
-            android:layout_alignParentBottom="true"
+            android:layout_width="wrap_content"
+            android:layout_height="@dimen/recent_item_info_size"
+            android:layout_alignBottom="@+id/item_home_row_film_img_poster"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:layout_toLeftOf="@+id/item_home_row_film_recent_btn_info"
+            android:layout_toStartOf="@+id/item_home_row_film_recent_btn_info"
             android:paddingTop="@dimen/space_4"
             android:paddingLeft="@dimen/space_4"
             android:paddingRight="@dimen/space_4"
             android:paddingBottom="@dimen/space_8"
+            android:gravity="center_vertical"
             android:background="@color/text_dark_2"
             android:textColor="@color/text_light_1"
             android:maxLines="1"
+            android:ellipsize="end"
             tools:text="Tru tiên Thanh"/>
 
         <ImageView
             android:id="@+id/item_home_row_film_recent_btn_info"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_above="@+id/item_home_row_film_recent_progress"
+            android:layout_width="@dimen/recent_item_info_size"
+            android:layout_height="@dimen/recent_item_info_size"
+            android:layout_alignBottom="@+id/item_home_row_film_img_poster"
             android:layout_alignRight="@+id/item_home_row_film_img_poster"
             android:layout_alignEnd="@+id/item_home_row_film_img_poster"
-            android:padding="@dimen/space_4"
+            android:padding="@dimen/space_8"
+            android:background="@color/text_dark_2"
             android:src="@drawable/icon_info"
             android:contentDescription="@string/app_name" />
 

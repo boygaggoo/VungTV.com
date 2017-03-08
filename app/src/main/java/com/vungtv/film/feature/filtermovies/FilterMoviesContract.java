@@ -30,6 +30,8 @@ public interface FilterMoviesContract {
 
         void showPopupSort(android.view.View view);
 
+        void updateRecyclerView(int columNumber, int rowAdsNumber,float itemWidth);
+
         void openActMovieDetail(int movieId);
 
         void addItemMovie(ArrayList<Movie> movies);
@@ -55,7 +57,7 @@ public interface FilterMoviesContract {
 
         void reloadData();
 
-        void configChange(boolean isScreenLand, ArrayList<Object> list);
+        void configChange(boolean isScreenLand);
 
         void openPopupSort(android.view.View view);
 

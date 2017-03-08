@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.vungtv.film.feature.recent.RecentActivity">
+
+    <com.vungtv.film.widget.VtvToolbarSetting
+        android:id="@+id/recent_toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:textTitle="@string/recent_text_title"/>
+
+    <android.support.v4.widget.SwipeRefreshLayout
+        android:id="@+id/recent_refreshLayout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@+id/recent_toolbar">
+
+        <com.vungtv.film.widget.VtvAutoFitRecyclerView
+            android:id="@+id/recent_recycler"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:padding="@dimen/space_7"
+            android:scrollbars="vertical"
+            android:columnWidth="@dimen/poster_size_w_horizontal"
+            android:clipToPadding="false"/>
+
+    </android.support.v4.widget.SwipeRefreshLayout>
+
+    <include
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        layout="@layout/include_text_error" />
+
+
+</RelativeLayout>

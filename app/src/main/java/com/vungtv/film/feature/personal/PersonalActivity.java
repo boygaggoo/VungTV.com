@@ -150,16 +150,18 @@ public class PersonalActivity extends BaseActivity implements PersonalContract.V
                         startActivity(new Intent(PersonalActivity.this, ChangePassActivity.class));
                         break;
                     case PersonalRecyclerAdapter.USERPAGE_ITEMID.INVITE_FRIENDS:
-
+                        showToast(R.string.error_not_been_updated);
                         break;
                     case PersonalRecyclerAdapter.USERPAGE_ITEMID.FILM_VIEWED:
-
+                        showToast(R.string.error_not_been_updated);
                         break;
                     case PersonalRecyclerAdapter.USERPAGE_ITEMID.FAVORITE:
-                        startActivity(new Intent(PersonalActivity.this, UserMoviesActivity.class));
+                        startActivity(new Intent(UserMoviesActivity.buildIntent(
+                                PersonalActivity.this, UserMoviesActivity.PAGE_FAVORITE)));
                         break;
                     case PersonalRecyclerAdapter.USERPAGE_ITEMID.FOLLOW:
-
+                        startActivity(new Intent(UserMoviesActivity.buildIntent(
+                                PersonalActivity.this, UserMoviesActivity.PAGE_FOLLOW)));
                         break;
                     case PersonalRecyclerAdapter.USERPAGE_ITEMID.SETTING:
                         // Open activity Setting;

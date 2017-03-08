@@ -18,8 +18,8 @@ public class GridSpacingItemDecoration extends RecyclerView.ItemDecoration {
         outRect.left = spacing;
         outRect.right = spacing;
         if (spacing > 0) {
-            outRect.top = spacing*2;
-            outRect.bottom = spacing*2;
+            outRect.top = spacing * 2;
+            outRect.bottom = spacing * 2;
         } else {
             outRect.top = 0;
             outRect.bottom = 0;

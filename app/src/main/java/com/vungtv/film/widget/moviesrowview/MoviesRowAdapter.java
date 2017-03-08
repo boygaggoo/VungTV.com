@@ -15,6 +15,7 @@ import android.widget.TextView;
 import com.google.gson.Gson;
 import com.squareup.picasso.Picasso;
 import com.vungtv.film.R;
+import com.vungtv.film.interfaces.OnRecentInfoClickListener;
 import com.vungtv.film.model.HotTopic;
 import com.vungtv.film.model.Movie;
 import com.vungtv.film.model.MovieRecent;
@@ -36,7 +37,7 @@ public class MoviesRowAdapter extends RecyclerView.Adapter {
     private int itemType;
     private ArrayList<Object> list = new ArrayList<>();
     private OnItemClickListener onItemClickListener;
-    private OnRecentInfoClick onRecentInfoClick;
+    private OnRecentInfoClickListener onRecentInfoClick;
 
     private final int COLOR_BLUE, COLOR_YELLOW, COLOR_ORANGE, COLOR_BLUEGRAY;
     private final int MARGIN, MARGIN_BETWEEN_ITEM;
@@ -138,7 +139,7 @@ public class MoviesRowAdapter extends RecyclerView.Adapter {
         this.onItemClickListener = onItemClickListener;
     }
 
-    public void setOnRecentInfoClick(OnRecentInfoClick onRecentInfoClick) {
+    public void setOnRecentInfoClick(OnRecentInfoClickListener onRecentInfoClick) {
         this.onRecentInfoClick = onRecentInfoClick;
     }
 
@@ -264,7 +265,6 @@ public class MoviesRowAdapter extends RecyclerView.Adapter {
         private View btnInfo;
         private ProgressBar progressBar;
         private FrameLayout rootLayout;
-        private ViewGroup viewGroup;
 
         public ItemRecentViewHolder(View itemView) {
             super(itemView);
@@ -274,7 +274,8 @@ public class MoviesRowAdapter extends RecyclerView.Adapter {
             name = (VtvTextView) itemView.findViewById(R.id.item_home_row_film_tv_film_name);
             btnInfo = itemView.findViewById(R.id.item_home_row_film_recent_btn_info);
             progressBar = (ProgressBar) itemView.findViewById(R.id.item_home_row_film_recent_progress);
-            viewGroup = (ViewGroup) rootLayout.getChildAt(0);
+
+            itemView.findViewById(R.id.item_home_row_film_icon).setOnClickListener(this);
             itemView.setOnClickListener(this);
             imageView.setOnClickListener(this);
             btnInfo.setOnClickListener(this);
@@ -317,18 +318,15 @@ public class MoviesRowAdapter extends RecyclerView.Adapter {
 
         @Override
         public void onClick(View view) {
-            if (view == itemView) {
-                if (onItemClickListener != null)
-                    onItemClickListener.onItemClick(view, getLayoutPosition());
-
-                return;
-            }
 
             if (view == btnInfo) {
                 if (onRecentInfoClick != null) {
                     MovieRecent movie = (MovieRecent) list.get(getLayoutPosition());
-                    onRecentInfoClick.onClickBtnInfo(movie.getMovId());
+                    onRecentInfoClick.onButtonInfoClick(movie.getMovId());
                 }
+            } else {
+                if (onItemClickListener != null)
+                    onItemClickListener.onItemClick(view, getLayoutPosition());
             }
         }
     }
@@ -424,10 +422,6 @@ public class MoviesRowAdapter extends RecyclerView.Adapter {
                 onItemClickListener.onItemClick(view, hotTopic.getMovId());
             }
         }
-    }
-
-    public interface OnRecentInfoClick {
-        void onClickBtnInfo(int movId);
     }
 
     public interface OnItemClickListener {

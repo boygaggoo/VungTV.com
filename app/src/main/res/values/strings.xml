@@ -191,5 +191,7 @@
     <string name="popup_text_resume_last_point">Tiếp tục xem từ vị trí lần trước ?</string>
     <string name="popup_action_resume">Xem tiếp</string>
     <string name="popup_action_begin">Xem từ đầu</string>
+    <string name="recent_text_title">Xem gần đây</string>
+    <string name="error_not_been_updated">Tính năng này chưa được cập nhật.</string>
 
 </resources>

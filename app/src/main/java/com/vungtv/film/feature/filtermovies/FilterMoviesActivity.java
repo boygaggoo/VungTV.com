@@ -103,7 +103,7 @@ public class FilterMoviesActivity extends BaseActivity implements FilterMoviesCo
     public void onConfigurationChanged(Configuration newConfig) {
         super.onConfigurationChanged(newConfig);
         curItemView = ((GridLayoutManager)recyclerView.getLayoutManager()).findFirstVisibleItemPosition();
-        presenter.configChange(isScreenLand, adapter.getList());
+        presenter.configChange(isScreenLand);
     }
 
     /**
@@ -177,6 +177,7 @@ public class FilterMoviesActivity extends BaseActivity implements FilterMoviesCo
 
     @Override
     public void showRecyclerView(final int columNumber, final int rowAdsNumber, float itemWidth, int itemSpace) {
+        LogUtils.i(TAG, "showRecyclerView: itemWidth = " + itemWidth + "\nitemSpace = " + itemSpace);
 
         GridLayoutManager layoutManager = new GridLayoutManager(getApplicationContext(), columNumber);
         layoutManager.setSpanSizeLookup(new GridLayoutManager.SpanSizeLookup() {
@@ -190,6 +191,7 @@ public class FilterMoviesActivity extends BaseActivity implements FilterMoviesCo
                 return 1;
             }
         });
+
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(layoutManager);
         recyclerView.addItemDecoration(new GridSpacingItemDecoration(itemSpace));
@@ -199,7 +201,6 @@ public class FilterMoviesActivity extends BaseActivity implements FilterMoviesCo
             @Override
             public void onItemClick(View v, int pos) {
                 presenter.openMovieDetails(adapter.getItemMovieId(pos));
-                LogUtils.e(TAG, "openActMovieDetail movId 2 = " + adapter.getItemMovieId(pos));
             }
         });
 
@@ -250,6 +251,25 @@ public class FilterMoviesActivity extends BaseActivity implements FilterMoviesCo
         }else {
             popupMenuSort.show();
         }
+    }
+
+    @Override
+    public void updateRecyclerView(final int columNumber, final int rowAdsNumber, float itemWith) {
+        GridLayoutManager layoutManager = new GridLayoutManager(getApplicationContext(), columNumber);
+        layoutManager.setSpanSizeLookup(new GridLayoutManager.SpanSizeLookup() {
+            @Override
+            public int getSpanSize(int position) {
+                int x = position / (columNumber * rowAdsNumber);
+                int y = position % (columNumber * rowAdsNumber);
+                if (x == y) {
+                    return 3;
+                }
+                return 1;
+            }
+        });
+        recyclerView.setLayoutManager(layoutManager);
+        adapter.setItemWidth(itemWith);
+        adapter.notifyDataSetChanged();
     }
 
     @Override

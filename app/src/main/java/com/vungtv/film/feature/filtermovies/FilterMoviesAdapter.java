@@ -15,6 +15,7 @@ import com.vungtv.film.R;
 import com.vungtv.film.interfaces.OnItemClickListener;
 import com.vungtv.film.model.Movie;
 import com.vungtv.film.util.DrawableUtils;
+import com.vungtv.film.util.LogUtils;
 import com.vungtv.film.widget.VtvTextView;
 
 import java.util.ArrayList;
@@ -109,6 +110,10 @@ public class FilterMoviesAdapter extends RecyclerView.Adapter {
         notifyDataSetChanged();
     }
 
+    public void setItemWidth(float itemWidth) {
+        this.itemWidth = itemWidth;
+    }
+
     public void setOnItemClickListener(OnItemClickListener onItemClickListener) {
         this.onItemClickListener = onItemClickListener;
     }
@@ -134,10 +139,13 @@ public class FilterMoviesAdapter extends RecyclerView.Adapter {
         }
 
         public void setInfo(Movie movie) {
+
             poster.getLayoutParams().width = (int) itemWidth;
             poster.getLayoutParams().height = (int) (itemWidth * 1.42);
-
             name.getLayoutParams().width = (int) itemWidth;
+
+            LogUtils.i(TAG, "setInfo: itemWidth = " + poster.getLayoutParams().width + "\nitemHeight = " + poster.getLayoutParams().height);
+
             // set image poster
             String urlPoster = movie.getMovPoster();
             if (urlPoster != null && urlPoster.length() > 5) {
@@ -146,6 +154,8 @@ public class FilterMoviesAdapter extends RecyclerView.Adapter {
                         .fit()
                         .error(R.drawable.default_poster)
                         .into(poster);
+            } else {
+                poster.setImageResource(R.drawable.default_poster);
             }
 
             // set film name

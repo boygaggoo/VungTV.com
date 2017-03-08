@@ -10,8 +10,13 @@ import android.widget.LinearLayout;
 
 import com.vungtv.film.R;
 import com.vungtv.film.eventbus.ConfigurationChangedEvent;
+import com.vungtv.film.eventbus.RecentModifyEvent;
 import com.vungtv.film.feature.filtermovies.FilterMoviesActivity;
 import com.vungtv.film.feature.moviedetail.MovieDetailActivity;
+import com.vungtv.film.feature.player.PlayerActivity;
+import com.vungtv.film.feature.recent.RecentActivity;
+import com.vungtv.film.interfaces.OnRecentInfoClickListener;
+import com.vungtv.film.model.MovieRecent;
 import com.vungtv.film.model.Slider;
 import com.vungtv.film.popup.PopupLoading;
 import com.vungtv.film.util.LogUtils;
@@ -48,6 +53,8 @@ public class HomeFragment extends Fragment implements HomeContract.View {
 
     private VtvFooterView footerView;
 
+    private VtvMoviesRowView moviesRecent;
+
     @BindView(R.id.frag_home_root) LinearLayout containerLayout;
 
     @Override
@@ -64,6 +71,11 @@ public class HomeFragment extends Fragment implements HomeContract.View {
     @Subscribe
     public void onEventBusConfigChange(ConfigurationChangedEvent eventBus) {
         presenter.configChange();
+    }
+
+    @Subscribe
+    public void onEventRecentModify(RecentModifyEvent eventBus) {
+        presenter.reloadRecentMovies();
     }
 
     @Override
@@ -87,6 +99,8 @@ public class HomeFragment extends Fragment implements HomeContract.View {
 
     @Override
     public void onDestroyView() {
+        presenter.onDestroy();
+        EventBus.getDefault().unregister(this);
         super.onDestroyView();
     }
 
@@ -107,6 +121,17 @@ public class HomeFragment extends Fragment implements HomeContract.View {
         }
 
         getActivity().startActivity(FilterMoviesActivity.buildIntent(getActivity(), url));
+    }
+
+    @Override
+    public void openActRecentMovies() {
+        getActivity().startActivity(RecentActivity.buildItent(HomeFragment.this.getActivity()));
+    }
+
+    @Override
+    public void openActPlayer(MovieRecent mov) {
+        getActivity().startActivity(PlayerActivity.buildIntentRecent(
+                getActivity(), mov.getMovId(), mov.getMovName(), mov.getMovEpsHash()));
     }
 
     @Override
@@ -158,19 +183,30 @@ public class HomeFragment extends Fragment implements HomeContract.View {
     }
 
     @Override
-    public void addReCentView(int style, int itemType, int iconRes, String title, ArrayList<Object> list) {
-        VtvMoviesRowView moviesRecent =
-                new VtvMoviesRowView.Builder(getActivity())
-                        .setStyle(style)
-                        .setIconTitle(iconRes)
-                        .setTitle(title)
-                        .setListData(itemType, list)
+    public void addReCentView(final ArrayList<Object> list) {
+        moviesRecent = new VtvMoviesRowView.Builder(getActivity())
+                        .setStyle(VtvMoviesRowView.STYLE_DEFAULT)
+                        .setIconTitle(R.drawable.icon_lavung)
+                        .setTitle(getString(R.string.home_text_xem_gan_day))
+                        .setListData(MoviesRowAdapter.ITEM_RECENT, list)
+                        .addOnItemClickListener(new MoviesRowAdapter.OnItemClickListener() {
+                            @Override
+                            public void onItemClick(View v, int pos) {
+                                openActPlayer((MovieRecent) list.get(pos));
+                            }
+                        })
+                        .addOnVtvMoviesRowListener(new VtvMoviesRowView.OnVtvMoviesRowListener() {
+                            @Override
+                            public void onClickViewMore() {
+                                openActRecentMovies();
+                            }
+                        })
                         .build();
 
-        moviesRecent.setOnRecentInfoClick(new MoviesRowAdapter.OnRecentInfoClick() {
+        moviesRecent.setOnRecentInfoClick(new OnRecentInfoClickListener() {
             @Override
-            public void onClickBtnInfo(int movId) {
-
+            public void onButtonInfoClick(int movId) {
+                openActMovieDetail(movId);
             }
         });
 
@@ -186,7 +222,7 @@ public class HomeFragment extends Fragment implements HomeContract.View {
                         .addOnVtvMoviesRowListener(new VtvMoviesRowView.OnVtvMoviesRowListener() {
                             @Override
                             public void onClickViewMore() {
-                                presenter.openActFilterMovies(url);
+                                openActFilterMovies(url);
                             }
                         })
                         .build();
@@ -204,14 +240,13 @@ public class HomeFragment extends Fragment implements HomeContract.View {
                         .addOnVtvMoviesRowListener(new VtvMoviesRowView.OnVtvMoviesRowListener() {
                             @Override
                             public void onClickViewMore() {
-                                presenter.openActFilterMovies(url);
+                                openActFilterMovies(url);
                             }
                         })
                         .addOnItemClickListener(new MoviesRowAdapter.OnItemClickListener() {
                             @Override
                             public void onItemClick(View v, int movieId) {
-                                presenter.openActMovieDetails(movieId);
-                                LogUtils.d(TAG, "addMoviesView openActMovieDetails movieId = " + movieId);
+                                openActMovieDetail(movieId);
                             }
                         })
                         .build();
@@ -224,6 +259,21 @@ public class HomeFragment extends Fragment implements HomeContract.View {
             footerView = new VtvFooterView(getActivity());
         }
         containerLayout.addView(footerView);
+    }
+
+    @Override
+    public void updateRecentView(ArrayList<Object> list) {
+        LogUtils.d(TAG, "updateRecentView");
+        if (containerLayout.getChildAt(2) == moviesRecent) {
+            if (list.size() == 0) {
+                containerLayout.removeView(moviesRecent);
+            } else {
+                moviesRecent.setListData(list);
+            }
+        } else {
+            addReCentView(list);
+        }
+
     }
 
     @Override
