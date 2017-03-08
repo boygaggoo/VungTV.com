@@ -25,7 +25,7 @@
             android:layout_height="match_parent"
             android:padding="@dimen/space_7"
             android:scrollbars="vertical"
-            android:columnWidth="@dimen/poster_size_w_horizontal"
+            android:columnWidth="@dimen/recent_item_size_w"
             android:clipToPadding="false"/>
 
     </android.support.v4.widget.SwipeRefreshLayout>
