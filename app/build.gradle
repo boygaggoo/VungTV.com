@@ -51,12 +51,12 @@ dependencies {
     compile 'com.google.android.gms:play-services-auth:10.2.0'
     compile 'com.android.support.constraint:constraint-layout:1.0.1'
     compile 'com.google.android.exoplayer:exoplayer:r2.2.0'
-    annotationProcessor 'com.jakewharton:butterknife-compiler:8.4.0'
     testCompile 'junit:junit:4.12'
     testCompile 'org.robolectric:robolectric:3.2.2'
     testCompile 'com.squareup.leakcanary:leakcanary-android-no-op:1.5'
     testCompile 'com.squareup.leakcanary:leakcanary-android:1.5'
     testCompile 'com.squareup.haha:haha:2.0.3'
+    annotationProcessor 'com.jakewharton:butterknife-compiler:8.4.0'
 }
 apply plugin: 'com.google.gms.google-services'
 apply plugin: 'realm-android'

@@ -15,6 +15,7 @@ import static com.google.gson.internal.$Gson$Preconditions.checkNotNull;
 public class LoadingPresenter implements LoadingContract.Presenter{
 
     private final Context context;
+
     private final LoadingContract.View activityView;
 
     private LoginGoogleUtils loginGoogleUtils;
@@ -51,18 +52,8 @@ public class LoadingPresenter implements LoadingContract.Presenter{
         if (!StringUtils.isEmpty(UserSessionManager.getAccessToken(context))) {
             accountServices.checkAccountInfo(UserSessionManager.getAccessToken(context));
         } else {
-            activityView.startHomePage();
+            activityView.openActHome();
         }
-    }
-
-    @Override
-    public void logoutAccount() {
-        UserSessionManager.logout(context, loginGoogleUtils);
-    }
-
-    @Override
-    public void refreshAccessToken(String token) {
-        UserSessionManager.setAccessToken(context, token);
     }
 
     private void accountServiceResponse() {
@@ -78,16 +69,26 @@ public class LoadingPresenter implements LoadingContract.Presenter{
             @Override
             public void onSuccess(User user, String token) {
                 UserSessionManager.updateUserSession(context, user);
-                activityView.startHomePage();
             }
 
             @Override
             public void onFailure(int code, String error) {
                 if (code == -999) {
-                    logoutAccount();
+                    accountServices.logout(UserSessionManager.getAccessToken(context));
+                } else {
+                    activityView.openActHome();
                 }
+            }
+        });
+        accountServices.setOnLogoutListener(new AccountServices.OnLogoutListener() {
+            @Override
+            public void onLogoutSuccess() {
+                UserSessionManager.logout(context, loginGoogleUtils);
+            }
 
-                activityView.startHomePage();
+            @Override
+            public void onFailure(int code, String error) {
+                activityView.openActHome();
             }
         });
     }

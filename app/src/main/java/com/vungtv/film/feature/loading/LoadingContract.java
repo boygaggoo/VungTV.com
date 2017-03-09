@@ -12,15 +12,11 @@ public interface LoadingContract {
 
         void setVersionName(String version);
 
-        void startHomePage();
+        void openActHome();
     }
 
     interface Presenter extends BasePresenter {
 
         void checkAccountInfo();
-
-        void logoutAccount();
-
-        void refreshAccessToken(String token);
     }
 }

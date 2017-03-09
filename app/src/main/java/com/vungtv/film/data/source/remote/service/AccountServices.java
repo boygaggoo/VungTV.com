@@ -6,20 +6,18 @@ import android.util.Base64;
 import com.google.gson.Gson;
 import com.vungtv.film.data.source.local.UserSessionManager;
 import com.vungtv.film.data.source.remote.ApiError;
-import com.vungtv.film.data.source.remote.RetrofitBuild;
+import com.vungtv.film.data.source.remote.BaseApiServices;
 import com.vungtv.film.data.source.remote.interfaces.ApiResultCallback;
 import com.vungtv.film.data.source.remote.model.ApiAccount;
 import com.vungtv.film.data.source.remote.model.ApiModel;
 import com.vungtv.film.model.User;
 import com.vungtv.film.util.LogUtils;
 import com.vungtv.film.util.MCrypt;
-import com.vungtv.film.util.NetworkUtils;
 import com.vungtv.film.util.StringUtils;
 
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
-import retrofit2.Retrofit;
 import retrofit2.http.Field;
 import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.GET;
@@ -32,14 +30,12 @@ import retrofit2.http.Query;
  * Created by pc on 2/3/2017.
  */
 
-public class AccountServices {
+public class AccountServices extends BaseApiServices{
     private static final String TAG = AccountServices.class.getSimpleName();
     private static final String SECRET_KEY = ":secret*3nCrypt0r_S3cr3t_K3y";
     private static final String SRC = "android";
 
-    private final Context context;
-
-    private final Retrofit retrofit;
+    private final ServicesInterface service;
 
     private Call<ApiAccount> callLogin;
 
@@ -51,9 +47,11 @@ public class AccountServices {
 
     private OnRefreshTokenListener onRefreshTokenListener;
 
+    private OnLogoutListener onLogoutListener;
+
     public AccountServices(Context context) {
-        this.context = context;
-        retrofit = RetrofitBuild.build();
+        super(context);
+        service = retrofit.create(ServicesInterface.class);
     }
 
     public void setOnLoginResulListener(OnLoginResulListener onLoginResulListener) {
@@ -68,21 +66,20 @@ public class AccountServices {
         this.onRefreshTokenListener = onRefreshTokenListener;
     }
 
+    public void setOnLogoutListener(OnLogoutListener onLogoutListener) {
+        this.onLogoutListener = onLogoutListener;
+    }
+
     /**
-     * Check account info;
+     * Kiểm tra trạng thái đăng nhập;
      *
      * @param token token login;
      */
     public void checkAccountInfo(String token) {
-
-        if (!NetworkUtils.isInternetTurnOn(context)) {
-            if (onLoginResulListener != null)
-                onLoginResulListener.onFailure(0, ApiError.toString(context, ApiError.OFF_INTERNET));
-            LogUtils.e(TAG, "checkAccountInfo: error: turn off internet!");
+        if (isInternetTurnOff(onLoginResulListener)) {
             return;
         }
 
-        AccountInterface service = retrofit.create(AccountInterface.class);
         callLogin = null;
         callLogin = service.checkAccountInfo(token, SRC);
         LogUtils.d(TAG, "checkAccountInfo request: " + new Gson().toJson(callLogin.request().body()));
@@ -127,16 +124,13 @@ public class AccountServices {
     }
 
     /**
-     * User login with email & pass;
+     * Đăng nhập = email & pass;
      *
      * @param email email
      * @param pass pass
      */
     public void loginWithEmail(String email, String pass) {
-        if (!NetworkUtils.isInternetTurnOn(context)) {
-            if (onLoginResulListener != null)
-                onLoginResulListener.onFailure(0, ApiError.toString(context, ApiError.OFF_INTERNET));
-            LogUtils.e(TAG, "loginWithEmail: error: turn off internet!");
+        if (isInternetTurnOff(onLoginResulListener)) {
             return;
         }
 
@@ -148,7 +142,6 @@ public class AccountServices {
             emailCrypt = Base64.encodeToString(emailCrypt.getBytes("UTF-8"), Base64.NO_WRAP);
             passCrypt = Base64.encodeToString(passCrypt.getBytes("UTF-8"), Base64.NO_WRAP);
 
-            AccountInterface service = retrofit.create(AccountInterface.class);
             callLogin = service.login(emailCrypt, passCrypt, SRC);
 
             callLogin.enqueue(new Callback<ApiAccount>() {
@@ -187,19 +180,14 @@ public class AccountServices {
     }
 
     /**
-     * Login with facebook, google;
+     * Đăng nhập = facebook, google;
      *
-     * @param accessToken /
+     * @param accessToken token nhận từ facebook / google
      */
     public void loginWithSocial(String provider, String accessToken) {
-        if (!NetworkUtils.isInternetTurnOn(context)) {
-            if (onLoginResulListener != null)
-                onLoginResulListener.onFailure(0, ApiError.toString(context, ApiError.OFF_INTERNET));
-            LogUtils.e(TAG, "loginWithFacebook: error: turn off internet!");
+        if (isInternetTurnOff(onLoginResulListener)) {
             return;
         }
-
-        AccountInterface service = retrofit.create(AccountInterface.class);
 
         callLogin = null;
         switch (provider) {
@@ -248,16 +236,14 @@ public class AccountServices {
     }
 
     /**
-     * User login with email & pass;
+     * Đăng ký tài khoản
      *
      * @param email email
      * @param pass pass
+     * @param rePass repass
      */
     public void register(String email, String pass, String rePass) {
-        if (!NetworkUtils.isInternetTurnOn(context)) {
-            if (onLoginResulListener != null)
-                onLoginResulListener.onFailure(0, ApiError.toString(context, ApiError.OFF_INTERNET));
-            LogUtils.e(TAG, "loadHomeData: error: turn off internet!");
+        if (isInternetTurnOff(onLoginResulListener)) {
             return;
         }
 
@@ -271,7 +257,6 @@ public class AccountServices {
             passCrypt = Base64.encodeToString(passCrypt.getBytes("UTF-8"), Base64.NO_WRAP);
             rePassCrypt = Base64.encodeToString(rePassCrypt.getBytes("UTF-8"), Base64.NO_WRAP);
 
-            AccountInterface service = retrofit.create(AccountInterface.class);
             callLogin = null;
             callLogin = service.register(emailCrypt, passCrypt, rePassCrypt, SRC);
             callLogin.enqueue(new Callback<ApiAccount>() {
@@ -313,19 +298,15 @@ public class AccountServices {
     }
 
     /**
-     * Change display name;
+     * Đổi tên hiển thị;
      *
-     * @param newName s
+     * @param newName tên mới
      */
     public void changeDisplayName(String token, String newName) {
-        if (!NetworkUtils.isInternetTurnOn(context)) {
-            if (onLoginResulListener != null)
-                onLoginResulListener.onFailure(0, ApiError.toString(context, ApiError.OFF_INTERNET));
-            LogUtils.e(TAG, "changeDisplayName: error: turn off internet!");
+        if (isInternetTurnOff(onLoginResulListener)) {
             return;
         }
 
-        AccountInterface service = retrofit.create(AccountInterface.class);
         callChangeInfo = null;
         callChangeInfo = service.changeName(newName, token, SRC);
         LogUtils.d(TAG, "changeDisplayName request: " + new Gson().toJson(callChangeInfo.request().body()));
@@ -361,16 +342,13 @@ public class AccountServices {
     }
 
     /**
-     * Change password;
+     * Đổi pass
      *
      * @param token token login
-     * @param pass array pass;
+     * @param pass array [ oldPass, newPass, reNewPass ];
      */
     public void changePassword(String token, String[] pass) {
-        if (!NetworkUtils.isInternetTurnOn(context)) {
-            if (onLoginResulListener != null)
-                onLoginResulListener.onFailure(0, ApiError.toString(context, ApiError.OFF_INTERNET));
-            LogUtils.e(TAG, "changePassword: error: turn off internet!");
+        if (isInternetTurnOff(onLoginResulListener)) {
             return;
         }
 
@@ -384,7 +362,6 @@ public class AccountServices {
             newPassCrypt = Base64.encodeToString(newPassCrypt.getBytes("UTF-8"), Base64.NO_WRAP);
             reNewPassCrypt = Base64.encodeToString(reNewPassCrypt.getBytes("UTF-8"), Base64.NO_WRAP);
 
-            AccountInterface service = retrofit.create(AccountInterface.class);
             callChangeInfo = null;
             callChangeInfo = service.changePass(oldPassCrypt, newPassCrypt, reNewPassCrypt, token, SRC);
             LogUtils.d(TAG, "changePassword request: " + new Gson().toJson(callChangeInfo.request().body()));
@@ -424,6 +401,45 @@ public class AccountServices {
     }
 
     /**
+     * Đăng xuất tài khoản;
+     *
+     * @param token token đăng nhập;
+     */
+    public void logout(String token) {
+        if (isInternetTurnOff(onLogoutListener)) {
+            return;
+        }
+
+        callChangeInfo = service.logout(token, SRC);
+        callChangeInfo.enqueue(new Callback<ApiModel>() {
+            @Override
+            public void onResponse(Call<ApiModel> call, Response<ApiModel> response) {
+                if (onLogoutListener == null) return;
+
+                if (response.isSuccessful() && response.body().getSuccess()) {
+                    onLogoutListener.onLogoutSuccess();
+                } else {
+                    int code = response.isSuccessful() ? response.body().getCode() : response.code();
+                    String mes = "";
+                    if (response.isSuccessful()) {
+                        response.body().getMessage();
+                    } else {
+                        mes = ApiError.toString(context, ApiError.NO_INTERNET);
+                    }
+                    onLogoutListener.onFailure(code, mes);
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ApiModel> call, Throwable t) {
+                if (onLogoutListener != null)
+                    onLogoutListener.onFailure(0, ApiError.toString(context, ApiError.NO_INTERNET));
+                t.printStackTrace();
+            }
+        });
+    }
+
+    /**
      * Cancel loading;
      */
     public void cancel() {
@@ -437,7 +453,7 @@ public class AccountServices {
     /**
      * interface service;
      */
-    public interface AccountInterface {
+    public interface ServicesInterface {
         @FormUrlEncoded
         @POST("login")
         Call<ApiAccount> login(
@@ -485,6 +501,12 @@ public class AccountServices {
         Call<ApiAccount> checkAccountInfo (
                 @Query("token") String token,
                 @Query("src") String src);
+        
+        @FormUrlEncoded
+        @POST("user/logout")
+        Call<ApiModel> logout(
+                @Field("token") String accessToken,
+                @Field("src") String src);
     }
 
     public interface OnLoginResulListener extends ApiResultCallback {
@@ -499,5 +521,9 @@ public class AccountServices {
 
     public interface OnAccountChangeResultListener extends ApiResultCallback{
         void onSuccess();
+    }
+
+    public interface OnLogoutListener extends ApiResultCallback {
+        void onLogoutSuccess();
     }
 }

@@ -263,4 +263,9 @@
         app:title="@string/movie_details_text_phim_lien_quan"
         app:itemType="recomment"/>
 
+    <com.vungtv.film.widget.VtvFooterView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/mdetails_relate_movies"/>
+
 </RelativeLayout>

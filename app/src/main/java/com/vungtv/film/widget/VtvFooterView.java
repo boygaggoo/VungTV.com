@@ -9,52 +9,33 @@ import android.view.View;
 import android.widget.LinearLayout;
 
 import com.vungtv.film.R;
+import com.vungtv.film.data.source.local.RemoteConfigManager;
+import com.vungtv.film.util.IntentUtils;
 
 public class VtvFooterView extends LinearLayout {
     private static final String TAG = VtvFooterView.class.getSimpleName();
-    private View btnMessenge;
-    private View btnFacebook;
-    private View btnRequest;
-    private View btnReport;
 
     private OnFooterViewListener onFooterViewListener;
 
+    private OnRequestListener onRequestListener;
+
     public VtvFooterView(Context context) {
-        super(context);
-        init();
+        this(context, null, 0);
     }
 
     public VtvFooterView(Context context, AttributeSet attrs) {
-        super(context, attrs);
-        init();
+        this(context, attrs, 0);
     }
 
     public VtvFooterView(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
-        init();
-    }
 
-    @TargetApi(Build.VERSION_CODES.LOLLIPOP)
-    public VtvFooterView(Context context, AttributeSet attrs, int defStyleAttr, int defStyleRes) {
-        super(context, attrs, defStyleAttr, defStyleRes);
-        init();
-    }
-
-    private void init() {
-        retrieverView();
-        registerListener();
-    }
-
-    private void retrieverView() {
         LayoutInflater.from(getContext()).inflate(R.layout.widget_footer_view, this);
+        View btnMessenge = findViewById(R.id.footer_messenge);
+        View btnFacebook = findViewById(R.id.footer_facebook);
+        View btnRequest = findViewById(R.id.footer_request);
+        View btnReport = findViewById(R.id.footer_report);
 
-        btnMessenge = findViewById(R.id.footer_messenge);
-        btnFacebook = findViewById(R.id.footer_facebook);
-        btnRequest = findViewById(R.id.footer_request);
-        btnReport = findViewById(R.id.footer_report);
-    }
-
-    private void registerListener() {
         CompomentListener compomentListener = new CompomentListener();
         btnMessenge.setOnClickListener(compomentListener);
         btnFacebook.setOnClickListener(compomentListener);
@@ -62,31 +43,61 @@ public class VtvFooterView extends LinearLayout {
         btnReport.setOnClickListener(compomentListener);
     }
 
+    @TargetApi(Build.VERSION_CODES.LOLLIPOP)
+    public VtvFooterView(Context context, AttributeSet attrs, int defStyleAttr, int defStyleRes) {
+        this(context, attrs, 0);
+    }
+
     public void setOnFooterViewListener(OnFooterViewListener onFooterViewListener) {
         this.onFooterViewListener = onFooterViewListener;
     }
 
-    private void sendRepost() {
-
+    public void setOnRequestListener(OnRequestListener onRequestListener) {
+        this.onRequestListener = onRequestListener;
     }
 
     private final class CompomentListener implements OnClickListener {
 
         @Override
         public void onClick(View view) {
-            if (onFooterViewListener == null) return;
+
             switch (view.getId()) {
                 case R.id.footer_messenge:
-                    onFooterViewListener.onSendMessenge();
+                    if (onFooterViewListener != null) {
+                        onFooterViewListener.onSendMessenge();
+                    } else {
+                        IntentUtils.sendFbMessenger(
+                                getContext().getPackageManager(),
+                                RemoteConfigManager.getFanpageId(),
+                                RemoteConfigManager.getFanpageUrl()
+                        );
+                    }
                     break;
                 case R.id.footer_facebook:
-                    onFooterViewListener.onOpenFanpage();
+                    if (onFooterViewListener != null) {
+                        onFooterViewListener.onOpenFanpage();
+                    } else {
+                        IntentUtils.openFacebook(
+                                getContext().getPackageManager(),
+                                RemoteConfigManager.getFanpageUrl()
+                        );
+                    }
                     break;
                 case R.id.footer_request:
-                    onFooterViewListener.onSendEmail();
+                    if (onFooterViewListener != null) {
+                        onFooterViewListener.onSendEmail();
+                    } else if (onRequestListener != null) {
+                        onRequestListener.onRequest();
+                    } else {
+                        IntentUtils.sendEmail(
+                                RemoteConfigManager.getEmail()
+                        );
+                    }
                     break;
                 case R.id.footer_report:
-                    onFooterViewListener.onSendReport();
+                    if (onFooterViewListener != null) {
+                        onFooterViewListener.onSendReport();
+                    }
                     break;
             }
         }
@@ -97,5 +108,9 @@ public class VtvFooterView extends LinearLayout {
         void onOpenFanpage();
         void onSendEmail();
         void onSendReport();
+    }
+
+    public interface OnRequestListener {
+        void onRequest();
     }
 }
