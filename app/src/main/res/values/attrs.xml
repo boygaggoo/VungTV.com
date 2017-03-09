@@ -32,7 +32,7 @@
         <attr name="lock_open" format="boolean" />
     </declare-styleable>
 
-    <declare-styleable name="VtvMoviesRowView">
+    <declare-styleable name="VtvMovieRowView">
         <attr name="style">
             <flag name="defaultStyle" value="0" />
             <flag name="black" value="1" />

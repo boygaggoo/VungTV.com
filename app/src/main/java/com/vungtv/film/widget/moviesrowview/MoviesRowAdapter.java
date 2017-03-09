@@ -6,7 +6,6 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
@@ -40,7 +39,6 @@ public class MoviesRowAdapter extends RecyclerView.Adapter {
     private OnRecentInfoClickListener onRecentInfoClick;
 
     private final int COLOR_BLUE, COLOR_YELLOW, COLOR_ORANGE, COLOR_BLUEGRAY;
-    private final int MARGIN, MARGIN_BETWEEN_ITEM;
 
     public MoviesRowAdapter(Context context, int itemType) {
         this.context = context;
@@ -50,8 +48,6 @@ public class MoviesRowAdapter extends RecyclerView.Adapter {
         COLOR_YELLOW = getColor(R.color.yellow);
         COLOR_ORANGE = getColor(R.color.orange);
         COLOR_BLUEGRAY = getColor(R.color.green_dark);
-        MARGIN = context.getResources().getDimensionPixelSize(R.dimen.margin);
-        MARGIN_BETWEEN_ITEM = context.getResources().getDimensionPixelSize(R.dimen.space_7);
     }
 
     @Override
@@ -155,11 +151,9 @@ public class MoviesRowAdapter extends RecyclerView.Adapter {
         private ImageView poster;
         private VtvTextView name, episode;
         private LinearLayout infoLayout;
-        private FrameLayout rootLayout;
 
         public ItemDefaultViewHolder(View itemView) {
             super(itemView);
-            rootLayout = (FrameLayout) itemView.findViewById(R.id.item_home_row_film_root);
             poster = (ImageView) itemView.findViewById(R.id.item_home_row_film_img_poster);
             name = (VtvTextView) itemView.findViewById(R.id.item_home_row_film_tv_film_name);
             episode = (VtvTextView) itemView.findViewById(R.id.item_home_row_film_tv_film_episode);
@@ -170,18 +164,6 @@ public class MoviesRowAdapter extends RecyclerView.Adapter {
         }
 
         public void setInfo(Movie movie) {
-
-            RecyclerView.LayoutParams layoutParams =
-                    (RecyclerView.LayoutParams) rootLayout.getLayoutParams();
-            if (getLayoutPosition() == 0) {
-                layoutParams.setMargins(MARGIN, 0, MARGIN_BETWEEN_ITEM, 0);
-            } else if (getLayoutPosition() == list.size() - 1){
-                layoutParams.setMargins(0, 0, MARGIN, 0);
-            } else {
-                layoutParams.setMargins(0, 0, MARGIN_BETWEEN_ITEM, 0);
-            }
-            rootLayout.setLayoutParams(layoutParams);
-
             // set image poster
             String urlPoster = movie.getMovPoster();
             if (urlPoster != null && urlPoster.length() > 5) {
@@ -264,12 +246,10 @@ public class MoviesRowAdapter extends RecyclerView.Adapter {
         private VtvTextView name;
         private View btnInfo;
         private ProgressBar progressBar;
-        private FrameLayout rootLayout;
 
         public ItemRecentViewHolder(View itemView) {
             super(itemView);
 
-            rootLayout = (FrameLayout) itemView.findViewById(R.id.item_home_row_film_root);
             imageView = (ImageView) itemView.findViewById(R.id.item_home_row_film_img_poster);
             name = (VtvTextView) itemView.findViewById(R.id.item_home_row_film_tv_film_name);
             btnInfo = itemView.findViewById(R.id.item_home_row_film_recent_btn_info);
@@ -283,20 +263,6 @@ public class MoviesRowAdapter extends RecyclerView.Adapter {
         }
 
         public void setInfo(final MovieRecent movie) {
-            //LogUtils.d(TAG, new Gson().toJson(movie));
-
-            RecyclerView.LayoutParams layoutParams =
-                    (RecyclerView.LayoutParams) rootLayout.getLayoutParams();
-            if (getLayoutPosition() == 0) {
-                layoutParams.setMargins(MARGIN, 0, MARGIN_BETWEEN_ITEM, 0);
-            } else if (getLayoutPosition() == list.size() - 1){
-                layoutParams.setMargins(0, 0, MARGIN, 0);
-            } else {
-                layoutParams.setMargins(0, 0, MARGIN_BETWEEN_ITEM, 0);
-            }
-
-            rootLayout.setLayoutParams(layoutParams);
-
             //File fileImg = ImageUtil.getFileImageRecentFromSD(movie.getMovFrameBg());
             if (movie.getMovFrameBg() != null) {
                 Picasso.with(context)
@@ -348,18 +314,6 @@ public class MoviesRowAdapter extends RecyclerView.Adapter {
 
         public void setInfo(Movie movie) {
 
-            RecyclerView.LayoutParams layoutParams =
-                    (RecyclerView.LayoutParams) poster.getLayoutParams();
-            if (getLayoutPosition() == 0) {
-                layoutParams.setMargins(MARGIN, 0, MARGIN_BETWEEN_ITEM, 0);
-            } else if (getLayoutPosition() == list.size() - 1){
-                layoutParams.setMargins(0, 0, MARGIN, 0);
-            } else {
-                layoutParams.setMargins(0, 0, MARGIN_BETWEEN_ITEM, 0);
-            }
-
-            poster.setLayoutParams(layoutParams);
-
             String urlPoster = movie.getMovPoster();
             if (urlPoster != null && urlPoster.length() > 5) {
                 Picasso.with(context)
@@ -395,16 +349,6 @@ public class MoviesRowAdapter extends RecyclerView.Adapter {
 
         public void setInfo(HotTopic hotTopic) {
 
-            RecyclerView.LayoutParams layoutParams =
-                    (RecyclerView.LayoutParams) poster.getLayoutParams();
-            if (getLayoutPosition() == 0) {
-                layoutParams.setMargins(MARGIN, 0, MARGIN_BETWEEN_ITEM, 0);
-            } else if (getLayoutPosition() == list.size() - 1){
-                layoutParams.setMargins(0, 0, MARGIN, 0);
-            } else {
-                layoutParams.setMargins(0, 0, MARGIN_BETWEEN_ITEM, 0);
-            }
-            poster.setLayoutParams(layoutParams);
             String urlPoster = hotTopic.getBanner();
             if (urlPoster != null && urlPoster.length() > 5) {
                 Picasso.with(context)

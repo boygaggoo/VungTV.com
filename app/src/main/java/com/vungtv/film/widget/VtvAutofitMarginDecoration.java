@@ -11,10 +11,10 @@ import android.view.View;
  * Created by pc on 3/3/2017.
  */
 
-public class MarginDecoration extends RecyclerView.ItemDecoration {
+public class VtvAutofitMarginDecoration extends RecyclerView.ItemDecoration {
     private int margin;
 
-    public MarginDecoration(Context context, @DimenRes int resDimen) {
+    public VtvAutofitMarginDecoration(Context context, @DimenRes int resDimen) {
         margin = context.getResources().getDimensionPixelSize(resDimen);
     }
 

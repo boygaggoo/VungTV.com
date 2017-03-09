@@ -14,12 +14,11 @@ import com.vungtv.film.feature.filtermovies.FilterMoviesActivity;
 import com.vungtv.film.feature.moviedetail.MovieDetailActivity;
 import com.vungtv.film.feature.search.SearchActivity;
 import com.vungtv.film.model.Movie;
-import com.vungtv.film.util.LogUtils;
 import com.vungtv.film.util.StringUtils;
 import com.vungtv.film.widget.VtvFooterView;
 import com.vungtv.film.widget.VtvToolbarPage;
 import com.vungtv.film.widget.moviesrowview.MoviesRowAdapter;
-import com.vungtv.film.widget.moviesrowview.VtvMoviesRowView;
+import com.vungtv.film.widget.moviesrowview.VtvMovieRowView;
 
 import java.util.ArrayList;
 
@@ -101,24 +100,22 @@ public class MenuMoviesActivity extends BaseActivity implements MenuMoviesContra
 
     @Override
     public void addRowMoviesView(int position, String title, ArrayList<Movie> movies, final String urlMore) {
-        LogUtils.d(TAG, "addRowMoviesView: urlMore = " + urlMore);
-        VtvMoviesRowView moviesRow =
-                new VtvMoviesRowView.Builder(this)
-                        .setTitle(title)
-                        .setListData(itemType, new ArrayList<Object>(movies))
-                        .addOnVtvMoviesRowListener(new VtvMoviesRowView.OnVtvMoviesRowListener() {
-                            @Override
-                            public void onClickViewMore() {
-                                openActFilterMovies(urlMore);
-                            }
-                        })
-                        .addOnItemClickListener(new MoviesRowAdapter.OnItemClickListener() {
-                            @Override
-                            public void onItemClick(View v, int movieId) {
-                                openActMovieDetail(movieId);
-                            }
-                        })
-                        .build();
+        VtvMovieRowView moviesRow = new VtvMovieRowView(this, VtvMovieRowView.STYLE_DEFAULT, itemType);
+        moviesRow.setTitle(title);
+        moviesRow.setListAdapter(new ArrayList<Object>(movies));
+        moviesRow.setOnViewMoreListener(new VtvMovieRowView.OnViewMoreListener() {
+            @Override
+            public void onViewMoreClick() {
+                openActFilterMovies(urlMore);
+            }
+        });
+        moviesRow.setOnItemClickListener(new MoviesRowAdapter.OnItemClickListener() {
+            @Override
+            public void onItemClick(View v, int movieId) {
+                openActMovieDetail(movieId);
+            }
+        });
+
         layoutContent.addView(moviesRow, position);
     }
 

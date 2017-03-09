@@ -10,4 +10,4 @@
     android:clickable="true"
     android:foreground="?android:attr/selectableItemBackground"
     android:contentDescription="@string/app_name"
-    tools:src="@drawable/default_poster_land"/>
+    android:src="@drawable/default_poster_land"/>

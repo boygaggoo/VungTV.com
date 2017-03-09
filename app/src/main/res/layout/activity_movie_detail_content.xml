@@ -253,7 +253,7 @@
         android:clipToPadding="false"
         app:layout_behavior="@string/appbar_scrolling_view_behavior"/>
 
-    <com.vungtv.film.widget.moviesrowview.VtvMoviesRowView
+    <com.vungtv.film.widget.moviesrowview.VtvMovieRowView
         android:id="@+id/mdetails_relate_movies"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

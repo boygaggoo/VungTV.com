@@ -28,10 +28,10 @@ import com.vungtv.film.util.StringUtils;
 import com.vungtv.film.util.TextUtils;
 import com.vungtv.film.util.TimeUtils;
 import com.vungtv.film.widget.ExpandableTextView;
-import com.vungtv.film.widget.MarginDecoration;
+import com.vungtv.film.widget.VtvAutofitMarginDecoration;
 import com.vungtv.film.widget.VtvTextView;
 import com.vungtv.film.widget.moviesrowview.MoviesRowAdapter;
-import com.vungtv.film.widget.moviesrowview.VtvMoviesRowView;
+import com.vungtv.film.widget.moviesrowview.VtvMovieRowView;
 
 import java.util.ArrayList;
 
@@ -91,7 +91,7 @@ public class MovieDetailActivity extends BaseActivity implements MovieDetailCont
     RecyclerView epsRecyclerView;
 
     @BindView(R.id.mdetails_relate_movies)
-    VtvMoviesRowView relateMovies;
+    VtvMovieRowView relateMovies;
 
     private PopupRating popupRating;
 
@@ -104,7 +104,7 @@ public class MovieDetailActivity extends BaseActivity implements MovieDetailCont
 
         ratingBar2.setOnRatingBarChangeListener(this);
 
-        epsRecyclerView.addItemDecoration(new MarginDecoration(this, R.dimen.space_4));
+        epsRecyclerView.addItemDecoration(new VtvAutofitMarginDecoration(this, R.dimen.space_4));
         epsRecyclerView.setHasFixedSize(true);
         adapter = new EpisodesRecycerAdapter();
         adapter.setOnItemClickListener(new OnItemClickListener() {
@@ -339,8 +339,8 @@ public class MovieDetailActivity extends BaseActivity implements MovieDetailCont
     @Override
     public void setRelateMovies(ArrayList<Movie> movies) {
         LogUtils.d(TAG, "setRelateMovies: " + movies.size());
-        relateMovies.setDataListView(new ArrayList<Object>(movies));
-        relateMovies.setBtnViewMoreVisible(false);
+        relateMovies.setListAdapter(new ArrayList<Object>(movies));
+        relateMovies.setButtonViewMoreVisible(false);
         relateMovies.setOnItemClickListener(new MoviesRowAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(View v, int movieId) {

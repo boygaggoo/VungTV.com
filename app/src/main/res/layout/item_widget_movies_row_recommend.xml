@@ -6,54 +6,46 @@
     android:layout_width="wrap_content"
     android:layout_height="wrap_content">
 
-    <RelativeLayout
-        android:orientation="vertical"
+    <ImageView
+        android:id="@+id/item_home_row_film_img_poster"
+        android:layout_width="@dimen/poster_size_w"
+        android:layout_height="@dimen/poster_size_h"
+        android:background="@color/colorPrimary"
+        android:scaleType="fitXY"
+        android:clickable="true"
+        android:foreground="?android:attr/selectableItemBackground"
+        android:contentDescription="@string/app_name"
+        android:src="@drawable/default_poster"/>
+
+    <com.vungtv.film.widget.VtvTextView
+        style="@style/AppTheme.Text.FilmTitle"
+        android:id="@+id/item_home_row_film_tv_film_name"
+        android:layout_width="@dimen/poster_size_w"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/space_4"
+        android:layout_gravity="bottom"
+        android:padding="@dimen/space_4"
+        android:background="@color/text_dark_2"
+        android:textColor="@color/text_light_1"
+        tools:text="Tru tiên Thanh vân chí"/>
+
+    <com.vungtv.film.widget.VtvTextView
+        style="@style/AppTheme.Text.FilmTitle"
+        android:id="@+id/item_home_row_film_tv_film_episode"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/space_4"
+        android:padding="2dp"
+        android:background="@drawable/ds_bg_white_radius"
+        android:textSize="12sp"
+        tools:text="20/23"/>
 
-        <ImageView
-            android:id="@+id/item_home_row_film_img_poster"
-            android:layout_width="@dimen/poster_size_w"
-            android:layout_height="@dimen/poster_size_h"
-            android:background="@color/colorPrimary"
-            android:scaleType="fitXY"
-            android:clickable="true"
-            android:foreground="?android:attr/selectableItemBackground"
-            android:contentDescription="@string/app_name"
-            tools:src="@drawable/default_poster"/>
-
-        <com.vungtv.film.widget.VtvTextView
-            style="@style/AppTheme.Text.FilmTitle"
-            android:id="@+id/item_home_row_film_tv_film_name"
-            android:layout_width="@dimen/poster_size_w"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/space_4"
-            android:layout_alignBottom="@+id/item_home_row_film_img_poster"
-            android:padding="@dimen/space_4"
-            android:background="@color/text_dark_2"
-            android:textColor="@color/text_light_1"
-            tools:text="Tru tiên Thanh vân chí"/>
-
-        <com.vungtv.film.widget.VtvTextView
-            style="@style/AppTheme.Text.FilmTitle"
-            android:id="@+id/item_home_row_film_tv_film_episode"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_margin="@dimen/space_4"
-            android:padding="2dp"
-            android:background="@drawable/ds_bg_white_radius"
-            android:textSize="12sp"
-            tools:text="20/23"/>
-
-        <LinearLayout
-            android:id="@+id/item_home_row_film_layout_info"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignRight="@+id/item_home_row_film_img_poster"
-            android:layout_alignEnd="@+id/item_home_row_film_img_poster"
-            android:padding="@dimen/space_4"
-            android:orientation="vertical"/>
-
-    </RelativeLayout>
+    <LinearLayout
+        android:id="@+id/item_home_row_film_layout_info"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="right"
+        android:padding="@dimen/space_4"
+        android:orientation="vertical"/>
 
 </FrameLayout>

@@ -14,7 +14,7 @@ import com.vungtv.film.feature.moviedetail.EpisodesRecycerAdapter;
 import com.vungtv.film.interfaces.OnItemClickListener;
 import com.vungtv.film.model.Episode;
 import com.vungtv.film.util.LogUtils;
-import com.vungtv.film.widget.MarginDecoration;
+import com.vungtv.film.widget.VtvAutofitMarginDecoration;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -44,7 +44,7 @@ public class PopupListEpisode implements TextWatcher {
 
         recyclerView = (RecyclerView) dialog.findViewById(R.id.pop_eps_recyclerView);
 
-        recyclerView.addItemDecoration(new MarginDecoration(context, R.dimen.space_4));
+        recyclerView.addItemDecoration(new VtvAutofitMarginDecoration(context, R.dimen.space_4));
         recyclerView.setHasFixedSize(true);
         adapter = new EpisodesRecycerAdapter();
         adapter.setOnItemClickListener(new OnItemClickListener() {

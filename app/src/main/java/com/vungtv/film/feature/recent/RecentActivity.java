@@ -16,7 +16,7 @@ import com.vungtv.film.interfaces.OnItemClickListener;
 import com.vungtv.film.interfaces.OnRecentInfoClickListener;
 import com.vungtv.film.model.MovieRecent;
 import com.vungtv.film.util.StringUtils;
-import com.vungtv.film.widget.MarginDecoration;
+import com.vungtv.film.widget.VtvAutofitMarginDecoration;
 import com.vungtv.film.widget.VtvToolbarSetting;
 
 import java.util.ArrayList;
@@ -65,7 +65,7 @@ public class RecentActivity extends BaseActivity implements RecentContract.View{
             }
         });
 
-        recyclerView.addItemDecoration(new MarginDecoration(this, R.dimen.space_4));
+        recyclerView.addItemDecoration(new VtvAutofitMarginDecoration(this, R.dimen.space_4));
         recyclerView.setHasFixedSize(true);
         adapter = new RecentRecyclerAdapter();
         adapter.setOnItemClickListener(new OnItemClickListener() {

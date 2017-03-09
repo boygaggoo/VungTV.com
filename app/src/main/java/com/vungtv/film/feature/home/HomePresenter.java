@@ -11,7 +11,7 @@ import com.vungtv.film.model.MovieRecent;
 import com.vungtv.film.model.Slider;
 import com.vungtv.film.util.LogUtils;
 import com.vungtv.film.widget.moviesrowview.MoviesRowAdapter;
-import com.vungtv.film.widget.moviesrowview.VtvMoviesRowView;
+import com.vungtv.film.widget.moviesrowview.VtvMovieRowView;
 
 import java.util.ArrayList;
 
@@ -122,25 +122,30 @@ public class HomePresenter implements HomeContract.Presenter {
         //add film de cu, top, han, trung, anime, tivishow, 18+;
         ArrayList<ApiHome.ModuleRow> listDataRow = dataHome.getModuleRows();
         if (listDataRow != null && listDataRow.size() > 0) {
+
             for (int i = 0; i < listDataRow.size(); i++) {
+
                 ApiHome.ModuleRow moduleRow = listDataRow.get(i);
+
                 int itemType = MoviesRowAdapter.ITEM_DEFAULT;
-                int rowStyle = VtvMoviesRowView.STYLE_DEFAULT;
-                int iconTitle = 0;
+
+                int rowStyle = VtvMovieRowView.STYLE_DEFAULT;
+
+                int iconTitle = R.drawable.icon_filmroll;
                 if (i == 0) {
                     // Phim de cu
                     itemType = MoviesRowAdapter.ITEM_RECOMMENT;
-                    rowStyle = VtvMoviesRowView.STYLE_BLACK;
+                    rowStyle = VtvMovieRowView.STYLE_BLACK;
                     iconTitle = R.drawable.icon_star1;
                 } else if (i == 1 || i == 2) {
                     // phim top vung
                     itemType = MoviesRowAdapter.ITEM_RECOMMENT;
-                    rowStyle = VtvMoviesRowView.STYLE_GRAY;
+                    rowStyle = VtvMovieRowView.STYLE_GRAY;
                     iconTitle = R.drawable.icon_lavung;
                 } else if (i == listDataRow.size() -1) {
                     // phim sap chieu
                     itemType = MoviesRowAdapter.ITEM_COMMING;
-                    rowStyle = VtvMoviesRowView.STYLE_BLACK_NO_FILMNAME;
+                    rowStyle = VtvMovieRowView.STYLE_BLACK_NO_FILMNAME;
                     iconTitle = R.drawable.icon_star1;
                 }
 
@@ -157,7 +162,7 @@ public class HomePresenter implements HomeContract.Presenter {
             // add row hot topic
             if (listDataRow.size() > 6) {
                 homeView.addHotTopicView(
-                        VtvMoviesRowView.STYLE_BLACK_NO_TITLE,
+                        VtvMovieRowView.STYLE_BLACK_NO_TITLE,
                         MoviesRowAdapter.ITEM_HOT_TOPIC,
                         null,
                         new ArrayList<Object>(dataHome.getHotTopic())
