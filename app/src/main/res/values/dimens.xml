@@ -46,5 +46,6 @@
     <dimen name="mov_detail_cover_h">200dp</dimen>
     <dimen name="recent_item_size_w">166dp</dimen>
     <dimen name="space_96">96dp</dimen>
+    <dimen name="content_size_sreen_land">600dp</dimen>
 
 </resources>

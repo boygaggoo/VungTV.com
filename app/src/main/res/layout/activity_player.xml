@@ -19,7 +19,14 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
+        android:background="@color/black"
+        android:gravity="center"
         android:padding="@dimen/space_24"
+        android:drawablePadding="@dimen/space_16"
+        android:drawableBottom="@drawable/ic_refresh_white"
+        android:lineSpacingMultiplier="1.3"
+        android:textColor="@color/text_light_1"
+        android:textSize="@dimen/font_lage"
         android:text="@string/player_control_msg_retry"
         android:visibility="gone"/>
 

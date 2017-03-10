@@ -131,7 +131,8 @@ public class RecentActivity extends BaseActivity implements RecentContract.View{
 
     @Override
     public void openActPlayerRecent(MovieRecent mov) {
-        startActivity(PlayerActivity.buildIntentRecent(this, mov.getMovId(), mov.getMovName(), mov.getMovEpsHash()));
+        startActivity(PlayerActivity.buildIntentRecent(this,
+                mov.getMovId(), mov.getMovName(), mov.getMovFrameBg(), mov.getMovEpsHash()));
     }
 
     @Override

@@ -174,7 +174,7 @@
     <string name="popup_action_buy_vip">Mua vip</string>
     <string name="movie_details_error_login">Đăng nhập tài khoản để sử dụng tính năng này.</string>
     <string name="player_clear_ads">Tắt quảng cáo</string>
-    <string name="player_control_msg_retry">Có lỗi xảy ra\nClick để thủ lại</string>
+    <string name="player_control_msg_retry">Có lỗi xảy ra</string>
     <string name="vtv_playback_control_clear_ads">Ẩn quảng cáo</string>
     <string name="player_text_subtutle">Phụ đề</string>
     <string name="player_text_quality">Chất lượng</string>
@@ -198,5 +198,9 @@
     <string name="request_text_content">Nội dung</string>
     <string name="request_hint_content">Nội dung yêu cầu...</string>
     <string name="request_action_send">Gửi yêu cầu</string>
+    <string name="request_error_require">Chưa điền đủ thông tin.</string>
+    <string name="popup_action_update">Cập nhật</string>
+    <string name="popup_action_later">Để sau</string>
+    <string name="popup_text_title_update">Cập nhật</string>
 
 </resources>

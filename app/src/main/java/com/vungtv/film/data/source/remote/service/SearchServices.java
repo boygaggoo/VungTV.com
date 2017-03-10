@@ -115,8 +115,9 @@ public class SearchServices {
     }
 
     public void cancel() {
-        if (call != null && call.isExecuted())
+        if (call != null && call.isExecuted()) {
             call.cancel();
+        }
     }
 
     private interface SearchInterface {

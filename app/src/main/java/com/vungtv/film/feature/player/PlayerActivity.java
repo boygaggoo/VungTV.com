@@ -89,6 +89,7 @@ public class PlayerActivity extends AppCompatActivity implements PlayerContract.
     private static final String TAG = PlayerActivity.class.getSimpleName();
     public static final String INTENT_MOV_ID = "INTENT_MOV_ID";
     public static final String INTENT_MOV_NAME = "INTENT_MOV_NAME";
+    public static final String INTENT_MOV_COVER = "INTENT_MOV_COVER";
     public static final String INTENT_EPS_HASH = "INTENT_EPS_HASH";
     public static final String INTENT_RECENT = "INTENT_RECENT";
 
@@ -132,16 +133,17 @@ public class PlayerActivity extends AppCompatActivity implements PlayerContract.
 
     private DrmSession drmSession;
 
-    public static Intent buildIntent(Context context, int movId, String movName, String epsHash) {
+    public static Intent buildIntent(Context context, int movId, String movName, String movCover, String epsHash) {
         Intent intent = new Intent(context, PlayerActivity.class);
         intent.putExtra(INTENT_MOV_ID, movId);
         intent.putExtra(INTENT_MOV_NAME, movName);
+        intent.putExtra(INTENT_MOV_COVER, movCover);
         intent.putExtra(INTENT_EPS_HASH, epsHash);
         return intent;
     }
 
-    public static Intent buildIntentRecent(Context context, int movId, String movName, String epsHash) {
-        Intent intent = buildIntent(context, movId, movName, epsHash);
+    public static Intent buildIntentRecent(Context context, int movId, String movName, String movCover, String epsHash) {
+        Intent intent = buildIntent(context, movId, movName, movCover, epsHash);
         intent.putExtra(INTENT_RECENT, true);
         return intent;
     }
@@ -416,6 +418,9 @@ public class PlayerActivity extends AppCompatActivity implements PlayerContract.
     @Override
     public void initPlayer() {
         LogUtils.d(TAG, "initPlayer.");
+
+        showMsgError(false, null);
+
         if (player == null) {
             boolean preferExtensionDecoders =
                     drmSession != null && drmSession.isPreferExtensionDecoders();
@@ -782,6 +787,8 @@ public class PlayerActivity extends AppCompatActivity implements PlayerContract.
             updateResumePosition();
             updateButtonsVisible();
         }
+
+        presenter.retryPlayWithHLS();
     }
 
     @Override

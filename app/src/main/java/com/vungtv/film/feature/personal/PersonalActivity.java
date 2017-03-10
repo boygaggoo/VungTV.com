@@ -13,6 +13,7 @@ import com.vungtv.film.R;
 import com.vungtv.film.eventbus.AccountModifyEvent;
 import com.vungtv.film.feature.buyvip.BuyVipActivity;
 import com.vungtv.film.feature.changepass.ChangePassActivity;
+import com.vungtv.film.feature.recent.RecentActivity;
 import com.vungtv.film.feature.usermovies.UserMoviesActivity;
 import com.vungtv.film.feature.login.LoginActivity;
 import com.vungtv.film.feature.logout.LogOutActivity;
@@ -153,15 +154,15 @@ public class PersonalActivity extends BaseActivity implements PersonalContract.V
                         showToast(R.string.error_not_been_updated);
                         break;
                     case PersonalRecyclerAdapter.USERPAGE_ITEMID.FILM_VIEWED:
-                        showToast(R.string.error_not_been_updated);
+                        startActivity(new Intent(PersonalActivity.this, RecentActivity.class));
                         break;
                     case PersonalRecyclerAdapter.USERPAGE_ITEMID.FAVORITE:
-                        startActivity(new Intent(UserMoviesActivity.buildIntent(
-                                PersonalActivity.this, UserMoviesActivity.PAGE_FAVORITE)));
+                        startActivity(UserMoviesActivity.buildIntent(
+                                PersonalActivity.this, UserMoviesActivity.PAGE_FAVORITE));
                         break;
                     case PersonalRecyclerAdapter.USERPAGE_ITEMID.FOLLOW:
-                        startActivity(new Intent(UserMoviesActivity.buildIntent(
-                                PersonalActivity.this, UserMoviesActivity.PAGE_FOLLOW)));
+                        startActivity(UserMoviesActivity.buildIntent(
+                                PersonalActivity.this, UserMoviesActivity.PAGE_FOLLOW));
                         break;
                     case PersonalRecyclerAdapter.USERPAGE_ITEMID.SETTING:
                         // Open activity Setting;

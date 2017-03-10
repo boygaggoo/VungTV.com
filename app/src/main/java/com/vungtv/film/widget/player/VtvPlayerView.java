@@ -743,7 +743,6 @@ public class VtvPlayerView extends FrameLayout {
                 }
 
                 if (isAdjustAudio) {
-                    LogUtils.e(TAG, "Width = " + width + " / x = " + x);
                     if (x < width / 3) {
                         // Dieu chinh do sang
                         if (onScreenBrightControl != null) {

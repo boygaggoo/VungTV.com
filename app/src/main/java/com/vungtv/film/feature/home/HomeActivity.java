@@ -89,6 +89,14 @@ public class HomeActivity extends BaseActivity implements OnNavItemSelectedListe
     }
 
     @Override
+    public void onConfigurationChanged(Configuration newConfig) {
+        super.onConfigurationChanged(newConfig);
+
+        configNavTabetLand(isScreenLand);
+        EventBus.getDefault().post(new ConfigurationChangedEvent(isScreenLand));
+    }
+
+    @Override
     public void onBackPressed() {
         if (!isScreenLand && drawer.isDrawerOpen(navRecycler)) {
             drawer.closeDrawer(navRecycler);
@@ -132,14 +140,6 @@ public class HomeActivity extends BaseActivity implements OnNavItemSelectedListe
     @Override
     public void onBtnUserClick() {
         startActivity(new Intent(HomeActivity.this, PersonalActivity.class));
-    }
-
-    @Override
-    public void onConfigurationChanged(Configuration newConfig) {
-        super.onConfigurationChanged(newConfig);
-
-        configNavTabetLand(isScreenLand);
-        EventBus.getDefault().post(new ConfigurationChangedEvent(isScreenLand));
     }
 
     @Override

@@ -51,6 +51,8 @@ public class PlayerPresenter implements PlayerContract.Presenter, PlayerServices
 
     private boolean isRecent = false;
 
+    private boolean isLoadDrive = true;
+
     private int watchVideoVer = 0;
 
     public PlayerPresenter(Context context, PlayerContract.View playerView) {
@@ -94,6 +96,20 @@ public class PlayerPresenter implements PlayerContract.Presenter, PlayerServices
     @Override
     public void reloadEpisodeInfo() {
         loadEpisodeInfo();
+    }
+
+    @Override
+    public void retryPlayWithHLS() {
+        if (videoData != null) {
+            isLoadDrive = false;
+
+            if (videoData.player.get(watchVideoVer) != null) {
+                setMediaSource(watchVideoVer);
+            } else {
+                setMediaSource(0);
+            }
+            playerView.initPlayer();
+        }
     }
 
     @Override
@@ -300,7 +316,7 @@ public class PlayerPresenter implements PlayerContract.Presenter, PlayerServices
      */
     private void setMediaSource(int pos) {
 
-        if (videoData.player.get(pos).files.size() > 1) {
+        if (isLoadDrive && videoData.player.get(pos).files.size() > 1) {
             // Play video MP4
             LogUtils.d(TAG, videoData.player.get(pos).label + " - MP4");
             playerView.setMediaSource(

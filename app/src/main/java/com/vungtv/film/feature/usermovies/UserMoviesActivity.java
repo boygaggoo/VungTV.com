@@ -100,6 +100,7 @@ public class UserMoviesActivity extends BaseActivity implements UserMoviesContra
 
     @Override
     public void showLoading(boolean show) {
+        if (popupLoading == null) return;
         if (!show) {
             popupLoading.dismiss();
             refreshLayout.setRefreshing(false);

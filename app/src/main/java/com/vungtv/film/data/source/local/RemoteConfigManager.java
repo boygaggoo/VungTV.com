@@ -20,4 +20,20 @@ public class RemoteConfigManager {
     public static String getEmail() {
         return "support@Vungtv.vn";
     }
+
+    public static int getVersionCode() {
+        return 2;
+    }
+
+    public static String getVersionname() {
+        return "2.0";
+    }
+
+    public static String getContentUpdate() {
+        return "Vừng TV đã có phiên bản 2.0<br/>Cập nhật thêm tính năng mới.<br/>Sửa 1 số lỗi.";
+    }
+
+    public static boolean isUpdateFromStore() {
+        return true;
+    }
 }

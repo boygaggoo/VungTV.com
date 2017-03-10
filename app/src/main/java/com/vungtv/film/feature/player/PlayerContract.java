@@ -92,6 +92,8 @@ public interface PlayerContract {
 
         void reloadEpisodeInfo();
 
+        void retryPlayWithHLS();
+
         void retryPlayer();
 
         void nextEpisode();

@@ -73,14 +73,20 @@
             android:configChanges="keyboard|keyboardHidden|orientation|screenSize|screenLayout|smallestScreenSize|uiMode"
             android:launchMode="singleTop"
             android:theme="@style/AppTheme.FullScreen" />
-        <activity android:name=".feature.recent.RecentActivity" />
+
+        <activity
+            android:configChanges="keyboardHidden|orientation|screenSize"
+            android:name=".feature.recent.RecentActivity" />
+
+        <activity
+            android:configChanges="keyboardHidden|orientation|screenSize"
+            android:name=".feature.sendrequest.RequestActivity" />
 
         <service
             android:name=".services.LogoutService"
             android:enabled="true"
             android:exported="true" />
 
-        <activity android:name=".feature.sendrequest.RequestActivity"></activity>
     </application>
 
 </manifest>

@@ -1,6 +1,7 @@
 package com.vungtv.film.feature.home;
 
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
@@ -9,16 +10,19 @@ import android.view.ViewGroup;
 import android.widget.LinearLayout;
 
 import com.vungtv.film.R;
+import com.vungtv.film.data.source.local.RemoteConfigManager;
 import com.vungtv.film.eventbus.ConfigurationChangedEvent;
 import com.vungtv.film.eventbus.RecentModifyEvent;
 import com.vungtv.film.feature.filtermovies.FilterMoviesActivity;
 import com.vungtv.film.feature.moviedetail.MovieDetailActivity;
 import com.vungtv.film.feature.player.PlayerActivity;
 import com.vungtv.film.feature.recent.RecentActivity;
+import com.vungtv.film.feature.sendrequest.RequestActivity;
 import com.vungtv.film.interfaces.OnRecentInfoClickListener;
 import com.vungtv.film.model.MovieRecent;
 import com.vungtv.film.model.Slider;
 import com.vungtv.film.popup.PopupLoading;
+import com.vungtv.film.util.IntentUtils;
 import com.vungtv.film.util.LogUtils;
 import com.vungtv.film.widget.VtvErrorMsgView;
 import com.vungtv.film.widget.VtvFooterView;
@@ -64,7 +68,6 @@ public class HomeFragment extends Fragment implements HomeContract.View {
         View v =  inflater.inflate(R.layout.fragment_home, container, false);
         ButterKnife.bind(this, v);
         EventBus.getDefault().register(this);
-        presenter.start();
         return v;
     }
 
@@ -81,6 +84,9 @@ public class HomeFragment extends Fragment implements HomeContract.View {
     @Override
     public void onStart() {
         super.onStart();
+        if (containerLayout.getChildCount() == 0) {
+            presenter.start();
+        }
     }
 
     @Override
@@ -99,8 +105,8 @@ public class HomeFragment extends Fragment implements HomeContract.View {
 
     @Override
     public void onDestroyView() {
-        presenter.onDestroy();
         EventBus.getDefault().unregister(this);
+        presenter.onDestroy();
         super.onDestroyView();
     }
 
@@ -131,7 +137,7 @@ public class HomeFragment extends Fragment implements HomeContract.View {
     @Override
     public void openActPlayer(MovieRecent mov) {
         getActivity().startActivity(PlayerActivity.buildIntentRecent(
-                getActivity(), mov.getMovId(), mov.getMovName(), mov.getMovEpsHash()));
+                getActivity(), mov.getMovId(), mov.getMovName(), mov.getMovFrameBg(), mov.getMovEpsHash()));
     }
 
     @Override
@@ -250,6 +256,40 @@ public class HomeFragment extends Fragment implements HomeContract.View {
     public void addFooterView() {
         if (footerView == null) {
             footerView = new VtvFooterView(getActivity());
+            footerView.setOnFooterViewListener(new VtvFooterView.OnFooterViewListener() {
+                @Override
+                public void onSendMessenge() {
+                    Intent intent = IntentUtils.sendFbMessenger(
+                            getContext().getPackageManager(),
+                            RemoteConfigManager.getFanpageId(),
+                            RemoteConfigManager.getFanpageUrl()
+                    );
+                    startActivity(intent);
+                }
+
+                @Override
+                public void onOpenFanpage() {
+                    Intent intent = IntentUtils.openFacebook(
+                            getContext().getPackageManager(),
+                            RemoteConfigManager.getFanpageId(),
+                            RemoteConfigManager.getFanpageUrl()
+                    );
+                    startActivity(intent);
+                }
+
+                @Override
+                public void onSendEmail() {
+                    startActivity(new Intent(HomeFragment.this.getActivity(), RequestActivity.class));
+                }
+
+                @Override
+                public void onSendReport() {
+                    Intent intent = IntentUtils.sendEmail(
+                            RemoteConfigManager.getEmail()
+                    );
+                    startActivity(intent);
+                }
+            });
         }
         containerLayout.addView(footerView);
     }

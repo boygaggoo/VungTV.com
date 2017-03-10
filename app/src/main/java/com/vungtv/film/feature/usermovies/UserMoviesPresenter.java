@@ -143,9 +143,10 @@ public class UserMoviesPresenter implements UserMoviesContract.Presenter, UserMo
         }
 
         activityView.addItemMovie(data.getMovies());
-
-        isLoadmore = true;
-        userMoviesServices.setOffset(data.getOffset() + userMoviesServices.getLimit());
+        if (data.getMovies().size() >= userMoviesServices.getLimit()) {
+            userMoviesServices.setOffset(data.getOffset() + userMoviesServices.getLimit());
+            isLoadmore = true;
+        }
     }
 
     @Override

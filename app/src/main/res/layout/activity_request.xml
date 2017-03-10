@@ -15,38 +15,46 @@
         android:layout_marginBottom="@dimen/space_16"
         app:textTitle="@string/request_text_title"/>
 
-    <com.vungtv.film.widget.VtvEditText
-        style="@style/AppTheme.Edittext.NapThe"
-        android:id="@+id/request_ed_title"
-        android:layout_height="@dimen/space_48"
-        android:layout_margin="@dimen/margin"
-        android:maxLines="1"
-        android:maxLength="100"
-        android:hint="@string/request_hint_subject"/>
-
-    <com.vungtv.film.widget.VtvEditText
-        style="@style/AppTheme.Edittext.NapThe"
-        android:id="@+id/request_ed_content"
+    <LinearLayout
+        android:id="@+id/request_layout_content"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:minHeight="@dimen/space_96"
-        android:layout_marginLeft="@dimen/margin"
-        android:layout_marginRight="@dimen/margin"
-        android:padding="@dimen/margin"
-        android:gravity="top|left|start"
-        android:maxLines="5"
-        android:maxLength="250"
-        android:hint="@string/request_hint_content"/>
-
-    <com.vungtv.film.widget.VtvButton
-        android:id="@+id/request_btn_submit"
-        style="@style/AppTheme.Dialog.Button"
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/space_48"
-        android:layout_margin="@dimen/margin"
+        android:layout_height="match_parent"
         android:layout_gravity="center_horizontal"
-        android:textAllCaps="true"
-        android:text="@string/request_action_send"
-        app:textStyle="bold"/>
+        android:orientation="vertical">
+
+        <com.vungtv.film.widget.VtvEditText
+            style="@style/AppTheme.Edittext.NapThe"
+            android:id="@+id/request_ed_title"
+            android:layout_margin="@dimen/margin"
+            android:maxLines="1"
+            android:maxLength="100"
+            android:hint="@string/request_hint_subject"/>
+
+        <com.vungtv.film.widget.VtvEditText
+            style="@style/AppTheme.Edittext.NapThe"
+            android:id="@+id/request_ed_content"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:minHeight="@dimen/space_128"
+            android:layout_marginLeft="@dimen/margin"
+            android:layout_marginRight="@dimen/margin"
+            android:padding="@dimen/margin"
+            android:gravity="top|left|start"
+            android:maxLines="10"
+            android:maxLength="250"
+            android:hint="@string/request_hint_content"/>
+
+        <com.vungtv.film.widget.VtvButton
+            android:id="@+id/request_btn_submit"
+            style="@style/AppTheme.Dialog.Button"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/space_36"
+            android:layout_margin="@dimen/margin"
+            android:layout_gravity="center_horizontal"
+            android:textAllCaps="true"
+            android:text="@string/request_action_send"
+            app:textStyle="bold"/>
+
+    </LinearLayout>
 
 </LinearLayout>

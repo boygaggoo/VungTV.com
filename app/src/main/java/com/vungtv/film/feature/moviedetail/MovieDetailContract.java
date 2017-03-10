@@ -48,9 +48,9 @@ public interface MovieDetailContract {
 
         void openActMovieDetail(int movId);
 
-        void openActPlayer(int movId, String movName, String epsHash);
+        void openActPlayer(int movId, String movName, String movCover, String epsHash);
 
-        void openActPlayerRecent(int movId, String movName, String epsHash);
+        void openActPlayerRecent(int movId, String movName, String movCover, String epsHash);
 
         void openActPlayerYoutube(String videoId);
 

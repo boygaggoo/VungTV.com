@@ -17,7 +17,7 @@ import static com.google.gson.internal.$Gson$Preconditions.checkNotNull;
  * Created by pc on 2/8/2017.
  */
 
-public class SearchPresenter implements SearchContract.Presenter {
+public class SearchPresenter implements SearchContract.Presenter, SearchServices.SearchResultCallback {
 
     private final Context context;
 
@@ -38,26 +38,7 @@ public class SearchPresenter implements SearchContract.Presenter {
         this.activityView.setPresenter(this);
 
         searchServices = new SearchServices(context);
-        searchServices.setSearchResultCallback(new SearchServices.SearchResultCallback() {
-            @Override
-            public void onSearchResultSuccess(ApiSearch.Data data) {
-                activityView.showLoadding(false);
-                activityView.showMsgError(false, null);
-
-                activityView.addItemMovie((ArrayList<Movie>) data.getMovies());
-
-                if (data.getMovies().size() > 0) {
-                    isLoadmore = true;
-                    searchServices.setOffset(data.getOffset() + data.getLimit());
-                }
-            }
-
-            @Override
-            public void onFailure(int code, String error) {
-                activityView.showLoadding(false);
-                activityView.showMsgError(true, error);
-            }
-        });
+        searchServices.setSearchResultCallback(this);
     }
 
     @Override
@@ -159,5 +140,22 @@ public class SearchPresenter implements SearchContract.Presenter {
         isLoadmore = true;
     }
 
+    @Override
+    public void onSearchResultSuccess(ApiSearch.Data data) {
+        activityView.showLoadding(false);
+        activityView.showMsgError(false, null);
 
+        activityView.addItemMovie((ArrayList<Movie>) data.getMovies());
+
+        if (data.getMovies().size() >= data.getLimit()) {
+            isLoadmore = true;
+            searchServices.setOffset(data.getOffset() + data.getLimit());
+        }
+    }
+
+    @Override
+    public void onFailure(int code, String error) {
+        activityView.showLoadding(false);
+        activityView.showMsgError(true, error);
+    }
 }

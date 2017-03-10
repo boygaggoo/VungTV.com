@@ -9,8 +9,6 @@ import android.view.View;
 import android.widget.LinearLayout;
 
 import com.vungtv.film.R;
-import com.vungtv.film.data.source.local.RemoteConfigManager;
-import com.vungtv.film.util.IntentUtils;
 
 public class VtvFooterView extends LinearLayout {
     private static final String TAG = VtvFooterView.class.getSimpleName();
@@ -65,22 +63,11 @@ public class VtvFooterView extends LinearLayout {
                 case R.id.footer_messenge:
                     if (onFooterViewListener != null) {
                         onFooterViewListener.onSendMessenge();
-                    } else {
-                        IntentUtils.sendFbMessenger(
-                                getContext().getPackageManager(),
-                                RemoteConfigManager.getFanpageId(),
-                                RemoteConfigManager.getFanpageUrl()
-                        );
                     }
                     break;
                 case R.id.footer_facebook:
                     if (onFooterViewListener != null) {
                         onFooterViewListener.onOpenFanpage();
-                    } else {
-                        IntentUtils.openFacebook(
-                                getContext().getPackageManager(),
-                                RemoteConfigManager.getFanpageUrl()
-                        );
                     }
                     break;
                 case R.id.footer_request:
@@ -88,10 +75,6 @@ public class VtvFooterView extends LinearLayout {
                         onFooterViewListener.onSendEmail();
                     } else if (onRequestListener != null) {
                         onRequestListener.onRequest();
-                    } else {
-                        IntentUtils.sendEmail(
-                                RemoteConfigManager.getEmail()
-                        );
                     }
                     break;
                 case R.id.footer_report:

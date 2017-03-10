@@ -132,7 +132,6 @@ public class FilterMoviesPresenter implements FilterMoviesContract.Presenter {
         itemWidth = itemWidth / columNumber;
 
         activityView.updateRecyclerView(columNumber, rowAdsNumber, itemWidth);
-
         isLoadmore = true;
     }
 
@@ -183,7 +182,7 @@ public class FilterMoviesPresenter implements FilterMoviesContract.Presenter {
                     activityView.addAdsNative();
                 }
                 activityView.addItemMovie(dataPage.getMovies());
-                if (dataPage.getMovies().size() > 0) {
+                if (dataPage.getMovies().size() >= filterMoviesServices.getLimit()) {
                     isLoadmore = true;
                     filterMoviesServices.setOffset(dataPage.getOffset() + filterMoviesServices.getLimit());
                 }

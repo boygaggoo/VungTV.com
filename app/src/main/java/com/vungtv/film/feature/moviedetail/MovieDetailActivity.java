@@ -394,14 +394,14 @@ public class MovieDetailActivity extends BaseActivity implements MovieDetailCont
     }
 
     @Override
-    public void openActPlayer(int movId, String movName, String epsHash) {
-        Intent intent = PlayerActivity.buildIntent(this, movId, movName, epsHash);
+    public void openActPlayer(int movId, String movName, String movCover, String epsHash) {
+        Intent intent = PlayerActivity.buildIntent(this, movId, movName, movCover, epsHash);
         startActivity(intent);
     }
 
     @Override
-    public void openActPlayerRecent(int movId, String movName, String epsHash) {
-        Intent intent = PlayerActivity.buildIntentRecent(this, movId, movName, epsHash);
+    public void openActPlayerRecent(int movId, String movName, String movCover, String epsHash) {
+        Intent intent = PlayerActivity.buildIntentRecent(this, movId, movName, movCover, epsHash);
         startActivity(intent);
     }
 
