@@ -5,13 +5,13 @@ import android.view.View;
 import android.widget.CompoundButton;
 import android.widget.Switch;
 
+import com.vungtv.film.App;
 import com.vungtv.film.BaseActivity;
 import com.vungtv.film.R;
 import com.vungtv.film.widget.VtvToolbarSetting;
 import com.vungtv.film.widget.VtvTwoTextView;
 
 import butterknife.BindView;
-import butterknife.ButterKnife;
 import butterknife.OnClick;
 
 import static com.google.gson.internal.$Gson$Preconditions.checkNotNull;
@@ -52,6 +52,12 @@ public class SettingActivity extends BaseActivity implements SettingContract.Vie
         });
 
         new SettingPresenter(this, this);
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        App.getInstance().trackScreenView("Setting Screen");
     }
 
     @Override

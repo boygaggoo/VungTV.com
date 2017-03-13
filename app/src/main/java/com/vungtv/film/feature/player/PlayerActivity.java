@@ -203,6 +203,7 @@ public class PlayerActivity extends AppCompatActivity implements PlayerContract.
         if ((Util.SDK_INT <= 23 || player == null)) {
             initPlayer();
         }
+        App.getInstance().trackScreenView("Player Screen");
     }
 
     @Override

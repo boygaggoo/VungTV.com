@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.widget.EditText;
 
+import com.vungtv.film.App;
 import com.vungtv.film.BaseActivity;
 import com.vungtv.film.R;
 import com.vungtv.film.data.source.remote.service.AccountServices;
@@ -39,6 +40,12 @@ public class ChangePassActivity extends BaseActivity implements ChangePassContra
 
         new ChangePassPresenter(this, new AccountServices(this), this);
         presenter.start();
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        App.getInstance().trackScreenView("Change Pass Screen");
     }
 
     @Override

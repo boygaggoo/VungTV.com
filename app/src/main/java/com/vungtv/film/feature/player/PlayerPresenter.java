@@ -3,6 +3,7 @@ package com.vungtv.film.feature.player;
 import android.content.Context;
 import android.content.Intent;
 
+import com.vungtv.film.App;
 import com.vungtv.film.R;
 import com.vungtv.film.data.source.local.MovieRecentManager;
 import com.vungtv.film.data.source.local.UserSessionManager;
@@ -80,6 +81,11 @@ public class PlayerPresenter implements PlayerContract.Presenter, PlayerServices
         movName = intent.getStringExtra(PlayerActivity.INTENT_MOV_NAME);
         epsHash = intent.getStringExtra(PlayerActivity.INTENT_EPS_HASH);
         isRecent = intent.getBooleanExtra(PlayerActivity.INTENT_RECENT, false);
+        if (isRecent) {
+            App.getInstance().trackEvent("Player", "Play movie", "Play movie from recent.");
+        } else {
+            App.getInstance().trackEvent("Player", "Play movie", "Play movie from list episodes.");
+        }
     }
 
     @Override

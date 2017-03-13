@@ -3,6 +3,7 @@ package com.vungtv.film.feature.userinfo;
 import android.content.Intent;
 import android.os.Bundle;
 
+import com.vungtv.film.App;
 import com.vungtv.film.BaseActivity;
 import com.vungtv.film.R;
 import com.vungtv.film.data.source.remote.service.AccountServices;
@@ -64,6 +65,12 @@ public class UserInfoActivity extends BaseActivity implements UserInfoContract.V
 
         new UserInfoPresenter(this, this, new AccountServices(this));
         presenter.start();
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        App.getInstance().trackScreenView("User Infomation Screen");
     }
 
     @Override

@@ -6,6 +6,7 @@ import android.support.v4.app.FragmentManager;
 import android.view.View;
 import android.widget.EditText;
 
+import com.vungtv.film.App;
 import com.vungtv.film.BaseFragment;
 import com.vungtv.film.R;
 import com.vungtv.film.util.ActivityUtils;
@@ -40,6 +41,12 @@ public class LoginFragment extends BaseFragment implements LoginContract.View {
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        App.getInstance().trackScreenView("Login Screen");
     }
 
     @Override

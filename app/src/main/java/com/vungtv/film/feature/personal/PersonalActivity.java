@@ -8,17 +8,18 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
+import com.vungtv.film.App;
 import com.vungtv.film.BaseActivity;
 import com.vungtv.film.R;
 import com.vungtv.film.eventbus.AccountModifyEvent;
 import com.vungtv.film.feature.buyvip.BuyVipActivity;
 import com.vungtv.film.feature.changepass.ChangePassActivity;
-import com.vungtv.film.feature.recent.RecentActivity;
-import com.vungtv.film.feature.usermovies.UserMoviesActivity;
 import com.vungtv.film.feature.login.LoginActivity;
 import com.vungtv.film.feature.logout.LogOutActivity;
+import com.vungtv.film.feature.recent.RecentActivity;
 import com.vungtv.film.feature.setting.SettingActivity;
 import com.vungtv.film.feature.userinfo.UserInfoActivity;
+import com.vungtv.film.feature.usermovies.UserMoviesActivity;
 import com.vungtv.film.interfaces.OnItemClickListener;
 import com.vungtv.film.model.User;
 import com.vungtv.film.util.LoginGoogleUtils;
@@ -60,6 +61,12 @@ public class PersonalActivity extends BaseActivity implements PersonalContract.V
 
         new PersonalPresenter(this, this, new LoginGoogleUtils(this));
         presenter.start();
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        App.getInstance().trackScreenView("Personal Screen");
     }
 
     @Override

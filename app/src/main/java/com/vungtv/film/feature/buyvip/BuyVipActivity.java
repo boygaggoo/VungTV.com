@@ -6,6 +6,7 @@ import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 
+import com.vungtv.film.App;
 import com.vungtv.film.BaseActivity;
 import com.vungtv.film.R;
 import com.vungtv.film.data.source.remote.service.BillingServices;
@@ -57,12 +58,19 @@ public class BuyVipActivity extends BaseActivity implements BuyVipContract.View 
             @Override
             public void onItemClick(View v, int pos) {
                 presenter.buyVip(pos);
+                App.getInstance().trackEvent("Personal", "Buy vip", "Click buy vip");
             }
         });
 
         new BuyVipPresenter(this, this, new BillingServices(this));
 
         presenter.start();
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        App.getInstance().trackScreenView("Buy Vip Screen");
     }
 
     @Override

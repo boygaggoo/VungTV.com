@@ -3,6 +3,7 @@ package com.vungtv.film.feature.login;
 import android.support.v4.app.FragmentManager;
 import android.widget.EditText;
 
+import com.vungtv.film.App;
 import com.vungtv.film.BaseFragment;
 import com.vungtv.film.R;
 import com.vungtv.film.util.ActivityUtils;
@@ -35,6 +36,12 @@ public class RegisterFragment extends BaseFragment implements LoginContract.View
     @Override
     protected int getFragmentLayout() {
         return R.layout.fragment_register;
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        App.getInstance().trackScreenView("Register Screen");
     }
 
     @Override

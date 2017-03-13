@@ -11,6 +11,7 @@ import android.view.inputmethod.EditorInfo;
 import android.widget.EditText;
 import android.widget.TextView;
 
+import com.vungtv.film.App;
 import com.vungtv.film.BaseActivity;
 import com.vungtv.film.R;
 import com.vungtv.film.feature.filtermovies.FilterMoviesAdapter;
@@ -80,6 +81,12 @@ public class SearchActivity extends BaseActivity implements SearchContract.View 
 
         new SearchPresenter(this, this);
         presenter.start();
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        App.getInstance().trackScreenView("Search Screen");
     }
 
     @Override

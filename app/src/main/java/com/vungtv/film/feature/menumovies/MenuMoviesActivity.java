@@ -8,6 +8,7 @@ import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.vungtv.film.App;
 import com.vungtv.film.BaseActivity;
 import com.vungtv.film.R;
 import com.vungtv.film.feature.filtermovies.FilterMoviesActivity;
@@ -60,6 +61,12 @@ public class MenuMoviesActivity extends BaseActivity implements MenuMoviesContra
         new MenuMoviesPresenter(this, this);
         presenter.getIntent(getIntent());
         presenter.loadContent();
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        App.getInstance().trackScreenView("Menu Movies Screen");
     }
 
     @Override

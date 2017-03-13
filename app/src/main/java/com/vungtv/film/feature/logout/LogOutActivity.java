@@ -3,6 +3,7 @@ package com.vungtv.film.feature.logout;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 
+import com.vungtv.film.App;
 import com.vungtv.film.BaseActivity;
 import com.vungtv.film.R;
 import com.vungtv.film.data.source.local.UserSessionManager;
@@ -35,6 +36,12 @@ public class LogOutActivity extends BaseActivity implements AccountServices.OnLo
         accountServices.setOnLogoutListener(this);
         loginGoogleUtils = new LoginGoogleUtils(this);
         popupLoading.show();
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        App.getInstance().trackScreenView("Logout Screen");
     }
 
     @Override

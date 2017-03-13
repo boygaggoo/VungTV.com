@@ -10,6 +10,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.TextView;
 
+import com.vungtv.film.App;
 import com.vungtv.film.BaseActivity;
 import com.vungtv.film.R;
 import com.vungtv.film.data.source.remote.model.ApiPopupFilterMovies;
@@ -91,6 +92,12 @@ public class FilterMoviesActivity extends BaseActivity implements FilterMoviesCo
         presenter.start();
         presenter.getIntentData(getIntent());
         presenter.loadData();
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        App.getInstance().trackScreenView("Filter movies Screen");
     }
 
     @Override

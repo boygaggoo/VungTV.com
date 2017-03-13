@@ -4,6 +4,7 @@ import android.content.res.Configuration;
 import android.os.Bundle;
 import android.widget.LinearLayout;
 
+import com.vungtv.film.App;
 import com.vungtv.film.BaseActivity;
 import com.vungtv.film.R;
 import com.vungtv.film.widget.VtvEditText;
@@ -51,6 +52,12 @@ public class RequestActivity extends BaseActivity implements RequestContract.Vie
         }
 
         new RequestPresenter(this, this);
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        App.getInstance().trackScreenView("Request Screen");
     }
 
     @Override

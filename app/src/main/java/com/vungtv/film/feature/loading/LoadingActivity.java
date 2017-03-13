@@ -8,6 +8,7 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Base64;
 
+import com.vungtv.film.App;
 import com.vungtv.film.R;
 import com.vungtv.film.eventbus.AccountModifyEvent;
 import com.vungtv.film.feature.home.HomeActivity;
@@ -47,6 +48,12 @@ public class LoadingActivity extends AppCompatActivity implements LoadingContrac
     protected void onStart() {
         super.onStart();
         presenter.start();
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        App.getInstance().trackScreenView("Loading Screen");
     }
 
     @Override

@@ -10,6 +10,7 @@ import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.RadioGroup;
 
+import com.vungtv.film.App;
 import com.vungtv.film.BaseActivity;
 import com.vungtv.film.R;
 import com.vungtv.film.data.source.remote.service.BillingServices;
@@ -89,6 +90,12 @@ public class RechargeActivity extends BaseActivity implements RechargeContract.V
     }
 
     @Override
+    protected void onResume() {
+        super.onResume();
+        App.getInstance().trackScreenView("Recharge Screen");
+    }
+
+    @Override
     protected void onDestroy() {
         presenter.onDestroy();
         super.onDestroy();
@@ -157,5 +164,6 @@ public class RechargeActivity extends BaseActivity implements RechargeContract.V
         cardInfo[2] = edCardSerial.getText().toString();
 
         presenter.rechargeSubmit(cardInfo);
+        App.getInstance().trackEvent("Personal", "Recharge", "Click recharge");
     }
 }

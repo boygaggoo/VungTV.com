@@ -9,6 +9,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.LinearLayout;
 
+import com.vungtv.film.App;
 import com.vungtv.film.BaseActivity;
 import com.vungtv.film.R;
 import com.vungtv.film.data.source.local.UserSessionManager;
@@ -79,6 +80,12 @@ public class HomeActivity extends BaseActivity implements OnNavItemSelectedListe
         HomeServices.loadHomeMenu();
         new HomePresenter(this, homeFragment, HomeServices);
 
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        App.getInstance().trackScreenView("Home Screen");
     }
 
     @Override

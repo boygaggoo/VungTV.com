@@ -10,6 +10,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.TextView;
 
+import com.vungtv.film.App;
 import com.vungtv.film.BaseActivity;
 import com.vungtv.film.R;
 import com.vungtv.film.feature.filtermovies.FilterMoviesAdapter;
@@ -56,8 +57,6 @@ public class UserMoviesActivity extends BaseActivity implements UserMoviesContra
     @BindView(R.id.text_msg_error)
     TextView textMsgError;
 
-    private int curItemView = 0;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -86,6 +85,20 @@ public class UserMoviesActivity extends BaseActivity implements UserMoviesContra
     }
 
     @Override
+    protected void onResume() {
+        super.onResume();
+
+        if (getIntent() != null) {
+            int pageType = getIntent().getIntExtra(INTENT_PAGE, PAGE_FAVORITE);
+            if (pageType == PAGE_FAVORITE) {
+                App.getInstance().trackScreenView("Favorite movies Screen");
+            } else if (pageType == PAGE_FOLLOW){
+                App.getInstance().trackScreenView("Follow movies Screen");
+            }
+        }
+    }
+
+    @Override
     protected void onDestroy() {
         presenter.onDestroy();
         super.onDestroy();
@@ -94,7 +107,6 @@ public class UserMoviesActivity extends BaseActivity implements UserMoviesContra
     @Override
     public void onConfigurationChanged(Configuration newConfig) {
         super.onConfigurationChanged(newConfig);
-        curItemView = ((GridLayoutManager)recyclerView.getLayoutManager()).findFirstVisibleItemPosition();
         presenter.configChange(isScreenLand);
     }
 

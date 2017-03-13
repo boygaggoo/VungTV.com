@@ -12,6 +12,7 @@ import android.widget.RatingBar;
 
 import com.google.android.youtube.player.YouTubeStandalonePlayer;
 import com.squareup.picasso.Picasso;
+import com.vungtv.film.App;
 import com.vungtv.film.BaseActivity;
 import com.vungtv.film.R;
 import com.vungtv.film.feature.buyvip.BuyVipActivity;
@@ -121,6 +122,12 @@ public class MovieDetailActivity extends BaseActivity implements MovieDetailCont
 
         new MovieDetailPresenter(this, this);
         presenter.startLoadDetail(getIntent().getIntExtra(INTENT_MOVIE_ID, 0));
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        App.getInstance().trackScreenView("Movie detail Screen");
     }
 
     /**
