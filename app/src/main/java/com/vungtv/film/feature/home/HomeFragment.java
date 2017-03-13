@@ -17,8 +17,9 @@ import com.vungtv.film.feature.filtermovies.FilterMoviesActivity;
 import com.vungtv.film.feature.moviedetail.MovieDetailActivity;
 import com.vungtv.film.feature.player.PlayerActivity;
 import com.vungtv.film.feature.recent.RecentActivity;
-import com.vungtv.film.feature.sendrequest.RequestActivity;
+import com.vungtv.film.feature.request.RequestActivity;
 import com.vungtv.film.interfaces.OnRecentInfoClickListener;
+import com.vungtv.film.model.Config;
 import com.vungtv.film.model.MovieRecent;
 import com.vungtv.film.model.Slider;
 import com.vungtv.film.popup.PopupLoading;
@@ -259,35 +260,44 @@ public class HomeFragment extends Fragment implements HomeContract.View {
             footerView.setOnFooterViewListener(new VtvFooterView.OnFooterViewListener() {
                 @Override
                 public void onSendMessenge() {
-                    Intent intent = IntentUtils.sendFbMessenger(
-                            getContext().getPackageManager(),
-                            RemoteConfigManager.getFanpageId(),
-                            RemoteConfigManager.getFanpageUrl()
-                    );
-                    startActivity(intent);
+                    Config config = RemoteConfigManager.getConfigs(getActivity());
+                    if (config != null) {
+                        Intent intent = IntentUtils.sendFbMessenger(
+                                getContext().getPackageManager(),
+                                config.getFanPageId(),
+                                config.getFanPage()
+                        );
+                        startActivity(intent);
+                    }
                 }
 
                 @Override
                 public void onOpenFanpage() {
-                    Intent intent = IntentUtils.openFacebook(
-                            getContext().getPackageManager(),
-                            RemoteConfigManager.getFanpageId(),
-                            RemoteConfigManager.getFanpageUrl()
-                    );
-                    startActivity(intent);
+                    Config config = RemoteConfigManager.getConfigs(getActivity());
+                    if (config != null) {
+                        Intent intent = IntentUtils.openFacebook(
+                                getContext().getPackageManager(),
+                                config.getFanPageId(),
+                                config.getFanPage()
+                        );
+                        startActivity(intent);
+                    }
                 }
 
                 @Override
-                public void onSendEmail() {
+                public void onSendRequest() {
                     startActivity(new Intent(HomeFragment.this.getActivity(), RequestActivity.class));
                 }
 
                 @Override
                 public void onSendReport() {
-                    Intent intent = IntentUtils.sendEmail(
-                            RemoteConfigManager.getEmail()
-                    );
-                    startActivity(intent);
+                    Config config = RemoteConfigManager.getConfigs(getActivity());
+                    if (config != null) {
+                        Intent intent = IntentUtils.sendEmail(
+                                config.getEmail()
+                        );
+                        startActivity(intent);
+                    }
                 }
             });
         }

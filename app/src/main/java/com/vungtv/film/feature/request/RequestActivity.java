@@ -1,4 +1,4 @@
-package com.vungtv.film.feature.sendrequest;
+package com.vungtv.film.feature.request;
 
 import android.content.res.Configuration;
 import android.os.Bundle;
@@ -22,9 +22,6 @@ public class RequestActivity extends BaseActivity implements RequestContract.Vie
 
     @BindView(R.id.request_layout_content)
     LinearLayout layoutContent;
-
-    @BindView(R.id.request_ed_title)
-    VtvEditText edTitle;
 
     @BindView(R.id.request_ed_content)
     VtvEditText edContent;
@@ -92,7 +89,7 @@ public class RequestActivity extends BaseActivity implements RequestContract.Vie
 
     @OnClick(R.id.request_btn_submit)
     public void onBtnSubmitClick() {
-        presenter.sendRequest(edTitle.getText().toString(), edContent.getText().toString());
+        presenter.sendRequest(edContent.getText().toString());
     }
 
     @Override
@@ -112,7 +109,6 @@ public class RequestActivity extends BaseActivity implements RequestContract.Vie
 
     @Override
     public void resetEdittext() {
-        edTitle.setText("");
         edContent.setText("");
     }
 

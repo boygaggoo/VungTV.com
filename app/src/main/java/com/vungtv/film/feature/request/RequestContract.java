@@ -1,4 +1,4 @@
-package com.vungtv.film.feature.sendrequest;
+package com.vungtv.film.feature.request;
 
 import com.vungtv.film.BasePresenter;
 import com.vungtv.film.BaseView;
@@ -21,6 +21,6 @@ public interface RequestContract {
 
     interface Presenter extends BasePresenter {
 
-        void sendRequest(String title, String content);
+        void sendRequest(String content);
     }
 }

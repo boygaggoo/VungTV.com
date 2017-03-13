@@ -1,8 +1,9 @@
-package com.vungtv.film.feature.sendrequest;
+package com.vungtv.film.feature.request;
 
 import android.content.Context;
 
 import com.vungtv.film.R;
+import com.vungtv.film.data.source.local.UserSessionManager;
 import com.vungtv.film.data.source.remote.service.RequestServices;
 import com.vungtv.film.util.StringUtils;
 
@@ -40,10 +41,11 @@ public class RequestPresenter implements RequestContract.Presenter, RequestServi
     }
 
     @Override
-    public void sendRequest(String title, String content) {
-        if (StringUtils.isNotEmpty(title) && StringUtils.isNotEmpty(content)) {
+    public void sendRequest(String content) {
+
+        if (StringUtils.isNotEmpty(content)) {
             activityView.showLoading(true);
-            requestServices.sendRequest(title, content);
+            requestServices.sendRequest(content, UserSessionManager.getAccessToken(context));
         } else {
             activityView.showMsgError(context.getString(R.string.request_error_require));
         }

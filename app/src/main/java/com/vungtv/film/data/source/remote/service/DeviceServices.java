@@ -15,17 +15,19 @@ import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.POST;
 
 /**
- *
- * Created by pc on 3/10/2017.
+ * Content class.
+ * <p>
+ * Created by Mr Cuong on 3/13/2017.
+ * Email: vancuong2941989@gmail.com
  */
 
-public class RequestServices extends BaseApiServices {
+public class DeviceServices extends BaseApiServices {
 
-    private Call<ApiModel> call;
+    private Call<ApiModel> callDevice;
 
     private ResultCallback resultCallback;
 
-    public RequestServices(Context context) {
+    public DeviceServices(Context context) {
         super(context);
     }
 
@@ -33,20 +35,13 @@ public class RequestServices extends BaseApiServices {
         this.resultCallback = resultCallback;
     }
 
-    /**
-     * Gửi yêu cầu;
-     *
-     * @param content noi dung yeu cau
-     * @param token token đăng nhập
-     */
-    public void sendRequest(String content, String token) {
-        if (isInternetTurnOff(resultCallback)) {
+    public void registerDevice(String devId, String devFcmKey) {
+        if (isInternetTurnOff(null)) {
             return;
         }
-
         ServicesInterface services = retrofit.create(ServicesInterface.class);
-        call = services.sendRequest(content, token, "android");
-        call.enqueue(new Callback<ApiModel>() {
+        callDevice = services.registerDevice(devId, devFcmKey, "android");
+        callDevice.enqueue(new Callback<ApiModel>() {
             @Override
             public void onResponse(Call<ApiModel> call, Response<ApiModel> response) {
                 if (resultCallback == null) return;
@@ -63,7 +58,7 @@ public class RequestServices extends BaseApiServices {
                     return;
                 }
 
-                resultCallback.onRequestResultSuccess(apiModel.getMessage());
+                resultCallback.onRegisterDeviceSuccess();
             }
 
             @Override
@@ -75,26 +70,27 @@ public class RequestServices extends BaseApiServices {
                 t.printStackTrace();
             }
         });
-
     }
 
     @Override
     public void cancel() {
-        if (call != null && call.isExecuted()) {
-            call.cancel();
+        if (callDevice != null && callDevice.isExecuted()) {
+            callDevice.cancel();
         }
     }
 
     private interface ServicesInterface {
+
         @FormUrlEncoded
-        @POST("home/request")
-        Call<ApiModel> sendRequest(@Field("req_content") String content,
-                                      @Field("token") String token,
-                                      @Field("src") String src);
+        @POST("home/device_register")
+        Call<ApiModel> registerDevice(
+                @Field("dev_id") String devId,
+                @Field("dev_fcm_key") String fcmKey,
+                @Field("src") String src);
     }
 
     public interface ResultCallback extends ApiResultCallback {
 
-        void onRequestResultSuccess(String msg);
+        void onRegisterDeviceSuccess();
     }
 }

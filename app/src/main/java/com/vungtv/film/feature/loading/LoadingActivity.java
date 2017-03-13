@@ -27,6 +27,8 @@ import butterknife.ButterKnife;
 
 public class LoadingActivity extends AppCompatActivity implements LoadingContract.View {
 
+    public static final String INTENT_MOV_ID_NOTIFY = "INTENT_MOV_ID_NOTIFY";
+
     private LoadingContract.Presenter presenter;
 
     @BindView(R.id.loading_version)

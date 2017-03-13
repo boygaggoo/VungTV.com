@@ -72,7 +72,7 @@ public class VtvFooterView extends LinearLayout {
                     break;
                 case R.id.footer_request:
                     if (onFooterViewListener != null) {
-                        onFooterViewListener.onSendEmail();
+                        onFooterViewListener.onSendRequest();
                     } else if (onRequestListener != null) {
                         onRequestListener.onRequest();
                     }
@@ -89,7 +89,7 @@ public class VtvFooterView extends LinearLayout {
     public interface OnFooterViewListener {
         void onSendMessenge();
         void onOpenFanpage();
-        void onSendEmail();
+        void onSendRequest();
         void onSendReport();
     }
 

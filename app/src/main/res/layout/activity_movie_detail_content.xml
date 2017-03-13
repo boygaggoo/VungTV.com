@@ -264,6 +264,7 @@
         app:itemType="recomment"/>
 
     <com.vungtv.film.widget.VtvFooterView
+        android:id="@+id/mdetails_footer"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@+id/mdetails_relate_movies"/>

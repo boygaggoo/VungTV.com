@@ -15,21 +15,26 @@ import com.squareup.picasso.Picasso;
 import com.vungtv.film.App;
 import com.vungtv.film.BaseActivity;
 import com.vungtv.film.R;
+import com.vungtv.film.data.source.local.RemoteConfigManager;
 import com.vungtv.film.feature.buyvip.BuyVipActivity;
 import com.vungtv.film.feature.login.LoginActivity;
 import com.vungtv.film.feature.player.PlayerActivity;
+import com.vungtv.film.feature.request.RequestActivity;
 import com.vungtv.film.feature.search.SearchActivity;
 import com.vungtv.film.interfaces.OnItemClickListener;
+import com.vungtv.film.model.Config;
 import com.vungtv.film.model.Episode;
 import com.vungtv.film.model.Movie;
 import com.vungtv.film.popup.PopupMessenger;
 import com.vungtv.film.popup.PopupRating;
+import com.vungtv.film.util.IntentUtils;
 import com.vungtv.film.util.LogUtils;
 import com.vungtv.film.util.StringUtils;
 import com.vungtv.film.util.TextUtils;
 import com.vungtv.film.util.TimeUtils;
 import com.vungtv.film.widget.ExpandableTextView;
 import com.vungtv.film.widget.VtvAutofitMarginDecoration;
+import com.vungtv.film.widget.VtvFooterView;
 import com.vungtv.film.widget.VtvTextView;
 import com.vungtv.film.widget.moviesrowview.MoviesRowAdapter;
 import com.vungtv.film.widget.moviesrowview.VtvMovieRowView;
@@ -39,7 +44,7 @@ import java.util.ArrayList;
 import butterknife.BindView;
 import butterknife.OnClick;
 
-public class MovieDetailActivity extends BaseActivity implements MovieDetailContract.View, RatingBar.OnRatingBarChangeListener {
+public class MovieDetailActivity extends BaseActivity implements MovieDetailContract.View, RatingBar.OnRatingBarChangeListener, VtvFooterView.OnFooterViewListener {
 
     private static final String TAG = MovieDetailActivity.class.getSimpleName();
 
@@ -94,6 +99,9 @@ public class MovieDetailActivity extends BaseActivity implements MovieDetailCont
     @BindView(R.id.mdetails_relate_movies)
     VtvMovieRowView relateMovies;
 
+    @BindView(R.id.mdetails_footer)
+    VtvFooterView footerView;
+
     private PopupRating popupRating;
 
     private PopupMessenger popupMessenger;
@@ -119,6 +127,8 @@ public class MovieDetailActivity extends BaseActivity implements MovieDetailCont
             }
         });
         epsRecyclerView.setAdapter(adapter);
+
+        footerView.setOnFooterViewListener(this);
 
         new MovieDetailPresenter(this, this);
         presenter.startLoadDetail(getIntent().getIntExtra(INTENT_MOVIE_ID, 0));
@@ -442,5 +452,46 @@ public class MovieDetailActivity extends BaseActivity implements MovieDetailCont
     @Override
     public void onRatingChanged(RatingBar ratingBar, float v, boolean b) {
         showPopupRating(v);
+    }
+
+    public void onSendMessenge() {
+        Config config = RemoteConfigManager.getConfigs(this);
+        if (config != null) {
+            Intent intent = IntentUtils.sendFbMessenger(
+                    getPackageManager(),
+                    config.getFanPageId(),
+                    config.getFanPage()
+            );
+            startActivity(intent);
+        }
+    }
+
+    @Override
+    public void onOpenFanpage() {
+        Config config = RemoteConfigManager.getConfigs(this);
+        if (config != null) {
+            Intent intent = IntentUtils.openFacebook(
+                    getPackageManager(),
+                    config.getFanPageId(),
+                    config.getFanPage()
+            );
+            startActivity(intent);
+        }
+    }
+
+    @Override
+    public void onSendRequest() {
+        startActivity(new Intent(this, RequestActivity.class));
+    }
+
+    @Override
+    public void onSendReport() {
+        Config config = RemoteConfigManager.getConfigs(this);
+        if (config != null) {
+            Intent intent = IntentUtils.sendEmail(
+                    config.getEmail()
+            );
+            startActivity(intent);
+        }
     }
 }

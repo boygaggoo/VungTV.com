@@ -3,8 +3,11 @@ package com.vungtv.film.feature.loading;
 import android.content.Context;
 
 import com.vungtv.film.BuildConfig;
+import com.vungtv.film.data.source.local.RemoteConfigManager;
 import com.vungtv.film.data.source.local.UserSessionManager;
 import com.vungtv.film.data.source.remote.service.AccountServices;
+import com.vungtv.film.data.source.remote.service.ConfigServices;
+import com.vungtv.film.model.Config;
 import com.vungtv.film.model.User;
 import com.vungtv.film.util.LoginGoogleUtils;
 import com.vungtv.film.util.StringUtils;
@@ -18,20 +21,23 @@ public class LoadingPresenter implements LoadingContract.Presenter{
 
     private final LoadingContract.View activityView;
 
-    private LoginGoogleUtils loginGoogleUtils;
-
     private final AccountServices accountServices;
+
+    private final ConfigServices configServices;
+
+    private LoginGoogleUtils loginGoogleUtils;
 
 
     public LoadingPresenter(Context context, LoadingContract.View loadingView, LoginGoogleUtils loginGoogleUtils) {
         this.context = context;
         this.activityView = checkNotNull(loadingView);
         this.loginGoogleUtils = loginGoogleUtils;
-
-        accountServices = new AccountServices(context.getApplicationContext());
-
         loadingView.setPresenter(this);
+
+        this.accountServices = new AccountServices(context.getApplicationContext());
+        configServices = new ConfigServices(context.getApplicationContext());
         accountServiceResponse();
+        configServicesResponse();
     }
 
     @Override
@@ -52,8 +58,13 @@ public class LoadingPresenter implements LoadingContract.Presenter{
         if (!StringUtils.isEmpty(UserSessionManager.getAccessToken(context))) {
             accountServices.checkAccountInfo(UserSessionManager.getAccessToken(context));
         } else {
-            activityView.openActHome();
+            getAppConfig();
         }
+    }
+
+    @Override
+    public void getAppConfig() {
+        configServices.loadConfig();
     }
 
     private void accountServiceResponse() {
@@ -68,7 +79,11 @@ public class LoadingPresenter implements LoadingContract.Presenter{
         accountServices.setOnLoginResulListener(new AccountServices.OnLoginResulListener() {
             @Override
             public void onSuccess(User user, String token) {
+
                 UserSessionManager.updateUserSession(context, user);
+
+                // Load app config
+                getAppConfig();
             }
 
             @Override
@@ -76,18 +91,44 @@ public class LoadingPresenter implements LoadingContract.Presenter{
                 if (code == -999) {
                     accountServices.logout(UserSessionManager.getAccessToken(context));
                 } else {
-                    activityView.openActHome();
+                    // Load app config
+                    getAppConfig();
                 }
             }
         });
+
         accountServices.setOnLogoutListener(new AccountServices.OnLogoutListener() {
             @Override
             public void onLogoutSuccess() {
+
                 UserSessionManager.logout(context, loginGoogleUtils);
+
+                // Load app config
+                getAppConfig();
             }
 
             @Override
             public void onFailure(int code, String error) {
+                // Load app config
+                getAppConfig();
+            }
+        });
+    }
+
+    private void configServicesResponse() {
+        configServices.setResultCallback(new ConfigServices.ResultCallback() {
+            @Override
+            public void onGetConfigSuccess(Config config) {
+
+                RemoteConfigManager.setConfigs(context, config);
+
+                // Open Home screen
+                activityView.openActHome();
+            }
+
+            @Override
+            public void onFailure(int code, String error) {
+                // Open Home screen
                 activityView.openActHome();
             }
         });

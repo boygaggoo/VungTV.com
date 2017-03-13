@@ -5,50 +5,47 @@ import android.content.Context;
 import com.vungtv.film.data.source.remote.ApiError;
 import com.vungtv.film.data.source.remote.BaseApiServices;
 import com.vungtv.film.data.source.remote.interfaces.ApiResultCallback;
-import com.vungtv.film.data.source.remote.model.ApiModel;
+import com.vungtv.film.data.source.remote.model.ApiConfig;
+import com.vungtv.film.model.Config;
 
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
-import retrofit2.http.Field;
-import retrofit2.http.FormUrlEncoded;
-import retrofit2.http.POST;
+import retrofit2.http.GET;
 
 /**
- *
- * Created by pc on 3/10/2017.
+ * Content class.
+ * <p>
+ * Created by Mr Cuong on 3/13/2017.
+ * Email: vancuong2941989@gmail.com
  */
 
-public class RequestServices extends BaseApiServices {
+public class ConfigServices extends BaseApiServices {
 
-    private Call<ApiModel> call;
+    private Call<ApiConfig> callConfig;
+
+    private ServicesInterface servicesInterface;
 
     private ResultCallback resultCallback;
 
-    public RequestServices(Context context) {
+    public ConfigServices(Context context) {
         super(context);
+        servicesInterface = retrofit.create(ServicesInterface.class);
     }
 
     public void setResultCallback(ResultCallback resultCallback) {
         this.resultCallback = resultCallback;
     }
 
-    /**
-     * Gửi yêu cầu;
-     *
-     * @param content noi dung yeu cau
-     * @param token token đăng nhập
-     */
-    public void sendRequest(String content, String token) {
+    public void loadConfig () {
         if (isInternetTurnOff(resultCallback)) {
             return;
         }
 
-        ServicesInterface services = retrofit.create(ServicesInterface.class);
-        call = services.sendRequest(content, token, "android");
-        call.enqueue(new Callback<ApiModel>() {
+        callConfig = servicesInterface.getConfig();
+        callConfig.enqueue(new Callback<ApiConfig>() {
             @Override
-            public void onResponse(Call<ApiModel> call, Response<ApiModel> response) {
+            public void onResponse(Call<ApiConfig> call, Response<ApiConfig> response) {
                 if (resultCallback == null) return;
 
                 if (!response.isSuccessful()) {
@@ -57,17 +54,17 @@ public class RequestServices extends BaseApiServices {
                     return;
                 }
 
-                ApiModel apiModel = response.body();
+                ApiConfig apiModel = response.body();
                 if (!apiModel.getSuccess()) {
                     resultCallback.onFailure(apiModel.getCode(), apiModel.getMessage());
                     return;
                 }
 
-                resultCallback.onRequestResultSuccess(apiModel.getMessage());
+                resultCallback.onGetConfigSuccess(apiModel.getData().getConfig());
             }
 
             @Override
-            public void onFailure(Call<ApiModel> call, Throwable t) {
+            public void onFailure(Call<ApiConfig> call, Throwable t) {
                 if (resultCallback != null) {
                     resultCallback.onFailure(0,
                             ApiError.toString(context, ApiError.NO_INTERNET));
@@ -75,26 +72,24 @@ public class RequestServices extends BaseApiServices {
                 t.printStackTrace();
             }
         });
-
     }
 
     @Override
     public void cancel() {
-        if (call != null && call.isExecuted()) {
-            call.cancel();
+        if (callConfig != null && callConfig.isExecuted()) {
+            callConfig.cancel();
         }
     }
 
+
     private interface ServicesInterface {
-        @FormUrlEncoded
-        @POST("home/request")
-        Call<ApiModel> sendRequest(@Field("req_content") String content,
-                                      @Field("token") String token,
-                                      @Field("src") String src);
+
+        @GET("home/config?src=android")
+        Call<ApiConfig> getConfig();
     }
 
     public interface ResultCallback extends ApiResultCallback {
 
-        void onRequestResultSuccess(String msg);
+        void onGetConfigSuccess(Config config);
     }
 }

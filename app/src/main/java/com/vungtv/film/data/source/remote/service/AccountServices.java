@@ -91,23 +91,18 @@ public class AccountServices extends BaseApiServices{
 
                 if (!response.isSuccessful()) {
                     onLoginResulListener.onFailure(response.code(), ApiError.toString(context, ApiError.SERVICE_ERROR));
-                    LogUtils.e(TAG, "checkAccountInfo: error: server down!");
                     return;
                 }
 
                 ApiAccount apiData = response.body();
-                LogUtils.e(TAG, "checkAccountInfo: response json: " + new Gson().toJson(apiData));
                 if (apiData.getCode() == -96 && StringUtils.isEmpty(apiData.getData().getRefreshToken()) && onRefreshTokenListener != null) {
                     // refresh token;
                     onRefreshTokenListener.onRefreshToken(apiData.getData().getRefreshToken());
-
                     return;
                 }
 
                 if (!apiData.getSuccess()) {
                     onLoginResulListener.onFailure(apiData.getCode(), apiData.getMessage());
-                    LogUtils.e(TAG, "checkAccountInfo: error: " + apiData.getMessage());
-
                     return;
                 }
 
@@ -118,7 +113,7 @@ public class AccountServices extends BaseApiServices{
             public void onFailure(Call<ApiAccount> call, Throwable t) {
                 if (onLoginResulListener != null)
                     onLoginResulListener.onFailure(0, ApiError.toString(context, ApiError.NO_INTERNET));
-                LogUtils.e(TAG, "loginWithEmail: error: " + t.getMessage());
+                t.printStackTrace();
             }
         });
     }
@@ -159,7 +154,6 @@ public class AccountServices extends BaseApiServices{
                     LogUtils.d(TAG, "loginWithEmail: dataJson: " + new Gson().toJson(apiData));
                     if (!apiData.getSuccess()) {
                         onLoginResulListener.onFailure(apiData.getCode(), apiData.getMessage());
-                        LogUtils.e(TAG, "loginWithEmail: error: " + apiData.getMessage());
                         return;
                     }
 

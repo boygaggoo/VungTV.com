@@ -18,5 +18,7 @@ public interface LoadingContract {
     interface Presenter extends BasePresenter {
 
         void checkAccountInfo();
+
+        void getAppConfig();
     }
 }
