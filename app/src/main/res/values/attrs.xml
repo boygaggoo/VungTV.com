@@ -64,6 +64,10 @@
         <attr name="textTitle" format="string" />
     </declare-styleable>
 
+    <declare-styleable name="VtvFooter">
+        <attr name="blackStyle" format="boolean" />
+    </declare-styleable>
+
     <declare-styleable name="ExpandableTextView">
         <attr name="maxCollapsedLines" format="integer"/>
         <attr name="animDuration" format="integer"/>

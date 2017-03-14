@@ -231,6 +231,14 @@ public class PlayerPresenter implements PlayerContract.Presenter, PlayerServices
     }
 
     @Override
+    public void shareEpisode() {
+        if (videoData == null || StringUtils.isEmpty(videoData.shareLink)) {
+            return;
+        }
+        playerView.showPopupShare(videoData.shareLink);
+    }
+
+    @Override
     public void countPlayed() {
         mPlayerServices.countPlay(movId,
                 UserSessionManager.getAccessToken(context.getApplicationContext()));

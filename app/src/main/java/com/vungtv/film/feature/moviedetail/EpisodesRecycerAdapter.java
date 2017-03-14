@@ -24,7 +24,7 @@ public class EpisodesRecycerAdapter extends RecyclerView.Adapter {
 
     private OnItemClickListener onItemClickListener;
 
-    int posChecked = 0;
+    private int posChecked = 0;
 
     public EpisodesRecycerAdapter() {
     }

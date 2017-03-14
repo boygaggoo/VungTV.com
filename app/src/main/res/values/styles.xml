@@ -86,6 +86,11 @@
         <item name="android:textColor">@color/text_dark_1</item>
     </style>
 
+    <style name="AppTheme.Text.Footer.Black" parent="@style/AppTheme.Text.Footer">
+        <item name="android:background">@drawable/ds_border_gray2_radius</item>
+        <item name="android:textColor">@color/text_light_1</item>
+    </style>
+
     <style name="AppTheme.Edittext.Login" parent="Base.Widget.AppCompat.EditText">
         <item name="android:background">@drawable/ds_edittext_login</item>
         <item name="android:layout_width">match_parent</item>

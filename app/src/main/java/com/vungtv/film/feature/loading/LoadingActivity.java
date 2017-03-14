@@ -10,14 +10,10 @@ import android.util.Base64;
 
 import com.vungtv.film.App;
 import com.vungtv.film.R;
-import com.vungtv.film.eventbus.AccountModifyEvent;
 import com.vungtv.film.feature.home.HomeActivity;
 import com.vungtv.film.util.LogUtils;
 import com.vungtv.film.util.LoginGoogleUtils;
 import com.vungtv.film.widget.VtvTextView;
-
-import org.greenrobot.eventbus.EventBus;
-import org.greenrobot.eventbus.Subscribe;
 
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
@@ -39,7 +35,6 @@ public class LoadingActivity extends AppCompatActivity implements LoadingContrac
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_loading);
         ButterKnife.bind(this);
-        EventBus.getDefault().register(this);
 
         new LoadingPresenter(this, this, new LoginGoogleUtils(this));
 
@@ -61,13 +56,7 @@ public class LoadingActivity extends AppCompatActivity implements LoadingContrac
     @Override
     protected void onDestroy() {
         presenter.onDestroy();
-        EventBus.getDefault().unregister(this);
         super.onDestroy();
-    }
-
-    @Subscribe
-    public void accountModifyEvent(AccountModifyEvent event) {
-        openActHome();
     }
 
     @Override

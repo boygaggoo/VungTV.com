@@ -30,6 +30,8 @@ public interface MovieDetailContract {
 
         void showPopupVip(String textContent);
 
+        void showPopupShare(String link);
+
         void setMovieInfo(Movie movie);
 
         void setListEpisodes(ArrayList<Episode> listEpisodes);
@@ -43,6 +45,10 @@ public interface MovieDetailContract {
         void changeStatusFollow(boolean isFollow);
 
         void changeBtnClearAdsVisible(boolean visible);
+
+        void changeIconBtnViewMoreEps(boolean isExpanded);
+
+        void showOrHideBtnViewMoreEps(boolean show);
 
         void addAdsBanner();
 
@@ -86,5 +92,7 @@ public interface MovieDetailContract {
         void shareMovie();
 
         void clearAds();
+
+        void viewMoreEps();
     }
 }

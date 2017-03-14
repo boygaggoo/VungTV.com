@@ -12,6 +12,7 @@ import com.google.android.gms.analytics.GoogleAnalytics;
 import com.google.android.gms.analytics.HitBuilders;
 import com.google.android.gms.analytics.StandardExceptionParser;
 import com.google.android.gms.analytics.Tracker;
+import com.squareup.leakcanary.LeakCanary;
 
 import io.realm.Realm;
 import io.realm.RealmConfiguration;
@@ -32,7 +33,7 @@ public class App extends Application {
         super.onCreate();
         mInstance = this;
 
-        //LeakCanary.install(this);
+        LeakCanary.install(this);
 
         Realm.init(this);
         RealmConfiguration configuration = new RealmConfiguration.Builder()

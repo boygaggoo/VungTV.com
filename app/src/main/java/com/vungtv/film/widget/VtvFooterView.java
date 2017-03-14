@@ -2,6 +2,7 @@ package com.vungtv.film.widget;
 
 import android.annotation.TargetApi;
 import android.content.Context;
+import android.content.res.TypedArray;
 import android.os.Build;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
@@ -28,7 +29,22 @@ public class VtvFooterView extends LinearLayout {
     public VtvFooterView(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
 
-        LayoutInflater.from(getContext()).inflate(R.layout.widget_footer_view, this);
+        boolean isBlackStyle = false;
+        if (attrs != null) {
+            TypedArray a = getContext().obtainStyledAttributes(
+                    attrs,
+                    R.styleable.VtvFooter);
+            try {
+                isBlackStyle = a.getBoolean(R.styleable.VtvFooter_blackStyle, false);
+            } finally {
+                a.recycle();
+            }
+        }
+        int layout = R.layout.widget_footer_view;
+        if (isBlackStyle) {
+            layout = R.layout.widget_footer_view_black;
+        }
+        LayoutInflater.from(getContext()).inflate(layout, this);
         View btnMessenge = findViewById(R.id.footer_messenge);
         View btnFacebook = findViewById(R.id.footer_facebook);
         View btnRequest = findViewById(R.id.footer_request);

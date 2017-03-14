@@ -253,11 +253,20 @@
         android:clipToPadding="false"
         app:layout_behavior="@string/appbar_scrolling_view_behavior"/>
 
+    <ImageView
+        android:id="@+id/mdetails_btn_more_eps"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/mdetails_recycler_eps"
+        android:gravity="center"
+        android:src="@drawable/ic_expand_more_24dp"
+        android:contentDescription="@string/movie_details_action_view_more" />
+
     <com.vungtv.film.widget.moviesrowview.VtvMovieRowView
         android:id="@+id/mdetails_relate_movies"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/mdetails_recycler_eps"
+        android:layout_below="@+id/mdetails_btn_more_eps"
         app:style="black"
         app:iconTitle="@drawable/icon_filmroll2"
         app:title="@string/movie_details_text_phim_lien_quan"
@@ -267,6 +276,7 @@
         android:id="@+id/mdetails_footer"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/mdetails_relate_movies"/>
+        android:layout_below="@+id/mdetails_relate_movies"
+        app:blackStyle="true"/>
 
 </RelativeLayout>

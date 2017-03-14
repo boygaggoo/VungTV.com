@@ -5,44 +5,40 @@
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:background="@color/gray_2">
-
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/space_24"
-        android:background="@color/white" />
+    android:background="@color/colorPrimary">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/space_24"
         android:orientation="horizontal"
         android:weightSum="3">
 
         <com.vungtv.film.widget.VtvTextView
-            style="@style/AppTheme.Text.Footer"
+            style="@style/AppTheme.Text.Footer.Black"
             android:id="@+id/footer_messenge"
             android:layout_weight="1"
             android:layout_marginLeft="@dimen/space_16"
             android:layout_marginStart="@dimen/space_16"
-            android:drawableTop="@drawable/icon_mess"
+            android:drawableTop="@drawable/icon_mess1"
             android:text="@string/footer_text_messenger"/>
 
         <com.vungtv.film.widget.VtvTextView
-            style="@style/AppTheme.Text.Footer"
+            style="@style/AppTheme.Text.Footer.Black"
             android:id="@+id/footer_facebook"
             android:layout_weight="1"
             android:layout_marginLeft="@dimen/space_8"
             android:layout_marginRight="@dimen/space_8"
-            android:drawableTop="@drawable/icon_mess"
+            android:drawableTop="@drawable/icon_mess1"
             android:text="@string/footer_text_face"/>
 
         <com.vungtv.film.widget.VtvTextView
-            style="@style/AppTheme.Text.Footer"
+            style="@style/AppTheme.Text.Footer.Black"
             android:id="@+id/footer_request"
             android:layout_weight="1"
             android:layout_marginRight="@dimen/space_16"
             android:layout_marginEnd="@dimen/space_16"
-            android:drawableTop="@drawable/icon_mail"
+            android:drawableTop="@drawable/icon_mail1"
             android:text="@string/footer_text_request"/>
 
     </LinearLayout>
@@ -53,7 +49,7 @@
         android:layout_height="wrap_content"
         android:paddingBottom="16dp"
         android:gravity="center"
-        android:textColor="@color/text_dark_1"
+        android:textColor="@color/text_light_1"
         android:textSize="@dimen/font_normal"
         android:text="@string/footer_text_report"/>
 

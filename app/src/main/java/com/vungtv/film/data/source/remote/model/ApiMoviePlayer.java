@@ -32,7 +32,9 @@ public class ApiMoviePlayer extends ApiModel {
         @SerializedName("previous")
         @Expose
         public String previous;
-
+        @SerializedName("share_link")
+        @Expose
+        public String shareLink;
     }
 
     public class Player {

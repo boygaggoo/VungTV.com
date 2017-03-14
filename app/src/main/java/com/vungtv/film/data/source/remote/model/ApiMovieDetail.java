@@ -36,6 +36,9 @@ public class ApiMovieDetail extends ApiModel{
         @SerializedName("movie_user_status")
         @Expose
         public MovieUserStatus movieUserStatus;
+        @SerializedName("share_link")
+        @Expose
+        public String shareLink;
     }
 
     public class MovieUserStatus {

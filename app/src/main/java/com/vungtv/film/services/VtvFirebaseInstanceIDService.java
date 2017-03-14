@@ -32,6 +32,7 @@ public class VtvFirebaseInstanceIDService extends FirebaseInstanceIdService {
         if (deviceServices != null) {
             deviceServices.cancel();
         }
+        LogUtils.d(TAG, "onDestroy");
         super.onDestroy();
     }
 

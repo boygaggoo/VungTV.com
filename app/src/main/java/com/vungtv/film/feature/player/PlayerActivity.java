@@ -61,6 +61,7 @@ import com.vungtv.film.model.DrmSession;
 import com.vungtv.film.model.Episode;
 import com.vungtv.film.popup.PopupListEpisode;
 import com.vungtv.film.popup.PopupMessenger;
+import com.vungtv.film.util.IntentUtils;
 import com.vungtv.film.util.LogUtils;
 import com.vungtv.film.widget.player.TrackSelectionHelper;
 import com.vungtv.film.widget.player.VersionSelectionHelper;
@@ -371,6 +372,12 @@ public class PlayerActivity extends AppCompatActivity implements PlayerContract.
         popupMessenger.show();
         popupMessenger.setTextContent(getString(R.string.movie_details_text_clear_ads));
         popupMessenger.setTextBtnConfirm(getString(R.string.popup_action_buy_vip));
+    }
+
+    @Override
+    public void showPopupShare(String link) {
+        startActivity(Intent.createChooser(
+                IntentUtils.share(link), getString(R.string.player_text_share)));
     }
 
     @Override

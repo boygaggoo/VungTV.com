@@ -96,6 +96,9 @@ public class MovieDetailActivity extends BaseActivity implements MovieDetailCont
     @BindView(R.id.mdetails_recycler_eps)
     RecyclerView epsRecyclerView;
 
+    @BindView(R.id.mdetails_btn_more_eps)
+    ImageView btnMoreEps;
+
     @BindView(R.id.mdetails_relate_movies)
     VtvMovieRowView relateMovies;
 
@@ -203,6 +206,11 @@ public class MovieDetailActivity extends BaseActivity implements MovieDetailCont
         presenter.clearAds();
     }
 
+    @OnClick(R.id.mdetails_btn_more_eps)
+    public void onBtnViewMoreEpsClick() {
+        presenter.viewMoreEps();
+    }
+
     @Override
     public void showLoadding(boolean show) {
         popupLoading.show(show);
@@ -274,6 +282,12 @@ public class MovieDetailActivity extends BaseActivity implements MovieDetailCont
         popupMessenger.show();
         popupMessenger.setTextContent(textContent);
         popupMessenger.setTextBtnConfirm(getString(R.string.popup_action_buy_vip));
+    }
+
+    @Override
+    public void showPopupShare(String link) {
+        startActivity(Intent.createChooser(
+                IntentUtils.share(link), getString(R.string.movie_details_text_share)));
     }
 
     @Override
@@ -350,6 +364,7 @@ public class MovieDetailActivity extends BaseActivity implements MovieDetailCont
 
     @Override
     public void setListEpisodes(ArrayList<Episode> listEpisodes) {
+        adapter.clear();
         adapter.addAll(listEpisodes);
     }
 
@@ -387,6 +402,18 @@ public class MovieDetailActivity extends BaseActivity implements MovieDetailCont
     @Override
     public void changeBtnClearAdsVisible(boolean visible) {
         btnClearAds.setVisibility(visible ? View.VISIBLE : View.GONE);
+    }
+
+    @Override
+    public void changeIconBtnViewMoreEps(boolean isExpanded) {
+        btnMoreEps.setImageResource(isExpanded ?
+                R.drawable.ic_expand_less_24dp : R.drawable.ic_expand_more_24dp);
+    }
+
+    @Override
+    public void showOrHideBtnViewMoreEps(boolean show) {
+        btnMoreEps.setVisibility(show ? View.VISIBLE : View.INVISIBLE);
+        btnMoreEps.setEnabled(show);
     }
 
     @Override

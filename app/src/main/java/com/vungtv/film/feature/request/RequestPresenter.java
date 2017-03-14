@@ -60,7 +60,7 @@ public class RequestPresenter implements RequestContract.Presenter, RequestServi
     @Override
     public void onRequestResultSuccess(String msg) {
         activityView.showLoading(false);
-        activityView.showMsgError(msg);
+        activityView.showMsgError(context.getString(R.string.request_text_msg_success));
         activityView.resetEdittext();
     }
 }

@@ -34,6 +34,8 @@ public class LogOutActivity extends BaseActivity implements AccountServices.OnLo
 
         accountServices = new AccountServices(this);
         accountServices.setOnLogoutListener(this);
+        accountServices.logout(UserSessionManager.getAccessToken(this));
+
         loginGoogleUtils = new LoginGoogleUtils(this);
         popupLoading.show();
     }

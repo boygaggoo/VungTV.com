@@ -44,6 +44,8 @@ public interface PlayerContract {
 
         void showPopupBuyVip();
 
+        void showPopupShare(String link);
+
         void setMediaSource(Uri uri, String extension);
 
         void setDrmSession(DrmSession drmSession);
@@ -117,6 +119,8 @@ public interface PlayerContract {
         void accountModify();
 
         void saveMovieRecent(long position, long duration);
+
+        void shareEpisode();
 
         void countPlayed();
     }

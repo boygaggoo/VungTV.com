@@ -82,12 +82,6 @@
             android:configChanges="keyboardHidden|orientation|screenSize"
             android:name=".feature.request.RequestActivity" />
 
-        <service
-            android:name=".services.LogoutService"
-            android:enabled="true"
-            android:exported="true" />
-
-
         <!--
           Optionally, register AnalyticsReceiver and AnalyticsService to support background
           dispatching on non-Google Play devices
@@ -119,10 +113,20 @@
 
         <service android:name="com.google.android.gms.analytics.CampaignTrackingService" />
 
+        <!-- Firebse cloud mesenger -->
         <service
-            android:name=".services.VtvFirebaseMessagingService">
+            android:name=".services.VtvFirebaseMessagingService"
+            android:exported="false">
             <intent-filter>
                 <action android:name="com.google.firebase.MESSAGING_EVENT"/>
+            </intent-filter>
+        </service>
+
+        <service
+            android:name=".services.VtvFirebaseInstanceIDService"
+            android:exported="false">
+            <intent-filter>
+                <action android:name="com.google.firebase.INSTANCE_ID_EVENT" />
             </intent-filter>
         </service>
 

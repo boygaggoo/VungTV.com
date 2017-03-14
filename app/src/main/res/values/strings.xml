@@ -202,5 +202,9 @@
     <string name="popup_action_update">Cập nhật</string>
     <string name="popup_action_later">Để sau</string>
     <string name="popup_text_title_update">Cập nhật</string>
+    <string name="request_text_msg_success">Yêu cầu của bạn đã gửi thành công.</string>
+    <string name="movie_details_action_view_more">Xem thêm</string>
+    <string name="movie_details_text_share">Chia sẻ phim</string>
+    <string name="player_text_share">Chia sẻ tập</string>
 
 </resources>

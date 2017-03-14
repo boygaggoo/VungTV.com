@@ -67,4 +67,11 @@ public class IntentUtils {
                 ("market://details?id=" + BuildConfig.APPLICATION_ID));
     }
 
+    public static Intent share(String shareLink) {
+        Intent intent = new Intent(Intent.ACTION_SEND);
+        intent.setType("text/plain");
+        intent.putExtra(Intent.EXTRA_TEXT, shareLink);
+        return intent;
+    }
+
 }

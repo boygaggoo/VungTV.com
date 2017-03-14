@@ -19,7 +19,7 @@ import java.util.ArrayList;
 /**
  * Slider image with indicator;
  */
-public class VtvSliderView extends LinearLayout {
+public class VtvSliderView extends LinearLayout implements ViewPager.OnPageChangeListener {
     private static final String TAG = VtvSliderView.class.getSimpleName();
     private static final float RATIO_COVER_HW = 0.404296875f;
     private static final float TABLET_LAND_PAGER_W = 0.8f;
@@ -89,6 +89,7 @@ public class VtvSliderView extends LinearLayout {
     protected void retrieverViews() {
         View.inflate(getContext(), R.layout.widget_slider_view, this);
         viewPager = (ViewPager) findViewById(R.id.home_row_viewPager);
+        viewPager.addOnPageChangeListener(this);
         pageIndicator = (CirclePageIndicator) findViewById(R.id.home_row_pagerIndicator);
     }
 
@@ -131,5 +132,20 @@ public class VtvSliderView extends LinearLayout {
 
     public void stopSlider() {
         handlerRunSlider.removeCallbacks(runnableRunSlider);
+    }
+
+    @Override
+    public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+
+    }
+
+    @Override
+    public void onPageSelected(int position) {
+        currentItem = position;
+    }
+
+    @Override
+    public void onPageScrollStateChanged(int state) {
+
     }
 }

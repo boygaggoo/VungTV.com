@@ -27,6 +27,9 @@ public class LoadingPresenter implements LoadingContract.Presenter{
 
     private LoginGoogleUtils loginGoogleUtils;
 
+    private boolean isGetConfigSuccess = false;
+
+    private boolean isCheckLoginSuccess = false;
 
     public LoadingPresenter(Context context, LoadingContract.View loadingView, LoginGoogleUtils loginGoogleUtils) {
         this.context = context;
@@ -34,8 +37,9 @@ public class LoadingPresenter implements LoadingContract.Presenter{
         this.loginGoogleUtils = loginGoogleUtils;
         loadingView.setPresenter(this);
 
-        this.accountServices = new AccountServices(context.getApplicationContext());
+        accountServices = new AccountServices(context.getApplicationContext());
         configServices = new ConfigServices(context.getApplicationContext());
+
         accountServiceResponse();
         configServicesResponse();
     }
@@ -44,11 +48,13 @@ public class LoadingPresenter implements LoadingContract.Presenter{
     public void start() {
         activityView.setVersionName(String.format("V %s", BuildConfig.VERSION_NAME));
         checkAccountInfo();
+        getAppConfig();
     }
 
     @Override
     public void onDestroy() {
         accountServices.cancel();
+        configServices.cancel();
         loginGoogleUtils.disconect();
     }
 
@@ -67,6 +73,12 @@ public class LoadingPresenter implements LoadingContract.Presenter{
         configServices.loadConfig();
     }
 
+    private void openActHome() {
+        if (isGetConfigSuccess && isCheckLoginSuccess) {
+            activityView.openActHome();
+        }
+    }
+
     private void accountServiceResponse() {
         accountServices.setOnRefreshTokenListener(new AccountServices.OnRefreshTokenListener() {
             @Override
@@ -81,9 +93,8 @@ public class LoadingPresenter implements LoadingContract.Presenter{
             public void onSuccess(User user, String token) {
 
                 UserSessionManager.updateUserSession(context, user);
-
-                // Load app config
-                getAppConfig();
+                isCheckLoginSuccess = true;
+                openActHome();
             }
 
             @Override
@@ -91,8 +102,8 @@ public class LoadingPresenter implements LoadingContract.Presenter{
                 if (code == -999) {
                     accountServices.logout(UserSessionManager.getAccessToken(context));
                 } else {
-                    // Load app config
-                    getAppConfig();
+                    isCheckLoginSuccess = true;
+                    openActHome();
                 }
             }
         });
@@ -100,17 +111,16 @@ public class LoadingPresenter implements LoadingContract.Presenter{
         accountServices.setOnLogoutListener(new AccountServices.OnLogoutListener() {
             @Override
             public void onLogoutSuccess() {
-
                 UserSessionManager.logout(context, loginGoogleUtils);
 
-                // Load app config
-                getAppConfig();
+                isCheckLoginSuccess = true;
+                openActHome();
             }
 
             @Override
             public void onFailure(int code, String error) {
-                // Load app config
-                getAppConfig();
+                isCheckLoginSuccess = true;
+                openActHome();
             }
         });
     }
@@ -119,17 +129,16 @@ public class LoadingPresenter implements LoadingContract.Presenter{
         configServices.setResultCallback(new ConfigServices.ResultCallback() {
             @Override
             public void onGetConfigSuccess(Config config) {
-
                 RemoteConfigManager.setConfigs(context, config);
 
-                // Open Home screen
-                activityView.openActHome();
+                isGetConfigSuccess = true;
+                openActHome();
             }
 
             @Override
             public void onFailure(int code, String error) {
-                // Open Home screen
-                activityView.openActHome();
+                isGetConfigSuccess = true;
+                openActHome();
             }
         });
     }

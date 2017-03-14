@@ -8,8 +8,11 @@ import com.vungtv.film.data.source.remote.model.ApiEpisodes;
 import com.vungtv.film.data.source.remote.model.ApiMovieDetail;
 import com.vungtv.film.data.source.remote.service.EpisodeServices;
 import com.vungtv.film.data.source.remote.service.MovieDetailServices;
+import com.vungtv.film.model.Episode;
 import com.vungtv.film.util.StringUtils;
 import com.vungtv.film.util.UriPaser;
+
+import java.util.ArrayList;
 
 /**
  * Content class.
@@ -29,6 +32,8 @@ public class MovieDetailPresenter implements MovieDetailContract.Presenter, Movi
 
     private final EpisodeServices episodeServices;
 
+    private ArrayList<Episode> episodes;
+
     private boolean isLiked = false;
 
     private boolean isFollowed = false;
@@ -41,8 +46,11 @@ public class MovieDetailPresenter implements MovieDetailContract.Presenter, Movi
 
     private String trailerVideoId;
 
+    private String shareLink;
+
     private String epsHash;
 
+    private boolean isEpsExpanded = false;
 
     public MovieDetailPresenter(Context context, MovieDetailContract.View activityView) {
         this.context = context;
@@ -150,7 +158,9 @@ public class MovieDetailPresenter implements MovieDetailContract.Presenter, Movi
 
     @Override
     public void shareMovie() {
-
+        if (StringUtils.isNotEmpty(shareLink)) {
+            activityView.showPopupShare(shareLink);
+        }
     }
 
     @Override
@@ -160,6 +170,27 @@ public class MovieDetailPresenter implements MovieDetailContract.Presenter, Movi
         } else {
             activityView.showPopupVip(context.getResources().getString(R.string.movie_details_text_clear_ads));
         }
+    }
+
+    @Override
+    public void viewMoreEps() {
+        if (episodes == null || episodes.size() < 5) {
+            return;
+        }
+
+        isEpsExpanded = !isEpsExpanded;
+        activityView.changeIconBtnViewMoreEps(isEpsExpanded);
+
+        if (isEpsExpanded) {
+            activityView.setListEpisodes(episodes);
+        } else {
+            ArrayList<Episode> list = new ArrayList<>();
+            for (int i = 0; i < 50; i++) {
+                list.add(episodes.get(i));
+            }
+            activityView.setListEpisodes(list);
+        }
+
     }
 
     @Override
@@ -183,6 +214,7 @@ public class MovieDetailPresenter implements MovieDetailContract.Presenter, Movi
         movName = data.movie.getMovName();
         movCover = data.movie.getMovCover();
         epsHash = data.movie.getEpsHash();
+        shareLink = data.shareLink;
         trailerVideoId = UriPaser.getYoutubeVideoId(data.movie.getMovTrailer());
 
         if (data.movieUserStatus != null) {
@@ -201,7 +233,21 @@ public class MovieDetailPresenter implements MovieDetailContract.Presenter, Movi
         activityView.showLoadding(false);
 
         if (data.getEpisodes() != null && data.getEpisodes().size() > 0) {
-            activityView.setListEpisodes(data.getEpisodes());
+
+            episodes = data.getEpisodes();
+
+            activityView.showOrHideBtnViewMoreEps(episodes.size() > 50);
+
+            if (episodes.size() > 50) {
+                ArrayList<Episode> list = new ArrayList<>();
+                for (int i = 0; i < 50; i++) {
+                    list.add(episodes.get(i));
+                }
+                activityView.setListEpisodes(list);
+            } else {
+                activityView.setListEpisodes(data.getEpisodes());
+            }
+
         }
     }
 
