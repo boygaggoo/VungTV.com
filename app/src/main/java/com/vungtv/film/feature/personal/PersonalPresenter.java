@@ -38,10 +38,6 @@ public class PersonalPresenter implements PersonalContract.Presenter {
         userPageView.updateRecylerViewItems(user != null);
 
         userPageView.setVisibleBtnGiftCodeAndVip(user != null);
-
-        if (user != null) {
-            userPageView.setNumberMoviesFollow(0);
-        }
     }
 
     @Override

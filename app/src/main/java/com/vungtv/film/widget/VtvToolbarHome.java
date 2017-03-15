@@ -9,10 +9,13 @@ import android.view.View;
 import android.widget.RelativeLayout;
 
 import com.vungtv.film.R;
+import com.vungtv.film.data.source.local.FollowNotifyManger;
+import com.vungtv.film.data.source.local.UserSessionManager;
 
 public class VtvToolbarHome extends RelativeLayout {
 
     private View btnMenu, btnSearch, btnVip, btnUser;
+
     private VtvTextView textUserLabel;
 
     private OnBtnClickListener onBtnClickListener;
@@ -42,6 +45,7 @@ public class VtvToolbarHome extends RelativeLayout {
         LayoutInflater.from(getContext()).inflate(R.layout.widget_toolbar_home, this);
         retrieverViews();
         registerListener();
+        notifyUserlabelChange();
     }
 
     private void retrieverViews() {
@@ -98,6 +102,15 @@ public class VtvToolbarHome extends RelativeLayout {
 
     public void setTextUserLabel(int number) {
         textUserLabel.setText(String.valueOf(number));
+    }
+
+    public void notifyUserlabelChange() {
+        if (UserSessionManager.isLogin(getContext())) {
+            textUserLabel.setVisibility(VISIBLE);
+            setTextUserLabel(FollowNotifyManger.get(getContext()));
+        } else {
+            textUserLabel.setVisibility(GONE);
+        }
     }
 
     public void setOnBtnClickListener(OnBtnClickListener onBtnClickListener) {

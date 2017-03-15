@@ -2,6 +2,7 @@ package com.vungtv.film.feature.moviedetail;
 
 import android.content.Context;
 
+import com.google.firebase.messaging.FirebaseMessaging;
 import com.vungtv.film.R;
 import com.vungtv.film.data.source.local.UserSessionManager;
 import com.vungtv.film.data.source.remote.model.ApiEpisodes;
@@ -273,6 +274,15 @@ public class MovieDetailPresenter implements MovieDetailContract.Presenter, Movi
 
         isFollowed = !isFollowed;
         activityView.changeStatusFollow(isFollowed);
+
+
+        if (isFollowed) {
+            // Đăng ký nhận thông báo khi phim được cập nhật.
+            FirebaseMessaging.getInstance().subscribeToTopic("mov_follow_" + movId);
+        } else {
+            // Hủy Đăng ký nhận thông báo khi phim được cập nhật.
+            FirebaseMessaging.getInstance().unsubscribeFromTopic("mov_follow_" + movId);
+        }
     }
 
     @Override

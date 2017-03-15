@@ -12,6 +12,7 @@ import com.vungtv.film.App;
 import com.vungtv.film.BaseActivity;
 import com.vungtv.film.R;
 import com.vungtv.film.eventbus.AccountModifyEvent;
+import com.vungtv.film.eventbus.FollowNotifyCountEvent;
 import com.vungtv.film.feature.buyvip.BuyVipActivity;
 import com.vungtv.film.feature.changepass.ChangePassActivity;
 import com.vungtv.film.feature.login.LoginActivity;
@@ -81,6 +82,11 @@ public class PersonalActivity extends BaseActivity implements PersonalContract.V
         presenter.loginStatusChange();
     }
 
+    @Subscribe
+    public void onEventUpdateFollowNotifyCount(FollowNotifyCountEvent eventBus) {
+        adapter.notifyFollowCountChange();
+    }
+
     @OnClick(R.id.userpage_btn_back)
     public void onClickExit() {
         finish();
@@ -99,11 +105,6 @@ public class PersonalActivity extends BaseActivity implements PersonalContract.V
     @Override
     public void setVisibleBtnGiftCodeAndVip(boolean show) {
         groupBtnVipCode.setVisibility(show ? View.VISIBLE : View.GONE);
-    }
-
-    @Override
-    public void setNumberMoviesFollow(int num) {
-        adapter.notifyChangeLabelItemFollow(num);
     }
 
     @Override

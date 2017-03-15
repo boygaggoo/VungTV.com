@@ -8,6 +8,7 @@ import android.view.ViewGroup;
 
 import com.squareup.picasso.Picasso;
 import com.vungtv.film.R;
+import com.vungtv.film.data.source.local.FollowNotifyManger;
 import com.vungtv.film.data.source.local.UserSessionManager;
 import com.vungtv.film.model.NavItem;
 import com.vungtv.film.model.User;
@@ -110,6 +111,14 @@ public class HomeNavAdapter extends RecyclerView.Adapter {
 
     public void notifyAccountChange() {
         notifyItemChanged(0);
+    }
+
+    public void notifyFollowCountChange() {
+        for (int i = 0; i < list.size(); i++) {
+            if (list.get(i).getType() == TYPE_WITH_ICON_LABEL) {
+                notifyItemChanged(i);
+            }
+        }
     }
 
     public void addItem(int pos, NavItem navItem) {
@@ -298,11 +307,14 @@ public class HomeNavAdapter extends RecyclerView.Adapter {
                 textTitle.setText(item.getTitle());
             }
 
-            if (item.getIconLeftRes() != 0) {
+            if (UserSessionManager.isLogin(context)) {
                 textTitle.setCompoundDrawablesWithIntrinsicBounds(item.getIconLeftRes(),0,0, 0);
+                textLabel.setVisibility(View.VISIBLE);
+                textLabel.setText(String.valueOf(FollowNotifyManger.get(context)));
+            } else {
+                textTitle.setCompoundDrawablesWithIntrinsicBounds(item.getIconLeftRes(), 0, R.drawable.icon_forward, 0);
+                textLabel.setVisibility(View.GONE);
             }
-
-            textLabel.setText("99");
         }
     }
 

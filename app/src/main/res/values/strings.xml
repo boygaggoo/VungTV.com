@@ -30,7 +30,7 @@
     <string name="home_text_phim_18">Phim 18+</string>
     <string name="home_text_tvshow">TV Shows</string>
     <string name="home_text_hoat_hinh">Hoạt hình</string>
-    <string name="home_text_xem_gan_day">Xem gần đây</string>
+    <string name="home_text_xem_gan_day">Xem Gần Đây</string>
 
     <!-- widget Footer -->
     <string name="footer_text_messenger">Messenge</string>
@@ -206,5 +206,6 @@
     <string name="movie_details_action_view_more">Xem thêm</string>
     <string name="movie_details_text_share">Chia sẻ phim</string>
     <string name="player_text_share">Chia sẻ tập</string>
+    <string name="movie_details_episode">Tập %1$s/%2$s</string>
 
 </resources>

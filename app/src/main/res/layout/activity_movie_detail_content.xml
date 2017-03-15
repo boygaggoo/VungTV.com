@@ -33,10 +33,21 @@
         tools:text="Đại Đường Song Long"/>
 
     <com.vungtv.film.widget.VtvTextView
+        android:id="@+id/mdetails_tv_episode"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/mdetails_tv_filmname_2"
+        android:layout_marginLeft="@dimen/margin"
+        android:layout_marginRight="@dimen/margin"
+        android:textColor="@color/text_light_1"
+        android:textSize="@dimen/font_normal"
+        tools:text="Tập 1/20"/>
+
+    <com.vungtv.film.widget.VtvTextView
         android:id="@+id/mdetails_tv_imdb"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/mdetails_tv_filmname_2"
+        android:layout_below="@+id/mdetails_tv_episode"
         android:layout_marginTop="@dimen/margin"
         android:layout_marginLeft="@dimen/margin"
         android:layout_marginStart="@dimen/margin"

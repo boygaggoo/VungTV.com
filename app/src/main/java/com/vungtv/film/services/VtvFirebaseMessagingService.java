@@ -10,11 +10,11 @@ import android.graphics.BitmapFactory;
 import android.media.RingtoneManager;
 import android.net.Uri;
 import android.support.v4.app.NotificationCompat;
-import android.util.Log;
 
 import com.google.firebase.messaging.FirebaseMessagingService;
 import com.google.firebase.messaging.RemoteMessage;
 import com.vungtv.film.R;
+import com.vungtv.film.data.source.local.FollowNotifyManger;
 import com.vungtv.film.feature.loading.LoadingActivity;
 import com.vungtv.film.util.LogUtils;
 
@@ -25,57 +25,54 @@ import java.net.URL;
 
 
 public class VtvFirebaseMessagingService extends FirebaseMessagingService {
-    private static final String TAG = "MyFirebaseMsgService";
+
+    private static final String TAG = VtvFirebaseMessagingService.class.getSimpleName();
+
     public static final int NOTIFICATION_ID = 0;
 
     @Override
     public void onMessageReceived(RemoteMessage remoteMessage) {
-        LogUtils.i(TAG, "onMessageReceived From: " + remoteMessage.getFrom());
 
-        // Check if message contains a data payload.
         if (remoteMessage.getData().size() > 0) {
 
-            if (remoteMessage.getFrom().equals("/topics/animeviet_news")) {
+            // Check if message contains a data payload.
+            if (remoteMessage.getData().get("mov_id") != null){
 
-                String mes = remoteMessage.getData().get("mes");
-                sendNewsNotification(mes);
-
-                LogUtils.d(TAG, "onMessageReceived Message: " +mes);
-            } else if (remoteMessage.getData().get("mov_id") != null){
-
+                // Send notification film follow;
                 sendMovieNotification(
                         Integer.parseInt(remoteMessage.getData().get("mov_id")),
                         remoteMessage.getData().get("title"),
                         remoteMessage.getData().get("mov_poster"),
-                        remoteMessage.getData().get("mes")
+                        remoteMessage.getData().get("message")
                 );
 
-                if (remoteMessage.getFrom().equals("/topics/follow_" + remoteMessage.getData().get("mov_id"))) {
-                    //new DbTableFollow(getApplicationContext())
-                    //        .updateStatus(Integer.parseInt(remoteMessage.getData().get("m_id")), 1);
+                if (remoteMessage.getFrom().equals("/topics/mov_follow_" + remoteMessage.getData().get("mov_id"))) {
+                    // Cập nhật thông tin vào db
+                    FollowNotifyManger.update(getApplicationContext());
                 }
             }
-            Log.d(TAG, "onMessageReceived Message data payload: " + remoteMessage.getData());
-        }
 
-        // Check if message contains a notification payload.
-        if (remoteMessage.getNotification() != null) {
-            Log.d(TAG, " * Message Notification Body: " + remoteMessage.getNotification().getBody());
+            LogUtils.d(TAG, "onMessageReceived Message data payload: " + remoteMessage.getData());
+        } else if (remoteMessage.getNotification() != null) {
+
+            // Check if message contains a notification payload.
             String messengerBody = remoteMessage.getNotification().getBody();
             sendNewsNotification(messengerBody);
-        }
 
+            LogUtils.d(TAG, " * Message Notification Body: " + remoteMessage.getNotification().getBody());
+        }
+        LogUtils.i(TAG, "onMessageReceived From: " + remoteMessage.getFrom());
     }
 
     /**
-     * Create a new notification;
+     * Tạo 1 notification thông báo tin tức;
      *
      * @param message {@link String}
      */
     private void sendNewsNotification(String message) {
         //if (!RemoteConfig.getNotificationOn(getApplicationContext())) return;
 
-        Intent intent = new Intent(this, LauncherActivity.class);
+        Intent intent = new Intent(this, LoadingActivity.class);
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
         PendingIntent pendingIntent = PendingIntent.getActivity(this, NOTIFICATION_ID, intent,
                 PendingIntent.FLAG_ONE_SHOT);
@@ -98,17 +95,20 @@ public class VtvFirebaseMessagingService extends FirebaseMessagingService {
     }
 
     /**
-     * Create and show a simple notification containing the received FCM message.
+     * Tạo 1 notification thông báo cập nhật phim đang theo dõi;
      *
-     * @param message string
+     * @param movId The ID of film
+     * @param title The title notification
+     * @param movPoster the image poster film
+     * @param message The content notification.
      */
-    private void sendMovieNotification(int mId, String title, String imgUrl, String message) {
+    private void sendMovieNotification(int movId, String title, String movPoster, String message) {
 
         //if (!RemoteConfig.getNotificationOn(getApplicationContext())) return;
 
         Intent intent = new Intent(this, LauncherActivity.class);
-        intent.putExtra(LoadingActivity.INTENT_MOV_ID_NOTIFY, mId);
-        Log.d(TAG, " * sendMovieNotification: mId = " + mId);
+        intent.putExtra(LoadingActivity.INTENT_MOV_ID_NOTIFY, movId);
+
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
         PendingIntent pendingIntent = PendingIntent.getActivity(this, NOTIFICATION_ID, intent,
                 PendingIntent.FLAG_ONE_SHOT);
@@ -116,7 +116,7 @@ public class VtvFirebaseMessagingService extends FirebaseMessagingService {
         Uri defaultSoundUri= RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
 
         NotificationCompat.Builder notificationBuilder = new NotificationCompat.Builder(this)
-                .setLargeIcon(getBitmapFromURL(imgUrl))
+                .setLargeIcon(getBitmapFromURL(movPoster))
                 .setSmallIcon(R.mipmap.ic_launcher)
                 .setContentTitle(title)
                 .setContentText(message)
@@ -130,7 +130,7 @@ public class VtvFirebaseMessagingService extends FirebaseMessagingService {
         NotificationManager notificationManager =
                 (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
 
-        notificationManager.notify(mId, notificationBuilder.build());
+        notificationManager.notify(movId, notificationBuilder.build());
     }
 
     /**
@@ -145,11 +145,14 @@ public class VtvFirebaseMessagingService extends FirebaseMessagingService {
     /**
      * Get bitmap from url;
      *
-     * @param src url;
-     * @return bitmap
+     * @param src The url image;
+     * @return The {@link Bitmap}
      */
     private Bitmap getBitmapFromURL(String src) {
-        if (src == null || src.length() < 5) return getBitmapLageIcon();
+        if (src == null || src.length() < 5) {
+            return getBitmapLageIcon();
+        }
+
         try {
             src = src.replace(" ", "");
             URL url = new URL(src);

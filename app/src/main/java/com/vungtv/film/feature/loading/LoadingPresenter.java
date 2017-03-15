@@ -60,11 +60,10 @@ public class LoadingPresenter implements LoadingContract.Presenter{
 
     @Override
     public void checkAccountInfo() {
-
         if (!StringUtils.isEmpty(UserSessionManager.getAccessToken(context))) {
             accountServices.checkAccountInfo(UserSessionManager.getAccessToken(context));
         } else {
-            getAppConfig();
+            isCheckLoginSuccess = true;
         }
     }
 

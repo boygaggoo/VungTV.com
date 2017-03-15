@@ -8,6 +8,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.vungtv.film.R;
+import com.vungtv.film.data.source.local.FollowNotifyManger;
 import com.vungtv.film.interfaces.OnItemClickListener;
 import com.vungtv.film.model.MenuItem;
 import com.vungtv.film.widget.VtvTextView;
@@ -84,17 +85,10 @@ public class PersonalRecyclerAdapter extends RecyclerView.Adapter {
         notifyDataSetChanged();
     }
 
-    /**
-     * ntify when change data follow;
-     */
-    public void notifyChangeLabelItemFollow(int numLabel) {
-        this.numLabel = numLabel;
-
-        if (list.size() < 5) return;
+    public void notifyFollowCountChange() {
         for (int i = 0; i < list.size(); i++) {
             if (list.get(i).getType() == TYPE_WITH_LABEL) {
                 notifyItemChanged(i);
-                break;
             }
         }
     }
@@ -231,7 +225,7 @@ public class PersonalRecyclerAdapter extends RecyclerView.Adapter {
                 textTitle.setText(item.getTitle());
             }
 
-            textLabel.setText(String.valueOf(numLabel));
+            textLabel.setText(String.valueOf(FollowNotifyManger.get(context)));
         }
     }
 

@@ -63,6 +63,9 @@ public class MovieDetailActivity extends BaseActivity implements MovieDetailCont
     @BindView(R.id.mdetails_tv_filmname_2)
     VtvTextView tvMovName2;
 
+    @BindView(R.id.mdetails_tv_episode)
+    VtvTextView tvMovEps;
+
     @BindView(R.id.mdetails_tv_imdb)
     VtvTextView tvIMDB;
 
@@ -311,6 +314,11 @@ public class MovieDetailActivity extends BaseActivity implements MovieDetailCont
         if (StringUtils.isNotEmpty(movie.getMovNameAccent())) {
             tvMovName2.setText(movie.getMovNameAccent());
         }
+
+        tvMovEps.setText(String.format(
+                getString(R.string.movie_details_episode),
+                String.valueOf(movie.getMovNumberEpisode()),
+                String.valueOf(movie.getMovCountEpisoder())));
 
         // set IMDB
         if (StringUtils.isNotEmpty(movie.getMovScore())) {

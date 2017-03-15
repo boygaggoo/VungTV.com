@@ -18,6 +18,7 @@ import com.vungtv.film.data.source.remote.model.ApiHomeMenu;
 import com.vungtv.film.data.source.remote.service.HomeServices;
 import com.vungtv.film.eventbus.AccountModifyEvent;
 import com.vungtv.film.eventbus.ConfigurationChangedEvent;
+import com.vungtv.film.eventbus.FollowNotifyCountEvent;
 import com.vungtv.film.feature.buyvip.BuyVipActivity;
 import com.vungtv.film.feature.filtermovies.FilterMoviesActivity;
 import com.vungtv.film.feature.home.HomeNavAdapter.OnNavItemSelectedListener;
@@ -119,6 +120,14 @@ public class HomeActivity extends BaseActivity implements OnNavItemSelectedListe
     @Subscribe
     public void onEventLoginSuccess(AccountModifyEvent eventBus) {
         navAdapter.notifyAccountChange();
+        navAdapter.notifyFollowCountChange();
+        toolbar.notifyUserlabelChange();
+    }
+
+    @Subscribe
+    public void onEventUpdateFollowNotifyCount(FollowNotifyCountEvent eventBus) {
+        navAdapter.notifyFollowCountChange();
+        toolbar.notifyUserlabelChange();
     }
 
     @Override

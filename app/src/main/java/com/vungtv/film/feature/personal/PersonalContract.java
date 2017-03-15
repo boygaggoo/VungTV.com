@@ -19,8 +19,6 @@ public interface PersonalContract {
 
         void setVisibleBtnGiftCodeAndVip(boolean show);
 
-        void setNumberMoviesFollow(int num);
-
         void openActLogin();
 
         void openActNapVip();
