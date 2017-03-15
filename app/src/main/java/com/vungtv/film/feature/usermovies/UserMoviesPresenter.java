@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 
 import com.vungtv.film.R;
+import com.vungtv.film.data.source.local.FollowNotifyManger;
 import com.vungtv.film.data.source.local.UserSessionManager;
 import com.vungtv.film.data.source.remote.model.ApiUserMovies;
 import com.vungtv.film.data.source.remote.service.UserMoviesServices;
@@ -54,12 +55,6 @@ public class UserMoviesPresenter implements UserMoviesContract.Presenter, UserMo
     public void getIntent(Intent intent) {
         if (intent != null) {
             pageType = intent.getIntExtra(INTENT_PAGE, PAGE_FAVORITE);
-
-            if (pageType == PAGE_FAVORITE) {
-                activityView.setTitlePage(context.getResources().getString(R.string.home_text_phim_yeu_thich));
-            } else if (pageType == PAGE_FOLLOW){
-                activityView.setTitlePage(context.getResources().getString(R.string.home_text_phim_theo_doi));
-            }
         }
     }
 
@@ -91,6 +86,7 @@ public class UserMoviesPresenter implements UserMoviesContract.Presenter, UserMo
 
     @Override
     public void configChange(boolean isScreenLand) {
+        boolean isLoadmoreCur = isLoadmore;
         isLoadmore = false;
 
         if (isScreenLand) {
@@ -106,11 +102,18 @@ public class UserMoviesPresenter implements UserMoviesContract.Presenter, UserMo
         itemWidth = itemWidth / columNumber;
         activityView.updateRecyclerView(columNumber, rowAdsNumber, itemWidth);
 
-        isLoadmore = true;
+        isLoadmore = isLoadmoreCur;
     }
 
     @Override
     public void start() {
+        if (pageType == PAGE_FAVORITE) {
+            activityView.setTitlePage(context.getResources().getString(R.string.home_text_phim_yeu_thich));
+        } else if (pageType == PAGE_FOLLOW){
+            activityView.setTitlePage(context.getResources().getString(R.string.home_text_phim_theo_doi));
+            FollowNotifyManger.reset(context);
+        }
+
         float itemWidth = DensityUtils.getWidthInPx(context);
         int itemSpace = context.getResources().getDimensionPixelSize(R.dimen.space_3);
         if (context.getResources().getBoolean(R.bool.isTabletLand)) {

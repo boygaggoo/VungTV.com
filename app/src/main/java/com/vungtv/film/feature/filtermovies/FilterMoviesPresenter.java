@@ -114,7 +114,7 @@ public class FilterMoviesPresenter implements FilterMoviesContract.Presenter {
 
     @Override
     public void configChange(boolean isScreenLand) {
-
+        boolean isLoadmoreCur = isLoadmore;
         isLoadmore = false;
 
         if (isScreenLand) {
@@ -132,7 +132,8 @@ public class FilterMoviesPresenter implements FilterMoviesContract.Presenter {
         itemWidth = itemWidth / columNumber;
 
         activityView.updateRecyclerView(columNumber, rowAdsNumber, itemWidth);
-        isLoadmore = true;
+
+        isLoadmore = isLoadmoreCur;
     }
 
     @Override

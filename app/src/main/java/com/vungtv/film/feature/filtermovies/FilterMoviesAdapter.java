@@ -15,7 +15,6 @@ import com.vungtv.film.R;
 import com.vungtv.film.interfaces.OnItemClickListener;
 import com.vungtv.film.model.Movie;
 import com.vungtv.film.util.DrawableUtils;
-import com.vungtv.film.util.LogUtils;
 import com.vungtv.film.widget.VtvTextView;
 
 import java.util.ArrayList;
@@ -143,8 +142,6 @@ public class FilterMoviesAdapter extends RecyclerView.Adapter {
             poster.getLayoutParams().width = (int) itemWidth;
             poster.getLayoutParams().height = (int) (itemWidth * 1.42);
             name.getLayoutParams().width = (int) itemWidth;
-
-            LogUtils.i(TAG, "setInfo: itemWidth = " + poster.getLayoutParams().width + "\nitemHeight = " + poster.getLayoutParams().height);
 
             // set image poster
             String urlPoster = movie.getMovPoster();

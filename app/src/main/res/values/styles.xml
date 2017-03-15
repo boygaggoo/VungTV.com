@@ -88,7 +88,7 @@
 
     <style name="AppTheme.Text.Footer.Black" parent="@style/AppTheme.Text.Footer">
         <item name="android:background">@drawable/ds_border_gray2_radius</item>
-        <item name="android:textColor">@color/text_light_1</item>
+        <item name="android:textColor">@color/text_light_2</item>
     </style>
 
     <style name="AppTheme.Edittext.Login" parent="Base.Widget.AppCompat.EditText">

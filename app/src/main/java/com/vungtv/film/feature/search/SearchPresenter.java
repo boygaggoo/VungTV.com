@@ -119,6 +119,7 @@ public class SearchPresenter implements SearchContract.Presenter, SearchServices
 
     @Override
     public void configChange(boolean isScreenLand) {
+        boolean isLoadmoreCur = isLoadmore;
         isLoadmore = false;
 
         if (isScreenLand) {
@@ -137,7 +138,7 @@ public class SearchPresenter implements SearchContract.Presenter, SearchServices
 
         activityView.updateRecyclerView(columNumber, rowAdsNumber, itemWidth);
 
-        isLoadmore = true;
+        isLoadmore = isLoadmoreCur;
     }
 
     @Override

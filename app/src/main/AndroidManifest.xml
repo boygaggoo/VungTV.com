@@ -60,6 +60,7 @@
             android:configChanges="keyboardHidden|orientation|screenSize"
             android:theme="@style/AppTheme.Transparent" />
         <activity android:name=".feature.menumovies.MenuMoviesActivity" />
+
         <activity
             android:name=".feature.usermovies.UserMoviesActivity"
             android:configChanges="keyboardHidden|orientation|screenSize" />
@@ -115,8 +116,7 @@
 
         <!-- Firebse cloud mesenger -->
         <service
-            android:name=".services.VtvFirebaseMessagingService"
-            android:exported="false">
+            android:name=".services.VtvFirebaseMessagingService">
             <intent-filter>
                 <action android:name="com.google.firebase.MESSAGING_EVENT"/>
             </intent-filter>

@@ -45,11 +45,7 @@ public class VtvFirebaseMessagingService extends FirebaseMessagingService {
                         remoteMessage.getData().get("mov_poster"),
                         remoteMessage.getData().get("message")
                 );
-
-                if (remoteMessage.getFrom().equals("/topics/mov_follow_" + remoteMessage.getData().get("mov_id"))) {
-                    // Cập nhật thông tin vào db
-                    FollowNotifyManger.update(getApplicationContext());
-                }
+                FollowNotifyManger.update(getApplicationContext());
             }
 
             LogUtils.d(TAG, "onMessageReceived Message data payload: " + remoteMessage.getData());
@@ -85,7 +81,8 @@ public class VtvFirebaseMessagingService extends FirebaseMessagingService {
                 .setContentText(message)
                 .setAutoCancel(true)
                 .setSound(defaultSoundUri)
-                .setStyle(new NotificationCompat.BigTextStyle().bigText(message))
+                .setStyle(new NotificationCompat.BigTextStyle()
+                        .bigText(message))
                 .setContentIntent(pendingIntent);
 
         NotificationManager notificationManager =
@@ -124,6 +121,7 @@ public class VtvFirebaseMessagingService extends FirebaseMessagingService {
                 .setSound(defaultSoundUri)
                 .setStyle(new NotificationCompat
                         .BigTextStyle()
+                        .setBigContentTitle(title)
                         .bigText(message))
                 .setContentIntent(pendingIntent);
 
