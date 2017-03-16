@@ -34,12 +34,13 @@ public class HomePresenter implements HomeContract.Presenter {
 
     private ApiHome.DataHome dataHome;
 
-    public HomePresenter(Context context, HomeContract.View homeView, HomeServices homeServices) {
+    public HomePresenter(Context context, HomeContract.View homeView) {
         this.context = context;
         this.homeView = checkNotNull(homeView);
-        this.homeServices = checkNotNull(homeServices);
 
         this.homeView.setPresenter(this);
+
+        homeServices = new HomeServices(context);
         homeServicesResponse();
 
         movieRecentManager = new MovieRecentManager();

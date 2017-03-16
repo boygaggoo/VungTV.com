@@ -69,6 +69,7 @@ public class HomeFragment extends Fragment implements HomeContract.View {
         View v =  inflater.inflate(R.layout.fragment_home, container, false);
         ButterKnife.bind(this, v);
         EventBus.getDefault().register(this);
+        new HomePresenter(getActivity(), this);
         return v;
     }
 

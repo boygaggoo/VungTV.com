@@ -24,6 +24,8 @@ public interface PersonalContract {
         void openActNapVip();
 
         void openActGiftcode();
+
+        void openActChangepass();
     }
 
     interface Presenter extends BasePresenter {
@@ -37,5 +39,7 @@ public interface PersonalContract {
         void openActNapVip();
 
         void openActGiftcode();
+
+        void openActChangepass();
     }
 }

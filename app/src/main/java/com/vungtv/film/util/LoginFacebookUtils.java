@@ -40,7 +40,7 @@ public class LoginFacebookUtils {
                 new FacebookCallback<LoginResult>() {
                     @Override
                     public void onSuccess(LoginResult loginResults) {
-                        LogUtils.d(TAG, "FB login onSuccess: " + loginResults.getAccessToken().getToken());
+                        LogUtils.d(TAG, "FB login onAccountChangeSuccess: " + loginResults.getAccessToken().getToken());
                         if (onLoginListener != null)
                             onLoginListener.onSuccess(loginResults.getAccessToken().getToken());
                     }

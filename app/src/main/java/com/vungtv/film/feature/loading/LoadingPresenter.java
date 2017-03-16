@@ -1,18 +1,24 @@
 package com.vungtv.film.feature.loading;
 
 import android.content.Context;
+import android.content.Intent;
+import android.net.Uri;
 
 import com.vungtv.film.BuildConfig;
 import com.vungtv.film.data.source.local.RemoteConfigManager;
 import com.vungtv.film.data.source.local.UserSessionManager;
 import com.vungtv.film.data.source.remote.service.AccountServices;
 import com.vungtv.film.data.source.remote.service.ConfigServices;
+import com.vungtv.film.feature.home.HomeActivity;
 import com.vungtv.film.model.Config;
 import com.vungtv.film.model.User;
 import com.vungtv.film.util.LoginGoogleUtils;
 import com.vungtv.film.util.StringUtils;
 
+import java.util.List;
+
 import static com.google.gson.internal.$Gson$Preconditions.checkNotNull;
+import static com.vungtv.film.feature.loading.LoadingActivity.INTENT_MOV_ID_NOTIFY;
 
 
 public class LoadingPresenter implements LoadingContract.Presenter{
@@ -31,6 +37,8 @@ public class LoadingPresenter implements LoadingContract.Presenter{
 
     private boolean isCheckLoginSuccess = false;
 
+    private int movId = -1;
+
     public LoadingPresenter(Context context, LoadingContract.View loadingView, LoginGoogleUtils loginGoogleUtils) {
         this.context = context;
         this.activityView = checkNotNull(loadingView);
@@ -47,8 +55,13 @@ public class LoadingPresenter implements LoadingContract.Presenter{
     @Override
     public void start() {
         activityView.setVersionName(String.format("V %s", BuildConfig.VERSION_NAME));
-        checkAccountInfo();
-        getAppConfig();
+
+        if (HomeActivity.isCreated) {
+            activityView.resumeActHome(movId);
+        } else {
+            checkAccountInfo();
+            getAppConfig();
+        }
     }
 
     @Override
@@ -56,6 +69,36 @@ public class LoadingPresenter implements LoadingContract.Presenter{
         accountServices.cancel();
         configServices.cancel();
         loginGoogleUtils.disconect();
+    }
+
+    @Override
+    public void getIntent(Intent intent) {
+        if (intent == null) return;
+
+        if (intent.hasExtra(INTENT_MOV_ID_NOTIFY)) {
+            // Intent frome notification;
+            movId = intent.getIntExtra(INTENT_MOV_ID_NOTIFY, -1);
+            return;
+        }
+
+        // intent frome deep link
+        Uri uri = intent.getData();
+        if (uri == null) return;
+
+        List<String> paths = uri.getPathSegments();
+        if (paths.size() > 1) {
+            String s = paths.get(0);
+            if (s.equalsIgnoreCase("xemphim")) {
+                String[] ss = paths.get(1).split("-");
+
+                movId = Integer.parseInt(ss[ss.length-1]);
+            } else if (s.equalsIgnoreCase("phim")) {
+                String ss = uri.getQueryParameter("mov_id");
+                if (StringUtils.isNotEmpty(ss)) {
+                    movId = Integer.parseInt(ss);
+                }
+            }
+        }
     }
 
     @Override
@@ -74,7 +117,7 @@ public class LoadingPresenter implements LoadingContract.Presenter{
 
     private void openActHome() {
         if (isGetConfigSuccess && isCheckLoginSuccess) {
-            activityView.openActHome();
+            activityView.openActHome(movId);
         }
     }
 

@@ -124,6 +124,11 @@ public class PersonalActivity extends BaseActivity implements PersonalContract.V
     }
 
     @Override
+    public void openActChangepass() {
+        startActivity(new Intent(PersonalActivity.this, ChangePassActivity.class));
+    }
+
+    @Override
     public void setPresenter(PersonalContract.Presenter presenter) {
         this.presenter = checkNotNull(presenter);
     }
@@ -137,7 +142,7 @@ public class PersonalActivity extends BaseActivity implements PersonalContract.V
 
             @Override
             public void onBtnChangeAvatar() {
-
+                showToast("Comming soon...");
             }
         });
     }
@@ -156,7 +161,7 @@ public class PersonalActivity extends BaseActivity implements PersonalContract.V
                         startActivity(new Intent(PersonalActivity.this, UserInfoActivity.class));
                         break;
                     case PersonalRecyclerAdapter.USERPAGE_ITEMID.CHANGE_PASS:
-                        startActivity(new Intent(PersonalActivity.this, ChangePassActivity.class));
+                        presenter.openActChangepass();
                         break;
                     case PersonalRecyclerAdapter.USERPAGE_ITEMID.INVITE_FRIENDS:
                         showToast(R.string.error_not_been_updated);

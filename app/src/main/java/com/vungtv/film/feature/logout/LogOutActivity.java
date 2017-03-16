@@ -1,8 +1,10 @@
 package com.vungtv.film.feature.logout;
 
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 
+import com.google.firebase.iid.FirebaseInstanceId;
 import com.vungtv.film.App;
 import com.vungtv.film.BaseActivity;
 import com.vungtv.film.R;
@@ -13,6 +15,8 @@ import com.vungtv.film.util.LoginGoogleUtils;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
+
+import java.io.IOException;
 
 /**
  *
@@ -25,6 +29,8 @@ public class LogOutActivity extends BaseActivity implements AccountServices.OnLo
     private LoginGoogleUtils loginGoogleUtils;
 
     private AccountServices accountServices;
+
+    private UnsubscribeAsync unsubscribeAsync;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -54,6 +60,9 @@ public class LogOutActivity extends BaseActivity implements AccountServices.OnLo
         if (accountServices != null) {
             accountServices.cancel();
         }
+        if (unsubscribeAsync != null && unsubscribeAsync.getStatus() == AsyncTask.Status.RUNNING) {
+            unsubscribeAsync.cancel(true);
+        }
         EventBus.getDefault().unregister(this);
         super.onDestroy();
     }
@@ -73,10 +82,33 @@ public class LogOutActivity extends BaseActivity implements AccountServices.OnLo
     public void onFailure(int code, String error) {
         popupLoading.dismiss();
         showToast(error);
+        finish();
     }
 
     @Override
     public void onLogoutSuccess() {
-        UserSessionManager.logout(this, loginGoogleUtils);
+        unsubscribeAsync = new UnsubscribeAsync();
+        unsubscribeAsync.execute();
+    }
+
+    private class UnsubscribeAsync extends AsyncTask<Void, Void, Void> {
+
+        @Override
+        protected Void doInBackground(Void... voids) {
+            try {
+                // unsubscribe all topic
+                FirebaseInstanceId.getInstance().deleteInstanceId();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            return null;
+        }
+
+        @Override
+        protected void onPostExecute(Void aVoid) {
+            super.onPostExecute(aVoid);
+            UserSessionManager.logout(getApplicationContext(), loginGoogleUtils);
+            showToast(R.string.logout_text_success);
+        }
     }
 }

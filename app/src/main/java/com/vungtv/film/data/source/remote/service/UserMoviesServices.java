@@ -31,12 +31,15 @@ public class UserMoviesServices extends BaseApiServices {
 
     private int offset = 0;
 
+    private final InterfaceServices service;
+
     private Call<ApiUserMovies> call;
 
     private ResultListener resultListener;
 
     public UserMoviesServices(Context context) {
         super(context);
+        service = retrofit.create(InterfaceServices.class);
     }
 
     public void setResultListener(ResultListener resultListener) {
@@ -48,7 +51,6 @@ public class UserMoviesServices extends BaseApiServices {
             return;
         }
 
-        InterfaceServices service = retrofit.create(InterfaceServices.class);
         if (pageType == UserMoviesActivity.PAGE_FAVORITE) {
             call = service.favoriteMovies(limit, offset, accessToken);
         } else {
@@ -109,7 +111,7 @@ public class UserMoviesServices extends BaseApiServices {
     }
 
     /* interface */
-    private interface InterfaceServices {
+    public interface InterfaceServices {
 
         @GET("page/phim_favorite?src=android")
         Call<ApiUserMovies> favoriteMovies (

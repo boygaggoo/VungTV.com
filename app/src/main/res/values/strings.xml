@@ -6,6 +6,8 @@
     <string name="facebook_app_id">329967930705976</string>
     <string name="yooutube_dev_key">AIzaSyCRqUixQupNAe-uNuuuAvquiFAg7JBURs0</string>
 
+    <string name="prefix_fcm_topic_follow">mov_follow_%s</string>
+
     <!-- error -->
     <string name="error_no_connection">Không thể kết nối tới máy chủ, hãy kiểm tra lại mạng của bạn! hoặc liên hệ admin.</string>
     <string name="error_off_network">Không có kết nối mạng, hãy bật wifi hoặc dữ liệu mạng.</string>
@@ -207,5 +209,9 @@
     <string name="movie_details_text_share">Chia sẻ phim</string>
     <string name="player_text_share">Chia sẻ tập</string>
     <string name="movie_details_episode">Tập %1$s/%2$s</string>
+    <string name="popup_text_exit_app">Bạn chắc chắn muốn thoát ứng dụng ?</string>
+    <string name="popup_action_exit">Thoát</string>
+    <string name="popup_action_cancel_exit">Ở lại</string>
+    <string name="logout_text_success">Đăng xuất tài khoản thành công.</string>
 
 </resources>

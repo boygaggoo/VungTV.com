@@ -71,7 +71,10 @@ public class ChangePassPresenter implements ChangePassContract.Presenter {
     private void setAccountServicesResult() {
         accountServices.setOnAccountChangeResultListener(new AccountServices.OnAccountChangeResultListener() {
             @Override
-            public void onSuccess() {
+            public void onAccountChangeSuccess(String token) {
+                if (StringUtils.isNotEmpty(token)) {
+                    UserSessionManager.setAccessToken(context, token);
+                }
                 activityView.showLoading(false);
                 activityView.changePassSuccess();
             }

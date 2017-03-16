@@ -278,10 +278,20 @@ public class MovieDetailPresenter implements MovieDetailContract.Presenter, Movi
 
         if (isFollowed) {
             // Đăng ký nhận thông báo khi phim được cập nhật.
-            FirebaseMessaging.getInstance().subscribeToTopic("mov_follow_" + movId);
+            FirebaseMessaging.getInstance().subscribeToTopic(
+                    String.format(
+                        context.getString(R.string.prefix_fcm_topic_follow),
+                        String.valueOf(movId)
+                    )
+            );
         } else {
             // Hủy Đăng ký nhận thông báo khi phim được cập nhật.
-            FirebaseMessaging.getInstance().unsubscribeFromTopic("mov_follow_" + movId);
+            FirebaseMessaging.getInstance().unsubscribeFromTopic(
+                    String.format(
+                            context.getString(R.string.prefix_fcm_topic_follow),
+                            String.valueOf(movId)
+                    )
+            );
         }
     }
 

@@ -704,7 +704,7 @@ public class PlayerActivity extends AppCompatActivity implements PlayerContract.
 
     @Override
     public void onButtonShareClick() {
-        showMsgToast("onButtonShareClick");
+        presenter.shareEpisode();
     }
 
     @Override

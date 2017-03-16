@@ -37,9 +37,9 @@ public class AccountServices extends BaseApiServices{
 
     private final ServicesInterface service;
 
-    private Call<ApiAccount> callLogin;
+    private Call<ApiAccount> call;
 
-    private Call<ApiModel> callChangeInfo;
+    private Call<ApiModel> callLogout;
 
     private OnLoginResulListener onLoginResulListener;
 
@@ -80,11 +80,10 @@ public class AccountServices extends BaseApiServices{
             return;
         }
 
-        callLogin = null;
-        callLogin = service.checkAccountInfo(token, SRC);
-        LogUtils.d(TAG, "checkAccountInfo request: " + new Gson().toJson(callLogin.request().body()));
+        call = null;
+        call = service.checkAccountInfo(token, SRC);
 
-        callLogin.enqueue(new Callback<ApiAccount>() {
+        call.enqueue(new Callback<ApiAccount>() {
             @Override
             public void onResponse(Call<ApiAccount> call, Response<ApiAccount> response) {
                 if (onLoginResulListener == null) return;
@@ -137,9 +136,9 @@ public class AccountServices extends BaseApiServices{
             emailCrypt = Base64.encodeToString(emailCrypt.getBytes("UTF-8"), Base64.NO_WRAP);
             passCrypt = Base64.encodeToString(passCrypt.getBytes("UTF-8"), Base64.NO_WRAP);
 
-            callLogin = service.login(emailCrypt, passCrypt, SRC);
+            call = service.login(emailCrypt, passCrypt, SRC);
 
-            callLogin.enqueue(new Callback<ApiAccount>() {
+            call.enqueue(new Callback<ApiAccount>() {
                 @Override
                 public void onResponse(Call<ApiAccount> call, Response<ApiAccount> response) {
                     if (onLoginResulListener == null) return;
@@ -183,19 +182,19 @@ public class AccountServices extends BaseApiServices{
             return;
         }
 
-        callLogin = null;
+        call = null;
         switch (provider) {
             case UserSessionManager.PROVIDER_FACE:
-                callLogin = service.loginWithFacebook(accessToken, SRC);
+                call = service.loginWithFacebook(accessToken, SRC);
                 break;
 
             case UserSessionManager.PROVIDER_GOOGLE:
-                callLogin = service.loginWithGoogle(accessToken, SRC);
+                call = service.loginWithGoogle(accessToken, SRC);
                 break;
         }
 
-        if (callLogin == null) return;
-        callLogin.enqueue(new Callback<ApiAccount>() {
+        if (call == null) return;
+        call.enqueue(new Callback<ApiAccount>() {
             @Override
             public void onResponse(Call<ApiAccount> call, Response<ApiAccount> response) {
                 if (onLoginResulListener == null) return;
@@ -251,9 +250,9 @@ public class AccountServices extends BaseApiServices{
             passCrypt = Base64.encodeToString(passCrypt.getBytes("UTF-8"), Base64.NO_WRAP);
             rePassCrypt = Base64.encodeToString(rePassCrypt.getBytes("UTF-8"), Base64.NO_WRAP);
 
-            callLogin = null;
-            callLogin = service.register(emailCrypt, passCrypt, rePassCrypt, SRC);
-            callLogin.enqueue(new Callback<ApiAccount>() {
+            call = null;
+            call = service.register(emailCrypt, passCrypt, rePassCrypt, SRC);
+            call.enqueue(new Callback<ApiAccount>() {
                 @Override
                 public void onResponse(Call<ApiAccount> call, Response<ApiAccount> response) {
                     if (onLoginResulListener == null) return;
@@ -301,12 +300,12 @@ public class AccountServices extends BaseApiServices{
             return;
         }
 
-        callChangeInfo = null;
-        callChangeInfo = service.changeName(newName, token, SRC);
-        LogUtils.d(TAG, "changeDisplayName request: " + new Gson().toJson(callChangeInfo.request().body()));
-        callChangeInfo.enqueue(new Callback<ApiModel>() {
+        call = null;
+        call = service.changeName(newName, token, SRC);
+        LogUtils.d(TAG, "changeDisplayName request: " + new Gson().toJson(callLogout.request().body()));
+        call.enqueue(new Callback<ApiAccount>() {
             @Override
-            public void onResponse(Call<ApiModel> call, Response<ApiModel> response) {
+            public void onResponse(Call<ApiAccount> call, Response<ApiAccount> response) {
                 if (onAccountChangeResultListener == null) return;
                 LogUtils.d(TAG, "changeDisplayName json: " + new Gson().toJson(response));
 
@@ -322,11 +321,11 @@ public class AccountServices extends BaseApiServices{
                     return;
                 }
 
-                onAccountChangeResultListener.onSuccess();
+                onAccountChangeResultListener.onAccountChangeSuccess(response.body().getData().getToken());
             }
 
             @Override
-            public void onFailure(Call<ApiModel> call, Throwable t) {
+            public void onFailure(Call<ApiAccount> call, Throwable t) {
                 if (onAccountChangeResultListener != null)
                     onAccountChangeResultListener.onFailure(0, ApiError.toString(context, ApiError.NO_INTERNET));
 
@@ -356,12 +355,12 @@ public class AccountServices extends BaseApiServices{
             newPassCrypt = Base64.encodeToString(newPassCrypt.getBytes("UTF-8"), Base64.NO_WRAP);
             reNewPassCrypt = Base64.encodeToString(reNewPassCrypt.getBytes("UTF-8"), Base64.NO_WRAP);
 
-            callChangeInfo = null;
-            callChangeInfo = service.changePass(oldPassCrypt, newPassCrypt, reNewPassCrypt, token, SRC);
-            LogUtils.d(TAG, "changePassword request: " + new Gson().toJson(callChangeInfo.request().body()));
-            callChangeInfo.enqueue(new Callback<ApiModel>() {
+            call = null;
+            call = service.changePass(oldPassCrypt, newPassCrypt, reNewPassCrypt, token, SRC);
+            LogUtils.d(TAG, "changePassword request: " + new Gson().toJson(callLogout.request().body()));
+            call.enqueue(new Callback<ApiAccount>() {
                 @Override
-                public void onResponse(Call<ApiModel> call, Response<ApiModel> response) {
+                public void onResponse(Call<ApiAccount> call, Response<ApiAccount> response) {
                     if (onAccountChangeResultListener == null) return;
                     LogUtils.d(TAG, "changePassword json: " + new Gson().toJson(response));
 
@@ -377,11 +376,11 @@ public class AccountServices extends BaseApiServices{
                         return;
                     }
 
-                    onAccountChangeResultListener.onSuccess();
+                    onAccountChangeResultListener.onAccountChangeSuccess(response.body().getData().getToken());
                 }
 
                 @Override
-                public void onFailure(Call<ApiModel> call, Throwable t) {
+                public void onFailure(Call<ApiAccount> call, Throwable t) {
                     if (onAccountChangeResultListener != null)
                         onAccountChangeResultListener.onFailure(0, ApiError.toString(context, ApiError.NO_INTERNET));
 
@@ -404,8 +403,8 @@ public class AccountServices extends BaseApiServices{
             return;
         }
 
-        callChangeInfo = service.logout(token, SRC);
-        callChangeInfo.enqueue(new Callback<ApiModel>() {
+        callLogout = service.logout(token, SRC);
+        callLogout.enqueue(new Callback<ApiModel>() {
             @Override
             public void onResponse(Call<ApiModel> call, Response<ApiModel> response) {
                 if (onLogoutListener == null) return;
@@ -437,11 +436,11 @@ public class AccountServices extends BaseApiServices{
      * Cancel loading;
      */
     public void cancel() {
-        if (callLogin != null && callLogin.isExecuted())
-            callLogin.cancel();
+        if (call != null && call.isExecuted())
+            call.cancel();
 
-        if (callChangeInfo != null && callChangeInfo.isExecuted())
-            callChangeInfo.cancel();
+        if (callLogout != null && callLogout.isExecuted())
+            callLogout.cancel();
     }
 
     /**
@@ -477,7 +476,7 @@ public class AccountServices extends BaseApiServices{
 
         @FormUrlEncoded
         @POST("user/change_password")
-        Call<ApiModel> changePass(
+        Call<ApiAccount> changePass(
                 @Field("old_password") String pass,
                 @Field("password") String newPass,
                 @Field("re_password") String reNewPass,
@@ -486,7 +485,7 @@ public class AccountServices extends BaseApiServices{
 
         @FormUrlEncoded
         @POST("user/change_name")
-        Call<ApiModel> changeName(
+        Call<ApiAccount> changeName(
                 @Field("name") String newName,
                 @Field("token") String token,
                 @Field("src") String src);
@@ -514,7 +513,7 @@ public class AccountServices extends BaseApiServices{
     }
 
     public interface OnAccountChangeResultListener extends ApiResultCallback{
-        void onSuccess();
+        void onAccountChangeSuccess(String token);
     }
 
     public interface OnLogoutListener extends ApiResultCallback {

@@ -1,5 +1,7 @@
 package com.vungtv.film.feature.loading;
 
+import android.content.Intent;
+
 import com.vungtv.film.BasePresenter;
 import com.vungtv.film.BaseView;
 
@@ -12,10 +14,14 @@ public interface LoadingContract {
 
         void setVersionName(String version);
 
-        void openActHome();
+        void openActHome(int movID);
+
+        void resumeActHome(int movID);
     }
 
     interface Presenter extends BasePresenter {
+
+        void getIntent(Intent intent);
 
         void checkAccountInfo();
 

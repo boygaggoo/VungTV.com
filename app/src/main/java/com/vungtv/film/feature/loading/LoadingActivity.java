@@ -10,10 +10,13 @@ import android.util.Base64;
 
 import com.vungtv.film.App;
 import com.vungtv.film.R;
+import com.vungtv.film.eventbus.LoadingToHomeEvent;
 import com.vungtv.film.feature.home.HomeActivity;
 import com.vungtv.film.util.LogUtils;
 import com.vungtv.film.util.LoginGoogleUtils;
 import com.vungtv.film.widget.VtvTextView;
+
+import org.greenrobot.eventbus.EventBus;
 
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
@@ -37,6 +40,8 @@ public class LoadingActivity extends AppCompatActivity implements LoadingContrac
         ButterKnife.bind(this);
 
         new LoadingPresenter(this, this, new LoginGoogleUtils(this));
+
+        presenter.getIntent(getIntent());
 
         getHashKeyfacebook();
     }
@@ -65,9 +70,20 @@ public class LoadingActivity extends AppCompatActivity implements LoadingContrac
     }
 
     @Override
-    public void openActHome() {
+    public void openActHome(int movId) {
+        if (movId > 0) {
+            EventBus.getDefault().postSticky(new LoadingToHomeEvent(movId));
+        }
         Intent intent = new Intent(LoadingActivity.this, HomeActivity.class);
         startActivity(intent);
+        finish();
+    }
+
+    @Override
+    public void resumeActHome(int movId) {
+        if (movId > 0) {
+            EventBus.getDefault().postSticky(new LoadingToHomeEvent(movId));
+        }
         finish();
     }
 

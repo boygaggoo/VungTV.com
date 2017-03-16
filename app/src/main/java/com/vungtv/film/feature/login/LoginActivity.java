@@ -8,6 +8,7 @@ import com.vungtv.film.BaseActivity;
 import com.vungtv.film.R;
 import com.vungtv.film.data.source.remote.service.AccountServices;
 import com.vungtv.film.eventbus.AccountModifyEvent;
+import com.vungtv.film.services.RegisterFCMTopicService;
 import com.vungtv.film.util.ActivityUtils;
 import com.vungtv.film.util.LoginFacebookUtils;
 import com.vungtv.film.util.LoginGoogleUtils;
@@ -50,6 +51,8 @@ public class LoginActivity extends BaseActivity {
 
     @Subscribe
     public void eventLoginSuccess(AccountModifyEvent event) {
+        Intent intent = new Intent(this, RegisterFCMTopicService.class);
+        startService(intent);
         finish();
     }
 

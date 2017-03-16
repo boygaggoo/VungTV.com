@@ -83,6 +83,7 @@ public class ChangePassActivity extends BaseActivity implements ChangePassContra
     @Override
     public void changePassSuccess() {
         showToast(getString(R.string.user_change_pass_success));
+        finish();
     }
 
     @Override

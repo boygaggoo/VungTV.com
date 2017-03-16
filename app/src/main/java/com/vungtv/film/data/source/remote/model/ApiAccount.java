@@ -15,12 +15,6 @@ public class ApiAccount extends ApiModel {
     }
 
     public class Data {
-        @SerializedName("limit")
-        @Expose
-        private int limit;
-        @SerializedName("offset")
-        @Expose
-        private int offset;
         @SerializedName("user")
         @Expose
         private User user;

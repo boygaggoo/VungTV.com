@@ -90,6 +90,11 @@ public class UserSessionManager {
         return preferences.getString(USER_PROVIDER, null);
     }
 
+    public static boolean isProviderEmail(Context context) {
+        String p = getUserProvider(context);
+        return p == null || p.equalsIgnoreCase(PROVIDER_EMAIL);
+    }
+
     /**
      * Lấy access token đăng nhập hiện tại;
      *
@@ -228,7 +233,7 @@ public class UserSessionManager {
     }
 
     public static void logout(Context context, @NonNull LoginGoogleUtils loginGoogleUtils) {
-        String provider = UserSessionManager.getUserProvider(context.getApplicationContext());
+        String provider = UserSessionManager.getUserProvider(context);
         if (provider == null) return;
 
         switch (provider) {

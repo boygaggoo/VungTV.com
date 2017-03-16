@@ -78,7 +78,9 @@ public class UserInfoPresenter implements UserInfoContract.Presenter {
 
     @Override
     public void openActChangePass() {
-        activityView.openActChangePass();
+        if (UserSessionManager.isProviderEmail(context)) {
+            activityView.openActChangePass();
+        }
     }
 
     @Override
@@ -89,8 +91,11 @@ public class UserInfoPresenter implements UserInfoContract.Presenter {
     private void setAccountServicesResult() {
         accountServices.setOnAccountChangeResultListener(new AccountServices.OnAccountChangeResultListener() {
             @Override
-            public void onSuccess() {
+            public void onAccountChangeSuccess(String token) {
                 UserSessionManager.updateDisplayName(context, newDisplayName);
+                if (StringUtils.isNotEmpty(token)) {
+                    UserSessionManager.setAccessToken(context, token);
+                }
                 activityView.showLoading(false);
                 activityView.showMsgChangenameSuccess();
             }

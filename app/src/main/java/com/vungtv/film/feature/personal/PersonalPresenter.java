@@ -17,15 +17,15 @@ public class PersonalPresenter implements PersonalContract.Presenter {
 
     private final Context context;
 
-    private final PersonalContract.View userPageView;
+    private final PersonalContract.View activityView;
 
     private final LoginGoogleUtils loginGoogleUtils;
 
-    public PersonalPresenter(Context context, PersonalContract.View userPageView, LoginGoogleUtils loginGoogleUtils) {
+    public PersonalPresenter(Context context, PersonalContract.View activityView, LoginGoogleUtils loginGoogleUtils) {
         this.context = checkNotNull(context);
-        this.userPageView = checkNotNull(userPageView);
+        this.activityView = checkNotNull(activityView);
         this.loginGoogleUtils = loginGoogleUtils;
-        this.userPageView.setPresenter(this);
+        this.activityView.setPresenter(this);
     }
 
     @Override
@@ -33,11 +33,11 @@ public class PersonalPresenter implements PersonalContract.Presenter {
 
         User user = UserSessionManager.getCurrentUser(context);
 
-        userPageView.updateUserInfoView(user);
+        activityView.updateUserInfoView(user);
 
-        userPageView.updateRecylerViewItems(user != null);
+        activityView.updateRecylerViewItems(user != null);
 
-        userPageView.setVisibleBtnGiftCodeAndVip(user != null);
+        activityView.setVisibleBtnGiftCodeAndVip(user != null);
     }
 
     @Override
@@ -47,17 +47,24 @@ public class PersonalPresenter implements PersonalContract.Presenter {
 
     @Override
     public void openActLogin() {
-        userPageView.openActLogin();
+        activityView.openActLogin();
     }
 
     @Override
     public void openActNapVip() {
-        userPageView.openActNapVip();
+        activityView.openActNapVip();
     }
 
     @Override
     public void openActGiftcode() {
-        userPageView.openActGiftcode();
+        activityView.openActGiftcode();
+    }
+
+    @Override
+    public void openActChangepass() {
+        if (UserSessionManager.isProviderEmail(context)) {
+            activityView.openActChangepass();
+        }
     }
 
     @Override

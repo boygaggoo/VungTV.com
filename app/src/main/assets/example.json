@@ -2,40 +2,20 @@
   "success": true,
   "code": 0,
   "message": "",
-  "data" : {
-    "sap-xep" : [
-      {
-        "label" : "tên phim",
-        "value" : "ten-phim"
-      },
-      {
-        "label" : "Điểm IMDB",
-        "value" : "imdb"
-      }
-    ],
-    "danh-muc" : [
-      {
-        "label" : "Phim le",
-        "value" : "phim-le"
-      }
-    ],
-    "quoc-gia" : [
-      {
-        "label" : "Mỹ",
-        "value" : "my"
-      }
-    ],
-    "the-loai" : [
-      {
-        "label" : "Khoa học",
-        "value" : "khoa-hoc"
-      }
-    ],
-    "nam" : [
-      {
-        "label" : "2016",
-        "value" : "2016"
-      }
-    ]
+  "data": {
+    "limit": 6,
+    "offset": 0,
+    "user": {
+      "user_id": "3097",
+      "user_email": "vodanhdong3@gmail.com",
+      "user_display_name": "Mr Cuong",
+      "user_phone": null,
+      "user_balance": "700",
+      "user_vip_date": "1508579192",
+      "user_status_message": "0",
+      "created_at_format": "13\/01\/2017",
+      "vip_date_format": "21\/10\/2017 16:46:32"
+    },
+    "token": "ODc1YzMwZDc1ZjM1MDFiNzBjNjZlYjhlN2NkYjhlNDUzZDQyNzg3N2M0NmIyN2M4MmMzZjUzMGQ1MjUyMDc5NWU5ZWI5MDBmOGE5ZDBhZjI0ZDFkNjk3ZjMxZTdhNjQ0NmZkODRmYmU4MzQ3OTBlOTNjYmE3ZGJjZTRjMmIzZDA0N2Q4Mzc1ODJmMDY4Yjg1MzE1NGVjZGY3Njg5MzdkNzg5MDllMTE1ZjE0MGM0MzhhY2VjODdkYmFlYzU4MzYyOTkyZjdiZWExNzg4NzcyNTJiZjFiYjM5NmEyOTVlZmE2YmQ2N2Q5Y2EzMTYxYTBhNGUyMGI5NTE3NDU3ZDRhMzJjOWZlOWEwNTQ0ODhmM2JiMjUzZjhmYzhmMjE4ZWI2NDBmZmY5NjRjZTdlNzg5YzU5MWM5MTBjYjVhMTY3ZTc0YWM1YWNkNDk0MTA2MmU0NjMzMmRlZjU5ZTg3MzgwMGQzY2FhMGQ2ODU3NWNiZjEzNjc4MmU4MGI3NWU3MDIyY2ZjMzg5MjM1YmRjOGI1N2UxMWJmNDBjMDNjOGZkNjRmZTljMjAxNGI5MGJiMTUxZDQ1ZjUxMGFjNmI2ZjlkNDQ3YjY3MzA3OGU1OTgzNjE3OTBkNTcyN2MxZDlkNDJkMzIwMzUxMWFjM2Y1ZTAwNmJiNTIzZWNhMDI1ZDU5Y2VlNDcyNTZlYTBlODdiYzU5OTY3OTdmNTk0ZmVmOGEzZmRjNzQzOWNmM2YyMjEzNjNlYmJiNjAwNTUxZGJkNDM0MzE1ZGU4ZmQzYTNjY2Q5YzllN2MwM2ViMjE3ZjIwMWRhYjU5MWQ4ODMwMzM1OWM3YWE5MTg2MzQ0OTQ0MGI2NjQ1NzIxYjljNTc5ZTY0NmRlNTZkODNhMGU4OGVhNTE4NzAzZTNhZmJhMGQzZjJkNjU5NzlhZTcwNzhhYmVlMGIzOTU2MDUwNmQwZTc5ODA3MGQ3NGU0ZGEwMjc5OTI1MDlmYjQzZmY1YzUzZGM4NWFhYzllY2Q0ZGY4MTI5MTRmZjY0MjI5ZTVkMjA2ZWRiYzgyMzg3YmI0MGJmN2M1Y2YzY2Q0OTgyYjFkMzAxZWYxNDdlZmFkMTk1M2ZjMjZmMTg4ZmE1NTk3MDM2OWM5ZTg4MThlNWZjYjhkODE0MTlhY2QzMDZlMGE0M2FhZDExNzMyMGNlYmYzZGNhZDIxM2E1OTQ1ODA2ZTYyYzNlMDBjZDVlODRmN2YwNzFlNTE0NDJkYTI1M2RlMzNkNzNjODczZWFlMTIyZGUyM2IyNzczYzgxMGFjYjVhMWM4YTU0MDc0YmQ5NzkzZDU1ODgyOGRhNzNiZDFiOTJiOTk0NjliZDNlNzllZTYxY2MyMTgyZjBmYTFhYjJhOWU4ZDAxN2I1NTQwNDA3ZmFjZWU5ZmE2Zjc5MmNkZGRhMzAwNjI4MDk1YjI0MTk2Y2ZjNWQwYTY1MTI4ZDZkMDUyYjgwZWNmOWEwODQ0ODU3ZTIzNzQ4MGE2M2EyM2E1NjFiMGJkODk4NWMwZDkzNWZhOGEwNThiMWEyODhmZDAyOTEyMDFjYmEzZjQ5ODMwZDg0NDY3OWM2YmRkZWQ4ZjBlMjZiYWVlNWM0MzYzYjM0MzE3NDQxZjMwMjFkZTMxOWIwMThhYTNmMmE1NmM4NmM5MzcxMDIy"
   }
 }

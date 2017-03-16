@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.View;
 import android.widget.LinearLayout;
 
@@ -19,15 +20,18 @@ import com.vungtv.film.data.source.remote.service.HomeServices;
 import com.vungtv.film.eventbus.AccountModifyEvent;
 import com.vungtv.film.eventbus.ConfigurationChangedEvent;
 import com.vungtv.film.eventbus.FollowNotifyCountEvent;
+import com.vungtv.film.eventbus.LoadingToHomeEvent;
 import com.vungtv.film.feature.buyvip.BuyVipActivity;
 import com.vungtv.film.feature.filtermovies.FilterMoviesActivity;
 import com.vungtv.film.feature.home.HomeNavAdapter.OnNavItemSelectedListener;
 import com.vungtv.film.feature.login.LoginActivity;
 import com.vungtv.film.feature.menumovies.MenuMoviesActivity;
+import com.vungtv.film.feature.moviedetail.MovieDetailActivity;
 import com.vungtv.film.feature.personal.PersonalActivity;
 import com.vungtv.film.feature.search.SearchActivity;
 import com.vungtv.film.feature.usermovies.UserMoviesActivity;
 import com.vungtv.film.model.NavItem;
+import com.vungtv.film.popup.PopupMessenger;
 import com.vungtv.film.util.ActivityUtils;
 import com.vungtv.film.util.LogUtils;
 import com.vungtv.film.util.UriPaser;
@@ -36,6 +40,7 @@ import com.vungtv.film.widget.VtvToolbarHome;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
 
 import butterknife.BindView;
 
@@ -62,12 +67,16 @@ public class HomeActivity extends BaseActivity implements OnNavItemSelectedListe
 
     private float lastTranslate = 0.0f;
 
+    public static boolean isCreated = false;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
-        isLoadingBackPressExit = false;
         EventBus.getDefault().register(this);
+
+        isCreated = true;
+        isLoadingBackPressExit = false;
 
         toolbar.setOnBtnClickListener(this);
         setupNavigation();
@@ -79,8 +88,6 @@ public class HomeActivity extends BaseActivity implements OnNavItemSelectedListe
         HomeServices = new HomeServices(this);
         HomeServices.setHomeMenuResultCallback(this);
         HomeServices.loadHomeMenu();
-        new HomePresenter(this, homeFragment, HomeServices);
-
     }
 
     @Override
@@ -93,6 +100,7 @@ public class HomeActivity extends BaseActivity implements OnNavItemSelectedListe
     protected void onDestroy() {
         HomeServices.cancelLoadMenu();
         EventBus.getDefault().unregister(this);
+        isCreated = false;
         super.onDestroy();
     }
 
@@ -110,11 +118,39 @@ public class HomeActivity extends BaseActivity implements OnNavItemSelectedListe
             drawer.closeDrawer(navRecycler);
             return;
         }
+
         if (getSupportFragmentManager().getBackStackEntryCount() == 1) {
             finish();
             return;
         }
-        super.onBackPressed();
+
+        PopupMessenger popupMessenger = new PopupMessenger(this);
+        popupMessenger.setTextContent(R.string.popup_text_exit_app);
+        popupMessenger.setTextBtnConfirm(R.string.popup_action_exit);
+        popupMessenger.setTextBtnCancel(R.string.popup_action_cancel_exit);
+        popupMessenger.setOnPopupMessengerListener(new PopupMessenger.OnPopupMessengerListener() {
+            @Override
+            public void onPopupMsgBtnConfirmClick() {
+                finish();
+            }
+
+            @Override
+            public void onPopupMsgBtnCancelClick() {
+
+            }
+        });
+        popupMessenger.show();
+    }
+
+    @Subscribe(sticky = true, threadMode = ThreadMode.MAIN)
+    public void onEventBusFromLoadingAct(LoadingToHomeEvent eventBus) {
+        int movId = eventBus.movId;
+
+        if (movId > 0) {
+            startActivity(MovieDetailActivity.buildIntent(this, movId));
+        }
+        Log.d(TAG, "movId = " + movId);
+        EventBus.getDefault().removeStickyEvent(LoadingToHomeEvent.class);
     }
 
     @Subscribe

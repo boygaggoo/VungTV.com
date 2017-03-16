@@ -135,15 +135,17 @@ public class VtvUserInfoHeaderView extends LinearLayout {
     }
 
     public void setTextVipExpired(String timeStampStr) {
-
         LogUtils.d(TAG, "setTextVipExpired: timeStampStr = " + timeStampStr);
 
         long timeStamp = 0;
-        if (timeStampStr != null) {
+        try {
+            if (timeStampStr != null) {
+                timeStampStr = timeStampStr.replace(" ", "");
+            }
             timeStamp = Long.parseLong(timeStampStr);
+        } catch (Exception e) {
+            e.printStackTrace();
         }
-
-        LogUtils.d(TAG, "setTextVipExpired: timeStamp = " + timeStamp);
 
         if (timeStamp == 0) {
             textVipExpired.setText(String.format(
