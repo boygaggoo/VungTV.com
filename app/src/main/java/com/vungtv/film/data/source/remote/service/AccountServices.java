@@ -302,22 +302,18 @@ public class AccountServices extends BaseApiServices{
 
         call = null;
         call = service.changeName(newName, token, SRC);
-        LogUtils.d(TAG, "changeDisplayName request: " + new Gson().toJson(callLogout.request().body()));
         call.enqueue(new Callback<ApiAccount>() {
             @Override
             public void onResponse(Call<ApiAccount> call, Response<ApiAccount> response) {
                 if (onAccountChangeResultListener == null) return;
-                LogUtils.d(TAG, "changeDisplayName json: " + new Gson().toJson(response));
 
                 if (!response.isSuccessful()) {
                     onAccountChangeResultListener.onFailure(response.code(), ApiError.toString(context, ApiError.SERVICE_ERROR));
-                    LogUtils.e(TAG, "changeDisplayName: error: server down!");
                     return;
                 }
 
                 if (!response.body().getSuccess()) {
                     onAccountChangeResultListener.onFailure(response.body().getCode(), response.body().getMessage());
-                    LogUtils.e(TAG, "changeDisplayName: error msg:" + response.body().getMessage() + "\nCode: " + response.body().getCode());
                     return;
                 }
 
@@ -326,10 +322,10 @@ public class AccountServices extends BaseApiServices{
 
             @Override
             public void onFailure(Call<ApiAccount> call, Throwable t) {
-                if (onAccountChangeResultListener != null)
+                if (onAccountChangeResultListener != null) {
                     onAccountChangeResultListener.onFailure(0, ApiError.toString(context, ApiError.NO_INTERNET));
-
-                LogUtils.e(TAG, "changeDisplayName: onFailure: " + t.getMessage());
+                }
+                t.printStackTrace();
             }
         });
     }
@@ -357,22 +353,18 @@ public class AccountServices extends BaseApiServices{
 
             call = null;
             call = service.changePass(oldPassCrypt, newPassCrypt, reNewPassCrypt, token, SRC);
-            LogUtils.d(TAG, "changePassword request: " + new Gson().toJson(callLogout.request().body()));
             call.enqueue(new Callback<ApiAccount>() {
                 @Override
                 public void onResponse(Call<ApiAccount> call, Response<ApiAccount> response) {
                     if (onAccountChangeResultListener == null) return;
-                    LogUtils.d(TAG, "changePassword json: " + new Gson().toJson(response));
 
                     if (!response.isSuccessful()) {
                         onAccountChangeResultListener.onFailure(response.code(), ApiError.toString(context, ApiError.SERVICE_ERROR));
-                        LogUtils.e(TAG, "changePassword: error: server down!");
                         return;
                     }
 
                     if (!response.body().getSuccess()) {
                         onAccountChangeResultListener.onFailure(response.body().getCode(), response.body().getMessage());
-                        LogUtils.e(TAG, "changePassword: error msg:" + response.body().getMessage() + "\nCode: " + response.body().getCode());
                         return;
                     }
 
@@ -381,15 +373,13 @@ public class AccountServices extends BaseApiServices{
 
                 @Override
                 public void onFailure(Call<ApiAccount> call, Throwable t) {
-                    if (onAccountChangeResultListener != null)
+                    if (onAccountChangeResultListener != null) {
                         onAccountChangeResultListener.onFailure(0, ApiError.toString(context, ApiError.NO_INTERNET));
-
-                    LogUtils.e(TAG, "changePassword: onFailure: " + t.getMessage());
+                    }
                 }
             });
         } catch (Exception e) {
             e.printStackTrace();
-            LogUtils.d(TAG, "changePassword error: email + pass null");
         }
     }
 

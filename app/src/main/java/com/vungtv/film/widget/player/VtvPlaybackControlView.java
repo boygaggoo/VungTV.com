@@ -23,6 +23,7 @@ import com.google.android.exoplayer2.source.TrackGroupArray;
 import com.google.android.exoplayer2.trackselection.TrackSelectionArray;
 import com.google.android.exoplayer2.util.Util;
 import com.vungtv.film.R;
+import com.vungtv.film.util.LogUtils;
 import com.vungtv.film.widget.VtvTextView;
 
 import java.util.Formatter;
@@ -36,6 +37,8 @@ import java.util.Locale;
  */
 
 public class VtvPlaybackControlView extends FrameLayout {
+    private static final String TAG = VtvPlaybackControlView.class.getSimpleName();
+
     /**
      * ResultListener to be notified about changes of the visibility of the UI control.
      */
@@ -99,13 +102,12 @@ public class VtvPlaybackControlView extends FrameLayout {
      * Default {@link SeekDispatcher} that dispatches seeks to the player without modification.
      */
     public static final SeekDispatcher DEFAULT_SEEK_DISPATCHER = new SeekDispatcher() {
-
         @Override
         public boolean dispatchSeek(ExoPlayer player, int windowIndex, long positionMs) {
+            LogUtils.i(TAG, "public boolean dispatchSeek(ExoPlayer player, int windowIndex, long positionMs)");
             player.seekTo(windowIndex, positionMs);
             return true;
         }
-
     };
 
     public static final int DEFAULT_FAST_FORWARD_MS = 15000;
@@ -704,10 +706,12 @@ public class VtvPlaybackControlView extends FrameLayout {
     }
 
     private void seekTo(long positionMs) {
+        LogUtils.d(TAG, "private void seekTo(long positionMs)");
         seekTo(player.getCurrentWindowIndex(), positionMs);
     }
 
     private void seekTo(int windowIndex, long positionMs) {
+        LogUtils.d(TAG, "private void seekTo(int windowIndex, long positionMs)");
         boolean dispatched = seekDispatcher.dispatchSeek(player, windowIndex, positionMs);
         if (!dispatched) {
             // The seek wasn't dispatched. If the progress bar was dragged by the user to perform the
@@ -821,6 +825,7 @@ public class VtvPlaybackControlView extends FrameLayout {
                     positionView.setText(stringForTime(position));
                 }
                 if (player != null && !dragging) {
+                    LogUtils.i(TAG, "onProgressChanged: player != null && !dragging");
                     seekTo(position);
                 }
             }
@@ -830,6 +835,7 @@ public class VtvPlaybackControlView extends FrameLayout {
         public void onStopTrackingTouch(SeekBar seekBar) {
             dragging = false;
             if (player != null) {
+                LogUtils.i(TAG, "onStopTrackingTouch: if (player != null)");
                 seekTo(positionValue(seekBar.getProgress()));
             }
             hideAfterTimeout();

@@ -50,5 +50,7 @@ public interface HomeContract {
         void reloadRecentMovies();
 
         void configChange();
+
+        void playRecentMovies(int pos);
     }
 }

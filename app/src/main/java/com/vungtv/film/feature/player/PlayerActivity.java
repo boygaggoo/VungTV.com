@@ -169,6 +169,7 @@ public class PlayerActivity extends AppCompatActivity implements PlayerContract.
         vtvPlayerView.setControllerVisibilityListener(this);
         vtvPlayerView.setOnScreenBrightControl(this);
         vtvPlayerView.requestFocus();
+
         vtvControlView = vtvPlayerView.getController();
         vtvControlView.setVisibilityListener(this);
         vtvControlView.setOnControlButtonClickListener(this);
@@ -527,11 +528,6 @@ public class PlayerActivity extends AppCompatActivity implements PlayerContract.
                 : C.TIME_UNSET;
 
         presenter.saveMovieRecent(resumePosition, player.getDuration());
-
-        LogUtils.d(TAG, "updateResumePosition: " +
-                "resumeWindow = " + resumeWindow +
-                "\nresumePosition = " + resumePosition +
-                "\nDuration = " + player.getDuration());
     }
 
     @Override

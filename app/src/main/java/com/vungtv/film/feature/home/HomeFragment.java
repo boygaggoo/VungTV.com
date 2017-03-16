@@ -191,7 +191,7 @@ public class HomeFragment extends Fragment implements HomeContract.View {
     }
 
     @Override
-    public void addReCentView(final ArrayList<Object> list) {
+    public void addReCentView(ArrayList<Object> list) {
         moviesRecent = new VtvMovieRowView(
                 getActivity(), VtvMovieRowView.STYLE_DEFAULT, MoviesRowAdapter.ITEM_RECENT);
         moviesRecent.setTitle(R.string.recent_text_title);
@@ -206,7 +206,7 @@ public class HomeFragment extends Fragment implements HomeContract.View {
         moviesRecent.setOnItemClickListener(new MoviesRowAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(View v, int pos) {
-                openActPlayer((MovieRecent) list.get(pos));
+                presenter.playRecentMovies(pos);
             }
         });
         moviesRecent.setOnRecentInfoListener(new OnRecentInfoClickListener() {

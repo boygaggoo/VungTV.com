@@ -14,6 +14,7 @@ import com.vungtv.film.widget.moviesrowview.MoviesRowAdapter;
 import com.vungtv.film.widget.moviesrowview.VtvMovieRowView;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import static com.google.gson.internal.$Gson$Preconditions.checkNotNull;
 
@@ -26,7 +27,7 @@ public class HomePresenter implements HomeContract.Presenter {
 
     private Context context;
 
-    private final HomeContract.View homeView;
+    private final HomeContract.View fragmentView;
 
     private final HomeServices homeServices;
 
@@ -34,11 +35,13 @@ public class HomePresenter implements HomeContract.Presenter {
 
     private ApiHome.DataHome dataHome;
 
-    public HomePresenter(Context context, HomeContract.View homeView) {
-        this.context = context;
-        this.homeView = checkNotNull(homeView);
+    private List<MovieRecent> listRecent;
 
-        this.homeView.setPresenter(this);
+    public HomePresenter(Context context, HomeContract.View fragmentView) {
+        this.context = context;
+        this.fragmentView = checkNotNull(fragmentView);
+
+        this.fragmentView.setPresenter(this);
 
         homeServices = new HomeServices(context);
         homeServicesResponse();
@@ -63,43 +66,48 @@ public class HomePresenter implements HomeContract.Presenter {
         // Load home data from remote server;
         homeServices.cancel();
         homeServices.loadHomeData();
-        homeView.showLoading(true);
+        fragmentView.showLoading(true);
     }
 
     @Override
     public void reloadData() {
         // Reload home data when prev load failed;
-        homeView.removeAllViews();
+        fragmentView.removeAllViews();
         loadData();
     }
 
     @Override
     public void reloadRecentMovies() {
         // add recent movies;
-        ArrayList<MovieRecent> recents = movieRecentManager.getAll(20);
-        homeView.updateRecentView(new ArrayList<Object>(recents));
+        listRecent = movieRecentManager.getAll(20);
+        fragmentView.updateRecentView(new ArrayList<Object>(listRecent));
     }
 
     @Override
     public void configChange() {
         // Call when orientation change;
-        homeView.removeAllViews();
+        fragmentView.removeAllViews();
         addViews();
+    }
+
+    @Override
+    public void playRecentMovies(int pos) {
+        fragmentView.openActPlayer(listRecent.get(pos));
     }
 
     private void homeServicesResponse() {
         homeServices.setHomeResultCallback(new HomeServices.HomeResultCallback() {
             @Override
             public void onSuccess(ApiHome.DataHome data) {
-                homeView.showLoading(false);
+                fragmentView.showLoading(false);
                 dataHome = data;
                 addViews();
             }
 
             @Override
             public void onFailure(int code, final String error) {
-                homeView.showLoading(false);
-                homeView.showMsgError(true, error);
+                fragmentView.showLoading(false);
+                fragmentView.showMsgError(true, error);
             }
         });
     }
@@ -118,7 +126,7 @@ public class HomePresenter implements HomeContract.Presenter {
         if (context.getResources().getBoolean(R.bool.isTabletLand)) {
             listSlider.add(null);
         }
-        homeView.addSliderView(listSlider);
+        fragmentView.addSliderView(listSlider);
 
         //add film de cu, top, han, trung, anime, tivishow, 18+;
         ArrayList<ApiHome.ModuleRow> listDataRow = dataHome.getModuleRows();
@@ -150,7 +158,7 @@ public class HomePresenter implements HomeContract.Presenter {
                     iconTitle = R.drawable.icon_star1;
                 }
 
-                homeView.addMoviesView(
+                fragmentView.addMoviesView(
                         rowStyle,
                         itemType,
                         iconTitle,
@@ -162,7 +170,7 @@ public class HomePresenter implements HomeContract.Presenter {
 
             // add row hot topic
             if (listDataRow.size() > 6) {
-                homeView.addHotTopicView(
+                fragmentView.addHotTopicView(
                         VtvMovieRowView.STYLE_BLACK_NO_TITLE,
                         MoviesRowAdapter.ITEM_HOT_TOPIC,
                         null,
@@ -171,13 +179,13 @@ public class HomePresenter implements HomeContract.Presenter {
             }
 
             // add recent movies;
-            ArrayList<MovieRecent> recents = movieRecentManager.getAll(20);
-            if (recents.size() > 0) {
-                homeView.addReCentView(new ArrayList<Object>(recents));
+            listRecent = movieRecentManager.getAll(20);
+            if (listRecent.size() > 0) {
+                fragmentView.addReCentView(new ArrayList<Object>(listRecent));
             }
 
             // add footer view
-            homeView.addFooterView();
+            fragmentView.addFooterView();
         }
     }
 }

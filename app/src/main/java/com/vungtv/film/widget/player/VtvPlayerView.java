@@ -41,7 +41,6 @@ import com.google.android.exoplayer2.ui.SubtitleView;
 import com.google.android.exoplayer2.util.Assertions;
 import com.vungtv.film.R;
 import com.vungtv.film.util.DensityUtils;
-import com.vungtv.film.util.LogUtils;
 import com.vungtv.film.widget.VtvTextView;
 
 import java.util.List;
@@ -116,8 +115,8 @@ public class VtvPlayerView extends FrameLayout {
         super(context, attrs, defStyleAttr);
 
         threshold = DensityUtils.dip2px(context, 18);
-        width = context.getResources().getDisplayMetrics().widthPixels;
-        height = context.getResources().getDisplayMetrics().heightPixels;
+        width = context.getResources().getDisplayMetrics().heightPixels;
+        height = context.getResources().getDisplayMetrics().widthPixels;
         int playerLayoutId = R.layout.widget_vtv_player_view;
         boolean useArtwork = true;
         int defaultArtworkId = 0;
@@ -340,10 +339,8 @@ public class VtvPlayerView extends FrameLayout {
         boolean wasShowingIndefinitely = controller.isVisible() && controller.getShowTimeoutMs() <= 0;
         controller.setShowTimeoutMs(showIndefinitely ? 0 : controllerShowTimeoutMs);
         if (isForced || showIndefinitely || wasShowingIndefinitely) {
-            LogUtils.d(TAG, "maybeShowController: 1 " + controller.isVisible());
             controller.show();
             showBtnLockController(true);
-            LogUtils.d(TAG, "maybeShowController: 2 " + controller.isVisible());
         }
     }
 
@@ -363,7 +360,6 @@ public class VtvPlayerView extends FrameLayout {
      * @param show bool
      */
     public void showBtnLockController(boolean show) {
-        LogUtils.d(TAG, "showBtnLockController: " + show);
         btnLockController.setVisibility(show ? VISIBLE : GONE);
     }
 
@@ -791,7 +787,6 @@ public class VtvPlayerView extends FrameLayout {
                 startX = 0;
                 if (isClick) {
                     // Show / hide controller
-                    LogUtils.i(TAG, "isLockController = " + isLockController);
                     if (isLockController) {
                         if (btnLockController.getVisibility() == VISIBLE) {
                             showBtnLockController(false);
