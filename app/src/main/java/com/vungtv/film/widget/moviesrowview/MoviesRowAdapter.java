@@ -25,7 +25,9 @@ import com.vungtv.film.widget.VtvTextView;
 import java.util.ArrayList;
 
 public class MoviesRowAdapter extends RecyclerView.Adapter {
+
     private static final String TAG = MoviesRowAdapter.class.getSimpleName();
+
     public static final int ITEM_DEFAULT = 0;
     public static final int ITEM_RECOMMENT = 1;
     public static final int ITEM_RECENT = 2;
@@ -33,9 +35,13 @@ public class MoviesRowAdapter extends RecyclerView.Adapter {
     public static final int ITEM_HOT_TOPIC = 4;
 
     private Context context;
+
     private int itemType;
+
     private ArrayList<Object> list = new ArrayList<>();
+
     private OnItemClickListener onItemClickListener;
+
     private OnRecentInfoClickListener onRecentInfoClick;
 
     private final int COLOR_BLUE, COLOR_YELLOW, COLOR_ORANGE, COLOR_BLUEGRAY;

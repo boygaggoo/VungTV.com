@@ -157,7 +157,7 @@ public class Config {
         this.advProvider = advProvider;
     }
 
-    public Boolean getForceUpdate() {
+    public Boolean isForceUpdate() {
         return forceUpdate;
     }
 
@@ -165,7 +165,7 @@ public class Config {
         this.forceUpdate = forceUpdate;
     }
 
-    public Boolean getStoreUpdate() {
+    public Boolean isStoreUpdate() {
         return storeUpdate;
     }
 

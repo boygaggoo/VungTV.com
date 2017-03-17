@@ -31,6 +31,12 @@ public class RecentRecyclerAdapter extends RecyclerView.Adapter {
 
     private OnRecentInfoClickListener infoClickListener;
 
+    private int itemHeight;
+
+    public RecentRecyclerAdapter() {
+
+    }
+
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext())
@@ -86,7 +92,7 @@ public class RecentRecyclerAdapter extends RecyclerView.Adapter {
      * Class item view holder
      */
     private class ItemRecentViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
-
+        private ViewGroup rootlayout;
         private ImageView imageView;
         private VtvTextView name;
         private View btnInfo;
@@ -95,6 +101,7 @@ public class RecentRecyclerAdapter extends RecyclerView.Adapter {
         public ItemRecentViewHolder(View itemView) {
             super(itemView);
 
+            rootlayout = (ViewGroup) itemView.findViewById(R.id.layout_root);
             imageView = (ImageView) itemView.findViewById(R.id.item_home_row_film_img_poster);
             name = (VtvTextView) itemView.findViewById(R.id.item_home_row_film_tv_film_name);
             btnInfo = itemView.findViewById(R.id.item_home_row_film_recent_btn_info);
@@ -108,15 +115,18 @@ public class RecentRecyclerAdapter extends RecyclerView.Adapter {
         }
 
         public void setInfo(final MovieRecent movie) {
-            //File fileImg = ImageUtil.getFileImageRecentFromSD(movie.getMovFrameBg());
+
             if (movie.getMovFrameBg() != null) {
                 Picasso.with(itemView.getContext())
                         .load(movie.getMovFrameBg())
-                        .centerCrop()
+                        .resize(480, 270)
                         .error(R.drawable.default_poster_land)
                         .into(imageView);
             } else {
-                imageView.setImageResource(R.drawable.default_poster_land);
+                Picasso.with(itemView.getContext())
+                        .load(R.drawable.default_poster_land)
+                        .resize(480, 270)
+                        .into(imageView);
             }
 
             if (movie.getMovName() != null)

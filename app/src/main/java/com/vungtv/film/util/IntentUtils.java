@@ -16,6 +16,14 @@ import com.vungtv.film.BuildConfig;
 
 public class IntentUtils {
 
+    /**
+     * Intent open page on facebook app;
+     *
+     * @param pm The {@link PackageManager}
+     * @param fbId The {@link String} facebook ID;
+     * @param url The {@link String} facebook url page;
+     * @return The {@link Intent}
+     */
     public static Intent openFacebook(PackageManager pm, String fbId, String url) {
         Uri uri = null;
         try {
@@ -50,6 +58,14 @@ public class IntentUtils {
         return intent;
     }
 
+    /**
+     * The intent is to send message on facebook msg;
+     *
+     * @param pm The {@link PackageManager}
+     * @param fbId The {@link String} facebook ID;
+     * @param url The {@link String} facebook url page;
+     * @return The {@link Intent}
+     */
     public static Intent sendFbMessenger(PackageManager pm, String fbId, String url) {
         try {
             ApplicationInfo applicationInfo = pm.getApplicationInfo("com.facebook.orca", 0);
@@ -72,6 +88,10 @@ public class IntentUtils {
         intent.setType("text/plain");
         intent.putExtra(Intent.EXTRA_TEXT, shareLink);
         return intent;
+    }
+
+    public static Intent openUrlOnWebsite(String url) {
+        return new Intent(Intent.ACTION_VIEW, Uri.parse(url));
     }
 
 }

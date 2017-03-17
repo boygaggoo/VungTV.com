@@ -25,20 +25,28 @@ public interface PersonalContract {
 
         void openActGiftcode();
 
+        void openActUserInfo();
+
         void openActChangepass();
+
+        void openActRecent();
+
+        void openActFavorite();
+
+        void openActFollow();
+
+        void openActSetting();
+
+        void openActAbout();
+
+        void openActContact();
+
+        void openActLogout();
     }
 
     interface Presenter extends BasePresenter {
 
         void loginStatusChange();
-
-        void logOut();
-
-        void openActLogin();
-
-        void openActNapVip();
-
-        void openActGiftcode();
 
         void openActChangepass();
     }

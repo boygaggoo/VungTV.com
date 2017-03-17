@@ -41,26 +41,6 @@ public class PersonalPresenter implements PersonalContract.Presenter {
     }
 
     @Override
-    public void logOut() {
-        UserSessionManager.logout(context, loginGoogleUtils);
-    }
-
-    @Override
-    public void openActLogin() {
-        activityView.openActLogin();
-    }
-
-    @Override
-    public void openActNapVip() {
-        activityView.openActNapVip();
-    }
-
-    @Override
-    public void openActGiftcode() {
-        activityView.openActGiftcode();
-    }
-
-    @Override
     public void openActChangepass() {
         if (UserSessionManager.isProviderEmail(context)) {
             activityView.openActChangepass();

@@ -17,6 +17,14 @@ public interface LoadingContract {
         void openActHome(int movID);
 
         void resumeActHome(int movID);
+
+        void showPopupUpdate(String content, boolean forceUpdate);
+
+        void openAppOnPlayStore();
+
+        void openAppOnWebsite(String url);
+
+        void closeApp();
     }
 
     interface Presenter extends BasePresenter {
@@ -26,5 +34,11 @@ public interface LoadingContract {
         void checkAccountInfo();
 
         void getAppConfig();
+
+        void checkUpdate();
+
+        void confirmUpdate();
+
+        void cancelUpdate();
     }
 }

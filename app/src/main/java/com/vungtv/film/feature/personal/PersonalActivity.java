@@ -6,13 +6,13 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Toast;
 
 import com.vungtv.film.App;
 import com.vungtv.film.BaseActivity;
 import com.vungtv.film.R;
 import com.vungtv.film.eventbus.AccountModifyEvent;
 import com.vungtv.film.eventbus.FollowNotifyCountEvent;
+import com.vungtv.film.feature.aboutcontact.AboutActivity;
 import com.vungtv.film.feature.buyvip.BuyVipActivity;
 import com.vungtv.film.feature.changepass.ChangePassActivity;
 import com.vungtv.film.feature.login.LoginActivity;
@@ -54,6 +54,7 @@ public class PersonalActivity extends BaseActivity implements PersonalContract.V
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_personal);
+
         EventBus.getDefault().register(this);
 
         setUserPageHeader();
@@ -61,6 +62,7 @@ public class PersonalActivity extends BaseActivity implements PersonalContract.V
         setGruopBtnVipCode();
 
         new PersonalPresenter(this, this, new LoginGoogleUtils(this));
+
         presenter.start();
     }
 
@@ -120,12 +122,52 @@ public class PersonalActivity extends BaseActivity implements PersonalContract.V
 
     @Override
     public void openActGiftcode() {
-        Toast.makeText(getApplicationContext(), "Open Activity Giftcode", Toast.LENGTH_SHORT).show();
+        showToast("Comming soon...");
+    }
+
+    @Override
+    public void openActUserInfo() {
+        startActivity(new Intent(this, UserInfoActivity.class));
     }
 
     @Override
     public void openActChangepass() {
         startActivity(new Intent(PersonalActivity.this, ChangePassActivity.class));
+    }
+
+    @Override
+    public void openActRecent() {
+        startActivity(new Intent(this, RecentActivity.class));
+    }
+
+    @Override
+    public void openActFavorite() {
+        startActivity(UserMoviesActivity.buildIntent(this, UserMoviesActivity.PAGE_FAVORITE));
+    }
+
+    @Override
+    public void openActFollow() {
+        startActivity(UserMoviesActivity.buildIntent(this, UserMoviesActivity.PAGE_FOLLOW));
+    }
+
+    @Override
+    public void openActSetting() {
+        startActivity(new Intent(this, SettingActivity.class));
+    }
+
+    @Override
+    public void openActAbout() {
+        startActivity(AboutActivity.buildIntentAbout(this));
+    }
+
+    @Override
+    public void openActContact() {
+        startActivity(AboutActivity.buildIntentContact(this));
+    }
+
+    @Override
+    public void openActLogout() {
+        startActivity(new Intent(this, LogOutActivity.class));
     }
 
     @Override
@@ -137,7 +179,7 @@ public class PersonalActivity extends BaseActivity implements PersonalContract.V
         userPageHeader.setOnUserPageHeaderListener(new VtvUserInfoHeaderView.OnUserPageHeaderListener() {
             @Override
             public void onBtnLoginClick() {
-                presenter.openActLogin();
+                openActLogin();
             }
 
             @Override
@@ -158,7 +200,7 @@ public class PersonalActivity extends BaseActivity implements PersonalContract.V
                 int itemId = (int) adapter.getItemId(pos);
                 switch (itemId) {
                     case PersonalRecyclerAdapter.USERPAGE_ITEMID.USER_INFO:
-                        startActivity(new Intent(PersonalActivity.this, UserInfoActivity.class));
+                        openActUserInfo();
                         break;
                     case PersonalRecyclerAdapter.USERPAGE_ITEMID.CHANGE_PASS:
                         presenter.openActChangepass();
@@ -167,28 +209,25 @@ public class PersonalActivity extends BaseActivity implements PersonalContract.V
                         showToast(R.string.error_not_been_updated);
                         break;
                     case PersonalRecyclerAdapter.USERPAGE_ITEMID.FILM_VIEWED:
-                        startActivity(new Intent(PersonalActivity.this, RecentActivity.class));
+                        openActRecent();
                         break;
                     case PersonalRecyclerAdapter.USERPAGE_ITEMID.FAVORITE:
-                        startActivity(UserMoviesActivity.buildIntent(
-                                PersonalActivity.this, UserMoviesActivity.PAGE_FAVORITE));
+                        openActFavorite();
                         break;
                     case PersonalRecyclerAdapter.USERPAGE_ITEMID.FOLLOW:
-                        startActivity(UserMoviesActivity.buildIntent(
-                                PersonalActivity.this, UserMoviesActivity.PAGE_FOLLOW));
+                        openActFollow();
                         break;
                     case PersonalRecyclerAdapter.USERPAGE_ITEMID.SETTING:
-                        // Open activity Setting;
-                        startActivity(new Intent(PersonalActivity.this, SettingActivity.class));
+                        openActSetting();
                         break;
                     case PersonalRecyclerAdapter.USERPAGE_ITEMID.APP_INFO:
-
+                        openActAbout();
                         break;
                     case PersonalRecyclerAdapter.USERPAGE_ITEMID.CONTACT:
-
+                        openActContact();
                         break;
                     case PersonalRecyclerAdapter.USERPAGE_ITEMID.LOGOUT:
-                        startActivity(new Intent(PersonalActivity.this, LogOutActivity.class));
+                        openActLogout();
                         break;
                 }
             }
@@ -201,7 +240,7 @@ public class PersonalActivity extends BaseActivity implements PersonalContract.V
         groupBtnVipCode.getChildAt(0).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                presenter.openActNapVip();
+                openActNapVip();
             }
         });
         // Click btn GiftCode
@@ -209,7 +248,7 @@ public class PersonalActivity extends BaseActivity implements PersonalContract.V
         groupBtnVipCode.getChildAt(1).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                presenter.openActGiftcode();
+                openActGiftcode();
             }
         });
     }

@@ -12,6 +12,8 @@ import com.vungtv.film.App;
 import com.vungtv.film.R;
 import com.vungtv.film.eventbus.LoadingToHomeEvent;
 import com.vungtv.film.feature.home.HomeActivity;
+import com.vungtv.film.popup.PopupUpdate;
+import com.vungtv.film.util.IntentUtils;
 import com.vungtv.film.util.LogUtils;
 import com.vungtv.film.util.LoginGoogleUtils;
 import com.vungtv.film.widget.VtvTextView;
@@ -84,6 +86,40 @@ public class LoadingActivity extends AppCompatActivity implements LoadingContrac
         if (movId > 0) {
             EventBus.getDefault().postSticky(new LoadingToHomeEvent(movId));
         }
+        finish();
+    }
+
+    @Override
+    public void showPopupUpdate(String content, boolean forceUpdate) {
+        PopupUpdate popupUpdate = new PopupUpdate(this);
+        popupUpdate.setTextContentFromHtml(content);
+        popupUpdate.setOnPopupUpdateListener(new PopupUpdate.OnPopupUpdateListener() {
+            @Override
+            public void onPopupUpdateBtnConfirmClick() {
+                presenter.confirmUpdate();
+            }
+
+            @Override
+            public void onPopupUpdateBtnCancelClick() {
+                presenter.cancelUpdate();
+            }
+        });
+        popupUpdate.setBtnCancelVisible(!forceUpdate);
+        popupUpdate.show();
+    }
+
+    @Override
+    public void openAppOnPlayStore() {
+        startActivity(IntentUtils.updateAppFromStore());
+    }
+
+    @Override
+    public void openAppOnWebsite(String url) {
+        startActivity(IntentUtils.openUrlOnWebsite(url));
+    }
+
+    @Override
+    public void closeApp() {
         finish();
     }
 

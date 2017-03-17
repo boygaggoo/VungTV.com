@@ -115,6 +115,39 @@ public class LoadingPresenter implements LoadingContract.Presenter{
         configServices.loadConfig();
     }
 
+    @Override
+    public void checkUpdate() {
+        Config config = RemoteConfigManager.getConfigs(context.getApplicationContext());
+        if (config != null && config.getAppVer() > BuildConfig.VERSION_CODE) {
+            activityView.showPopupUpdate(config.getPopupUpdateHtml(), config.isForceUpdate());
+        } else {
+            // Version app is newest
+            isGetConfigSuccess = true;
+            openActHome();
+        }
+    }
+
+    @Override
+    public void confirmUpdate() {
+        Config config = RemoteConfigManager.getConfigs(context.getApplicationContext());
+        if (config.isStoreUpdate()) {
+            activityView.openAppOnPlayStore();
+        } else {
+            activityView.openAppOnWebsite(config.getApkUrl());
+        }
+    }
+
+    @Override
+    public void cancelUpdate() {
+        Config config = RemoteConfigManager.getConfigs(context.getApplicationContext());
+        if (config.isForceUpdate()) {
+            activityView.closeApp();
+        } else {
+            isGetConfigSuccess = true;
+            openActHome();
+        }
+    }
+
     private void openActHome() {
         if (isGetConfigSuccess && isCheckLoginSuccess) {
             activityView.openActHome(movId);
@@ -172,15 +205,12 @@ public class LoadingPresenter implements LoadingContract.Presenter{
             @Override
             public void onGetConfigSuccess(Config config) {
                 RemoteConfigManager.setConfigs(context, config);
-
-                isGetConfigSuccess = true;
-                openActHome();
+                checkUpdate();
             }
 
             @Override
             public void onFailure(int code, String error) {
-                isGetConfigSuccess = true;
-                openActHome();
+                checkUpdate();
             }
         });
     }

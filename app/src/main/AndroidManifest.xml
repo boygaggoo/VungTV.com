@@ -22,12 +22,22 @@
             </intent-filter>
             <intent-filter>
                 <action android:name="android.intent.action.VIEW" />
+
                 <category android:name="android.intent.category.BROWSABLE" />
                 <category android:name="android.intent.category.DEFAULT" />
-                <data android:scheme="vungtv" android:host="film"/>
-                <data android:scheme="vungtv" android:host="player"/>
-                <data android:scheme="http" android:host="vungtv.com"/>
-                <data android:scheme="https" android:host="vungtv.com"/>
+
+                <data
+                    android:host="film"
+                    android:scheme="vungtv" />
+                <data
+                    android:host="player"
+                    android:scheme="vungtv" />
+                <data
+                    android:host="vungtv.com"
+                    android:scheme="http" />
+                <data
+                    android:host="vungtv.com"
+                    android:scheme="https" />
             </intent-filter>
         </activity>
         <activity
@@ -149,8 +159,9 @@
             android:name="com.google.firebase.messaging.default_notification_color"
             android:resource="@color/colorAccent" />
 
-        <service
-            android:name=".services.RegisterFCMTopicService"/>
+        <service android:name=".services.RegisterFCMTopicService" />
+
+        <activity android:name=".feature.aboutcontact.AboutActivity"></activity>
     </application>
 
 </manifest>

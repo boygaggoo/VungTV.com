@@ -213,5 +213,7 @@
     <string name="popup_action_exit">Thoát</string>
     <string name="popup_action_cancel_exit">Ở lại</string>
     <string name="logout_text_success">Đăng xuất tài khoản thành công.</string>
+    <string name="about_text_title">Giới Thiệu App</string>
+    <string name="about_text_title_contact">Liên Hệ Quảng Cáo</string>
 
 </resources>

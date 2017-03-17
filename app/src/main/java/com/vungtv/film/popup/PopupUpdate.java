@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.res.Resources;
 import android.support.annotation.StringRes;
+import android.view.KeyEvent;
 import android.view.View;
 import android.view.Window;
 import android.widget.Button;
@@ -57,7 +58,18 @@ public class PopupUpdate implements View.OnClickListener, DialogInterface.OnDism
         dialog.setContentView(R.layout.popup_update);
         dialog.setOnDismissListener(this);
         dialog.setOnCancelListener(this);
+        dialog.setOnKeyListener(new DialogInterface.OnKeyListener() {
+            @Override
+            public boolean onKey(DialogInterface dialogInterface, int keyCode, KeyEvent keyEvent) {
 
+                if (keyCode == KeyEvent.KEYCODE_BACK) {
+                    if (onPopupUpdateListener != null)
+                        onPopupUpdateListener.onPopupUpdateBtnCancelClick();
+                    return true;
+                }
+                return false;
+            }
+        });
         tvTitle = (VtvTextView) dialog.findViewById(R.id.pop_msg_tv_title);
         tvContent = (VtvTextView) dialog.findViewById(R.id.pop_msg_tv_content);
         btnSubmit = (VtvButton) dialog.findViewById(R.id.pop_msg_btn_submit);
